@@ -1,8 +1,18 @@
 .loginArea {
-  margin-top: 5%; }
+  margin-top: 10%; }
+
+.headerLoginArea {
+  text-align: center; }
 
 .formArea {
-  background-color: white; }
+  background-color: white;
+  padding-bottom: 0px;
+  margin-bottom: 60px;
+  padding-top: 20px; }
+
+.headerLogin {
+  font-size: 24px;
+  font-weight: 300; }
 
 .container {
   position: absolute;
@@ -21,8 +31,6 @@
   background-image: url("../../images/track.png");
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
-  opacity: 0.2; }
+  opacity: 0.5; }
 
 /*# sourceMappingURL=login.css.map */

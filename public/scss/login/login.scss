@@ -1,13 +1,24 @@
 @import "../common/colors";
 
 .loginArea {
- margin-top: 5%;
- //padding-left: 125px;
- //padding-right: 125px;
+ margin-top: 10%;
 }
-
+.headerLoginArea {
+ text-align: center;
+}
 .formArea {
  background-color: white;
+ padding-bottom: 0px;
+ margin-bottom: 60px;
+ padding-top: 20px;
+}
+.headerLogin {
+ font-size: 24px;
+ font-weight: 300;
+}
+.loginCard {
+ //width: 50%;
+ //margin-left: 50%;
 }
 
 .container {
@@ -29,9 +40,7 @@
  background-image:url('../../images/track.png');
  top: 0;
  left: 0;
- bottom: 0;
- right: 0;
- opacity: 0.2;
+ opacity: 0.5;
 }
 
 .imageBackground:before {
