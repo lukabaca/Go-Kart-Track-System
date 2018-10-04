@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAEA,aAAc;EACZ,UAAU,EAAE,IAAI;;AAGlB,aAAc;EACZ,SAAS,EAAE,IAAI",
+"sources": ["../../scss/registration/registration.scss"],
 "names": [],
 "file": "registration.css"
 }

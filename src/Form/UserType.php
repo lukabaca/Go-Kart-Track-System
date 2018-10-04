@@ -10,6 +10,10 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,7 +26,7 @@ class UserType extends AbstractType
     {
 
 
-        $builder->add('email', TextType::class, array(
+        $builder->add('email', EmailType::class, array(
             'label' => 'Email',
             'required' => TRUE,
             'attr' => [
@@ -38,46 +42,46 @@ class UserType extends AbstractType
             'label' => 'Hasło',
             'required' => TRUE,
             'attr' => [
-                'placeholder' => 'Email',
+                'placeholder' => 'Hasło',
                 'class' => 'form-control'
             ]
         ));
 
         $builder->add('name', TextType::class, array(
-            'label' => 'Email',
+            'label' => 'Imię',
             'required' => TRUE,
             'attr' => [
-                'placeholder' => 'Email',
+                'placeholder' => 'Imię',
                 'class' => 'form-control'
             ]
 
         ));
 
-        $builder->add('surname', PasswordType::class, array(
+        $builder->add('surname', TextType::class, array(
 
             'label' => 'Nazwisko',
             'required' => TRUE,
             'attr' => [
-                'placeholder' => 'Email',
+                'placeholder' => 'Nazwisko',
                 'class' => 'form-control'
             ]
         ));
 
-        $builder->add('birthDate', TextType::class, array(
+        $builder->add('birthDate', BirthdayType::class, array(
             'label' => 'Data urodzenia',
             'required' => TRUE,
             'attr' => [
-                'placeholder' => 'Email',
+                'placeholder' => 'Data urodzenia',
                 'class' => 'form-control'
             ]
         ));
 
-        $builder->add('pesel', PasswordType::class, array(
+        $builder->add('pesel', NumberType::class, array(
 
             'label' => 'Pesel',
             'required' => TRUE,
             'attr' => [
-                'placeholder' => 'Email',
+                'placeholder' => 'Pesel',
                 'class' => 'form-control'
             ]
         ));
@@ -86,19 +90,19 @@ class UserType extends AbstractType
             'label' => 'Numer i seria dowodu osobistego',
             'required' => TRUE,
             'attr' => [
-                'placeholder' => 'Email',
+                'placeholder' => 'Numer i seria dowodu osobistego',
                 'class' => 'form-control'
             ]
 
 
         ));
 
-        $builder->add('telephoneNumber', PasswordType::class, array(
+        $builder->add('telephoneNumber', NumberType::class, array(
 
             'label' => 'Numer telefonu',
             'required' => TRUE,
             'attr' => [
-                'placeholder' => 'Email',
+                'placeholder' => 'Numer telefonu',
                 'class' => 'form-control'
             ]
         ));
@@ -107,7 +111,7 @@ class UserType extends AbstractType
 
             'label' => 'Zarejestruj się',
             'attr' => ['id' => 'submitButton',
-                'class' => 'btn btn-main submitButton'
+                'class' => 'btn btn-info submitButton'
             ]
         ));
 
