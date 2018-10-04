@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +25,19 @@ class RegistrationController extends Controller
           $user = new User();
           return $this->handleForm($request, $user);
 //        return $this->render('views/controllers/registration/index.html.twig', []);
+    }
+
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test(Request $request)
+    {
+        $user = new User('a@gmail.com', '1234', 'lukasz', 'blaszczyk', new DateTime('2011-01-01T15:03:01.012345Z'),
+            '123123', '123123', '12312213');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);//tell doctrine you want to save to database, but not query yet
+        $em->flush();//exetues the query
+
     }
 
     private function handleForm(Request $request, User $user)

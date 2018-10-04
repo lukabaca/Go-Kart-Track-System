@@ -18,11 +18,31 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 use Symfony\Component\Validator\Constraints as Assert;
+/**
+ *
+ * @Table(name="user")
+ * @Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ */
 class User
 {
-
+    /**
+     * @Column(type="integer")
+     * @Id()
+     * @GeneratedValue()
+     */
+    private $id;
+    /**
+     * @Column(type="string", length=45)
+     */
     private $email;
+    /**
+     * @Column(type="string", length=255)
+     */
     private $password;
+    /**
+     * @Column(type="string", length=30)
+     */
     /**
      * @Assert\Regex(
      *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
@@ -37,6 +57,9 @@ class User
      */
     private $name;
     /**
+     * @Column(type="string", length=30)
+     */
+    /**
      * @Assert\Regex(
      *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
      *     message="Wartość {{ value }} nie jest w poprawnym formacie"
@@ -50,7 +73,13 @@ class User
      */
     private $surname;
 
+    /**
+     * @Column(type="date")
+     */
     private $birthDate;
+    /**
+     * @Column(type="string", length=11)
+     */
     /**
      * * @Assert\Regex(
      *     pattern = "/^[0-9]{11}/",
@@ -60,12 +89,18 @@ class User
     private $pesel;
 
     /**
+     * @Column(type="string", length=9)
+     */
+    /**
      * * @Assert\Regex(
      *     pattern = "/^[a-zA-Z]{3}[0-9]{6}/",
      *     message="Niepoprawny format serii i numeru dowodu osobistego"
      * )
      */
     private $documentID;
+    /**
+     * @Column(type="string", length=15)
+     */
     /**
      * * @Assert\Regex(
      *     pattern = "/^[0-9]{9}/",
