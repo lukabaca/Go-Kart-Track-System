@@ -24,11 +24,26 @@ class User
     private $email;
     private $password;
     /**
-     * @Assert\NotBlank(
-     *    message="nie moze byc pusty"
+     * @Assert\Regex(
+     *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
+     *     message="Wartość {{ value }} nie jest w poprawnym formacie"
+     * )
+     * @Assert\Length(
+     *    max = 30,
+     *    min = 2,
+     *    maxMessage = "Maksymalna liczba znaków to 30",
+     *    minMessage = "Minimalna liczba znaków to 2"
      * )
      */
     private $name;
+    /**
+     * @Assert\Length(
+     *    max = 30,
+     *    min = 2,
+     *    maxMessage = "Maksymalna liczba znaków to 30",
+     *    minMessage = "Minimalna liczba znaków to 2"
+     * )
+     */
     private $surname;
 
     private $birthDate;
