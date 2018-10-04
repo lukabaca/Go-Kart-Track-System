@@ -11,7 +11,8 @@
 
 .loginLabel {
   font-weight: 200;
-  font-size: 18px; }
+  font-size: 18px;
+  color: #C8C8C8; }
 
 .form-control {
   font-size: 12px;
@@ -25,7 +26,6 @@
   margin-bottom: 30px; }
 
 .headerLogin {
-  font-size: 24px;
   font-weight: 300; }
 
 .container {
