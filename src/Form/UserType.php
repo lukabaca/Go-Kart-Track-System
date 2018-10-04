@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,14 +38,15 @@ class UserType extends AbstractType
 
         ));
 
-        $builder->add('password', PasswordType::class, array(
-
+        $builder->add('password', RepeatedType::class, array(
+            'type' => PasswordType::class,
+            'invalid_message' => 'Hasła muszą się zgadzać',
             'label' => 'Hasło',
             'required' => FALSE,
-            'attr' => [
-                'placeholder' => 'Hasło',
-                'class' => 'form-control'
-            ]
+            'options' => array('attr' => array('class' => 'form-control')),
+
+            'first_options'  => array('label' => 'Password'),
+            'second_options' => array('label' => 'Repeat Password'),
         ));
 
         $builder->add('name', TextType::class, array(

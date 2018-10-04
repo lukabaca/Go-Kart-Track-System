@@ -1,7 +1,7 @@
 @import "../common/colors";
 
 .submitButton {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .form-control {
@@ -9,7 +9,7 @@
   //height: 30px;
 }
 .registrationArea {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .formErrorMessage {
   color: red;
@@ -17,4 +17,9 @@
 ul {
   list-style: none;
   padding: 0px;
+}
+.card-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
 }

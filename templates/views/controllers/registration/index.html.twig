@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-4 offset-md-4 registrationArea">
                 <div class="shadow p-3 mb-5 bg-white rounded card">
-                    {#{{ form(userLoginForm) }}#}
+                    <div class="card-title">Rejestracja</div>
                     {{ form_start(userLoginForm) }}
                     <div class="form-group">
                         {{ form_label(userLoginForm.email) }}
@@ -30,11 +30,15 @@
                     </div>
 
                     <div class="form-group">
-                        {{ form_label(userLoginForm.password) }}
-                        {{ form_widget(userLoginForm.password) }}
-                        <small class="formErrorMessage">{{ form_errors(userLoginForm.password) }}</small>
-                        {{ form_help(userLoginForm.password) }}
+                        {{ form_label(userLoginForm.password.first) }}
+                        {{ form_widget(userLoginForm.password.first) }}
+                        {{ form_help(userLoginForm.password.first) }}
 
+                        {{ form_label(userLoginForm.password.second) }}
+                        {{ form_widget(userLoginForm.password.second) }}
+                        {{ form_help(userLoginForm.password.second) }}
+
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.password.first) }}</small>
                     </div>
 
                     <div class="form-group">
