@@ -37,6 +37,10 @@ class User
      */
     private $name;
     /**
+     * @Assert\Regex(
+     *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
+     *     message="Wartość {{ value }} nie jest w poprawnym formacie"
+     * )
      * @Assert\Length(
      *    max = 30,
      *    min = 2,
@@ -49,6 +53,12 @@ class User
     private $birthDate;
     private $pesel;
     private $documentID;
+    /**
+     * * @Assert\Regex(
+     *     pattern = "/^[0-9]{9}/",
+     *     message="Numer telefonu musi składać się z 9 cyfr"
+     * )
+     */
     private $telephoneNumber;
 
     /**

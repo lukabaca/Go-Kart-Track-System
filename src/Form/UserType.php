@@ -73,10 +73,11 @@ class UserType extends AbstractType
             'attr' => [
                 'placeholder' => 'Data urodzenia',
                 'class' => 'form-control'
-            ]
+            ],
+            'format' => 'yyyy-MM-dd',
         ));
 
-        $builder->add('pesel', NumberType::class, array(
+        $builder->add('pesel', TextType::class, array(
 
             'label' => 'Pesel',
             'required' => FALSE,
@@ -97,7 +98,7 @@ class UserType extends AbstractType
 
         ));
 
-        $builder->add('telephoneNumber', NumberType::class, array(
+        $builder->add('telephoneNumber', TextType::class, array(
 
             'label' => 'Numer telefonu',
             'required' => FALSE,
