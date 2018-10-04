@@ -51,6 +51,12 @@ class User
     private $surname;
 
     private $birthDate;
+    /**
+     * * @Assert\Regex(
+     *     pattern = "/^[0-9]{11}/",
+     *     message="Numer pesel musi składać się z 11 cyfr"
+     * )
+     */
     private $pesel;
     private $documentID;
     /**

@@ -6,4 +6,9 @@ html, body {
   margin-left: 0px;
   margin-right: 0px; }
 
+.arrowBack {
+  font-size: 40px;
+  color: #C8C8C8;
+  margin-top: 20px; }
+
 /*# sourceMappingURL=global.css.map */

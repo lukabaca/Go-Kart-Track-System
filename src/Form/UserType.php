@@ -80,7 +80,7 @@ class UserType extends AbstractType
         $builder->add('pesel', TextType::class, array(
 
             'label' => 'Pesel',
-            'required' => FALSE,
+            'required' => false,
             'attr' => [
                 'placeholder' => 'Pesel',
                 'class' => 'form-control'
@@ -101,7 +101,7 @@ class UserType extends AbstractType
         $builder->add('telephoneNumber', TextType::class, array(
 
             'label' => 'Numer telefonu',
-            'required' => FALSE,
+            'required' => false,
             'attr' => [
                 'placeholder' => 'Numer telefonu',
                 'class' => 'form-control'
