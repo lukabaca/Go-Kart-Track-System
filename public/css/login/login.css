@@ -1,7 +1,28 @@
 .loginArea {
-  margin-top: 10%; }
+  margin-top: 5%; }
 
 .formArea {
   background-color: white; }
+
+.container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  max-width: 100%; }
+
+.main {
+  height: 100%;
+  position: relative; }
+
+.imageBackground {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background-image: url("../../images/track.png");
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.2; }
 
 /*# sourceMappingURL=login.css.map */

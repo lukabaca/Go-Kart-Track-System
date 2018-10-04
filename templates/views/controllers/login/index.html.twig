@@ -8,33 +8,44 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/login/login.css') }}">
+    {#<style>#}
+        {#body{#}
+            {#background:url({{ asset('images/track.png') }}) no-repeat center;#}
+
+        {#}#}
+    {#</style>#}
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 offset-md-4 loginArea">
-                <div class="card loginCard">
-                    <div class="card-body">
-                        <div class="jumbotron jumbotron-fluid formArea">
-                            <form method="POST">
-                                <div class="form-group">
-                                    <label for="email">Login</label>
-                                    <input type="text" class="form-control" id="email" placeholder="Login" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Hasło</label>
-                                    <input type="password" class="form-control" id="email" placeholder="Hasło" required>
-                                </div>
-                                <button class="btn btn-info" type="submit">Zaloguj się</button>
-                            </form>
+    <div class="main">
+        <div class="imageBackground">
+        </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 loginArea">
+                        <div class="card loginCard">
+                            <div class="card-body">
+                                <div class="jumbotron jumbotron-fluid formArea">
+                                    <form method="POST">
+                                        <div class="form-group">
+                                            <label for="email">Login</label>
+                                            <input type="text" class="form-control" id="email" placeholder="Login" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Hasło</label>
+                                            <input type="password" class="form-control" id="email" placeholder="Hasło" required>
+                                        </div>
+                                        <button class="btn btn-info" type="submit">Zaloguj się</button>
+                                    </form>
 
 
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
     </div>
 {% endblock %}
 
