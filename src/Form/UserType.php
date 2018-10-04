@@ -28,7 +28,7 @@ class UserType extends AbstractType
 
         $builder->add('email', EmailType::class, array(
             'label' => 'Email',
-            'required' => TRUE,
+            'required' => FALSE,
             'attr' => [
                 'placeholder' => 'Email',
                 'class' => 'form-control'
@@ -40,7 +40,7 @@ class UserType extends AbstractType
         $builder->add('password', PasswordType::class, array(
 
             'label' => 'Hasło',
-            'required' => TRUE,
+            'required' => FALSE,
             'attr' => [
                 'placeholder' => 'Hasło',
                 'class' => 'form-control'
@@ -49,7 +49,7 @@ class UserType extends AbstractType
 
         $builder->add('name', TextType::class, array(
             'label' => 'Imię',
-            'required' => TRUE,
+            'required' => FALSE,
             'attr' => [
                 'placeholder' => 'Imię',
                 'class' => 'form-control'
@@ -60,7 +60,7 @@ class UserType extends AbstractType
         $builder->add('surname', TextType::class, array(
 
             'label' => 'Nazwisko',
-            'required' => TRUE,
+            'required' => FALSE,
             'attr' => [
                 'placeholder' => 'Nazwisko',
                 'class' => 'form-control'
@@ -69,7 +69,7 @@ class UserType extends AbstractType
 
         $builder->add('birthDate', BirthdayType::class, array(
             'label' => 'Data urodzenia',
-            'required' => TRUE,
+            'required' => FALSE,
             'attr' => [
                 'placeholder' => 'Data urodzenia',
                 'class' => 'form-control'
@@ -79,7 +79,7 @@ class UserType extends AbstractType
         $builder->add('pesel', NumberType::class, array(
 
             'label' => 'Pesel',
-            'required' => TRUE,
+            'required' => FALSE,
             'attr' => [
                 'placeholder' => 'Pesel',
                 'class' => 'form-control'
@@ -88,7 +88,7 @@ class UserType extends AbstractType
 
         $builder->add('documentID', TextType::class, array(
             'label' => 'Numer i seria dowodu osobistego',
-            'required' => TRUE,
+            'required' => FALSE,
             'attr' => [
                 'placeholder' => 'Numer i seria dowodu osobistego',
                 'class' => 'form-control'
@@ -100,7 +100,7 @@ class UserType extends AbstractType
         $builder->add('telephoneNumber', NumberType::class, array(
 
             'label' => 'Numer telefonu',
-            'required' => TRUE,
+            'required' => FALSE,
             'attr' => [
                 'placeholder' => 'Numer telefonu',
                 'class' => 'form-control'

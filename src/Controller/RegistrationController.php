@@ -34,8 +34,9 @@ class RegistrationController extends Controller
 
         if($userLoginForm->isSubmitted() && $userLoginForm->isValid())
         {
-
-
+            $name = $user->getName();
+            var_dump($name);
+            exit();
 
         }
 

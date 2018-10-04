@@ -16,10 +16,18 @@ use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+
+use Symfony\Component\Validator\Constraints as Assert;
 class User
 {
+
     private $email;
     private $password;
+    /**
+     * @Assert\NotBlank(
+     *    message="nie moze byc pusty"
+     * )
+     */
     private $name;
     private $surname;
 
