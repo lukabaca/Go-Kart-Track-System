@@ -22,6 +22,7 @@ class User
     private $password;
     private $name;
     private $surname;
+
     private $birthDate;
     private $pesel;
     private $documentID;
