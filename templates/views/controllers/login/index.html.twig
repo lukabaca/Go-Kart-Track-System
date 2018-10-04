@@ -24,7 +24,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 offset-md-4 loginArea">
-                    <div class="card loginCard">
+                    <div class="shadow p-3 mb-5 bg-white rounded card loginCard">
                         <div class="card-body">
                             <div class="headerLoginArea">
                                 <h5 class="headerLogin">Gokart arena</h5>
@@ -32,16 +32,18 @@
                             <div class="jumbotron jumbotron-fluid formArea">
                                 <form method="POST">
                                     <div class="form-group">
-                                        <label for="email">Login</label>
-                                        <input type="text" class="form-control" id="email" placeholder="Login" required>
+                                        <label for="email" class="loginLabel">Login</label>
+                                        <input type="text" class="form-control" id="email" placeholder="Login" >
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">Hasło</label>
-                                        <input type="password" class="form-control" id="email" placeholder="Hasło" required>
+                                        <label for="email" class="loginLabel">Hasło</label>
+                                        <input type="password" class="form-control" id="email" placeholder="Hasło" >
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-info" type="submit">Zaloguj się</button>
+                                        <button class="btn btn-info" type="submit" id="singInButton">Zaloguj się</button>
                                     </div>
+                                    <a href="#" id="register">Zarejestruj się</a>
+
                                 </form>
 
 

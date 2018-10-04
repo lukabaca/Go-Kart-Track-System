@@ -6,11 +6,28 @@
 .headerLoginArea {
  text-align: center;
 }
+
+#singInButton {
+ height: 35px;
+ font-size: 14px;
+ width: 100%;
+ //line-height: 30px;
+}
+
+.loginLabel {
+ font-weight: 200;
+ font-size: 18px;
+}
+.form-control {
+ font-size: 12px;
+ height: 30px;
+}
 .formArea {
  background-color: white;
  padding-bottom: 0px;
  margin-bottom: 60px;
  padding-top: 20px;
+ margin-bottom: 30px;
 }
 .headerLogin {
  font-size: 24px;
