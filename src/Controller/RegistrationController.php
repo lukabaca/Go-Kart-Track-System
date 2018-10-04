@@ -32,12 +32,23 @@ class RegistrationController extends Controller
      */
     public function test(Request $request)
     {
-        $user = new User('a@gmail.com', '1234', 'lukasz', 'blaszczyk', new DateTime('2011-01-01T15:03:01.012345Z'),
-            '123123', '123123', '12312213');
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);//tell doctrine you want to save to database, but not query yet
-        $em->flush();//exetues the query
+//        $user = new User('a@gmail.com', '1234', 'lukasz', 'blaszczyk', new DateTime('2011-01-01T15:03:01.012345Z'),
+//            '123123', '123123', '12312213');
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($user);//tell doctrine you want to save to database, but not query yet
+//        $em->flush();//exetues the query
 
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find(1);
+
+        if (!$user)
+        {
+           echo 'blad';
+        }
+
+        var_dump($user);
+        exit();
     }
 
     private function handleForm(Request $request, User $user)

@@ -18,32 +18,31 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 /**
  *
  * @Table(name="user")
- * @Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *
  */
 class User
 {
     /**
-     * @Column(type="integer")
-     * @Id()
-     * @GeneratedValue()
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
      */
     private $id;
+
     /**
-     * @Column(type="string", length=45)
-     */
-    private $email;
-    /**
-     * @Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $password;
+
     /**
-     * @Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30)
      */
-    /**
+    /*
      * @Assert\Regex(
      *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
      *     message="Wartość {{ value }} nie jest w poprawnym formacie"
@@ -57,9 +56,9 @@ class User
      */
     private $name;
     /**
-     * @Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30)
      */
-    /**
+    /*
      * @Assert\Regex(
      *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
      *     message="Wartość {{ value }} nie jest w poprawnym formacie"
@@ -74,13 +73,14 @@ class User
     private $surname;
 
     /**
-     * @Column(type="date")
+     * @ORM\Column(type="date")
      */
     private $birthDate;
+
     /**
-     * @Column(type="string", length=11)
+     * @ORM\Column(type="string", length=11)
      */
-    /**
+    /*
      * * @Assert\Regex(
      *     pattern = "/^[0-9]{11}/",
      *     message="Numer pesel musi składać się z 11 cyfr"
@@ -89,19 +89,26 @@ class User
     private $pesel;
 
     /**
-     * @Column(type="string", length=9)
+     * @ORM\Column(type="string", length=9)
      */
-    /**
+    /*
      * * @Assert\Regex(
      *     pattern = "/^[a-zA-Z]{3}[0-9]{6}/",
      *     message="Niepoprawny format serii i numeru dowodu osobistego"
      * )
      */
     private $documentID;
+
+
     /**
-     * @Column(type="string", length=15)
+     * @ORM\Column(type="string", length=45)
      */
+    private $email;
+
     /**
+     * @ORM\Column(type="string", length=15)
+     */
+    /*
      * * @Assert\Regex(
      *     pattern = "/^[0-9]{9}/",
      *     message="Numer telefonu musi składać się z 9 cyfr"
@@ -132,6 +139,21 @@ class User
         $this->telephoneNumber = $telephoneNumber;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
     /**
      * @return mixed
      */
