@@ -15,7 +15,75 @@
         <div class="row">
             <div class="col-md-4 registrationArea">
                 <div class="shadow p-3 mb-5 bg-white rounded card">
-                    {{ form(userLoginForm) }}
+                    {#{{ form(userLoginForm) }}#}
+                    {{ form_start(userLoginForm) }}
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.email) }}
+                        {{ form_widget(userLoginForm.email) }}
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.email) }}</small>
+                        {{ form_help(userLoginForm.email) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.password) }}
+                        {{ form_widget(userLoginForm.password) }}
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.password) }}</small>
+                        {{ form_help(userLoginForm.password) }}
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.name) }}
+                        {{ form_widget(userLoginForm.name) }}
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.name) }}</small>
+                        {{ form_help(userLoginForm.name) }}
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.surname) }}
+                        {{ form_widget(userLoginForm.surname) }}
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.surname) }}</small>
+                        {{ form_help(userLoginForm.surname) }}
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.birthDate) }}
+                        {{ form_widget(userLoginForm.birthDate) }}
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.birthDate) }}</small>
+                        {{ form_help(userLoginForm.birthDate) }}
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.pesel) }}
+                        {{ form_widget(userLoginForm.pesel) }}
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.pesel) }}</small>
+                        {{ form_help(userLoginForm.pesel) }}
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.documentID) }}
+                        {{ form_widget(userLoginForm.documentID) }}
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.documentID) }}</small>
+                        {{ form_help(userLoginForm.documentID) }}
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.telephoneNumber) }}
+                        {{ form_widget(userLoginForm.telephoneNumber) }}
+                        <small class="formErrorMessage">{{ form_errors(userLoginForm.telephoneNumber) }}</small>
+                        {{ form_help(userLoginForm.telephoneNumber) }}
+
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(userLoginForm.submit) }}
+                        {{ form_widget(userLoginForm.submit) }}
+                    </div>
+                    {{ form_end(userLoginForm) }}
                 </div>
             </div>
         </div>

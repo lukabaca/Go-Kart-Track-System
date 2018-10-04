@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAEA,aAAc;EACZ,UAAU,EAAE,IAAI;;AAGlB,aAAc;EACZ,SAAS,EAAE,IAAI;;AAGjB,iBAAkB;EAChB,UAAU,EAAE,IAAI",
+"mappings": "AAEA,aAAc;EACZ,UAAU,EAAE,IAAI;;AAGlB,aAAc;EACZ,SAAS,EAAE,IAAI;;AAGjB,iBAAkB;EAChB,UAAU,EAAE,IAAI;;AAElB,iBAAkB;EAChB,KAAK,EAAE,GAAG;;AAEZ,EAAG;EACD,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,GAAG",
 "sources": ["../../scss/registration/registration.scss"],
 "names": [],
 "file": "registration.css"
