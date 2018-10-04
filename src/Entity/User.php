@@ -59,6 +59,12 @@ class User
      */
     private $pesel;
 
+    /**
+     * * @Assert\Regex(
+     *     pattern = "/^[a-zA-Z]{3}[0-9]{6}/",
+     *     message="Niepoprawny format serii i numeru dowodu osobistego"
+     * )
+     */
     private $documentID;
     /**
      * * @Assert\Regex(
