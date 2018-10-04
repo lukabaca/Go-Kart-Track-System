@@ -1,0 +1,57 @@
+@import "../common/colors";
+
+.loginArea {
+ margin-top: 10%;
+}
+.headerLoginArea {
+ text-align: center;
+}
+#noAccountLabel {
+ font-size: 12px;
+ margin-bottom: 5px;
+}
+#singInButton {
+ height: 35px;
+ font-size: 14px;
+ width: 100%;
+}
+
+.loginLabel {
+ font-weight: 200;
+ font-size: 18px;
+ color: $labelsAccent;
+}
+.form-control {
+ font-size: 12px;
+ height: 30px;
+}
+.formArea {
+ background-color: white;
+ padding-bottom: 0px;
+ margin-bottom: 60px;
+ padding-top: 20px;
+ margin-bottom: 30px;
+}
+.headerLogin {
+ font-weight: 300;
+}
+.container {
+ position: absolute;
+ top: 0;
+ width: 100%;
+ max-width: 100%;
+}
+.main {
+ height: 100%;
+ position: relative;
+}
+
+.imageBackground {
+ height: 100%;
+ width: 100%;
+ position: relative;
+ background-image:url('../../images/track.png');
+ top: 0;
+ left: 0;
+ opacity: 0.5;
+}
