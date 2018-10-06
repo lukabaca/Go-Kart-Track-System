@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
 use DateTime;
@@ -40,21 +41,25 @@ class RegistrationController extends Controller
 //        $em->persist($user);//tell doctrine you want to save to database, but not query yet
 //        $em->flush();//exetues the query
 
-//        $user = $this->getDoctrine()
-//            ->getRepository(User::class)
-//            ->find(2);
-//
-//        if (!$user)
-//        {
-//           echo 'blad';
-//        }
-        $user = new User();
-        $user->setId(1);
-        $encoded = $encoder->encodePassword($user, '1234');
+        $roles = $this->getDoctrine()
+            ->getRepository(Role::class)
+            ->findAll();
 
-        $user->setPassword($encoded);
-        var_dump($user);
+        if (!$roles)
+        {
+           echo 'blad';
+        }
+
+        var_dump($roles);
         exit();
+
+//        $user = new User();
+//        $user->setId(1);
+//        $encoded = $encoder->encodePassword($user, '1234');
+//
+//        $user->setPassword($encoded);
+//        var_dump($user);
+//        exit();
     }
 
     private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder)
