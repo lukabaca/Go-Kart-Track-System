@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Entity\User;
+use App\Entity\UserRoles;
 use App\Form\UserType;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -73,9 +74,17 @@ class RegistrationController extends Controller
             $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encodedPassword);
 
+            $userID = $user->getId();
+            $userRoles = new UserRoles($userID, 1);//role_id 1 dla ROLE_USER
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($userRoles);
+            $em->flush();
+
             //tutaj przekieruj na dashboard
             return $this->render('views/controllers/login/index.html.twig', []);
         }

@@ -19,12 +19,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 /**
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- *
+ * @UniqueEntity("email", message="Ten adres email jest już w użyciu")
  */
 class User implements UserInterface
 {
@@ -39,6 +40,15 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     *
+     */
+    private $roles;
+
+
+
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -285,6 +295,13 @@ class User implements UserInterface
     public function setTelephoneNumber($telephoneNumber): void
     {
         $this->telephoneNumber = $telephoneNumber;
+    }
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles($roles): void
+    {
+        $this->roles = $roles;
     }
 
     /**
