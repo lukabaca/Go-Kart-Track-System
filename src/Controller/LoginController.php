@@ -9,17 +9,27 @@
 namespace App\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-class LoginController extends Controller
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+class LoginController extends AbstractController
 {
     /**
      * @Route("/login", name="login")
      * @Route("/", name="default")
      */
-    public function indexAction(Request $request)
+    public function login(AuthenticationUtils $authenticationUtils)
     {
-        return $this->render('views/controllers/login/index.html.twig', []);
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('views/controllers/login/index.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
     }
+
 }

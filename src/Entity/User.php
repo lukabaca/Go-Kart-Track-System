@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 /**
  *
- * @Table(name="user")
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *
  */
@@ -299,6 +299,7 @@ class User implements UserInterface
     public function getRoles()
     {
         // TODO: Implement getRoles() method.
+        return array('ROLE_USER');
     }
 
     /**
@@ -321,7 +322,7 @@ class User implements UserInterface
      */
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+       return $this->email;
     }
 
     /**

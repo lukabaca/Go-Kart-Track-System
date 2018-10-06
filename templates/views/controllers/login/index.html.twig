@@ -30,14 +30,17 @@
                                 <h2 class="headerLogin">Gokart arena</h2>
                             </div>
                             <div class="jumbotron jumbotron-fluid formArea">
-                                <form method="POST">
+                                {% if error %}
+                                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+                                <form action="{{ path('login') }}" method="POST">
                                     <div class="form-group">
                                         <label for="email" class="loginLabel">Login</label>
-                                        <input type="text" class="form-control" id="email" placeholder="Login" >
+                                        <input type="text" name="_username" class="form-control" id="email" placeholder="Login" value="{{ last_username }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="email" class="loginLabel">Hasło</label>
-                                        <input type="password" class="form-control" id="email" placeholder="Hasło" >
+                                        <input type="password" name="_password" class="form-control" id="password" placeholder="Hasło" >
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-info" type="submit" id="singInButton">Zaloguj się</button>
