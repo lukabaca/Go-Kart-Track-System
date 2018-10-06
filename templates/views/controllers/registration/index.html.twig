@@ -34,10 +34,12 @@
                         {{ form_widget(userLoginForm.password.first) }}
                         {{ form_help(userLoginForm.password.first) }}
 
+                    </div>
+
+                    <div class="form-group">
                         {{ form_label(userLoginForm.password.second) }}
                         {{ form_widget(userLoginForm.password.second) }}
                         {{ form_help(userLoginForm.password.second) }}
-
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.password.first) }}</small>
                     </div>
 
