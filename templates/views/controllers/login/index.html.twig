@@ -32,6 +32,7 @@
                             <div class="jumbotron jumbotron-fluid formArea">
                                 {% if error %}
                                     <p>Błędny email lub hasło</p>
+                                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                                 {% endif %}
                                 <form action="{{ path('login') }}" method="POST">
                                     <div class="form-group">

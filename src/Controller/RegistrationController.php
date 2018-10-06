@@ -44,16 +44,18 @@ class RegistrationController extends Controller
 //        $em->flush();//exetues the query
 
         $roles = $this->getDoctrine()
-            ->getRepository(Role::class)
-            ->findAll();
+            ->getRepository(User::class)
+            ->loadUserByUsername('jan@gmail.com');
 
         if (!$roles)
         {
-           echo 'blad';
+           echo 'GGG';
         }
 
         var_dump($roles);
         exit();
+
+
 
 //        $user = new User();
 //        $user->setId(1);
@@ -75,16 +77,10 @@ class RegistrationController extends Controller
             $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encodedPassword);
 
-//            $userID = $user->getId();
-//            $userRoles = new UserRoles($userID, 1);//role_id 1 dla ROLE_USER
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($userRoles);
-//            $em->flush();
 
             $em->getRepository(UserRoles::class )->insertUserAndRolesIDs($user->getId(), 1);
             //tutaj przekieruj na dashboard
