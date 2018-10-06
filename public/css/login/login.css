@@ -51,4 +51,8 @@
   left: 0;
   opacity: 0.5; }
 
+.errorMessage {
+  color: #DC143C;
+  font-size: 14px; }
+
 /*# sourceMappingURL=login.css.map */

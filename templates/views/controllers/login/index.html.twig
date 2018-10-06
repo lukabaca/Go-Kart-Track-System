@@ -30,10 +30,6 @@
                                 <h2 class="headerLogin">Gokart arena</h2>
                             </div>
                             <div class="jumbotron jumbotron-fluid formArea">
-                                {% if error %}
-                                    <p>Błędny email lub hasło</p>
-                                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                {% endif %}
                                 <form action="{{ path('login') }}" method="POST">
                                     <div class="form-group">
                                         <label for="email" class="loginLabel">Login</label>
@@ -43,6 +39,9 @@
                                         <label for="email" class="loginLabel">Hasło</label>
                                         <input type="password" name="_password" class="form-control" required id="password" placeholder="Hasło" >
                                     </div>
+                                    {% if error %}
+                                        <p class="errorMessage">Wprowadzono błędny email lub hasło</p>
+                                    {% endif %}
                                     <div class="form-group">
                                         <button class="btn btn-info" type="submit" id="singInButton">Zaloguj się</button>
                                     </div>
