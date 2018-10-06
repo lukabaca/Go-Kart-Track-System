@@ -32,4 +32,18 @@ class LoginController extends AbstractController
         ));
     }
 
+    /**
+     * @Route("/loginAfterLogout", name="loginAfterLogout")
+     */
+    public function loginAferLogout(AuthenticationUtils $authenticationUtils)
+    {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUserEmail = $authenticationUtils->getLastUsername();
+
+        return $this->render('views/controllers/login/logout.html.twig', array(
+            'lastUserEmail' => $lastUserEmail,
+            'error'         => $error,
+        ));
+    }
+
 }

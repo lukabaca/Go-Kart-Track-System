@@ -25,9 +25,8 @@
 .formArea {
   background-color: white;
   padding-bottom: 0px;
-  margin-bottom: 60px;
-  padding-top: 20px;
-  margin-bottom: 30px; }
+  margin-bottom: 0px;
+  padding-top: 20px; }
 
 .headerLogin {
   font-weight: 300; }
@@ -54,5 +53,11 @@
 .errorMessage {
   color: #DC143C;
   font-size: 14px; }
+
+.logoutMessage {
+  color: #228B22;
+  font-size: 22px;
+  text-align: center;
+  font-weight: 500; }
 
 /*# sourceMappingURL=login.css.map */

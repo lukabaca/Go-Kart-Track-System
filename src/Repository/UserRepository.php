@@ -28,21 +28,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
      */
     public function loadUserByUsername($username)
     {
-        // TODO: Implement loadUserByUsername() method.
-//        return $this->createQueryBuilder('u')
-//            ->where(' u.email = :email')
-//            ->setParameter('email', $username)
-//            ->getQuery()
-//            ->getOneOrNullResult();
-        $conn= $this->getEntityManager()->getConnection();
-
-        //gdy bedziemy miec 2 role dla 1 uzytkownika to musisz zwrocic 2 row set z rolami odzielnie
-//        $sql = '
-//            select user.id, password, user.name as userName, surname, birth_date, pesel, document_id, email, telephone_number, role.name as roleName from user
-//            join user_roles on user.id = user_roles.user_id join role  on role.id = user_roles.role_id
-//            where user.email = ?
-//        ';
-
         $sql1 = 'call getUserByUserEmail(?)';
         $sql2 = 'call getUserRolesByUserID(?)';
         $conn = $this->getEntityManager()->getConnection();
@@ -87,35 +72,5 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         } catch (DBALException $e) {
             return null;
         }
-
-//        try {
-//            $stmt = $conn->prepare($sql);
-//            $stmt->bindParam(1, $username);
-//            $rowCount = $stmt->execute();
-//            if($rowCount == 1) {
-//                $temp = $stmt->fetchAll();
-////                return $temp[0];
-//                $user = new User();
-//
-//                $user->setId($temp[0]['id']);
-//                $user->setPassword(($temp[0]['password']));
-//                $user->setName($temp[0]['userName']);
-//                $user->setSurname($temp[0]['surname']);
-//                $user->setBirthDate($temp[0]['birth_date']);
-//                $user->setPesel($temp[0]['pesel']);
-//                $user->setDocumentID($temp[0]['document_id']);
-//                $user->setEmail( $temp[0]['email']);
-//                $user->setTelephoneNumber($temp[0]['telephone_number']);
-//
-//                $user->setRoles(array($temp[0]['roleName']));
-//
-//                return $user;
-//            } else {
-//                return null;
-//            }
-//        } catch (DBALException $e) {
-//            return null;
-//        }
-
     }
 }

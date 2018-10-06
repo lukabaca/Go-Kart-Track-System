@@ -22,7 +22,7 @@ security:
             provider: our_db_provider
             logout:
                 path: /logout
-                target: /login
+                target: /loginAfterLogout
 
             # activate different ways to authenticate
 

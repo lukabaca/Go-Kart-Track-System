@@ -28,9 +28,8 @@
 .formArea {
  background-color: white;
  padding-bottom: 0px;
- margin-bottom: 60px;
+ margin-bottom: 0px;
  padding-top: 20px;
- margin-bottom: 30px;
 }
 .headerLogin {
  font-weight: 300;
@@ -55,9 +54,13 @@
  left: 0;
  opacity: 0.5;
 }
-
 .errorMessage {
  color: $error;
  font-size: 14px;
- //text-align: center;
+}
+.logoutMessage {
+ color: $confirmation;
+ font-size: 22px;
+ text-align: center;
+ font-weight: 500;
 }
