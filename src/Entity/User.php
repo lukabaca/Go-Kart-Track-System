@@ -102,13 +102,18 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=45,  unique=true)
+     *
+     * @Assert\Email(
+     *     message = "'{{ value }}' nie jest adresem email",
+     *     checkMX = true
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=15)
-     */
-    /*
+     *
+     *
      * * @Assert\Regex(
      *     pattern = "/^[0-9]{9}/",
      *     message="Numer telefonu musi składać się z 9 cyfr"

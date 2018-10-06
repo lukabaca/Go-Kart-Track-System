@@ -24,10 +24,10 @@ class LoginController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $lastUserEmail = $authenticationUtils->getLastUsername();
 
         return $this->render('views/controllers/login/index.html.twig', array(
-            'last_username' => $lastUsername,
+            'lastUserEmail' => $lastUserEmail,
             'error'         => $error,
         ));
     }

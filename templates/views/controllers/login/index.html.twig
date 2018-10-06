@@ -31,16 +31,16 @@
                             </div>
                             <div class="jumbotron jumbotron-fluid formArea">
                                 {% if error %}
-                                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                    <p>Błędny email lub hasło</p>
                                 {% endif %}
                                 <form action="{{ path('login') }}" method="POST">
                                     <div class="form-group">
                                         <label for="email" class="loginLabel">Login</label>
-                                        <input type="text" name="_username" class="form-control" id="email" placeholder="Login" value="{{ last_username }}">
+                                        <input type="email" name="_username" class="form-control" required id="email" placeholder="Login" value="{{ lastUserEmail }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="email" class="loginLabel">Hasło</label>
-                                        <input type="password" name="_password" class="form-control" id="password" placeholder="Hasło" >
+                                        <input type="password" name="_password" class="form-control" required id="password" placeholder="Hasło" >
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-info" type="submit" id="singInButton">Zaloguj się</button>
