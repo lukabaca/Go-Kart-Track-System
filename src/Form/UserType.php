@@ -29,7 +29,7 @@ class UserType extends AbstractType
 
         $builder->add('email', EmailType::class, array(
             'label' => 'Email',
-            'required' => FALSE,
+            'required' => TRUE,
             'attr' => [
                 'placeholder' => 'Email',
                 'class' => 'form-control'
@@ -51,7 +51,7 @@ class UserType extends AbstractType
 
         $builder->add('name', TextType::class, array(
             'label' => 'Imię',
-            'required' => TRUE,
+            'required' => false,
             'attr' => [
                 'placeholder' => 'Imię',
                 'class' => 'form-control'
@@ -62,7 +62,7 @@ class UserType extends AbstractType
         $builder->add('surname', TextType::class, array(
 
             'label' => 'Nazwisko',
-            'required' => TRUE,
+            'required' => false,
             'attr' => [
                 'placeholder' => 'Nazwisko',
                 'class' => 'form-control'

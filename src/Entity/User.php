@@ -31,7 +31,7 @@ class User implements UserInterface
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -42,8 +42,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=30)
-     */
-    /*
+     *
      * @Assert\Regex(
      *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
      *     message="Wartość {{ value }} nie jest w poprawnym formacie"
@@ -102,7 +101,7 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(type="string", length=45,  unique=true)
      */
     private $email;
 

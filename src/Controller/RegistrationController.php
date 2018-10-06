@@ -22,10 +22,10 @@ class RegistrationController extends Controller
     /**
      * @Route("/registration", name="registration")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
           $user = new User();
-          return $this->handleForm($request, $user);
+          return $this->handleForm($request, $user, $passwordEncoder);
 //        return $this->render('views/controllers/registration/index.html.twig', []);
     }
 
@@ -50,14 +50,14 @@ class RegistrationController extends Controller
 //        }
         $user = new User();
         $user->setId(1);
-        $encoded = $encoder->encodePassword($user, 'aa');
+        $encoded = $encoder->encodePassword($user, '1234');
 
         $user->setPassword($encoded);
         var_dump($user);
         exit();
     }
 
-    private function handleForm(Request $request, User $user)
+    private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder)
     {
         $userLoginForm = $this->createForm(UserType::class, $user);
 
@@ -65,10 +65,14 @@ class RegistrationController extends Controller
 
         if($userLoginForm->isSubmitted() && $userLoginForm->isValid())
         {
-            $name = $user->getName();
-            var_dump($name);
-            exit();
+            $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($encodedPassword);
 
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            //tutaj przekieruj na dashboard
+            return $this->render('views/controllers/login/index.html.twig', []);
         }
 
         return $this->render('views/controllers/registration/index.html.twig', [
