@@ -15,6 +15,8 @@ use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 class RegistrationController extends Controller
 {
     /**
@@ -30,7 +32,7 @@ class RegistrationController extends Controller
     /**
      * @Route("/test", name="test")
      */
-    public function test(Request $request)
+    public function test(Request $request, UserPasswordEncoderInterface $encoder)
     {
 //        $user = new User('a@gmail.com', '1234', 'lukasz', 'blaszczyk', new DateTime('2011-01-01T15:03:01.012345Z'),
 //            '123123', '123123', '12312213');
@@ -38,15 +40,19 @@ class RegistrationController extends Controller
 //        $em->persist($user);//tell doctrine you want to save to database, but not query yet
 //        $em->flush();//exetues the query
 
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->find(1);
+//        $user = $this->getDoctrine()
+//            ->getRepository(User::class)
+//            ->find(2);
+//
+//        if (!$user)
+//        {
+//           echo 'blad';
+//        }
+        $user = new User();
+        $user->setId(1);
+        $encoded = $encoder->encodePassword($user, 'aa');
 
-        if (!$user)
-        {
-           echo 'blad';
-        }
-
+        $user->setPassword($encoded);
         var_dump($user);
         exit();
     }
