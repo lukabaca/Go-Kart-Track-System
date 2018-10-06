@@ -61,7 +61,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                 $user->setEmail( $temp[0]['email']);
                 $user->setTelephoneNumber($temp[0]['telephone_number']);
 
-                $user->setRoles($temp[0]['roleName']);
+                $user->setRoles(array($temp[0]['roleName']));
 
                 return $user;
             } else {

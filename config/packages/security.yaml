@@ -20,6 +20,9 @@ security:
             pattern:    ^/
             http_basic: ~
             provider: our_db_provider
+            logout:
+                path: /logout
+                target: /login
 
             # activate different ways to authenticate
 
@@ -33,4 +36,4 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/laps, roles: ROLE_USER }
+         - { path: ^/laps, roles: ROLE_ADMIN}

@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -152,6 +153,8 @@ class User implements UserInterface
         $this->pesel = $pesel;
         $this->documentID = $documentID;
         $this->telephoneNumber = $telephoneNumber;
+
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -321,7 +324,8 @@ class User implements UserInterface
     public function getRoles()
     {
         // TODO: Implement getRoles() method.
-        return array('ROLE_USER');
+//        return array('ROLE_USER');
+        return $this->roles;
     }
 
     /**
