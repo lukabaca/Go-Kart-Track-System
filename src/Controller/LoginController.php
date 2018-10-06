@@ -18,32 +18,19 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/login/{afterLogout}", name="login")
      * @Route("/", name="default")
      */
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils, $afterLogout = false)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUserEmail = $authenticationUtils->getLastUsername();
+        
+        $view = $afterLogout ? 'views/controllers/login/logout.html.twig' : 'views/controllers/login/index.html.twig';
 
-        return $this->render('views/controllers/login/index.html.twig', array(
+        return $this->render($view, array(
             'lastUserEmail' => $lastUserEmail,
             'error'         => $error,
         ));
     }
-
-    /**
-     * @Route("/loginAfterLogout", name="loginAfterLogout")
-     */
-    public function loginAferLogout(AuthenticationUtils $authenticationUtils)
-    {
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUserEmail = $authenticationUtils->getLastUsername();
-
-        return $this->render('views/controllers/login/logout.html.twig', array(
-            'lastUserEmail' => $lastUserEmail,
-            'error'         => $error,
-        ));
-    }
-
 }
