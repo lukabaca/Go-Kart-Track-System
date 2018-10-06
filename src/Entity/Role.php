@@ -97,4 +97,6 @@ class Role
     {
         $this->users = new ArrayCollection();
     }
+
+
 }

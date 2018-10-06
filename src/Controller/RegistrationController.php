@@ -13,6 +13,7 @@ use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\UserRoles;
 use App\Form\UserType;
+use App\Repository\RoleRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,17 +75,18 @@ class RegistrationController extends Controller
             $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encodedPassword);
 
-            $userID = $user->getId();
-            $userRoles = new UserRoles($userID, 1);//role_id 1 dla ROLE_USER
+//            $userID = $user->getId();
+//            $userRoles = new UserRoles($userID, 1);//role_id 1 dla ROLE_USER
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($userRoles);
-            $em->flush();
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($userRoles);
+//            $em->flush();
 
+            $em->getRepository(UserRoles::class )->insertUserAndRolesIDs($user->getId(), 1);
             //tutaj przekieruj na dashboard
             return $this->render('views/controllers/login/index.html.twig', []);
         }

@@ -23,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  *
  * @ORM\Table(name="user_roles")
- * @ORM\Entity(repositoryClass="App\Repository\UserRoles")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRolesRepository")
  *
  */
 class UserRoles
