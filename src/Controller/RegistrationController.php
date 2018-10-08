@@ -37,21 +37,18 @@ class RegistrationController extends Controller
      */
     public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
     {
-
-//        print_r($user->getBirthDate());
-//
-//        exit();
+        $user = $this->getUser();
         $userID = $user->getId();
         $repository = $this->getDoctrine()->getRepository(User::class);
-        $user = $repository->find($userID);
+        $userToEdit = $repository->find($userID);
 
-        if(!$user) {
+        if(!$userToEdit) {
             throw $this->createNotFoundException(
                 'No user found for id '.$userID
             );
         }
 
-        return $this->handleForm($request, $user, $passwordEncoder, true);
+        return $this->handleForm($request, $userToEdit, $passwordEncoder, true);
     }
 
     /**
