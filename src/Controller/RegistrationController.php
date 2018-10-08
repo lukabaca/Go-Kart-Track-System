@@ -106,7 +106,10 @@ class RegistrationController extends Controller
 
             if(!$isEditingUser) {
                 $em->getRepository(UserRoles::class)->insertUserAndRolesIDs($user->getId(), 1);
-                return $this->render('views/controllers/login/index.html.twig', []);
+                return $this->render('views/controllers/login/index.html.twig', [
+                    'lastUserEmail' => '',
+                    'error' => ''
+                ]);
             }
             //tutaj przekieruj na dashboard
             return $this->render('views/controllers/laps/index.html.twig', []);

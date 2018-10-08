@@ -28,9 +28,9 @@ class LoginController extends AbstractController
 
         $view = $afterLogout ? 'views/controllers/login/logout.html.twig' : 'views/controllers/login/index.html.twig';
 
-        return $this->render($view, array(
+        return $this->render($view, [
             'lastUserEmail' => $lastUserEmail,
             'error'         => $error,
-        ));
+        ]);
     }
 }
