@@ -18,4 +18,15 @@ html, body {
 .userIcon {
   font-size: 40px; }
 
+#userName {
+  text-transform: capitalize; }
+
+.navbarArea {
+  height: 40px; }
+
+@media only screen and (min-width: 960px) {
+  .navbarRightArea {
+    position: fixed;
+    right: 0; } }
+
 /*# sourceMappingURL=global.css.map */
