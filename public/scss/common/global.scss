@@ -27,10 +27,13 @@ html, body {
 
 #userName {
   text-transform: capitalize;
-  //font-size: 20px;
+  font-size: 30px;
+  margin-right: 25px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .navbarArea {
-  height: 40px;
+  height: 50px;
 }
 
 @media only screen and (min-width: 960px) {
@@ -39,3 +42,7 @@ html, body {
     right: 0;
   }
 }
+#logout {
+  //font-size:30p
+}
+

@@ -19,10 +19,14 @@ html, body {
   font-size: 40px; }
 
 #userName {
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  font-size: 30px;
+  margin-right: 25px;
+  padding-top: 0;
+  padding-bottom: 0; }
 
 .navbarArea {
-  height: 40px; }
+  height: 50px; }
 
 @media only screen and (min-width: 960px) {
   .navbarRightArea {
