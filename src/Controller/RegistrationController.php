@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class RegistrationController extends Controller
 {
@@ -29,7 +30,28 @@ class RegistrationController extends Controller
     {
           $user = new User();
           return $this->handleForm($request, $user, $passwordEncoder);
-//        return $this->render('views/controllers/registration/index.html.twig', []);
+    }
+
+    /**
+     * @Route("/editUserData", name="editUserData")
+     */
+    public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
+    {
+
+//        print_r($user->getBirthDate());
+//
+//        exit();
+        $userID = $user->getId();
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $user = $repository->find($userID);
+
+        if(!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$userID
+            );
+        }
+
+        return $this->handleForm($request, $user, $passwordEncoder, true);
     }
 
     /**
@@ -66,7 +88,7 @@ class RegistrationController extends Controller
 //        exit();
     }
 
-    private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder)
+    private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder, $isEditingUser = false)
     {
         $userLoginForm = $this->createForm(UserType::class, $user);
 
@@ -82,14 +104,23 @@ class RegistrationController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $em->getRepository(UserRoles::class )->insertUserAndRolesIDs($user->getId(), 1);
+            if(!$isEditingUser) {
+                $em->getRepository(UserRoles::class)->insertUserAndRolesIDs($user->getId(), 1);
+                return $this->render('views/controllers/login/index.html.twig', []);
+            }
             //tutaj przekieruj na dashboard
-            return $this->render('views/controllers/login/index.html.twig', []);
+            return $this->render('views/controllers/laps/index.html.twig', []);
+
         }
 
-        return $this->render('views/controllers/registration/index.html.twig', [
-            'userLoginForm' => $userLoginForm->createView(),
-
-        ]);
+        if(!$isEditingUser) {
+            return $this->render('views/controllers/registration/index.html.twig', [
+                'userLoginForm' => $userLoginForm->createView(),
+            ]);
+        } else {
+            return $this->render('views/controllers/registration/editUser.html.twig', [
+                'userLoginForm' => $userLoginForm->createView(),
+            ]);
+        }
     }
 }

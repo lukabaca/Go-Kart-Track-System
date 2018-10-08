@@ -36,13 +36,21 @@ html, body {
   height: 50px;
 }
 
-@media only screen and (min-width: 960px) {
-  .navbarRightArea {
-    position: fixed;
-    right: 0;
-  }
-}
+//@media only screen and (min-width: 950px) {
+//  .navbarRightArea {
+//    position: fixed;
+//    right: 0;
+//  }
+//}
 #logout {
   //font-size:30p
+}
+.nav-item {
+  font-size: 18px;
+  //margin-right: 5px;
+}
+.logoTitle {
+  font-size: 30px;
+  margin-right: 30px;
 }
 
