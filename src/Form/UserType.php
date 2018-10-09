@@ -69,15 +69,15 @@ class UserType extends AbstractType
             ]
         ));
 
-        $builder->add('birthDate', TextType::class, array(
+        $builder->add('birthDate', BirthdayType::class, array(
             'label' => 'Data urodzenia',
             'required' => TRUE,
             'attr' => [
                 'placeholder' => 'Data urodzenia',
                 'class' => 'form-control'
             ],
-//            'format' => 'yyyy-MM-dd',
-//            'widget' => 'choice',
+            'format' => 'yyyy-MM-dd',
+            'widget' => 'choice',
         ));
 
         $builder->add('pesel', TextType::class, array(
