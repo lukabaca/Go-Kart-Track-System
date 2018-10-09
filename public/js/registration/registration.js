@@ -31,13 +31,50 @@ $( document ).ready(function() {
         $('#user_birthDate_day').append(optionDay);
     }
 
-    $('#user_birthDate_month').on('change', function (e) {
-       e.preventDefault();
+    $('#user_birthDate_year').on('change', function (e) {
+        e.preventDefault();
         let selectedMonth = $(this).find(":selected").val();
         let selectedYear = $('#user_birthDate_year').find(':selected').val();
-        console.log(selectedMonth);
+
         let dayCount = calculateDays(selectedMonth, selectedYear);
         console.log(dayCount);
+
+        let daysSelect = $('#user_birthDate_day');
+        daysSelect.empty();
+
+        for(let i = 1; i <= dayCount; i++ ) {
+            let dayNumber;
+            if(i < 10) {
+                dayNumber = '0' + i;
+            } else {
+                dayNumber = i;
+            }
+            let optionDay = '<option value="'+i+'">'+dayNumber+'</option>';
+            $('#user_birthDate_day').append(optionDay);
+        }
+    });
+
+    $('#user_birthDate_month').on('change', function (e) {
+       e.preventDefault();
+        let selectedMonth = $('#user_birthDate_month').find(":selected").val();
+        let selectedYear = $('#user_birthDate_year').find(':selected').val();
+
+        let dayCount = calculateDays(selectedMonth, selectedYear);
+        console.log(dayCount);
+
+        let daysSelect = $('#user_birthDate_day');
+        daysSelect.empty();
+
+        for(let i = 1; i <= dayCount; i++ ) {
+            let dayNumber;
+            if(i < 10) {
+                dayNumber = '0' + i;
+            } else {
+                dayNumber = i;
+            }
+            let optionDay = '<option value="'+i+'">'+dayNumber+'</option>';
+            $('#user_birthDate_day').append(optionDay);
+        }
     });
 });
 
