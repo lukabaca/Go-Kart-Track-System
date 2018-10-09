@@ -18,9 +18,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LapsController extends Controller
 {
     /**
-     * @Route("/laps", name="laps")
+     * @Route("/laps/index", name="laps/index")
      */
-    public function login(Request $request)
+    public function indexAction(Request $request)
     {
         return $this->render('views/controllers/laps/index.html.twig', []
         );

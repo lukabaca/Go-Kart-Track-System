@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class RegistrationController extends Controller
 {
     /**
-     * @Route("/registration", name="registration")
+     * @Route("/registration/index", name="registration/index")
      */
     public function indexAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -33,7 +33,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/editUserData", name="editUserData")
+     * @Route("/registration/editUserData", name="registration/editUserData")
      */
     public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
     {
