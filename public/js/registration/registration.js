@@ -13,6 +13,32 @@ $( document ).ready(function() {
     monthSelect.empty();
     yearSelect.empty();
 
+    initSelects(actualYear, yearSelect, monthSelect, daysSelect);
+
+    yearSelect.on('change', function (e) {
+        e.preventDefault();
+        let selectedMonth = monthSelect.find(":selected").val();
+        let selectedYear = $(this).find(':selected').val();
+
+        if(selectedMonth == 2) {
+            let dayCount = calculateDays(selectedMonth, selectedYear);
+            daysSelect.empty();
+            populateDays(dayCount, daysSelect);
+        }
+    });
+
+    monthSelect.on('change', function (e) {
+       e.preventDefault();
+        let selectedMonth = $(this).find(":selected").val();
+        let selectedYear = yearSelect.find(':selected').val();
+
+        let dayCount = calculateDays(selectedMonth, selectedYear);
+        daysSelect.empty();
+        populateDays(dayCount, daysSelect);
+
+    });
+});
+function initSelects(actualYear, yearSelect, monthSelect, daysSelect) {
     for(let i = 1898; i <= actualYear.getFullYear() - 1; i++) {
         let optionYear = '<option value="'+i+'">'+i+'</option>';
         yearSelect.append(optionYear);
@@ -38,52 +64,20 @@ $( document ).ready(function() {
         let optionDay = '<option value="'+i+'">'+dayNumber+'</option>';
         daysSelect.append(optionDay);
     }
+}
 
-    yearSelect.on('change', function (e) {
-        e.preventDefault();
-        let selectedMonth = $(this).find(":selected").val();
-        let selectedYear = $(this).find(':selected').val();
-
-        if(selectedMonth == 2) {
-            let dayCount = calculateDays(selectedMonth, selectedYear);
-
-
-            daysSelect.empty();
-
-            for(let i = 1; i <= dayCount; i++ ) {
-                let dayNumber;
-                if(i < 10) {
-                    dayNumber = '0' + i;
-                } else {
-                    dayNumber = i;
-                }
-                let optionDay = '<option value="'+i+'">'+dayNumber+'</option>';
-                daysSelect.append(optionDay);
-            }
+function populateDays(dayCount, daysSelect) {
+    for(let i = 1; i <= dayCount; i++ ) {
+        let dayNumber;
+        if(i < 10) {
+            dayNumber = '0' + i;
+        } else {
+            dayNumber = i;
         }
-    });
-
-    monthSelect.on('change', function (e) {
-       e.preventDefault();
-        let selectedMonth = monthSelect.find(":selected").val();
-        let selectedYear = yearSelect.find(':selected').val();
-
-        let dayCount = calculateDays(selectedMonth, selectedYear);
-
-        daysSelect.empty();
-
-        for(let i = 1; i <= dayCount; i++ ) {
-            let dayNumber;
-            if(i < 10) {
-                dayNumber = '0' + i;
-            } else {
-                dayNumber = i;
-            }
-            let optionDay = '<option value="'+i+'">'+dayNumber+'</option>';
-            daysSelect.append(optionDay);
-        }
-    });
-});
+        let optionDay = '<option value="'+i+'">'+dayNumber+'</option>';
+        daysSelect.append(optionDay);
+    }
+}
 
 function calculateDays(monthNumber, yearNumber) {
     let dayNumber;
