@@ -16,7 +16,6 @@ $( document ).ready(function() {
 
     daysSelect.empty();
     monthSelect.empty();
-    // yearSelect.empty();
 
     initSelects(actualYear, yearSelect, monthSelect, daysSelect);
 
