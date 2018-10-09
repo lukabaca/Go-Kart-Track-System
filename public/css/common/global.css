@@ -16,7 +16,8 @@ html, body {
   margin-top: 20px; }
 
 .userIcon {
-  font-size: 40px; }
+  font-size: 40px;
+  margin-right: 10px; }
 
 #userName {
   text-transform: capitalize;

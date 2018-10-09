@@ -23,6 +23,7 @@ html, body {
 //navbar
 .userIcon {
   font-size: 40px;
+  margin-right: 10px;
 }
 
 #userName {
@@ -35,19 +36,11 @@ html, body {
 .navbarArea {
   height: 50px;
 }
-
-//@media only screen and (min-width: 950px) {
-//  .navbarRightArea {
-//    position: fixed;
-//    right: 0;
-//  }
-//}
 #logout {
   //font-size:30p
 }
 .nav-item {
   font-size: 18px;
-  //margin-right: 5px;
 }
 .logoTitle {
   font-size: 30px;
