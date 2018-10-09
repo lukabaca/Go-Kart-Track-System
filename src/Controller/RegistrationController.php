@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class RegistrationController extends Controller
 {
     /**
-     * @Route("/registration", name="registration")
+     * @Route("/registration/index", name="registration/index")
      */
     public function indexAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -33,7 +33,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/editUserData", name="editUserData")
+     * @Route("/registration/editUserData", name="registration/editUserData")
      */
     public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
     {
@@ -103,9 +103,9 @@ class RegistrationController extends Controller
 
             if(!$isEditingUser) {
                 $em->getRepository(UserRoles::class)->insertUserAndRolesIDs($user->getId(), 1);
-                return $this->render('views/controllers/login/index.html.twig', [
-                    'lastUserEmail' => '',
-                    'error' => ''
+                return $this->render('views/controllers/registration/index.html.twig', [
+                    'userLoginForm' => $userLoginForm->createView(),
+                    'sucessfulRegistration' => true
                 ]);
             }
             //tutaj przekieruj na dashboard
@@ -116,6 +116,7 @@ class RegistrationController extends Controller
         if(!$isEditingUser) {
             return $this->render('views/controllers/registration/index.html.twig', [
                 'userLoginForm' => $userLoginForm->createView(),
+                'sucessfulRegistration' => false
             ]);
         } else {
             return $this->render('views/controllers/registration/editUser.html.twig', [

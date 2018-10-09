@@ -68,8 +68,8 @@ class User implements UserInterface
     private $name;
     /**
      * @ORM\Column(type="string", length=30)
-     */
-    /*
+     *
+     *
      * @Assert\Regex(
      *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
      *     message="Wartość {{ value }} nie jest w poprawnym formacie"
@@ -85,13 +85,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date(message="To nie jest poprawny format daty (wymagany YYYY-MM-DD)")
      */
     private $birthDate;
 
     /**
      * @ORM\Column(type="string", length=11)
-     */
-    /*
+     *
+     *
      * * @Assert\Regex(
      *     pattern = "/^[0-9]{11}/",
      *     message="Numer pesel musi składać się z 11 cyfr"
@@ -101,11 +102,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=9)
-     */
-    /*
+     *
+     *
      * * @Assert\Regex(
      *     pattern = "/^[a-zA-Z]{3}[0-9]{6}/",
-     *     message="Niepoprawny format serii i numeru dowodu osobistego"
+     *     message="Niepoprawny format serii i numeru dowodu osobistego (wymagane 3 litery oraz 6 cyfr)"
      * )
      */
     private $documentID;
@@ -125,7 +126,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=15)
      *
      *
-     * * @Assert\Regex(
+     * @Assert\Regex(
      *     pattern = "/^[0-9]{9}/",
      *     message="Numer telefonu musi składać się z 9 cyfr"
      * )
