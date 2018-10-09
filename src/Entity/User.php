@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -19,12 +20,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 /**
  *
- * @Table(name="user")
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- *
+ * @UniqueEntity("email", message="Ten adres email jest już w użyciu")
  */
 class User implements UserInterface
 {
@@ -39,6 +41,15 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     *
+     */
+    private $roles;
+
+
+
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -102,13 +113,18 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=45,  unique=true)
+     *
+     * @Assert\Email(
+     *     message = "'{{ value }}' nie jest adresem email",
+     *     checkMX = true
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=15)
-     */
-    /*
+     *
+     *
      * * @Assert\Regex(
      *     pattern = "/^[0-9]{9}/",
      *     message="Numer telefonu musi składać się z 9 cyfr"
@@ -137,6 +153,8 @@ class User implements UserInterface
         $this->pesel = $pesel;
         $this->documentID = $documentID;
         $this->telephoneNumber = $telephoneNumber;
+
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -281,6 +299,13 @@ class User implements UserInterface
     {
         $this->telephoneNumber = $telephoneNumber;
     }
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles($roles): void
+    {
+        $this->roles = $roles;
+    }
 
     /**
      * Returns the roles granted to the user.
@@ -299,6 +324,8 @@ class User implements UserInterface
     public function getRoles()
     {
         // TODO: Implement getRoles() method.
+//        return array('ROLE_USER');
+        return $this->roles;
     }
 
     /**
@@ -321,7 +348,7 @@ class User implements UserInterface
      */
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+       return $this->email;
     }
 
     /**

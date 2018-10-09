@@ -15,4 +15,25 @@ html, body {
   color: #C8C8C8;
   margin-top: 20px; }
 
+.userIcon {
+  font-size: 40px;
+  margin-right: 10px; }
+
+#userName {
+  text-transform: capitalize;
+  font-size: 30px;
+  margin-right: 25px;
+  padding-top: 0;
+  padding-bottom: 0; }
+
+.navbarArea {
+  height: 50px; }
+
+.nav-item {
+  font-size: 18px; }
+
+.logoTitle {
+  font-size: 30px;
+  margin-right: 30px; }
+
 /*# sourceMappingURL=global.css.map */

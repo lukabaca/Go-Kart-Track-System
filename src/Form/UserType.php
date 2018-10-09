@@ -45,8 +45,8 @@ class UserType extends AbstractType
             'required' => FALSE,
             'options' => array('attr' => array('class' => 'form-control')),
 
-            'first_options'  => array('label' => 'Password'),
-            'second_options' => array('label' => 'Repeat Password'),
+            'first_options'  => array('label' => 'Hasło'),
+            'second_options' => array('label' => 'Powtórz hasło'),
         ));
 
         $builder->add('name', TextType::class, array(

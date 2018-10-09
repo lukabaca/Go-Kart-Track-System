@@ -9,13 +9,17 @@
 namespace App\Controller;
 
 
+use App\Entity\Role;
 use App\Entity\User;
+use App\Entity\UserRoles;
 use App\Form\UserType;
+use App\Repository\RoleRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class RegistrationController extends Controller
 {
@@ -26,7 +30,25 @@ class RegistrationController extends Controller
     {
           $user = new User();
           return $this->handleForm($request, $user, $passwordEncoder);
-//        return $this->render('views/controllers/registration/index.html.twig', []);
+    }
+
+    /**
+     * @Route("/editUserData", name="editUserData")
+     */
+    public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
+    {
+        $user = $this->getUser();
+        $userID = $user->getId();
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $userToEdit = $repository->find($userID);
+
+        if(!$userToEdit) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$userID
+            );
+        }
+
+        return $this->handleForm($request, $userToEdit, $passwordEncoder, true);
     }
 
     /**
@@ -40,24 +62,30 @@ class RegistrationController extends Controller
 //        $em->persist($user);//tell doctrine you want to save to database, but not query yet
 //        $em->flush();//exetues the query
 
-//        $user = $this->getDoctrine()
-//            ->getRepository(User::class)
-//            ->find(2);
-//
-//        if (!$user)
-//        {
-//           echo 'blad';
-//        }
-        $user = new User();
-        $user->setId(1);
-        $encoded = $encoder->encodePassword($user, '1234');
+        $roles = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->loadUserByUsername('jan@gmail.com');
 
-        $user->setPassword($encoded);
-        var_dump($user);
+        if (!$roles)
+        {
+           echo 'GGG';
+        }
+
+        var_dump($roles);
         exit();
+
+
+
+//        $user = new User();
+//        $user->setId(1);
+//        $encoded = $encoder->encodePassword($user, '1234');
+//
+//        $user->setPassword($encoded);
+//        var_dump($user);
+//        exit();
     }
 
-    private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder)
+    private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder, $isEditingUser = false)
     {
         $userLoginForm = $this->createForm(UserType::class, $user);
 
@@ -68,16 +96,31 @@ class RegistrationController extends Controller
             $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encodedPassword);
 
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            if(!$isEditingUser) {
+                $em->getRepository(UserRoles::class)->insertUserAndRolesIDs($user->getId(), 1);
+                return $this->render('views/controllers/login/index.html.twig', [
+                    'lastUserEmail' => '',
+                    'error' => ''
+                ]);
+            }
             //tutaj przekieruj na dashboard
-            return $this->render('views/controllers/login/index.html.twig', []);
+            return $this->render('views/controllers/laps/index.html.twig', []);
+
         }
 
-        return $this->render('views/controllers/registration/index.html.twig', [
-            'userLoginForm' => $userLoginForm->createView(),
-
-        ]);
+        if(!$isEditingUser) {
+            return $this->render('views/controllers/registration/index.html.twig', [
+                'userLoginForm' => $userLoginForm->createView(),
+            ]);
+        } else {
+            return $this->render('views/controllers/registration/editUser.html.twig', [
+                'userLoginForm' => $userLoginForm->createView(),
+            ]);
+        }
     }
 }
