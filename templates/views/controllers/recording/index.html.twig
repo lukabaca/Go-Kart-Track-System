@@ -1,0 +1,51 @@
+
+{# app/Resources/views/number.html.twig #}
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Nagrania
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/recording/recording.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
+                    <h5 class="card-title">Card title</h5>
+                    <div class="card-body">
+                        <iframe class="video" src="https://www.youtube.com/embed/ZfImgQosU8I" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
+                    <h5 class="card-title">Card title</h5>
+                    <div class="card-body">
+                        <iframe class="video" src="https://www.youtube.com/embed/n1ySyN3R1kk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
+                    <h5 class="card-title">Card title</h5>
+                    <div class="card-body">
+                        <iframe class="video" src="https://www.youtube.com/embed/ZNoBpycB1xo?start=2" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{%  endblock %}
