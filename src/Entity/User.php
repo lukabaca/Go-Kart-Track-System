@@ -42,14 +42,7 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
-     *
-     */
     private $roles;
-
-
-
 
     /**
      * @ORM\Column(type="string", length=30)

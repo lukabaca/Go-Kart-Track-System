@@ -7,6 +7,7 @@
  */
 
 namespace App\Controller;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,5 +23,25 @@ class RecordingController extends Controller
     {
         return $this->render('views/controllers/recording/index.html.twig', []
         );
+    }
+    /**
+     * @Route("/test", name="test")
+     */
+    public function test(Request $request)
+    {
+
+
+        $roles = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find(1);
+
+        if (!$roles)
+        {
+            echo 'GGG';
+        }
+
+        var_dump($roles);
+        exit();
+
     }
 }

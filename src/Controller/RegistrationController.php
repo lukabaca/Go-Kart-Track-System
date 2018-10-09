@@ -51,39 +51,7 @@ class RegistrationController extends Controller
         return $this->handleForm($request, $userToEdit, $passwordEncoder, true);
     }
 
-    /**
-     * @Route("/test", name="test")
-     */
-    public function test(Request $request, UserPasswordEncoderInterface $encoder)
-    {
-//        $user = new User('a@gmail.com', '1234', 'lukasz', 'blaszczyk', new DateTime('2011-01-01T15:03:01.012345Z'),
-//            '123123', '123123', '12312213');
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($user);//tell doctrine you want to save to database, but not query yet
-//        $em->flush();//exetues the query
 
-        $roles = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->loadUserByUsername('jan@gmail.com');
-
-        if (!$roles)
-        {
-           echo 'GGG';
-        }
-
-        var_dump($roles);
-        exit();
-
-
-
-//        $user = new User();
-//        $user->setId(1);
-//        $encoded = $encoder->encodePassword($user, '1234');
-//
-//        $user->setPassword($encoded);
-//        var_dump($user);
-//        exit();
-    }
 
     private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder, $isEditingUser = false)
     {
