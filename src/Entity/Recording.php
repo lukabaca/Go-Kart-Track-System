@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  *
  * @ORM\Table(name="recording")
- * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\RecordingRepository")
  *
  */
 class Recording
@@ -25,6 +25,9 @@ class Recording
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
     private $user_ID;
 
     /**
