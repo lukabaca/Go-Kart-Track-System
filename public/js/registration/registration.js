@@ -4,6 +4,11 @@ $( document ).ready(function() {
        window.location.href = '/login';
     });
 
+    $('.closeWindow').on('click', function (e) {
+       e.preventDefault();
+       window.location.href = '/login';
+    });
+
     let actualYear = new Date();
     let daysSelect = $('#user_birthDate_day');
     let monthSelect = $('#user_birthDate_month');
@@ -11,7 +16,7 @@ $( document ).ready(function() {
 
     daysSelect.empty();
     monthSelect.empty();
-    yearSelect.empty();
+    // yearSelect.empty();
 
     initSelects(actualYear, yearSelect, monthSelect, daysSelect);
 
@@ -39,10 +44,10 @@ $( document ).ready(function() {
     });
 });
 function initSelects(actualYear, yearSelect, monthSelect, daysSelect) {
-    for(let i = 1898; i <= actualYear.getFullYear() - 1; i++) {
-        let optionYear = '<option value="'+i+'">'+i+'</option>';
-        yearSelect.append(optionYear);
-    }
+    // for(let i = 1898; i <= actualYear.getFullYear() - 1; i++) {
+    //     let optionYear = '<option value="'+i+'">'+i+'</option>';
+    //     yearSelect.append(optionYear);
+    // }
     for(i = 1; i <= 12; i++) {
         let monthNumber;
         if(i < 10) {
