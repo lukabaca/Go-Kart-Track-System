@@ -40,8 +40,9 @@ class RecordingController extends Controller
         {
             echo 'GGG';
         }
-
-        var_dump($roles);
+        $test = $roles->getRecordingLink();
+        $test2 = $roles->getUser()->getName();
+        var_dump($test2);
         exit();
 
     }
