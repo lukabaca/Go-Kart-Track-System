@@ -61,13 +61,14 @@
 
                     <div class="form-group">
 
-                        {{ form_label(userLoginForm.birthDate) }}
+                        {#{{ form_label(userLoginForm.birthDate) }}#}
                         {#{{ form_widget(userLoginForm.birthDate) }}#}
+                        <label class="required">Data urodzenia</label>
                         <select id="user_birthDate_year" name="user[birthDate][year]"></select>
                         <select id="user_birthDate_month" name="user[birthDate][month]"></select>
                         <select id="user_birthDate_day" name="user[birthDate][day]"></select>
-                        <small class="formErrorMessage">{{ form_errors(userLoginForm.birthDate) }}</small>
-                        {{ form_help(userLoginForm.birthDate) }}
+                        {#<small class="formErrorMessage">{{ form_errors(userLoginForm.birthDate) }}</small>#}
+                        {#{{ form_help(userLoginForm.birthDate) }}#}
 
                     </div>
 
