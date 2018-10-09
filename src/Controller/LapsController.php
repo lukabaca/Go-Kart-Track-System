@@ -22,7 +22,7 @@ class LapsController extends Controller
      */
     public function login(Request $request)
     {
-        return $this->render('views/controllers/laps/index.html.twig', array(
-        ));
+        return $this->render('views/controllers/laps/index.html.twig', []
+        );
     }
 }
