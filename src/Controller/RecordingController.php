@@ -69,16 +69,11 @@ class RecordingController extends Controller
 
         $recordingLoginForm->handleRequest($request);
 
-        if(!$recordingLoginForm->isSubmitted()) {
-            print_r('nie jest');
-            exit();
-        }
 
         if($recordingLoginForm->isSubmitted() && $recordingLoginForm->isValid())
         {
 //            print_r('jest');
 //            exit();
-
             //tutaj przekieruj na dashboard
             return $this->render('views/controllers/recording/index.html.twig', [
                 'recordingLoginForm' => $recordingLoginForm->createView(),
