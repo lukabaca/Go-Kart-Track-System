@@ -1,17 +1,40 @@
 $(document).ready(function () {
 
-    // $('#formAddRecording').submit(function (event) {
-    //     event.preventDefault();
-    //     console.log('z submitowano');
-    //
-    //     let title = $('#recording_title').val();
-    //     let link = $('#recording_recordingLink').val();
-    //
-    //     console.log(title);
-    //     console.log(link);
-    //
-    //     addRecording(title, link);
-    // });
+    let addRecordButton = $('#recording_submit');
+    let inputLink = $('#recording_recordingLink');
+    let isDisabled = true;
+
+    let ytLinkRegex = '/((http://)?)(www\.)?((youtube\.com/)|(youtu.be)|(youtube)).+';
+
+    addRecordButton.addClass('disabled');
+
+    inputLink.on('change', function (e) {
+       e.preventDefault();
+       console.log($(this).val());
+
+       if(validateYTlink($(this).val(), ytLinkRegex)) {
+           addRecordButton.removeClass('disabled');
+       } else {
+           addRecordButton.addClass('disabled');
+       }
+    });
+
+    $('#formAddRecording').submit(function (event) {
+        event.preventDefault();
+        console.log('z submitowano');
+
+        let title = $('#recording_title').val();
+        let link = $('#recording_recordingLink').val();
+
+        console.log(title);
+        console.log(link);
+
+        addRecording(title, link);
+    });
+        function validateYTlink(link, regex) {
+            let isMatching = link.match(regex);
+            return isMatching;
+        }
 
 
         function addRecording(title, link) {
@@ -33,6 +56,7 @@ $(document).ready(function () {
                 success: function (data) {
 
                     console.log(data);
+                    $('#formAddRecording')[0].reset();
                     // // $('#modalCorrectReservation').modal('open');
                     // $('#makeReservation')[0].reset();
                     //

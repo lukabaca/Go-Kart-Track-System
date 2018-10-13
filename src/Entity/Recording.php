@@ -37,8 +37,8 @@ class Recording
     private $recordingLink;
 
     /**
-     *     @ORM\Column(type="string", length=45)
-     *     @Assert\Regex(
+     *@ORM\Column(type="string", length=45)
+     * @Assert\Regex(
      *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
      *     message="Wartość {{ value }} nie jest w poprawnym formacie"
      * )

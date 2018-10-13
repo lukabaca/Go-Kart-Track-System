@@ -57,10 +57,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                {#{'action': path('recording/addRecording'), 'method': 'POST'}#}
                 <div class="modal-body">
                     {#<form method="POST" action="{{ asset((path('recording/addRecording')) }}">#}
                     {#</form>#}
-                    {{ form_start(recordingLoginForm, {'action': path('recording/addRecording'), 'method': 'POST'}, {'attr': {'id': 'formAddRecording'}}) }}
+                    {{ form_start(recordingLoginForm, {'attr': {'id': 'formAddRecording'}}) }}
                     <div class="form-group">
                         {{ form_label(recordingLoginForm.title) }}
                         {{ form_widget(recordingLoginForm.title) }}
