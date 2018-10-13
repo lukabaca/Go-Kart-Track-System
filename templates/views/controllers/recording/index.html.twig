@@ -60,7 +60,7 @@
                 <div class="modal-body">
                     {#<form method="POST" action="{{ asset((path('recording/addRecording')) }}">#}
                     {#</form>#}
-                    {{ form_start(recordingLoginForm) }}
+                    {{ form_start(recordingLoginForm, {'action': path('recording/addRecording'), 'method': 'POST'}, {'attr': {'id': 'formAddRecording'}}) }}
                     <div class="form-group">
                         {{ form_label(recordingLoginForm.title) }}
                         {{ form_widget(recordingLoginForm.title) }}
