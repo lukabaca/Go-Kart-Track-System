@@ -61,12 +61,20 @@
                     {#<form method="POST" action="{{ asset((path('recording/addRecording')) }}">#}
                     {#</form>#}
                     {{ form_start(recordingLoginForm) }}
-                    {{ form_widget(recordingLoginForm) }}
-                    {{ form_end(recordingLoginForm) }}
+                    <div class="form-group">
+                        {{ form_label(recordingLoginForm.title) }}
+                        {{ form_widget(recordingLoginForm.title) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(recordingLoginForm.recordingLink) }}
+                        {{ form_widget(recordingLoginForm.recordingLink) }}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" disabled>Dodaj</button>
+                        {{ form_label(recordingLoginForm.submit) }}
+                        {{ form_widget(recordingLoginForm.submit) }}
+                    {{ form_end(recordingLoginForm) }}
                 </div>
             </div>
         </div>

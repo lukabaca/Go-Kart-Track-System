@@ -38,7 +38,11 @@ class RecordingController extends Controller
      */
     public function addRecordingAction(Request $request)
     {
-
+        $recording = new Recording();
+        $recording->setTitle('aa');
+        $recording->setRecordingLink('youtube.com');
+        $recording->setUser(new User());
+        return $this->handleForm($request, $recording);
     }
 
     private function handleForm(Request $request, Recording $recording)
