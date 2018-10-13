@@ -58,11 +58,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    {#<form method="POST" action="{{ asset((path('recording/addRecording')) }}">#}
+                    {#</form>#}
+                    {{ form_start(recordingLoginForm) }}
+                    {{ form_widget(recordingLoginForm) }}
+                    {{ form_end(recordingLoginForm) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Dodaj</button>
+                    <button type="button" class="btn btn-primary" disabled>Dodaj</button>
                 </div>
             </div>
         </div>
@@ -71,4 +75,5 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/recording/recording.js') }}"></script>
 {%  endblock %}
