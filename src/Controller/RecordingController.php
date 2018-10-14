@@ -88,6 +88,15 @@ class RecordingController extends Controller
             return new JsonResponse([], 500);
         }
     }
+
+    /**
+     * @Route("/recording/deleteRecording/{id}", name="recording/deleteRecording/{id}")
+     */
+    public function deleteRecordingAction(Request $request)
+    {
+
+
+    }
     private function getYoutubeEmbedUrl($url){
 
         $urlParts   = explode('/', $url);
@@ -95,29 +104,6 @@ class RecordingController extends Controller
 
         return 'https://www.youtube.com/embed/' . $vidid[0] ;
     }
-    private function handleForm(Request $request, $recording)
-    {
-//        $recording = new Recording();
-        $recordingLoginForm = $this->createForm(RecordingType::class, $recording);
-
-//        $recordingLoginForm->handleRequest($request);
-
-        $recordingLoginForm->submit($recording);
-
-        if(!$recordingLoginForm->isSubmitted()) {
-            print_r('nie jest submitted');
-            exit();
-        }
-
-        if($recordingLoginForm->isSubmitted() && $recordingLoginForm->isValid())
-        {
-
-            return new JsonResponse(array('a' => 'b'), 200);
-        }
-        return new JsonResponse(array('c' => 'd'), 400);
-
-    }
-
     /**
      * @Route("/test", name="test")
      */
