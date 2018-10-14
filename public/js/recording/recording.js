@@ -94,11 +94,29 @@ $(document).ready(function () {
                     recordingData: recordingData
                 },
                 success: function (data) {
-                    console.log(data);
+                    // let title = (reservations[i].title === null || reservations[i].title === undefined) ? (isValid = false) : reservations[i].title;
+                    let recordingLink = data.link;
+                    let recordingTitle = data.title;
+
                     responseElement.text('');
                     $('#formAddRecording')[0].reset();
-                    $('#addRecordingModal').modal('hide');
 
+                    // console.log(recordingLink);
+
+                    let content =
+                        '<div class="col-md-4">' +
+                            '<div class="shadow p-3 mb-5 bg-white rounded card videoCard">' +
+                                '<h5 class="card-title">'+recordingTitle+'</h5>'+
+                                '<div class="card-body">' +
+                                '<iframe class="video" src="'+recordingLink+'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>'+'</iframe>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>';
+
+                    // let content2 = '<td>'+aa+'</td>';
+                    $('.recordingArea').append(content);
+
+                    $('#addRecordingModal').modal('hide');
                     $('.alert').css('display', 'block');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

@@ -14,42 +14,27 @@
     {{ parent() }}
 
     <div class="container">
-        <div class="row">
+        <div class="row recordingArea">
             <div class="col-md-12">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <strong>Dodano poprawnie nagranie</strong>
+                    <strong>Dodano nagranie</strong>
                 </div>
                 <button class="btn btn-primary" id="addRecording" data-toggle="modal" data-target="#addRecordingModal">Dodaj nagranie</button>
             </div>
-            <div class="col-md-4">
-                <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
-                    <h5 class="card-title">Card title</h5>
-                    <div class="card-body">
-                        <iframe class="video" src="https://www.youtube.com/embed/ZfImgQosU8I" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            {% for recording in recordings %}
+                <div class="col-md-4">
+                    <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
+                        <h5 class="card-title">{{ recording.title }}</h5>
+                        <div class="card-body">
+                            <iframe class="video" src={{ recording.recordingLink }} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
 
-            <div class="col-md-4">
-                <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
-                    <h5 class="card-title">Card title</h5>
-                    <div class="card-body">
-                        <iframe class="video" src="https://www.youtube.com/embed/n1ySyN3R1kk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
-                    <h5 class="card-title">Card title</h5>
-                    <div class="card-body">
-                        <iframe class="video" src="https://www.youtube.com/embed/kHbQr6Xsy8U" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>

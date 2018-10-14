@@ -27,10 +27,21 @@ class RecordingController extends Controller
     public function indexAction(Request $request)
     {
         $recording = new Recording();
-//        return $this->handleForm($request, $recording);
         $recordingLoginForm = $this->createForm(RecordingType::class, $recording);
+
+        $recordingsTemp = $this->getDoctrine()->getRepository(Recording::class)->findAll();
+
+        $recordings = [];
+        foreach ($recordingsTemp as $recording) {
+            $recordingTemp = $recording;
+            $ytLinkFormatted = $this->getYoutubeEmbedUrl($recordingTemp->getRecordingLink());
+            $recordingTemp->setRecordingLink($ytLinkFormatted);
+            $recordings [] = $recordingTemp;
+        }
+
         return $this->render('views/controllers/recording/index.html.twig', [
                 'recordingLoginForm' => $recordingLoginForm->createView(),
+                'recordings' => $recordings
             ]
         );
     }
