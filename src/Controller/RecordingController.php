@@ -29,7 +29,7 @@ class RecordingController extends Controller
         $recording = new Recording();
         $recordingLoginForm = $this->createForm(RecordingType::class, $recording);
 
-        $recordingsTemp = $this->getDoctrine()->getRepository(Recording::class)->findAll();
+        $recordingsTemp = $this->getDoctrine()->getRepository(Recording::class)->findUserRecordings($this->getUser()->getId());
 
         $recordings = [];
         foreach ($recordingsTemp as $recording) {

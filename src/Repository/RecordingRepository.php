@@ -39,9 +39,7 @@ class RecordingRepository extends EntityRepository
                     $recordings [] = $recording;
                 }
 
-                print_r($recordings);
-                exit();
-
+                return $recordings;
             } else {
                 return [];
             }
