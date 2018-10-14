@@ -42,12 +42,7 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
-     *
-     */
     private $roles;
-
 
 
 
@@ -144,6 +139,29 @@ class User implements UserInterface
      * @param $documentID
      * @param $telephoneNumber
      */
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Recording", mappedBy="user")
+     */
+    private $recording;
+
+    /**
+     * @return mixed
+     */
+    public function getRecording()
+    {
+        return $this->recording;
+    }
+
+    /**
+     * @param mixed $recording
+     */
+    public function setRecording($recording): void
+    {
+        $this->recording = $recording;
+    }
+
+
     public function __construct($email = null, $password = null, $name = null, $surname = null, $birthDate = null, $pesel = null, $documentID = null, $telephoneNumber = null)
     {
         $this->email = $email;
@@ -156,6 +174,7 @@ class User implements UserInterface
         $this->telephoneNumber = $telephoneNumber;
 
         $this->roles = new ArrayCollection();
+        $this->recording = new ArrayCollection();
     }
 
     /**

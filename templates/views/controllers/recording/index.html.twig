@@ -1,0 +1,98 @@
+
+{# app/Resources/views/number.html.twig #}
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Nagrania
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/recording/recording.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="container">
+        <div class="row recordingArea">
+            <div class="col-md-12 alertArea">
+                {#<div class="alert alert-success alert-dismissible fade show" role="alert">#}
+                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+                        {#<span aria-hidden="true">&times;</span>#}
+                    {#</button>#}
+                    {#<strong>Dodano nagranie</strong>#}
+                {#</div>#}
+                {#<div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+                        {#<span aria-hidden="true">&times;</span>#}
+                    {#</button>#}
+                    {#<strong>Wystąpił błąd podczas usuwania nagrania</strong>#}
+                {#</div>#}
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary" id="addRecording" data-toggle="modal" data-target="#addRecordingModal">Dodaj nagranie</button>
+            </div>
+            {% for recording in recordings %}
+                <div class="col-md-4 recordingCol" recording-id-area={{ recording.id }}>
+                    <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
+                        <div class="row">
+                            <div class="col" recording-id={{ recording.id }}>
+                                <span class="card-title">{{ recording.title }}</span>
+                                <i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <iframe class="video" src={{ recording.recordingLink }}  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="addRecordingModal" tabindex="-1" role="dialog" aria-labelledby="addRecordingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addRecordingModalLabel">Dodaj nagranie</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {#{'action': path('recording/addRecording'), 'method': 'POST'}#}
+                <div class="modal-body">
+                    {#<form method="POST" action="{{ asset((path('recording/addRecording')) }}">#}
+                    {#</form>#}
+                    {{ form_start(recordingLoginForm, {'attr': {'id': 'formAddRecording'}}) }}
+                    <div class="form-group">
+                        {{ form_label(recordingLoginForm.title) }}
+                        {{ form_widget(recordingLoginForm.title) }}
+                        <small class="formErrorMessage"><span id="titleError"></span></small>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(recordingLoginForm.recordingLink) }}
+                        {{ form_widget(recordingLoginForm.recordingLink) }}
+                        <small class="formErrorMessage"><span id="linkError"></span></small>
+                    </div>
+                </div>
+                <div class="col-md-12 responseArea">
+                    <small class="responseInfo"></small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        {{ form_label(recordingLoginForm.submit) }}
+                        {{ form_widget(recordingLoginForm.submit) }}
+                    {{ form_end(recordingLoginForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/recording/recording.js') }}"></script>
+{%  endblock %}

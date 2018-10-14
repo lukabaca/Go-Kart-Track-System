@@ -1,0 +1,27 @@
+.videoCard {
+  height: 350px; }
+
+.video {
+  width: 100%;
+  height: 100%; }
+
+#addRecording {
+  margin-bottom: 30px; }
+
+.responseArea {
+  text-align: center; }
+
+.responseInfo {
+  color: #DC143C; }
+
+#formAddRecording, .modal-body {
+  padding-bottom: 0px; }
+
+.card-title {
+  text-transform: capitalize;
+  font-size: 18px; }
+
+.deleteRecordingIcon:hover {
+  cursor: pointer; }
+
+/*# sourceMappingURL=recording.css.map */

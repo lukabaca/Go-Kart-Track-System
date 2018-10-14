@@ -40,10 +40,6 @@ class Role
      */
     private $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
-     */
-    private $users;
 
     /**
      * @return mixed
@@ -77,25 +73,9 @@ class Role
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
-     * @param mixed $users
-     */
-    public function setUsers($users): void
-    {
-        $this->users = $users;
-    }
-
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+
     }
 
 

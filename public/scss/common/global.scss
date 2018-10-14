@@ -3,13 +3,15 @@
 html, body {
   width: 100%;
   height: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 .container {
+  margin-top: 40px;
   margin-left: 0px;
   margin-right: 0px;
   width: 100%;
-  height: 100%;
+  //height: 100%;
   max-width: 100%;
   max-height: 100%;
 }
@@ -19,7 +21,9 @@ html, body {
   color: $labelsAccent;
   margin-top: 20px;
 }
-
+.formErrorMessage {
+  color: $error;
+}
 //navbar
 .userIcon {
   font-size: 40px;
