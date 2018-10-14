@@ -22,8 +22,6 @@ $(document).ready(function () {
 
     openModalButton.on('click', function (e) {
        e.preventDefault();
-        // $(".alert").alert('close');
-        console.log('ss');
         $('.alert').css('display', 'none');
     });
 
@@ -69,9 +67,10 @@ $(document).ready(function () {
         }
     });
 
-    deleteRecordingIcon.on('click', function (e) {
-       e.preventDefault();
-       let recordingId = $('.recordingCol').attr('recording-id');
+    $('body').on('click', '.deleteRecordingIcon', function (e) {
+        e.stopPropagation();
+        let recordingId = $(this).closest('.col').attr('recording-id');
+       // let recordingId = $('deleteRecordingIcon .recordingCol').attr('recording-id');
        console.log(recordingId);
 
         $.ajax({
@@ -79,16 +78,13 @@ $(document).ready(function () {
             dataType: 'json',
             url: '/recording/deleteRecording/' + recordingId,
             success: function (data) {
-                console.log(data);
-
-                // let recordingCol = $('.recordingCol').attr('recording-id');
-                let recordingCol = $('[recording-id='+recordingId+']');
-                console.log(recordingCol);
+                // let area = $('.recordingCol .col[recording-id='+recordingId+']');
+                
+                let recordingCol = $('[recording-id-area='+recordingId+']');
                 recordingCol.remove();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
-                console.log(statusCode);
 
                 switch (statusCode) {
                     default : {
@@ -136,15 +132,16 @@ $(document).ready(function () {
                     // let title = (reservations[i].title === null || reservations[i].title === undefined) ? (isValid = false) : reservations[i].title;
                     let recordingLink = data.link;
                     let recordingTitle = data.title;
+                    let recordingId = data.id;
 
                     responseElement.text('');
                     $('#formAddRecording')[0].reset();
 
                     let content =
-                        '<div class="col-md-4">' +
+                        '<div class="col-md-4 recordingCol" recording-id-area='+recordingId+'>' +
                             '<div class="shadow p-3 mb-5 bg-white rounded card videoCard">' +
                         '<div class="row">' +
-                            '<div class="col">' +
+                            '<div class="col" recording-id='+recordingId+'>' +
                                 '<span class="card-title">'+recordingTitle+'</span>' +
                                 '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">'+'</i>' +
                             '</div>' +

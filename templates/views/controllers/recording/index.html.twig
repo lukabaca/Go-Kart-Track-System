@@ -25,10 +25,10 @@
                 <button class="btn btn-primary" id="addRecording" data-toggle="modal" data-target="#addRecordingModal">Dodaj nagranie</button>
             </div>
             {% for recording in recordings %}
-                <div class="col-md-4 recordingCol" recording-id={{ recording.id }}>
+                <div class="col-md-4 recordingCol" recording-id-area={{ recording.id }}>
                     <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
                         <div class="row">
-                            <div class="col">
+                            <div class="col" recording-id={{ recording.id }}>
                                 <span class="card-title">{{ recording.title }}</span>
                                 <i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true"></i>
                             </div>
