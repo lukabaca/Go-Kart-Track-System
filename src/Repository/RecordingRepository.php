@@ -13,5 +13,16 @@ use Doctrine\ORM\EntityRepository;
 
 class RecordingRepository extends EntityRepository
 {
-
+//    public function addRecording($recording) {
+//        $em = $this->getEntityManager()->getConnection()->beginTransaction();
+//        try {
+//
+//            $em->persist($recording);
+//            $em->flush();
+//            $em->getConnection()->commit();
+//        } catch (Exception $e) {
+//            $em->getConnection()->rollBack();
+//            throw $e;
+//        }
+//    }
 }

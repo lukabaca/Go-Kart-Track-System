@@ -40,25 +40,24 @@ class RecordingController extends Controller
      */
     public function addRecordingAction(Request $request)
     {
-//        return $this->handleForm($request);
         if ($request->request->get('recordingData')) {
             $recordingTemp = json_decode($request->request->get('recordingData'), true);
-
-//            print_r($recordingTemp);
-//            exit();
 
             $recording = new Recording();
             $recording->setTitle($recordingTemp['title']);
             $recording->setRecordingLink($recordingTemp['link']);
             $user = $this->getUser();
 
-//            print_r($user->getId());
-//            exit();
             $recording->setUser($user);
 
-            return $this->handleForm($request, $recording);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($recording);
+            $em->flush();
+
+            return new JsonResponse([], 201);
+//            return $this->handleForm($request, $recording);
         } else {
-            return new JsonResponse([], 400);
+            return new JsonResponse([], 500);
         }
     }
     private function getYoutubeEmbedUrl($url){
@@ -84,49 +83,13 @@ class RecordingController extends Controller
 
         if($recordingLoginForm->isSubmitted() && $recordingLoginForm->isValid())
         {
-//            print_r('jest');
-//            exit();
-            //tutaj przekieruj na dashboard
-//            return $this->render('views/controllers/recording/index.html.twig', [
-//                'recordingLoginForm' => $recordingLoginForm->createView(),
-//            ], new Response('',200, []));
+
             return new JsonResponse(array('a' => 'b'), 200);
         }
         return new JsonResponse(array('c' => 'd'), 400);
 
-//        return $this->render('views/controllers/recording/index.html.twig', [
-//            'recordingLoginForm' => $recordingLoginForm->createView(),
-//        ], new Response('',400, []));
     }
 
-//    private function handleForm(Request $request, $recording)
-//    {
-////        $recording = new Recording();
-//        $recordingLoginForm = $this->createForm(RecordingType::class, $recording);
-//
-//        $recordingLoginForm->handleRequest($request);
-//
-//        if(!$recordingLoginForm->isSubmitted()) {
-//            print_r('nie jest submitted');
-//            exit();
-//        }
-//
-//        if($recordingLoginForm->isSubmitted() && $recordingLoginForm->isValid())
-//        {
-////            print_r('jest');
-////            exit();
-//            //tutaj przekieruj na dashboard
-////            return $this->render('views/controllers/recording/index.html.twig', [
-////                'recordingLoginForm' => $recordingLoginForm->createView(),
-////            ], new Response('',200, []));
-//            return new JsonResponse(array('a' => 'b'), 200);
-//        }
-//        return new JsonResponse(array('c' => 'd'), 400);
-//
-////        return $this->render('views/controllers/recording/index.html.twig', [
-////            'recordingLoginForm' => $recordingLoginForm->createView(),
-////        ], new Response('',400, []));
-//    }
     /**
      * @Route("/test", name="test")
      */

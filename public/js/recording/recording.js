@@ -10,7 +10,7 @@ $(document).ready(function () {
     let isDisabled = true;
 
     let ytLinkRegex = '/((http://)?)(www\.)?((youtube\.com/)|(youtu.be)|(youtube)).+';
-    let maxTitleLenght = 4;
+    let maxTitleLenght = 45;
     // let titleRegex = '/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ][0-9]+$/';
 
     let isValidTitle = true;
@@ -116,24 +116,8 @@ $(document).ready(function () {
                     recordingData: recordingData
                 },
                 success: function (data) {
-
                     console.log(data);
                     $('#formAddRecording')[0].reset();
-                    // // $('#modalCorrectReservation').modal('open');
-                    // $('#makeReservation')[0].reset();
-                    //
-                    //
-                    // let reservationID = data.id;
-                    // let reservationDate = data.startTime;
-                    //
-                    // (reservationID === null || reservationID === undefined) ? (window.location.href = '/APIerror') : ('');
-                    // // (reservationID === null ||reservationID === undefined) ? (window.location.href = '/APIerror') : ('');
-                    //
-                    //
-                    // window.location.href = 'meeting/detailsReservation/' + reservationID;
-                    //
-                    // // window.location.href = '/meeting';
-                    // // getReservations(reservationID, reservationDate);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
 
