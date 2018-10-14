@@ -20,7 +20,9 @@ html, body {
   color: $labelsAccent;
   margin-top: 20px;
 }
-
+.formErrorMessage {
+  color: $error;
+}
 //navbar
 .userIcon {
   font-size: 40px;

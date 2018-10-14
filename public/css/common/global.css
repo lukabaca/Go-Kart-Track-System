@@ -15,6 +15,9 @@ html, body {
   color: #C8C8C8;
   margin-top: 20px; }
 
+.formErrorMessage {
+  color: #DC143C; }
+
 .userIcon {
   font-size: 40px;
   margin-right: 10px; }

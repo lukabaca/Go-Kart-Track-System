@@ -2,42 +2,69 @@ $(document).ready(function () {
 
     let addRecordButton = $('#recording_submit');
     let inputLink = $('#recording_recordingLink');
+    let linkErrorInfo = $('#linkError');
+
+    let inputTitle = $('#recording_title');
+    let titleErrorInfo = $('#titleError');
+
     let isDisabled = true;
 
     let ytLinkRegex = '/((http://)?)(www\.)?((youtube\.com/)|(youtu.be)|(youtube)).+';
+    let maxTitleLenght = 4;
+    // let titleRegex = '/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ][0-9]+$/';
 
-    addRecordButton.addClass('disabled');
+    // addRecordButton.addClass('disabled');
 
     inputLink.on('change', function (e) {
        e.preventDefault();
-       console.log($(this).val());
 
-       if(validateYTlink($(this).val(), ytLinkRegex)) {
-           addRecordButton.removeClass('disabled');
+       if(validateString($(this).val(), ytLinkRegex)) {
+           linkErrorInfo.text('');
+           addRecordButton.removeAttr("disabled");
        } else {
-           addRecordButton.addClass('disabled');
+
+           if($(this).val().length == 0) {
+               console.log($(this).val().length);
+               linkErrorInfo.text('');
+               addRecordButton.removeAttr("disabled");
+           } else {
+               addRecordButton.attr("disabled", "disabled");
+               linkErrorInfo.text('Brak poprawnego formatu linku YT');
+           }
        }
+    });
+
+    inputTitle.on('change', function (e) {
+        e.preventDefault();
+
+        let titleLength = $(this).val().length;
+        if(titleLength > maxTitleLenght) {
+            titleErrorInfo.text('Maksymalna długość tytułu to 45 znaków');
+            addRecordButton.attr( "disabled", "disabled" );
+        } else {
+            titleErrorInfo.text('');
+            addRecordButton.removeAttr("disabled");
+        }
     });
 
     $('#formAddRecording').submit(function (event) {
         event.preventDefault();
-        console.log('z submitowano');
+       
 
         let title = $('#recording_title').val();
         let link = $('#recording_recordingLink').val();
-
-        console.log(title);
-        console.log(link);
-
+        
         addRecording(title, link);
     });
-        function validateYTlink(link, regex) {
+        function validateString(link, regex) {
             let isMatching = link.match(regex);
             return isMatching;
         }
 
-
         function addRecording(title, link) {
+
+            title = title.trim();
+            link = link.trim();
 
             let recordingData = {
                 "title": title,

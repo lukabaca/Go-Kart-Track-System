@@ -65,10 +65,12 @@
                     <div class="form-group">
                         {{ form_label(recordingLoginForm.title) }}
                         {{ form_widget(recordingLoginForm.title) }}
+                        <small class="formErrorMessage"><span id="titleError"></span></small>
                     </div>
                     <div class="form-group">
                         {{ form_label(recordingLoginForm.recordingLink) }}
                         {{ form_widget(recordingLoginForm.recordingLink) }}
+                        <small class="formErrorMessage"><span id="linkError"></span></small>
                     </div>
                 </div>
                 <div class="modal-footer">
