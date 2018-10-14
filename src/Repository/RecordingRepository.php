@@ -47,7 +47,7 @@ class RecordingRepository extends EntityRepository
                 return [];
             }
         } catch (DBALException $e) {
-            return null;
+            return [];
         }
     }
 

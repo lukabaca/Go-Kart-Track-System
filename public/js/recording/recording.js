@@ -79,7 +79,7 @@ $(document).ready(function () {
             url: '/recording/deleteRecording/' + recordingId,
             success: function (data) {
                 // let area = $('.recordingCol .col[recording-id='+recordingId+']');
-                
+
                 let recordingCol = $('[recording-id-area='+recordingId+']');
                 recordingCol.remove();
             },
@@ -129,33 +129,37 @@ $(document).ready(function () {
                     recordingData: recordingData
                 },
                 success: function (data) {
-                    // let title = (reservations[i].title === null || reservations[i].title === undefined) ? (isValid = false) : reservations[i].title;
-                    let recordingLink = data.link;
-                    let recordingTitle = data.title;
-                    let recordingId = data.id;
+                    let isValid = true;
+                    let recordingLink = (data.link === null || data.link === undefined) ? isValid = false : data.title;
+                    let recordingTitle = (data.title === null || data.title === undefined) ? '' : data.title;
+                    let recordingId = (data.id === null || data.id === undefined) ? isValid = false : data.id;
 
                     responseElement.text('');
                     $('#formAddRecording')[0].reset();
 
-                    let content =
-                        '<div class="col-md-4 recordingCol" recording-id-area='+recordingId+'>' +
+                    if(isValid) {
+                        let content =
+                            '<div class="col-md-4 recordingCol" recording-id-area=' + recordingId + '>' +
                             '<div class="shadow p-3 mb-5 bg-white rounded card videoCard">' +
-                        '<div class="row">' +
-                            '<div class="col" recording-id='+recordingId+'>' +
-                                '<span class="card-title">'+recordingTitle+'</span>' +
-                                '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">'+'</i>' +
+                            '<div class="row">' +
+                            '<div class="col" recording-id=' + recordingId + '>' +
+                            '<span class="card-title">' + recordingTitle + '</span>' +
+                            '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">' + '</i>' +
                             '</div>' +
-                        '</div>' +
-                                '<div class="card-body">' +
-                                '<iframe class="video" src="'+recordingLink+'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>'+'</iframe>' +
-                                '</div>' +
                             '</div>' +
-                        '</div>';
+                            '<div class="card-body">' +
+                            '<iframe class="video" src="' + recordingLink + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' + '</iframe>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
 
-                    $('.recordingArea').append(content);
+                        $('.recordingArea').append(content);
 
-                    $('#addRecordingModal').modal('hide');
-                    $('.alert').css('display', 'block');
+                        $('#addRecordingModal').modal('hide');
+                        $('.alert').css('display', 'block');
+                    } else {
+
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     let statusCode = xhr.status;
