@@ -70,31 +70,8 @@ $(document).ready(function () {
     $('body').on('click', '.deleteRecordingIcon', function (e) {
         e.stopPropagation();
         let recordingId = $(this).closest('.col').attr('recording-id');
-       // let recordingId = $('deleteRecordingIcon .recordingCol').attr('recording-id');
-       console.log(recordingId);
 
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: '/recording/deleteRecording/' + recordingId,
-            success: function (data) {
-                // let area = $('.recordingCol .col[recording-id='+recordingId+']');
-
-                let recordingCol = $('[recording-id-area='+recordingId+']');
-                recordingCol.remove();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                let statusCode = xhr.status;
-
-                switch (statusCode) {
-                    default : {
-                        responseElement.text('Wystąpił błąd po stronie serwera, spróbuj ponownie');
-                        break;
-                    }
-                }
-                $('#formAddRecording')[0].reset();
-            }
-        });
+        deleteRecording(recordingId);
     });
 
     $('#formAddRecording').submit(function (event) {
@@ -110,6 +87,29 @@ $(document).ready(function () {
             return isMatching;
         }
 
+        function deleteRecording(recordingId) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/recording/deleteRecording/' + recordingId,
+                success: function (data) {
+
+                    let recordingCol = $('[recording-id-area='+recordingId+']');
+                    recordingCol.remove();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    let statusCode = xhr.status;
+
+                    switch (statusCode) {
+                        default : {
+                            // $('.alert-danger').css('display', 'block');
+                            break;
+                        }
+                    }
+                    $('#formAddRecording')[0].reset();
+                }
+            });
+        }
         function addRecording(title, link) {
 
             title = title.trim();
@@ -156,7 +156,7 @@ $(document).ready(function () {
                         $('.recordingArea').append(content);
 
                         $('#addRecordingModal').modal('hide');
-                        $('.alert').css('display', 'block');
+                        $('.alert-success').css('display', 'block');
                     } else {
 
                     }
