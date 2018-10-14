@@ -63,17 +63,19 @@ $(document).ready(function () {
 
     deleteRecordingIcon.on('click', function (e) {
        e.preventDefault();
-       console.log('bin');
+       let recordingId = $('.video').attr('recording-id');
+       console.log(recordingId);
+
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/recording/deleteRecording/' + id,
+            url: '/recording/deleteRecording/' + recordingId,
             success: function (data) {
-
+                console.log(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
-
                 let statusCode = xhr.status;
+                console.log(statusCode);
 
                 switch (statusCode) {
                     default : {

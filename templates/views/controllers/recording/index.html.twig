@@ -29,12 +29,12 @@
                     <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
                         <div class="row">
                             <div class="col">
-                            <span class="card-title">{{ recording.title }}</span>
-                            <i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true"></i>
+                                <span class="card-title">{{ recording.title }}</span>
+                                <i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true"></i>
                             </div>
                         </div>
                         <div class="card-body">
-                            <iframe class="video" src={{ recording.recordingLink }} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            <iframe class="video" src={{ recording.recordingLink }} recording-id={{ recording.id }} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>

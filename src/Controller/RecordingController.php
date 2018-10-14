@@ -92,9 +92,26 @@ class RecordingController extends Controller
     /**
      * @Route("/recording/deleteRecording/{id}", name="recording/deleteRecording/{id}")
      */
-    public function deleteRecordingAction(Request $request)
+    public function deleteRecordingAction(Request $request, $id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $recording = $em->getRepository(Recording::class)->find($id);
 
+        if(!$recording) {
+            return new JsonResponse([], 404);
+        }
+
+        $recordingUserId = $recording->getUser()->getId();
+        $loggedUserId = $this->getUser()->getId();
+
+        if($recordingUserId != $loggedUserId) {
+            return new JsonResponse([], 401);
+        }
+
+        $em->remove($recording);
+        $em->flush();
+
+        return new JsonResponse(['usunieto'], 200);
 
     }
     private function getYoutubeEmbedUrl($url){

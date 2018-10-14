@@ -10,6 +10,7 @@ namespace App\Repository;
 
 
 use App\Entity\Recording;
+use App\Entity\User;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
 
@@ -30,11 +31,13 @@ class RecordingRepository extends EntityRepository
                     $id = $recordingTemp['id'];
                     $recordingLink = $recordingTemp['recording_link'];
                     $title = $recordingTemp['title'];
+                    $userId = $recordingTemp['user_id'];
 
                     $recording = new Recording();
                     $recording->setId($id);
                     $recording->setRecordingLink($recordingLink);
                     $recording->setTitle($title);
+                    $recording->setUser(new User($userId));
 
                     $recordings [] = $recording;
                 }
