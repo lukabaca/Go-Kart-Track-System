@@ -13,25 +13,50 @@ $(document).ready(function () {
     let maxTitleLenght = 4;
     // let titleRegex = '/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ][0-9]+$/';
 
-    // addRecordButton.addClass('disabled');
+    let isValidTitle = true;
+    let isValidLink = true;
 
     inputLink.on('change', function (e) {
        e.preventDefault();
 
-       if(validateString($(this).val(), ytLinkRegex)) {
-           linkErrorInfo.text('');
-           addRecordButton.removeAttr("disabled");
-       } else {
+        if($(this).val().length == 0) {
+            linkErrorInfo.text('');
+            isValidLink = true;
+        } else {
+            if(validateString($(this).val(), ytLinkRegex)) {
+                linkErrorInfo.text('');
+                isValidLink = true;
+                // addRecordButton.removeAttr("disabled");
+            } else {
+                isValidLink = false;
+                linkErrorInfo.text('Brak poprawnego formatu linku YT');
+            }
+        }
 
-           if($(this).val().length == 0) {
-               console.log($(this).val().length);
-               linkErrorInfo.text('');
-               addRecordButton.removeAttr("disabled");
-           } else {
-               addRecordButton.attr("disabled", "disabled");
-               linkErrorInfo.text('Brak poprawnego formatu linku YT');
-           }
-       }
+       // if(validateString($(this).val(), ytLinkRegex)) {
+       //     linkErrorInfo.text('');
+       //     isValidLink = true;
+       //     // addRecordButton.removeAttr("disabled");
+       // } else {
+       //
+       //     if($(this).val().length == 0) {
+       //         linkErrorInfo.text('');
+       //         isValidLink = true;
+       //         // addRecordButton.removeAttr("disabled");
+       //     } else {
+       //         // addRecordButton.attr("disabled", "disabled");
+       //         isValidLink = false;
+       //         linkErrorInfo.text('Brak poprawnego formatu linku YT');
+       //     }
+       // }
+       console.log('link ' + isValidLink);
+       console.log('title ' + isValidTitle);
+
+        if(isValidTitle && isValidLink) {
+            addRecordButton.removeAttr("disabled");
+        } else {
+            addRecordButton.attr("disabled", "disabled");
+        }
     });
 
     inputTitle.on('change', function (e) {
@@ -40,10 +65,20 @@ $(document).ready(function () {
         let titleLength = $(this).val().length;
         if(titleLength > maxTitleLenght) {
             titleErrorInfo.text('Maksymalna długość tytułu to 45 znaków');
-            addRecordButton.attr( "disabled", "disabled" );
+            isValidTitle = false;
+            // addRecordButton.attr( "disabled", "disabled" );
         } else {
+            isValidTitle = true;
             titleErrorInfo.text('');
+            // addRecordButton.removeAttr("disabled");
+        }
+        console.log('link ' + isValidLink);
+        console.log('title ' + isValidTitle);
+
+        if(isValidTitle && isValidLink) {
             addRecordButton.removeAttr("disabled");
+        } else {
+            addRecordButton.attr("disabled", "disabled");
         }
     });
 
