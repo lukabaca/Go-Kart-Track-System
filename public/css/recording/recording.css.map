@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AACA,UAAW;EACT,MAAM,EAAE,KAAK;;AAEf,MAAO;EACL,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;;AAEd,aAAc;EACZ,aAAa,EAAE,IAAI",
-"sources": ["../../scss/recording/recording.scss"],
+"mappings": "AACA,UAAW;EACT,MAAM,EAAE,KAAK;;AAEf,MAAO;EACL,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;;AAEd,aAAc;EACZ,aAAa,EAAE,IAAI;;AAErB,aAAc;EACZ,UAAU,EAAE,MAAM;;AAGpB,aAAc;EACZ,KAAK,ECfC,OAAO;;ADkBf,8BAA+B;EAC7B,cAAc,EAAE,GAAG;;AAErB,MAAO;EACL,OAAO,EAAE,IAAI",
+"sources": ["../../scss/recording/recording.scss","../../scss/common/_colors.scss"],
 "names": [],
 "file": "recording.css"
 }

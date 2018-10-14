@@ -54,8 +54,25 @@ class RecordingController extends Controller
             $em->persist($recording);
             $em->flush();
 
-            return new JsonResponse([], 201);
-//            return $this->handleForm($request, $recording);
+
+            $recording = $this->getDoctrine()->getRepository(Recording::class)->find($recording->getId());
+
+            if(!$recording) {
+                return new JsonResponse([], 404);
+            }
+
+            $id = $recording->getId();
+            $title = $recording->getTitle();
+            $ytLink = $recording->getRecordingLink();
+
+            $ytLinkFormatted = $this->getYoutubeEmbedUrl($ytLink);
+
+            $response = [
+                'id' => $id,
+                'title' => $title,
+                'link' => $ytLinkFormatted
+            ];
+            return new JsonResponse($response, 201);
         } else {
             return new JsonResponse([], 500);
         }

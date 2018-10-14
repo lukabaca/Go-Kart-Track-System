@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+
+    let responseElement = $('.responseInfo');
+
     let addRecordButton = $('#recording_submit');
     let inputLink = $('#recording_recordingLink');
     let linkErrorInfo = $('#linkError');
@@ -11,7 +14,6 @@ $(document).ready(function () {
 
     let ytLinkRegex = '/((http://)?)(www\.)?((youtube\.com/)|(youtu.be)|(youtube)).+';
     let maxTitleLenght = 45;
-    // let titleRegex = '/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ][0-9]+$/';
 
     let isValidTitle = true;
     let isValidLink = true;
@@ -26,31 +28,11 @@ $(document).ready(function () {
             if(validateString($(this).val(), ytLinkRegex)) {
                 linkErrorInfo.text('');
                 isValidLink = true;
-                // addRecordButton.removeAttr("disabled");
             } else {
                 isValidLink = false;
                 linkErrorInfo.text('Brak poprawnego formatu linku YT');
             }
         }
-
-       // if(validateString($(this).val(), ytLinkRegex)) {
-       //     linkErrorInfo.text('');
-       //     isValidLink = true;
-       //     // addRecordButton.removeAttr("disabled");
-       // } else {
-       //
-       //     if($(this).val().length == 0) {
-       //         linkErrorInfo.text('');
-       //         isValidLink = true;
-       //         // addRecordButton.removeAttr("disabled");
-       //     } else {
-       //         // addRecordButton.attr("disabled", "disabled");
-       //         isValidLink = false;
-       //         linkErrorInfo.text('Brak poprawnego formatu linku YT');
-       //     }
-       // }
-       console.log('link ' + isValidLink);
-       console.log('title ' + isValidTitle);
 
         if(isValidTitle && isValidLink) {
             addRecordButton.removeAttr("disabled");
@@ -66,14 +48,10 @@ $(document).ready(function () {
         if(titleLength > maxTitleLenght) {
             titleErrorInfo.text('Maksymalna długość tytułu to 45 znaków');
             isValidTitle = false;
-            // addRecordButton.attr( "disabled", "disabled" );
         } else {
             isValidTitle = true;
             titleErrorInfo.text('');
-            // addRecordButton.removeAttr("disabled");
         }
-        console.log('link ' + isValidLink);
-        console.log('title ' + isValidTitle);
 
         if(isValidTitle && isValidLink) {
             addRecordButton.removeAttr("disabled");
@@ -117,38 +95,25 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     console.log(data);
+                    responseElement.text('');
                     $('#formAddRecording')[0].reset();
+                    $('#addRecordingModal').modal('hide');
+
+                    $('.alert').css('display', 'block');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
 
                     let statusCode = xhr.status;
                     console.log(statusCode);
-                    //
-                    // let responseElement = $('.responseInfo');
-                    //
-                    // switch (statusCode) {
-                    //     case 400: {
-                    //
-                    //         responseElement.text('Nie można sparsować przesłanych dat');
-                    //         break;
-                    //     }
-                    //     case 404: {
-                    //
-                    //         responseElement.text('Podano złe parametry');
-                    //         break;
-                    //     }
-                    //     case 409: {
-                    //
-                    //         responseElement.text('Ten termin jest już zajęty');
-                    //         break;
-                    //     }
-                    //     default : {
-                    //         window.location.href = '/APIerror';
-                    //         break;
-                    //     }
-                    // }
-                    // $('#modalReservationResponseInfo').modal('open');
 
+
+                    switch (statusCode) {
+                        default : {
+                            responseElement.text('Wystąpił błąd po stronie serwera, spróbuj ponownie');
+                            break;
+                        }
+                    }
+                    $('#formAddRecording')[0].reset();
                 }
             });
         }

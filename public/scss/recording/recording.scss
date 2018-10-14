@@ -9,3 +9,17 @@
 #addRecording {
   margin-bottom: 30px;
 }
+.responseArea {
+  text-align: center;
+}
+
+.responseInfo {
+  color: $error;
+}
+
+#formAddRecording, .modal-body {
+  padding-bottom: 0px;
+}
+.alert {
+  display: none;
+}
