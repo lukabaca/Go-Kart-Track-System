@@ -61,6 +61,13 @@ class RecordingController extends Controller
             return new JsonResponse([], 400);
         }
     }
+    private function getYoutubeEmbedUrl($url){
+
+        $urlParts   = explode('/', $url);
+        $vidid      = explode( '&', str_replace('watch?v=', '', end($urlParts) ) );
+
+        return 'https://www.youtube.com/embed/' . $vidid[0] ;
+    }
     private function handleForm(Request $request, $recording)
     {
 //        $recording = new Recording();
@@ -127,17 +134,18 @@ class RecordingController extends Controller
     {
 
 
-        $roles = $this->getDoctrine()
-            ->getRepository(Recording::class)
-            ->find(1);
-
-        if (!$roles)
-        {
-            echo 'GGG';
-        }
-        $test = $roles->getRecordingLink();
-        $test2 = $roles->getUser()->getName();
-        var_dump($test2);
+//        $roles = $this->getDoctrine()
+//            ->getRepository(Recording::class)
+//            ->find(1);
+//
+//        if (!$roles)
+//        {
+//            echo 'GGG';
+//        }
+//        $test = $roles->getRecordingLink();
+//        $test2 = $roles->getUser()->getName();
+        $testYT = $this->getYoutubeEmbedUrl('https://www.youtube.com/watch?v=kHbQr6Xsy8U');
+        print_r($testYT);
         exit();
 
     }
