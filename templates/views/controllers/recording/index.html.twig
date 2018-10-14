@@ -15,19 +15,21 @@
 
     <div class="container">
         <div class="row recordingArea">
+            <div class="col-md-12 alertArea">
+                {#<div class="alert alert-success alert-dismissible fade show" role="alert">#}
+                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+                        {#<span aria-hidden="true">&times;</span>#}
+                    {#</button>#}
+                    {#<strong>Dodano nagranie</strong>#}
+                {#</div>#}
+                {#<div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
+                        {#<span aria-hidden="true">&times;</span>#}
+                    {#</button>#}
+                    {#<strong>Wystąpił błąd podczas usuwania nagrania</strong>#}
+                {#</div>#}
+            </div>
             <div class="col-md-12">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>Dodano nagranie</strong>
-                </div>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>Wystąpił błąd podczas usuwania nagrania</strong>
-                </div>
                 <button class="btn btn-primary" id="addRecording" data-toggle="modal" data-target="#addRecordingModal">Dodaj nagranie</button>
             </div>
             {% for recording in recordings %}

@@ -102,6 +102,15 @@ $(document).ready(function () {
 
                     switch (statusCode) {
                         default : {
+                            let alertErrorContent =
+                                '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                '<span aria-hidden="true">X</span>' +
+                                '</button>' +
+                                '<strong>Wystąpił błąd podczas usuwania nagrania</strong>' +
+                                '</div>';
+
+                            $('.alertArea').append(alertErrorContent);
                             // $('.alert-danger').css('display', 'block');
                             break;
                         }
@@ -156,7 +165,17 @@ $(document).ready(function () {
                         $('.recordingArea').append(content);
 
                         $('#addRecordingModal').modal('hide');
-                        $('.alert-success').css('display', 'block');
+
+                        let alertSuccessContent =
+                            '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                            '<span aria-hidden="true">X</span>' +
+                            '</button>' +
+                            '<strong>Dodano nagranie</strong>' +
+                            '</div>';
+
+                        $('.alertArea').append(alertSuccessContent);
+                        // $('.alert-success').css('display', 'block');
                     } else {
 
                     }
