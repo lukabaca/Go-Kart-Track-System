@@ -121,9 +121,10 @@ class RecordingController extends Controller
 //        }
 //        $test = $roles->getRecordingLink();
 //        $test2 = $roles->getUser()->getName();
-        $testYT = $this->getYoutubeEmbedUrl('https://www.youtube.com/watch?v=kHbQr6Xsy8U');
-        print_r($testYT);
-        exit();
+//        $testYT = $this->getYoutubeEmbedUrl('https://www.youtube.com/watch?v=kHbQr6Xsy8U');
+//        print_r($testYT);
+//        exit();
 
+        $this->getDoctrine()->getRepository(Recording::class)->findUserRecordings(1);
     }
 }

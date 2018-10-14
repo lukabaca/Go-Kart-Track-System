@@ -1,6 +1,4 @@
 $(document).ready(function () {
-
-
     let responseElement = $('.responseInfo');
 
     let addRecordButton = $('#recording_submit');
@@ -9,6 +7,9 @@ $(document).ready(function () {
 
     let inputTitle = $('#recording_title');
     let titleErrorInfo = $('#titleError');
+
+    let deleteRecordingIcon = $('.deleteRecordingIcon');
+
 
     let isDisabled = true;
 
@@ -60,9 +61,33 @@ $(document).ready(function () {
         }
     });
 
+    deleteRecordingIcon.on('click', function (e) {
+       e.preventDefault();
+       console.log('bin');
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/recording/deleteRecording/' + id,
+            success: function (data) {
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+                let statusCode = xhr.status;
+
+                switch (statusCode) {
+                    default : {
+                        responseElement.text('Wystąpił błąd po stronie serwera, spróbuj ponownie');
+                        break;
+                    }
+                }
+                $('#formAddRecording')[0].reset();
+            }
+        });
+    });
+
     $('#formAddRecording').submit(function (event) {
         event.preventDefault();
-       
 
         let title = $('#recording_title').val();
         let link = $('#recording_recordingLink').val();
@@ -85,7 +110,6 @@ $(document).ready(function () {
             };
 
             recordingData = JSON.stringify(recordingData);
-            console.log(recordingData);
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -101,30 +125,28 @@ $(document).ready(function () {
                     responseElement.text('');
                     $('#formAddRecording')[0].reset();
 
-                    // console.log(recordingLink);
-
                     let content =
                         '<div class="col-md-4">' +
                             '<div class="shadow p-3 mb-5 bg-white rounded card videoCard">' +
-                                '<h5 class="card-title">'+recordingTitle+'</h5>'+
+                        '<div class="row">' +
+                            '<div class="col">' +
+                                '<span class="card-title">'+recordingTitle+'</span>' +
+                                '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">'+'</i>' +
+                            '</div>' +
+                        '</div>' +
                                 '<div class="card-body">' +
                                 '<iframe class="video" src="'+recordingLink+'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>'+'</iframe>' +
                                 '</div>' +
                             '</div>' +
                         '</div>';
 
-                    // let content2 = '<td>'+aa+'</td>';
                     $('.recordingArea').append(content);
 
                     $('#addRecordingModal').modal('hide');
                     $('.alert').css('display', 'block');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-
                     let statusCode = xhr.status;
-                    console.log(statusCode);
-
-
                     switch (statusCode) {
                         default : {
                             responseElement.text('Wystąpił błąd po stronie serwera, spróbuj ponownie');

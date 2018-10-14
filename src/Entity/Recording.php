@@ -46,6 +46,21 @@ class Recording
     private $title;
 
     /**
+     * Recording constructor.
+     * @param $id
+     * @param $user
+     * @param $recordingLink
+     * @param $title
+     */
+    public function __construct($id = null, $user = null, $recordingLink = null, $title= null)
+    {
+        $this->id = $id;
+        $this->user = $user;
+        $this->recordingLink = $recordingLink;
+        $this->title = $title;
+    }
+
+    /**
      * @return mixed
      */
     public function getId()

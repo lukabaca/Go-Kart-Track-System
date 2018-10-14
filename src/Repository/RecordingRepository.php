@@ -9,20 +9,45 @@
 namespace App\Repository;
 
 
+use App\Entity\Recording;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
 
 class RecordingRepository extends EntityRepository
 {
-//    public function addRecording($recording) {
-//        $em = $this->getEntityManager()->getConnection()->beginTransaction();
-//        try {
-//
-//            $em->persist($recording);
-//            $em->flush();
-//            $em->getConnection()->commit();
-//        } catch (Exception $e) {
-//            $em->getConnection()->rollBack();
-//            throw $e;
-//        }
-//    }
+    public function findUserRecordings($userId) {
+        $sql = 'call getUserRecordings(?)';
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $userId);
+            $rowCount = $stmt->execute();
+            if($rowCount > 0) {
+                $recordings = [];
+                $recordingsTemp = $stmt->fetchAll();
+
+                foreach ($recordingsTemp as $recordingTemp) {
+                    $id = $recordingTemp['id'];
+                    $recordingLink = $recordingTemp['recording_link'];
+                    $title = $recordingTemp['title'];
+
+                    $recording = new Recording();
+                    $recording->setId($id);
+                    $recording->setRecordingLink($recordingLink);
+                    $recording->setTitle($title);
+
+                    $recordings [] = $recording;
+                }
+
+                print_r($recordings);
+                exit();
+
+            } else {
+                return [];
+            }
+        } catch (DBALException $e) {
+            return null;
+        }
+    }
+
 }
