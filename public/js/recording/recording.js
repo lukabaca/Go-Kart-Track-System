@@ -1,5 +1,6 @@
 $(document).ready(function () {
     let responseElement = $('.responseInfo');
+    let openModalButton = $('#addRecording');
 
     let addRecordButton = $('#recording_submit');
     let inputLink = $('#recording_recordingLink');
@@ -18,6 +19,13 @@ $(document).ready(function () {
 
     let isValidTitle = true;
     let isValidLink = true;
+
+    openModalButton.on('click', function (e) {
+       e.preventDefault();
+        // $(".alert").alert('close');
+        console.log('ss');
+        $('.alert').css('display', 'none');
+    });
 
     inputLink.on('change', function (e) {
        e.preventDefault();
