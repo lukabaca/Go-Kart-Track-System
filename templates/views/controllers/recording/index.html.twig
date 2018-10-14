@@ -25,7 +25,7 @@
                 <button class="btn btn-primary" id="addRecording" data-toggle="modal" data-target="#addRecordingModal">Dodaj nagranie</button>
             </div>
             {% for recording in recordings %}
-                <div class="col-md-4">
+                <div class="col-md-4 recordingCol" recording-id={{ recording.id }}>
                     <div class="shadow p-3 mb-5 bg-white rounded card videoCard">
                         <div class="row">
                             <div class="col">
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <iframe class="video" src={{ recording.recordingLink }} recording-id={{ recording.id }} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            <iframe class="video" src={{ recording.recordingLink }}  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>

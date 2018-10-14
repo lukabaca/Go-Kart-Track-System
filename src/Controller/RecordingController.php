@@ -111,7 +111,7 @@ class RecordingController extends Controller
         $em->remove($recording);
         $em->flush();
 
-        return new JsonResponse(['usunieto'], 200);
+        return new JsonResponse([], 200);
 
     }
     private function getYoutubeEmbedUrl($url){

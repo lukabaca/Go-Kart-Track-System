@@ -63,7 +63,7 @@ $(document).ready(function () {
 
     deleteRecordingIcon.on('click', function (e) {
        e.preventDefault();
-       let recordingId = $('.video').attr('recording-id');
+       let recordingId = $('.recordingCol').attr('recording-id');
        console.log(recordingId);
 
         $.ajax({
@@ -72,6 +72,11 @@ $(document).ready(function () {
             url: '/recording/deleteRecording/' + recordingId,
             success: function (data) {
                 console.log(data);
+
+                // let recordingCol = $('.recordingCol').attr('recording-id');
+                let recordingCol = $('[recording-id='+recordingId+']');
+                console.log(recordingCol);
+                recordingCol.remove();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
