@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAEA,UAAW;EACT,UAAU,EAAE,IAAI;;AAGlB,aAAc;EACZ,UAAU,EAAE,MAAM;EAClB,aAAa,EAAE,IAAI",
+"sources": ["../../scss/ride/ride.scss"],
 "names": [],
 "file": "ride.css"
 }
