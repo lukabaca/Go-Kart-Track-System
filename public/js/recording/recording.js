@@ -139,7 +139,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     let isValid = true;
-                    let recordingLink = (data.link === null || data.link === undefined) ? isValid = false : data.title;
+                    let recordingLink = (data.link === null || data.link === undefined) ? isValid = false : data.link;
                     let recordingTitle = (data.title === null || data.title === undefined) ? '' : data.title;
                     let recordingId = (data.id === null || data.id === undefined) ? isValid = false : data.id;
 
