@@ -22,6 +22,7 @@ class LapsController extends Controller
      */
     public function indexAction(Request $request)
     {
+
         return $this->render('views/controllers/laps/index.html.twig', []
         );
     }
