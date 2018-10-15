@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Lap;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,6 +24,48 @@ class LapsController extends Controller
     {
         return $this->render('views/controllers/laps/index.html.twig', []
         );
+    }
+
+    /**
+     * @Route("/laps/record/index", name="laps/record/index")
+     */
+    public function recordIndexAction(Request $request)
+    {
+        return $this->render('views/controllers/ride/index.html.twig', []);
+    }
+
+    /**
+     * @Route("/laps/loadRecords/{limit}", name="laps/loadRecords/{limit}")
+     */
+    public function loadRecordsAction(Request $request, $limit)
+    {
+        if($limit > 100) {
+            return new JsonResponse([], 400);
+        }
+
+        $recordsTemp = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords($limit);
+
+        if(!$recordsTemp) {
+            return new JsonResponse([], 404);
+        }
+
+        $records = [];
+        foreach ($recordsTemp as $recordTemp) {
+            $record = [
+                'id' => $recordsTemp->getId(),
+                'user_id' => $recordsTemp->getUser()->getId(),
+                'kart_id' => $recordsTemp->getKart()->getId(),
+                'time' => $recordsTemp->getTime(),
+                'averageSpeed' => $recordsTemp->getAverageSpeed(),
+                'date' => $recordsTemp->getDate()
+            ];
+
+            $records [] = $record;
+        }
+        print_r($records);
+        exit();
+
+        return new JsonResponse($records, 200);
     }
 
     /**

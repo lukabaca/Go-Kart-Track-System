@@ -14,11 +14,5 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RideController extends Controller
 {
-    /**
-     * @Route("/ride/record/index", name="ride/record/index")
-     */
-    public function recordIndexAction(Request $request)
-    {
-        return $this->render('views/controllers/ride/index.html.twig', []);
-    }
+
 }
