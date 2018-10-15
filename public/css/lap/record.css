@@ -8,4 +8,10 @@
 #recordNumberHeader {
   margin-right: 10px; }
 
+.recordHeaderRow {
+  font-weight: 600; }
+
+#recordTable {
+  text-align: center !important; }
+
 /*# sourceMappingURL=record.css.map */

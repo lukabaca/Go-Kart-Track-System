@@ -80,16 +80,15 @@ function loadRecords(table, recordLimit, timeMode) {
             let statusCode = xhr.status;
             switch (statusCode) {
                 default : {
-                    // let alertErrorContent =
-                    //     '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                    //     '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                    //     '<span aria-hidden="true">X</span>' +
-                    //     '</button>' +
-                    //     '<strong>Wystąpił błąd podczas usuwania nagrania</strong>' +
-                    //     '</div>';
-                    //
-                    // $('.alertArea').append(alertErrorContent);
-                    // // $('.alert-danger').css('display', 'block');
+                    let alertErrorContent =
+                        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                        '<span aria-hidden="true">X</span>' +
+                        '</button>' +
+                        '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+                        '</div>';
+
+                    $('.alertArea').append(alertErrorContent);
                     break;
                 }
             }

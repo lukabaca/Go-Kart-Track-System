@@ -2,13 +2,20 @@
 
 .tableArea {
   margin-top: 50px;
- //text-align: center;
 }
 #recordHeader {
   text-align: center;
   margin-bottom: 25px;
 }
-
 #recordNumberHeader {
   margin-right: 10px;
+}
+
+.recordHeaderRow {
+  font-weight: 600;
+}
+
+#recordTable {
+  //width: 50%;
+  text-align: center !important;
 }
