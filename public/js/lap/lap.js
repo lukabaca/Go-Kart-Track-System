@@ -8,17 +8,20 @@ $(document).ready(function (e) {
 
     $('#allTimeRecord').on('click', function (e) {
        e.preventDefault();
-       console.log('rekord wszech czasow');
+       clearTable(recordTable);
+       loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['allTime']);
     });
 
     $('#monthRecord').on('click', function (e) {
         e.preventDefault();
-        console.log('rekord miesiaca');
+        clearTable(recordTable);
+        loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['month']);
     });
 
     $('#weekRecord').on('click', function (e) {
         e.preventDefault();
-        console.log('rekord tygodnia');
+        clearTable(recordTable);
+        loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['week']);
     });
 
 });
@@ -75,5 +78,11 @@ function loadRecords(table, recordLimit, timeMode) {
             }
             // $('#formAddRecording')[0].reset();
         }
+    });
+}
+
+function clearTable(table) {
+    table.find('tbody tr').each(function () {
+        $(this).remove();
     });
 }
