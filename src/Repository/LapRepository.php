@@ -37,7 +37,9 @@ class LapRepository extends EntityRepository
 
                     $lap = new Lap();
                     $lap->setId($id);
-                    $lap->setUser(new User($user_id));
+                    $user = new User();
+                    $user->setId($user_id);
+                    $lap->setUser($user);
                     $lap->setKart(new Kart($kart_id));
                     $lap->setTime($time);
                     $lap->setAverageSpeed($averageSpeed);

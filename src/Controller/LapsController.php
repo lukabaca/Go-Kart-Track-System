@@ -49,21 +49,22 @@ class LapsController extends Controller
             return new JsonResponse([], 404);
         }
 
+
+
         $records = [];
         foreach ($recordsTemp as $recordTemp) {
             $record = [
-                'id' => $recordsTemp->getId(),
-                'user_id' => $recordsTemp->getUser()->getId(),
-                'kart_id' => $recordsTemp->getKart()->getId(),
-                'time' => $recordsTemp->getTime(),
-                'averageSpeed' => $recordsTemp->getAverageSpeed(),
-                'date' => $recordsTemp->getDate()
+                'id' => $recordTemp->getId(),
+                'user_id' => $recordTemp->getUser()->getId(),
+                'kart_id' => $recordTemp->getKart()->getId(),
+                'time' => $recordTemp->getTime(),
+                'averageSpeed' => $recordTemp->getAverageSpeed(),
+                'date' => $recordTemp->getDate()
             ];
 
             $records [] = $record;
         }
-        print_r($records);
-        exit();
+
 
         return new JsonResponse($records, 200);
     }
