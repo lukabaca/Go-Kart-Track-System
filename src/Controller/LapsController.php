@@ -35,15 +35,15 @@ class LapsController extends Controller
     }
 
     /**
-     * @Route("/laps/loadRecords/{limit}", name="laps/loadRecords/{limit}")
+     * @Route("/laps/loadRecords/{limit}/{timeMode}", name="laps/loadRecords/{limit}/{timeMode}")
      */
-    public function loadRecordsAction(Request $request, $limit)
+    public function loadRecordsAction(Request $request, $limit, $timeMode)
     {
         if($limit > 100) {
             return new JsonResponse([], 400);
         }
 
-        $recordsTemp = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords($limit);
+        $recordsTemp = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords($limit, $timeMode);
 
         if(!$recordsTemp) {
             return new JsonResponse([], 404);

@@ -15,13 +15,14 @@ use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
 class LapRepository extends EntityRepository
 {
-    public function getRecords($recordLimit)
+    public function getRecords($recordLimit, $timeMode)
     {
-        $sql = 'call getRecords(?)';
+        $sql = 'call getRecords(?, ?)';
         $conn = $this->getEntityManager()->getConnection();
         try {
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(1, $recordLimit);
+            $stmt->bindValue(2, $timeMode);
             $rowCount = $stmt->execute();
             if ($rowCount > 0) {
                 $laps = [];

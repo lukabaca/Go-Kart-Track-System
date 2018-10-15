@@ -1,10 +1,10 @@
 $(document).ready(function (e) {
     let recordTable = $('#recordTable');
-    // recordTable.DataTable();
+    let timeModeDictionary = {'allTime' : 1, 'month' : 2, 'week' : 3};
 
     let defaultRecordLimit = 10;
 
-    initRecords(recordTable, defaultRecordLimit);
+    loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['allTime']);
 
     $('#allTimeRecord').on('click', function (e) {
        e.preventDefault();
@@ -23,15 +23,16 @@ $(document).ready(function (e) {
 
 });
 
-function initRecords(table, recordLimit) {
+function loadRecords(table, recordLimit, timeMode) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: '/laps/loadRecords/' + recordLimit,
+        url: '/laps/loadRecords/' + recordLimit + '/' + timeMode,
         success: function (data) {
             // console.log(data[0].time);
 
             for(let i = 0; i < data.length; i++) {
+                let position = i + 1;
                 let id = data[i].id;
                 let time = data[i].time;
                 let averageSpeed = data[i].averageSpeed;
@@ -39,6 +40,7 @@ function initRecords(table, recordLimit) {
 
                 let recordContent =
                     '<tr class="record-row" record-id='+id+'>' +
+                        '<td class="record-info-td">' + position + '</td>' +
                         '<td class="record-info-td">' + id + '</td>' +
                         '<td class="record-info-td">' + time + '</td>' +
                         '<td class="record-info-td">' + averageSpeed + '</td>' +
