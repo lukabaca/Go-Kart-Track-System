@@ -47,40 +47,37 @@ function loadRecords(table, recordLimit, timeMode) {
         dataType: 'json',
         url: '/laps/loadRecords/' + recordLimit + '/' + timeMode,
         success: function (data) {
-            // console.log(data[0].time);
-
+            let isValid = true;
             for(let i = 0; i < data.length; i++) {
+
                 let position = i + 1;
-                let id = data[i].id;
-                let time = data[i].time;
-                let averageSpeed = data[i].averageSpeed;
-                let date = data[i].date;
+                let id = (data[i].id === null || data[i].id === undefined) ? isValid = false : data[i].id;
+                let time = (data[i].time === null || data[i].time === undefined) ? isValid = false : data[i].time;
+                // let averageSpeed = (data[i].averageSpeed === null || data[i].averageSpeed === undefined) ? isValid = false : data[i].averageSpeed;
+                let date = (data[i].date === null || data[i].date === undefined) ? isValid = false : data[i].date;
 
-                let userName = data[i].user.name;
-                let userSurname = data[i].user.surname;
+                let userName = (data[i].user.name === null || data[i].user.name === undefined) ? isValid = false : data[i].user.name;
+                let userSurname = (data[i].user.surname === null || data[i].user.surname === undefined) ? isValid = false : data[i].user.surname;
 
-                let kartName = data[i].kart.name;
+                let kartName = (data[i].kart.name === null || data[i].kart.name === undefined) ? isValid = false : data[i].kart.name;
 
-                let recordContent =
-                    '<tr class="record-row" record-id='+id+'>' +
+                if(isValid) {
+                    let recordContent =
+                        '<tr class="record-row" record-id=' + id + '>' +
                         '<td class="record-info-td">' + position + '</td>' +
                         '<td class="record-info-td">' + userName + ' ' + userSurname + '</td>' +
                         '<td class="record-info-td">' + time + '</td>' +
                         '<td class="record-info-td">' + kartName + '</td>' +
                         '<td class="record-info-td">' + date + '</td>' +
-                    '</tr>';
+                        '</tr>';
 
-                table.find('tbody').append(recordContent);
+                    table.find('tbody').append(recordContent);
+                }
             }
-            // let recordingCol = $('[recording-id-area=' + recordingId + ']');
-            // recordingCol.remove();
             $('.loader').css('display', 'none');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
-            console.log(statusCode);
-
-
             switch (statusCode) {
                 default : {
                     // let alertErrorContent =
@@ -97,7 +94,6 @@ function loadRecords(table, recordLimit, timeMode) {
                 }
             }
             $('.loader').css('display', 'none');
-            // $('#formAddRecording')[0].reset();
         }
     });
 }
