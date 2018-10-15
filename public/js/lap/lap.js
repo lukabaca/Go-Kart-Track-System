@@ -56,12 +56,17 @@ function loadRecords(table, recordLimit, timeMode) {
                 let averageSpeed = data[i].averageSpeed;
                 let date = data[i].date;
 
+                let userName = data[i].user.name;
+                let userSurname = data[i].user.surname;
+
+                let kartName = data[i].kart.name;
+
                 let recordContent =
                     '<tr class="record-row" record-id='+id+'>' +
                         '<td class="record-info-td">' + position + '</td>' +
-                        '<td class="record-info-td">' + id + '</td>' +
+                        '<td class="record-info-td">' + userName + ' ' + userSurname + '</td>' +
                         '<td class="record-info-td">' + time + '</td>' +
-                        '<td class="record-info-td">' + averageSpeed + '</td>' +
+                        '<td class="record-info-td">' + kartName + '</td>' +
                         '<td class="record-info-td">' + date + '</td>' +
                     '</tr>';
 

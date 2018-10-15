@@ -53,28 +53,41 @@ class LapsController extends Controller
 
         $recordsTemp = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords($limit, $timeMode);
 
-
         if(!$recordsTemp) {
             return new JsonResponse([], 404);
         }
 
-
-
         $records = [];
         foreach ($recordsTemp as $recordTemp) {
+
+            $userId = $recordTemp->getUser()->getId();
+            $kartId = $recordTemp->getKart()->getId();
+
+            $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($userId);
+            $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($kartId);
+
+            if(!$user || !$kart) {
+                return new JsonResponse([], 404);
+            }
+            $recordTemp->setUser($user);
+            $recordTemp->setKart($kart);
+
             $record = [
                 'id' => $recordTemp->getId(),
-                'user_id' => $recordTemp->getUser()->getId(),
-                'kart_id' => $recordTemp->getKart()->getId(),
                 'time' => $recordTemp->getTime(),
                 'averageSpeed' => $recordTemp->getAverageSpeed(),
-                'date' => $recordTemp->getDate()
+                'date' => $recordTemp->getDate(),
+                'user' => [
+                    'name' => $recordTemp->getUser()->getName(),
+                    'surname' => $recordTemp->getUser()->getSurname()
+                ],
+                'kart' => [
+                    'name' => $recordTemp->getKart()->getName(),
+                ]
             ];
 
             $records [] = $record;
         }
-
-
         return new JsonResponse($records, 200);
     }
 
