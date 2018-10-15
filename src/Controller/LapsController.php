@@ -9,11 +9,10 @@
 namespace App\Controller;
 
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Lap;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LapsController extends Controller
 {
@@ -24,5 +23,15 @@ class LapsController extends Controller
     {
         return $this->render('views/controllers/laps/index.html.twig', []
         );
+    }
+
+    /**
+     * @Route("/lapTest", name="lapTest")
+     */
+    public function test(Request $request)
+    {
+        $test = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords(5);
+        print_r($test);
+        exit();
     }
 }

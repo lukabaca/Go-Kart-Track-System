@@ -48,6 +48,25 @@ class Kart
     private $lap;
 
     /**
+     * Kart constructor.
+     * @param $id
+     * @param $availability
+     * @param $prize
+     * @param $name
+     * @param $description
+     * @param $lap
+     */
+    public function __construct($id = null, $availability = null, $prize = null, $name = null, $description = null, $lap = null)
+    {
+        $this->id = $id;
+        $this->availability = $availability;
+        $this->prize = $prize;
+        $this->name = $name;
+        $this->description = $description;
+        $this->lap = $lap;
+    }
+
+    /**
      * @return mixed
      */
     public function getLap()
