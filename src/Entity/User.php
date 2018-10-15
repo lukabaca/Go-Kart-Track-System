@@ -146,6 +146,27 @@ class User implements UserInterface
     private $recording;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lap", mappedBy="user")
+     */
+    private $lap;
+
+    /**
+     * @return mixed
+     */
+    public function getLap()
+    {
+        return $this->lap;
+    }
+
+    /**
+     * @param mixed $lap
+     */
+    public function setLap($lap): void
+    {
+        $this->lap = $lap;
+    }
+
+    /**
      * @return mixed
      */
     public function getRecording()
