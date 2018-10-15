@@ -33,7 +33,7 @@ class LapsController extends Controller
     public function recordIndexAction(Request $request)
     {
         $defaultLimitRecord = 10;
-        $limitRecordOptions = [10, 20, 50, 100];
+        $limitRecordOptions = [10, 15, 20];
         return $this->render('views/controllers/laps/record.html.twig', [
             'limitRecordOptions' => $limitRecordOptions,
             'defaultLimitRecord' => $defaultLimitRecord

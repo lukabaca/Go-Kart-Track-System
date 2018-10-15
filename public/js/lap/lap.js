@@ -1,27 +1,41 @@
 $(document).ready(function (e) {
     let recordTable = $('#recordTable');
+    let recordNumber = $('#recordNumber');
+    let recordNumberHeader = $('#recordNumberHeader');
     let timeModeDictionary = {'allTime' : 1, 'month' : 2, 'week' : 3};
-
     let defaultRecordLimit = 10;
 
+    recordNumber.text(defaultRecordLimit);
     loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['allTime']);
+
+    $('#limitRecordSelect').on('change', function (e) {
+       e.preventDefault();
+       let recordLimit = $('#limitRecordSelect option:selected').val();
+       recordNumber.text(recordLimit);
+       clearTable(recordTable);
+       loadRecords(recordTable, recordLimit, timeModeDictionary['allTime']);
+    });
+
 
     $('#allTimeRecord').on('click', function (e) {
        e.preventDefault();
+       let recordLimit = $('#limitRecordSelect option:selected').val();
        clearTable(recordTable);
-       loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['allTime']);
+       loadRecords(recordTable, recordLimit, timeModeDictionary['allTime']);
     });
 
     $('#monthRecord').on('click', function (e) {
         e.preventDefault();
+        let recordLimit = $('#limitRecordSelect option:selected').val();
         clearTable(recordTable);
-        loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['month']);
+        loadRecords(recordTable, recordLimit, timeModeDictionary['month']);
     });
 
     $('#weekRecord').on('click', function (e) {
         e.preventDefault();
+        let recordLimit = $('#limitRecordSelect option:selected').val();
         clearTable(recordTable);
-        loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['week']);
+        loadRecords(recordTable, recordLimit, timeModeDictionary['week']);
     });
 
 });
