@@ -9,7 +9,9 @@
 namespace App\Controller;
 
 
+use App\Entity\Kart;
 use App\Entity\Lap;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,6 +53,7 @@ class LapsController extends Controller
 
         $recordsTemp = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords($limit, $timeMode);
 
+
         if(!$recordsTemp) {
             return new JsonResponse([], 404);
         }
@@ -80,8 +83,21 @@ class LapsController extends Controller
      */
     public function test(Request $request)
     {
-        $test = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords(5);
-        print_r($test);
+        $test = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords(5, 1);
+
+        $userId = $test[0]->getUser()->getId();
+        $kartId = $test[0]->getKart()->getId();
+
+        $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($userId);
+        $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($userId);
+
+        if(!$user || !$kart) {
+            echo 'a';
+        }
+
+        print_r($user->getName());
+        print_r($kart->getName());
+
         exit();
     }
 }

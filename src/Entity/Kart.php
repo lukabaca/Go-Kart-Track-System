@@ -38,7 +38,7 @@ class Kart
      */
     private $name;
     /**
-     * @ORM\Column(type="longtext")
+     * @ORM\Column(type="text")
      */
     private $description;
 
