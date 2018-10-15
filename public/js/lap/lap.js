@@ -1,5 +1,7 @@
 $(document).ready(function (e) {
     let recordTable = $('#recordTable');
+    // recordTable.DataTable();
+
     let defaultRecordLimit = 10;
 
     initRecords(recordTable, defaultRecordLimit);
