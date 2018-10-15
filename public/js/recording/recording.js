@@ -88,6 +88,7 @@ $(document).ready(function () {
         }
 
         function deleteRecording(recordingId) {
+            $('.loader').css('display', 'block');
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -96,6 +97,7 @@ $(document).ready(function () {
 
                     let recordingCol = $('[recording-id-area='+recordingId+']');
                     recordingCol.remove();
+                    $('.loader').css('display', 'none');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     let statusCode = xhr.status;
@@ -116,11 +118,12 @@ $(document).ready(function () {
                         }
                     }
                     $('#formAddRecording')[0].reset();
+                    $('.loader').css('display', 'none');
                 }
             });
         }
         function addRecording(title, link) {
-
+            $('.loader').css('display', 'block');
             title = title.trim();
             link = link.trim();
 
@@ -179,6 +182,7 @@ $(document).ready(function () {
                     } else {
 
                     }
+                    $('.loader').css('display', 'none');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     let statusCode = xhr.status;
@@ -189,6 +193,7 @@ $(document).ready(function () {
                         }
                     }
                     $('#formAddRecording')[0].reset();
+                    $('.loader').css('display', 'none');
                 }
             });
         }
