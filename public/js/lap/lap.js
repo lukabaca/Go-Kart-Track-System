@@ -27,6 +27,7 @@ $(document).ready(function (e) {
 });
 
 function loadRecords(table, recordLimit, timeMode) {
+    $('.loader').css('display', 'block');
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -54,7 +55,7 @@ function loadRecords(table, recordLimit, timeMode) {
             }
             // let recordingCol = $('[recording-id-area=' + recordingId + ']');
             // recordingCol.remove();
-
+            $('.loader').css('display', 'none');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
@@ -76,6 +77,7 @@ function loadRecords(table, recordLimit, timeMode) {
                     break;
                 }
             }
+            $('.loader').css('display', 'none');
             // $('#formAddRecording')[0].reset();
         }
     });
