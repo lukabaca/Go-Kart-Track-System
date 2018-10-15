@@ -32,7 +32,12 @@ class LapsController extends Controller
      */
     public function recordIndexAction(Request $request)
     {
-        return $this->render('views/controllers/ride/index.html.twig', []);
+        $defaultLimitRecord = 10;
+        $limitRecordOptions = [10, 20, 50, 100];
+        return $this->render('views/controllers/laps/record.html.twig', [
+            'limitRecordOptions' => $limitRecordOptions,
+            'defaultLimitRecord' => $defaultLimitRecord
+        ]);
     }
 
     /**

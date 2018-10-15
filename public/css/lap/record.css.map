@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,UAAW;EACT,UAAU,EAAE,IAAI;;AAGlB,aAAc;EACZ,UAAU,EAAE,MAAM;EAClB,aAAa,EAAE,IAAI;;AAGrB,mBAAoB;EAClB,YAAY,EAAE,IAAI",
+"sources": ["../../scss/lap/record.scss"],
+"names": [],
+"file": "record.css"
+}
