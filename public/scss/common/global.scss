@@ -11,11 +11,16 @@ html, body {
   margin-left: 0px;
   margin-right: 0px;
   width: 100%;
-  //height: 100%;
   max-width: 100%;
   max-height: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
 }
-
+.pageHeader {
+  margin-bottom: 30px;
+  font-weight: 100 !important;
+  color: $pageHeader;
+}
 .arrowBack {
   font-size: 45px;
   color: $labelsAccent;
@@ -40,6 +45,33 @@ html, body {
 .navbarArea {
   height: 50px;
 }
+a {
+  color: #495057;
+}
+a:hover {
+  color: #868686 !important;
+  //#868686
+}
+.navbar {
+  background-color: $mainAccent !important;
+  a, span, i {
+    color: $mainAccentLight !important;
+    //#cfcfcf
+  }
+  a:hover {
+    color: #ffffff !important;
+    background-color: $mainAccent !important;
+  }
+
+  .dropdown-menu {
+    background-color: $mainAccent !important;
+  }
+  .dropdown-menu > li > a:hover {
+    background-color: $mainAccent !important;
+  }
+}
+
+//
 #logout {
   //font-size:30p
 }
@@ -51,3 +83,32 @@ html, body {
   margin-right: 30px;
 }
 
+//loading
+.loader {
+  height: 4px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #ddd;
+  display: none;
+}
+.loader:before{
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  width: 200px;
+  height: 4px;
+  background-color: #2980b9;
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+  from {left: -200px; width: 30%;}
+  50% {width: 30%;}
+  70% {width: 70%;}
+  80% { left: 50%;}
+  95% {left: 120%;}
+  to {left: 100%;}
+}
+//

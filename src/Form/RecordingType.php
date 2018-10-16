@@ -46,7 +46,7 @@ class RecordingType extends AbstractType
 
         $builder->add('submit', SubmitType::class, array(
 
-            'label' => 'Dodaj nagranie',
+            'label' => 'Dodaj',
             'attr' => ['id' => 'addRecordingButton',
                 'class' => 'btn btn-primary submitButton'
             ]

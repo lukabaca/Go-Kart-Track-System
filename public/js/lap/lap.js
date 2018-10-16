@@ -1,0 +1,104 @@
+$(document).ready(function (e) {
+    let recordTable = $('#recordTable');
+    let recordNumber = $('#recordNumber');
+    let recordNumberHeader = $('#recordNumberHeader');
+    let timeModeDictionary = {'allTime' : 1, 'month' : 2, 'week' : 3};
+    let defaultRecordLimit = 10;
+
+    recordNumber.text(defaultRecordLimit);
+    loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['allTime']);
+
+    $('#limitRecordSelect').on('change', function (e) {
+       e.preventDefault();
+       let recordLimit = $('#limitRecordSelect option:selected').val();
+       recordNumber.text(recordLimit);
+       clearTable(recordTable);
+       loadRecords(recordTable, recordLimit, timeModeDictionary['allTime']);
+    });
+
+
+    $('#allTimeRecord').on('click', function (e) {
+       e.preventDefault();
+       let recordLimit = $('#limitRecordSelect option:selected').val();
+       clearTable(recordTable);
+       loadRecords(recordTable, recordLimit, timeModeDictionary['allTime']);
+    });
+
+    $('#monthRecord').on('click', function (e) {
+        e.preventDefault();
+        let recordLimit = $('#limitRecordSelect option:selected').val();
+        clearTable(recordTable);
+        loadRecords(recordTable, recordLimit, timeModeDictionary['month']);
+    });
+
+    $('#weekRecord').on('click', function (e) {
+        e.preventDefault();
+        let recordLimit = $('#limitRecordSelect option:selected').val();
+        clearTable(recordTable);
+        loadRecords(recordTable, recordLimit, timeModeDictionary['week']);
+    });
+
+});
+
+function loadRecords(table, recordLimit, timeMode) {
+    $('.loader').css('display', 'block');
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/laps/loadRecords/' + recordLimit + '/' + timeMode,
+        success: function (data) {
+            let isValid = true;
+            for(let i = 0; i < data.length; i++) {
+
+                let position = i + 1;
+                let id = (data[i].id === null || data[i].id === undefined) ? isValid = false : data[i].id;
+                let time = (data[i].time === null || data[i].time === undefined) ? isValid = false : data[i].time;
+                // let averageSpeed = (data[i].averageSpeed === null || data[i].averageSpeed === undefined) ? isValid = false : data[i].averageSpeed;
+                let date = (data[i].date === null || data[i].date === undefined) ? isValid = false : data[i].date;
+
+                let userName = (data[i].user.name === null || data[i].user.name === undefined) ? isValid = false : data[i].user.name;
+                let userSurname = (data[i].user.surname === null || data[i].user.surname === undefined) ? isValid = false : data[i].user.surname;
+
+                let kartName = (data[i].kart.name === null || data[i].kart.name === undefined) ? isValid = false : data[i].kart.name;
+
+                if(isValid) {
+                    let recordContent =
+                        '<tr class="record-row" record-id=' + id + '>' +
+                        '<td class="record-info-td">' + position + '</td>' +
+                        '<td class="record-info-td">' + userName + ' ' + userSurname + '</td>' +
+                        '<td class="record-info-td">' + time + '</td>' +
+                        '<td class="record-info-td">' + kartName + '</td>' +
+                        '<td class="record-info-td">' + date + '</td>' +
+                        '</tr>';
+
+                    table.find('tbody').append(recordContent);
+                }
+            }
+            $('.loader').css('display', 'none');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            let statusCode = xhr.status;
+            switch (statusCode) {
+                default : {
+                    let alertErrorContent =
+                        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                        '<span aria-hidden="true">X</span>' +
+                        '</button>' +
+                        '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+                        '</div>';
+
+                    $('.alertArea').append(alertErrorContent);
+                    break;
+                }
+            }
+            $('.loader').css('display', 'none');
+        }
+    });
+}
+
+function clearTable(table) {
+    table.find('tbody tr').each(function () {
+        $(this).remove();
+    });
+}

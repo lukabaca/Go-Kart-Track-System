@@ -12,23 +12,12 @@
 
 {% block body %}
     {{ parent() }}
-
+    <div class="loader"></div>
     <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Twoje nagrania</h4>
         <div class="row recordingArea">
-            <div class="col-md-12 alertArea">
-                {#<div class="alert alert-success alert-dismissible fade show" role="alert">#}
-                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
-                        {#<span aria-hidden="true">&times;</span>#}
-                    {#</button>#}
-                    {#<strong>Dodano nagranie</strong>#}
-                {#</div>#}
-                {#<div class="alert alert-danger alert-dismissible fade show" role="alert">#}
-                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
-                        {#<span aria-hidden="true">&times;</span>#}
-                    {#</button>#}
-                    {#<strong>Wystąpił błąd podczas usuwania nagrania</strong>#}
-                {#</div>#}
-            </div>
             <div class="col-md-12">
                 <button class="btn btn-primary" id="addRecording" data-toggle="modal" data-target="#addRecordingModal">Dodaj nagranie</button>
             </div>
@@ -56,15 +45,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addRecordingModalLabel">Dodaj nagranie</h5>
+                    <h5 class="modal-title" id="addRecordingModalLabel">Nagranie</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                {#{'action': path('recording/addRecording'), 'method': 'POST'}#}
+
                 <div class="modal-body">
-                    {#<form method="POST" action="{{ asset((path('recording/addRecording')) }}">#}
-                    {#</form>#}
                     {{ form_start(recordingLoginForm, {'attr': {'id': 'formAddRecording'}}) }}
                     <div class="form-group">
                         {{ form_label(recordingLoginForm.title) }}

@@ -1,0 +1,75 @@
+
+{# app/Resources/views/number.html.twig #}
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Rekordy
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/lap/record.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="loader"></div>
+    <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Rekordy</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="allTimeRecord" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Rekordy wszechczasów</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="monthRecord" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Rekordy miesiąca</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="weekRecord" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Rekordy tygodnia</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-12 tableArea">
+                <span id="recordNumberHeader">Liczba rekordów</span>
+                <select id="limitRecordSelect">
+                    {% for limitRecordOption in limitRecordOptions %}
+                        {% if limitRecordOption == defaultLimitRecord %}
+                            <option value="{{ limitRecordOption }}" selected>{{ limitRecordOption }}</option>
+                        {% else %}
+                            <option value="{{ limitRecordOption }}">{{ limitRecordOption }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <div class="shadow p-3 mb-5 bg-white rounded card recordCard">
+                    <div class="card-body">
+                        <h3 class="card-title recordHeader">Top <span id="recordNumber"></span> rekordów</h3>
+
+                        <table class="table" id="recordTable">
+                            <thead>
+                            <tr class="recordHeaderRow">
+                                <td>Lp.</td>
+                                <td>Uczestnik</td>
+                                <td>Czas przejazdu</td>
+                                <td>Gokart</td>
+                                <td>Data</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/lap/lap.js') }}"></script>
+{%  endblock %}
