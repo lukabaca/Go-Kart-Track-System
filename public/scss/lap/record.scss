@@ -3,7 +3,7 @@
 .tableArea {
   margin-top: 50px;
 }
-#recordHeader {
+.recordHeader {
   text-align: center;
   margin-bottom: 25px;
 }
@@ -16,6 +16,11 @@
 }
 
 #recordTable {
-  //width: 50%;
+  width: 100%;
   text-align: center !important;
+}
+
+.recordCard {
+  text-align: center;
+  margin-top: 20px;
 }

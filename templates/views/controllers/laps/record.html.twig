@@ -34,32 +34,36 @@
             </div>
             <div class="col-md-12 tableArea">
                 <span id="recordNumberHeader">Liczba rekordów</span>
-               <select id="limitRecordSelect">
-                   {% for limitRecordOption in limitRecordOptions %}
-                       {% if limitRecordOption == defaultLimitRecord %}
+                <select id="limitRecordSelect">
+                    {% for limitRecordOption in limitRecordOptions %}
+                        {% if limitRecordOption == defaultLimitRecord %}
                             <option value="{{ limitRecordOption }}" selected>{{ limitRecordOption }}</option>
-                       {% else %}
-                           <option value="{{ limitRecordOption }}">{{ limitRecordOption }}</option>
-                       {% endif %}
-                   {% endfor %}
-               </select>
-                <h3 id="recordHeader">Top <span id="recordNumber"></span> rekordów</h3>
+                        {% else %}
+                            <option value="{{ limitRecordOption }}">{{ limitRecordOption }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <div class="shadow p-3 mb-5 bg-white rounded card recordCard">
+                    <div class="card-body">
+                        <h3 class="card-title recordHeader">Top <span id="recordNumber"></span> rekordów</h3>
+
+                        <table class="table" id="recordTable">
+                            <thead>
+                            <tr class="recordHeaderRow">
+                                <td>Lp.</td>
+                                <td>Uczestnik</td>
+                                <td>Czas przejazdu</td>
+                                <td>Gokart</td>
+                                <td>Data</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div>
-                <table class="table" id="recordTable">
-                    <thead>
-                        <tr class="recordHeaderRow">
-                            <td>Lp.</td>
-                            <td>Uczestnik</td>
-                            <td>Czas przejazdu</td>
-                            <td>Gokart</td>
-                            <td>Data</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+
         </div>
     </div>
 
