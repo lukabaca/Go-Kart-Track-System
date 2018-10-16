@@ -112,3 +112,17 @@ a:hover {
   to {left: 100%;}
 }
 //
+
+//footer
+.page-footer {
+  background-color: $mainAccent;
+}
+
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+
+  color: $mainAccentLight;
+}

@@ -97,5 +97,14 @@ a:hover {
     left: 120%; }
   to {
     left: 100%; } }
+.page-footer {
+  background-color: #494949; }
+
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  color: #e0e0e0; }
 
 /*# sourceMappingURL=global.css.map */
