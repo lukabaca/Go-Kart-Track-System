@@ -1,3 +1,7 @@
+.card {
+  width: 100% !important; }
 
+.kartName {
+  text-transform: capitalize; }
 
 /*# sourceMappingURL=vehicle.css.map */

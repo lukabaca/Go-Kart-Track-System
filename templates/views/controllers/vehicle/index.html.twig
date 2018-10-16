@@ -19,8 +19,27 @@
         </div>
         <h4 class="pageHeader">Pojazdy</h4>
         <div class="row">
-
-
+            {% for kart in karts %}
+                <div class="col-md-6">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title kartName">{{ kart.name }}</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDZr1xg7BVOhyBV2JReChIe8isASgonZ3JVwIxBR-sUKBEN-Ue" alt="Card image cap">
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">First item</li>
+                                        <li class="list-group-item">Second item</li>
+                                        <li class="list-group-item">Third item</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
     </div>
