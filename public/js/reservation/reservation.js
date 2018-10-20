@@ -9,6 +9,10 @@ $(document).ready(function () {
     let chosenGokartsNumber = 0;
     let numberOfRides = 0;
 
+    let reserveButton = $('#reserveBtn');
+    let isDisabledBtn = true;
+
+    reserveButton.attr("disabled", "disabled");
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
         daysShort: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],

@@ -12,8 +12,6 @@ $(document).ready(function () {
     let deleteRecordingIcon = $('.deleteRecordingIcon');
 
 
-    let isDisabled = true;
-
     let ytLinkRegex = '/((http://)?)(www\.)?((youtube\.com/)|(youtu.be)|(youtube)).+';
     let maxTitleLenght = 45;
 
@@ -41,11 +39,7 @@ $(document).ready(function () {
             }
         }
 
-        if(isValidTitle && isValidLink) {
-            addRecordButton.removeAttr("disabled");
-        } else {
-            addRecordButton.attr("disabled", "disabled");
-        }
+        checkButtonStatus();
     });
 
     inputTitle.on('change', function (e) {
@@ -60,11 +54,7 @@ $(document).ready(function () {
             titleErrorInfo.text('');
         }
 
-        if(isValidTitle && isValidLink) {
-            addRecordButton.removeAttr("disabled");
-        } else {
-            addRecordButton.attr("disabled", "disabled");
-        }
+        checkButtonStatus();
     });
 
     $('body').on('click', '.deleteRecordingIcon', function (e) {
@@ -197,4 +187,13 @@ $(document).ready(function () {
                 }
             });
         }
+
+    function checkButtonStatus() {
+        if(isValidTitle && isValidLink) {
+            addRecordButton.removeAttr("disabled");
+        } else {
+            addRecordButton.attr("disabled", "disabled");
+        }
+    }
 });
+
