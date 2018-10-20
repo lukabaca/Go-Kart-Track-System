@@ -21,7 +21,7 @@ class ReservationController extends Controller
      */
     public function indexAction(Request $request)
     {
-
+//        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
         return $this->render('views/controllers/reservation/index.html.twig', []
         );
     }

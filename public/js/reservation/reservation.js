@@ -3,6 +3,9 @@ $(document).ready(function () {
     let today = new Date();
     let maxEndDate = new Date();
     maxEndDate.setDate(maxEndDate.getDate() + maxNumberOfDays);
+
+    let chosenGokartsNumber = 0;
+
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
         daysShort: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
@@ -28,6 +31,14 @@ $(document).ready(function () {
         scrollbar: true,
         minHour: 12,
         maxHour: 21
+    });
+
+    $('#chosenGokartsNumber').text(chosenGokartsNumber + '/');
+
+    $('#numberOfPeopleInput').on('change', function (e) {
+        e.preventDefault();
+        let numberOfPeople = $(this).val();
+        $('#numberOfPeoplePerReservation').text(numberOfPeople);
     });
 
 });
