@@ -13,6 +13,11 @@ $(document).ready(function () {
     let isDisabledBtn = true;
 
     reserveButton.attr("disabled", "disabled");
+
+    let isValidHourStart = false;
+    let isValidNumberOfRides = false;
+    let isValidNumberOfPeople = false;
+
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
         daysShort: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
@@ -43,24 +48,29 @@ $(document).ready(function () {
         dropdown: true,
         change: function () {
             let time = $(this).val();
-            let res = getHourAndMinutesFromTimePicker(time);
-            let hour = res[0];
-            let minute = res[1];
-            let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-            let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
-            let test = new Date(testTime);
+            if(time !== '') {
+                isValidHourStart = true;
+                let res = getHourAndMinutesFromTimePicker(time);
+                let hour = res[0];
+                let minute = res[1];
+                let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
+                let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
+                let test = new Date(testTime);
 
 
+                if ($('#numberOfRidesInput').val() !== '' && time !== '') {
+                    let finalTime = convertHourAndMinuteToProperFormat(test);
 
-            if( $('#numberOfRidesInput').val() !== '' && time !== '') {
-                let finalTime = convertHourAndMinuteToProperFormat(test);
-
-                let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
-                console.log(hourAndMinuteEndTime);
-                $('#hourEndInput').val(hourAndMinuteEndTime);
+                    let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
+                    console.log(hourAndMinuteEndTime);
+                    $('#hourEndInput').val(hourAndMinuteEndTime);
+                } else {
+                    $('#hourEndInput').val('');
+                }
             } else {
-                $('#hourEndInput').val('');
+                isValidHourStart = false;
             }
+            checkButtonStatus();
         }
     });
 
@@ -98,13 +108,20 @@ $(document).ready(function () {
     $('#numberOfPeopleInput').on('change', function (e) {
         e.preventDefault();
         let numberOfPeople = $(this).val();
-        $('#numberOfPeoplePerReservation').text(numberOfPeople);
+        if(numberOfPeople !== '') {
+            isValidNumberOfPeople = true;
+            $('#numberOfPeoplePerReservation').text(numberOfPeople);
+        } else {
+            isValidNumberOfPeople = false;
+        }
+        checkButtonStatus();
     });
 
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
         if($('#hourStartInput').val() !== '' && numberOfRides !== '') {
+            isValidNumberOfRides = true;
             let time = $('#hourStartInput').val();
             let res = getHourAndMinutesFromTimePicker(time);
             let hour = res[0];
@@ -120,8 +137,21 @@ $(document).ready(function () {
             $('#hourEndInput').val(hourAndMinuteEndTime);
         } else {
             $('#hourEndInput').val('');
+            isValidNumberOfRides = false;
         }
+
+        checkButtonStatus();
     });
+
+    function checkButtonStatus() {
+        if(isValidHourStart && isValidNumberOfPeople && isValidNumberOfRides) {
+            console.log('weszlo');
+            reserveButton.removeAttr("disabled");
+        } else {
+            console.log('nie weszlo');
+            reserveButton.attr("disabled", "disabled");
+        }
+    }
 });
 
 function getHourAndMinutesFromTimePicker(time) {
@@ -146,3 +176,4 @@ function convertHourAndMinuteToProperFormat(date) {
     res = [hour, minute];
     return res;
 }
+
