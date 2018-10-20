@@ -34,7 +34,8 @@
             </div>
             <div class="col-md-12 tableArea">
                 <span id="recordNumberHeader">Liczba rekordów</span>
-                <select id="limitRecordSelect">
+
+                <select class="md-form form-control" id="limitRecordSelect">
                     {% for limitRecordOption in limitRecordOptions %}
                         {% if limitRecordOption == defaultLimitRecord %}
                             <option value="{{ limitRecordOption }}" selected>{{ limitRecordOption }}</option>

@@ -1,4 +1,6 @@
 $(document).ready(function (e) {
+
+    $('.md-form').formSelect();
     let recordTable = $('#recordTable');
     let recordNumber = $('#recordNumber');
     let recordNumberHeader = $('#recordNumberHeader');
