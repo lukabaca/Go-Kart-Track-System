@@ -2,73 +2,73 @@ $(document).ready(function () {
     $('#calendar').fullCalendar({
 
 
-        // customButtons: {
-        //
-        //     chooseDay: {
-        //         text: 'Wybierz dzień',
-        //         click: function() {
-        //             $('.datepicker').datepicker('show');
-        //         }
-        //     },
-        //     myDay: {
-        //         text: 'Dzień',
-        //         click: function() {
-        //             loadReservationsForCertainView('day');
-        //             $('#calendar').fullCalendar('changeView', 'agendaDay');
-        //         }
-        //
-        //     },
-        //     myWeek: {
-        //         text: 'Tydzień',
-        //         click: function() {
-        //             loadReservationsForCertainView('week');
-        //             $('#calendar').fullCalendar('changeView', 'agendaWeek');
-        //         }
-        //     },
-        //     myMonth: {
-        //         text: 'Miesiąc',
-        //         click: function() {
-        //             loadReservationsForCertainView('month');
-        //             $('#calendar').fullCalendar('changeView', 'month');
-        //         }
-        //     },
-        //     myToday: {
-        //         text: 'Dzisiaj',
-        //         click: function() {
-        //             $('#calendar').fullCalendar('today');
-        //             loadReservationsForCertainView('day');
-        //             $('#calendar').fullCalendar('changeView', 'agendaDay');
-        //         }
-        //     },
-        //
-        //     myLeftArrow: {
-        //         text: '<',
-        //         click: function() {
-        //             $('#calendar').fullCalendar('prev');
-        //             let calendarViewType = getCalendarViewType();
-        //             loadReservationsForCertainView(calendarViewType);
-        //
-        //             let actualView = $('#calendar').fullCalendar('getView');
-        //             $('#calendar').fullCalendar('changeView', actualView.name);
-        //
-        //         }
-        //
-        //     },
-        //
-        //     myRightArrow: {
-        //         text: '>',
-        //         click: function() {
-        //             $('#calendar').fullCalendar('next');
-        //             let calendarViewType = getCalendarViewType();
-        //             loadReservationsForCertainView(calendarViewType);
-        //
-        //             let actualView = $('#calendar').fullCalendar('getView');
-        //             $('#calendar').fullCalendar('changeView', actualView.name);
-        //         }
-        //
-        //     },
-        //
-        // },
+        customButtons: {
+
+            chooseDay: {
+                text: 'Wybierz dzień',
+                click: function() {
+                    $('.datepicker').datepicker('show');
+                }
+            },
+            myDay: {
+                text: 'Dzień',
+                click: function() {
+                    loadReservationsForCertainView('day');
+                    $('#calendar').fullCalendar('changeView', 'agendaDay');
+                }
+
+            },
+            myWeek: {
+                text: 'Tydzień',
+                click: function() {
+                    loadReservationsForCertainView('week');
+                    $('#calendar').fullCalendar('changeView', 'agendaWeek');
+                }
+            },
+            myMonth: {
+                text: 'Miesiąc',
+                click: function() {
+                    loadReservationsForCertainView('month');
+                    $('#calendar').fullCalendar('changeView', 'month');
+                }
+            },
+            myToday: {
+                text: 'Dzisiaj',
+                click: function() {
+                    $('#calendar').fullCalendar('today');
+                    loadReservationsForCertainView('day');
+                    $('#calendar').fullCalendar('changeView', 'agendaDay');
+                }
+            },
+
+            myLeftArrow: {
+                text: '<',
+                click: function() {
+                    $('#calendar').fullCalendar('prev');
+                    let calendarViewType = getCalendarViewType();
+                    loadReservationsForCertainView(calendarViewType);
+
+                    let actualView = $('#calendar').fullCalendar('getView');
+                    $('#calendar').fullCalendar('changeView', actualView.name);
+
+                }
+
+            },
+
+            myRightArrow: {
+                text: '>',
+                click: function() {
+                    $('#calendar').fullCalendar('next');
+                    let calendarViewType = getCalendarViewType();
+                    loadReservationsForCertainView(calendarViewType);
+
+                    let actualView = $('#calendar').fullCalendar('getView');
+                    $('#calendar').fullCalendar('changeView', actualView.name);
+                }
+
+            },
+
+        },
 
         firstDay: 1,
 
@@ -84,7 +84,7 @@ $(document).ready(function () {
 
         aspectRatio: 2,
 
-        // defaultView: defaultView,
+        // defaultView: 'agendaWeek',
 
         monthNames: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec',
             'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],

@@ -25,4 +25,14 @@ class ReservationController extends Controller
         return $this->render('views/controllers/reservation/index.html.twig', []
         );
     }
+
+    /**
+     * @Route("/reservation/calendar", name="reservation/calendar")
+     */
+    public function calendarAction(Request $request)
+    {
+
+        return $this->render('views/controllers/reservation/calendar.html.twig', []
+        );
+    }
 }

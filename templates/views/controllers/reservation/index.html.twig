@@ -9,7 +9,8 @@ Rezerwacja
 {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/reservation.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" media="'print">
+    <link rel="stylesheet" type="text/css" href="{{ asset('calendar/materialCalendar.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -55,17 +56,6 @@ Rezerwacja
                             </div>
                             <button type="submit" class="btn btn-primary">Rezerwuj</button>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="shadow p-3 mb-5 bg-white rounded card">
-                <div class="card-body">
-                    <div class="row">
-                        <div id="calendar">
-
-                        </div>
                     </div>
                 </div>
             </div>
