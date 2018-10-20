@@ -20,7 +20,7 @@ $(document).ready(function () {
     };
     $('.datePicker').datepicker({
         todayHighlight: true,
-        default: 'now',
+        defaultTime: 'now',
         startDate: today,
         endDate: maxEndDate,
         weekStart: 1,
@@ -34,6 +34,8 @@ $(document).ready(function () {
         scrollbar: true,
         minHour: 12,
         maxHour: 21,
+        dynamic: true,
+        dropdown: true,
         change: function () {
             let time = $(this).val();
             let res = getHourAndMinutesFromTimePicker(time);
@@ -45,9 +47,16 @@ $(document).ready(function () {
 
             let hourEnd = test.getHours();
             let minuteEnd = test.getMinutes();
+
+
             console.log(hourEnd);
             console.log(minuteEnd);
 
+            if( $('#numberOfRidesInput').val() !== '') {
+                let hourAndMinuteEndTime = hourEnd + ':' + minuteEnd;
+                console.log(hourAndMinuteEndTime);
+                $('#hourEndInput').val(hourAndMinuteEndTime);
+            }
         }
     });
 
@@ -91,21 +100,23 @@ $(document).ready(function () {
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
+        if($('#hourStartInput').val() !== '') {
+            let time = $('#hourStartInput').val();
+            let res = getHourAndMinutesFromTimePicker(time);
+            let hour = res[0];
+            let minute = res[1];
+            let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
+            let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
+            let test = new Date(testTime);
 
-        let time = $('#hourStartInput').val();
-        let res = getHourAndMinutesFromTimePicker(time);
-        let hour = res[0];
-        let minute = res[1];
-        let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-        let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
-        let test = new Date(testTime);
+            let hourEnd = test.getHours();
+            let minuteEnd = test.getMinutes();
 
-        let hourEnd = test.getHours();
-        let minuteEnd = test.getMinutes();
 
-        let hourAndMinuteEndTime = hourEnd + ':' + minuteEnd;
-        console.log(hourAndMinuteEndTime);
-        $('#hourEndInput').val(hourAndMinuteEndTime);
+            let hourAndMinuteEndTime = hourEnd + ':' + minuteEnd;
+            console.log(hourAndMinuteEndTime);
+            $('#hourEndInput').val(hourAndMinuteEndTime);
+        }
     });
 });
 
@@ -116,4 +127,8 @@ function getHourAndMinutesFromTimePicker(time) {
 
 function getMilisecondsFromMinutes(minutes) {
     return minutes * 60 * 1000;
+}
+
+function f() {
+    
 }
