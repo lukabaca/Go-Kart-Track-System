@@ -4,6 +4,8 @@ $(document).ready(function () {
     let maxEndDate = new Date();
     maxEndDate.setDate(maxEndDate.getDate() + maxNumberOfDays);
 
+    let timePerOneRide;
+
     let chosenGokartsNumber = 0;
 
     $.fn.datepicker.dates['pl'] = {
@@ -30,7 +32,15 @@ $(document).ready(function () {
         interval: 30,
         scrollbar: true,
         minHour: 12,
-        maxHour: 21
+        maxHour: 21,
+        change: function () {
+            let time = $(this).val();
+            let res = getHourAndMinutesFromTimePicker(time);
+            let hour = res[0];
+            let minute = res[1];
+            console.log(hour);
+            console.log(minute);
+        }
     });
 
     $.ajax({
@@ -38,7 +48,8 @@ $(document).ready(function () {
         dataType: 'json',
         url: '/reservation/getTimePerOneRide',
         success: function (data) {
-            console.log(data);
+            // console.log(data);
+            timePerOneRide = data.timePerRide;
             // $('.loader').css('display', 'none');
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -68,5 +79,9 @@ $(document).ready(function () {
         let numberOfPeople = $(this).val();
         $('#numberOfPeoplePerReservation').text(numberOfPeople);
     });
-
 });
+
+function getHourAndMinutesFromTimePicker(time) {
+    $res = time.split(':');
+    return $res;
+}
