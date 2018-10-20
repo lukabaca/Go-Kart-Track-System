@@ -1,4 +1,7 @@
-.hour-area {
-  display: flex; }
+#reservationForm {
+  width: 100%; }
+
+.vehicleHeader {
+  text-align: center; }
 
 /*# sourceMappingURL=reservation.css.map */
