@@ -7,6 +7,7 @@ $(document).ready(function () {
     let timePerOneRide;
 
     let chosenGokartsNumber = 0;
+    let numberOfRides = 0;
 
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -39,7 +40,7 @@ $(document).ready(function () {
             let hour = res[0];
             let minute = res[1];
             let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-            let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(7 * timePerOneRide);
+            let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
             let test = new Date(testTime);
 
             let hourEnd = test.getHours();
@@ -85,6 +86,26 @@ $(document).ready(function () {
         e.preventDefault();
         let numberOfPeople = $(this).val();
         $('#numberOfPeoplePerReservation').text(numberOfPeople);
+    });
+
+    $('#numberOfRidesInput').on('change', function (e) {
+        e.preventDefault();
+        numberOfRides = $(this).val();
+
+        let time = $('#hourStartInput').val();
+        let res = getHourAndMinutesFromTimePicker(time);
+        let hour = res[0];
+        let minute = res[1];
+        let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
+        let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
+        let test = new Date(testTime);
+
+        let hourEnd = test.getHours();
+        let minuteEnd = test.getMinutes();
+
+        let hourAndMinuteEndTime = hourEnd + ':' + minuteEnd;
+        console.log(hourAndMinuteEndTime);
+        $('#hourEndInput').val(hourAndMinuteEndTime);
     });
 });
 
