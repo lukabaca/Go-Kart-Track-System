@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  *
  * @ORM\Table(name="ride_time_dictionary")
- * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\trackConfig\RideTimeDictionaryRepository")
  *
  */
 class RideTimeDictionary

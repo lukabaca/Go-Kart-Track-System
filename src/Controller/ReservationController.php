@@ -9,6 +9,8 @@
 namespace App\Controller;
 
 
+use App\Entity\trackConfig\RideTimeDictionary;
+use App\Repository\trackConfig\RideTimeDictionaryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +24,14 @@ class ReservationController extends Controller
     public function indexAction(Request $request)
     {
 //        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
-        return $this->render('views/controllers/reservation/index.html.twig', []
+
+        $timePerOneRide = $this->getDoctrine()->getManager()->getRepository(RideTimeDictionary::class)->getTimePerOneRide();
+        if(!$timePerOneRide) {
+
+        }
+        return $this->render('views/controllers/reservation/index.html.twig', [
+                'timePerOneRide' => $timePerOneRide
+            ]
         );
     }
 
