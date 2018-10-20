@@ -39,13 +39,14 @@ $(document).ready(function () {
             let hour = res[0];
             let minute = res[1];
             let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-            console.log(startDateTemp);
-            let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(timePerOneRide);
-            console.log(testTime);
+            let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(7 * timePerOneRide);
             let test = new Date(testTime);
-            console.log(test);
 
-            console.log(getMilisecondsFromMinutes(timePerOneRide));
+            let hourEnd = test.getHours();
+            let minuteEnd = test.getMinutes();
+            console.log(hourEnd);
+            console.log(minuteEnd);
+
         }
     });
 
@@ -56,7 +57,6 @@ $(document).ready(function () {
         success: function (data) {
             // console.log(data);
             timePerOneRide = data.timePerRide;
-            console.log(timePerOneRide);
             // $('.loader').css('display', 'none');
         },
         error: function (xhr, ajaxOptions, thrownError) {
