@@ -45,15 +45,12 @@ $(document).ready(function () {
             let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
             let test = new Date(testTime);
 
-            let hourEnd = test.getHours();
-            let minuteEnd = test.getMinutes();
 
-
-            console.log(hourEnd);
-            console.log(minuteEnd);
 
             if( $('#numberOfRidesInput').val() !== '') {
-                let hourAndMinuteEndTime = hourEnd + ':' + minuteEnd;
+                let finalTime = convertHourAndMinuteToProperFormat(test);
+
+                let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
                 console.log(hourAndMinuteEndTime);
                 $('#hourEndInput').val(hourAndMinuteEndTime);
             }
@@ -109,11 +106,9 @@ $(document).ready(function () {
             let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
             let test = new Date(testTime);
 
-            let hourEnd = test.getHours();
-            let minuteEnd = test.getMinutes();
+            let finalTime = convertHourAndMinuteToProperFormat(test);
 
-
-            let hourAndMinuteEndTime = hourEnd + ':' + minuteEnd;
+            let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
             console.log(hourAndMinuteEndTime);
             $('#hourEndInput').val(hourAndMinuteEndTime);
         }
@@ -129,6 +124,16 @@ function getMilisecondsFromMinutes(minutes) {
     return minutes * 60 * 1000;
 }
 
-function f() {
-    
+function convertHourAndMinuteToProperFormat(date) {
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+
+    if(hour < 10) {
+        hour = '0' + hour;
+    }
+    if(minute < 10) {
+        minute = '0' + minute;
+    }
+    res = [hour, minute];
+    return res;
 }
