@@ -25,14 +25,28 @@ class ReservationController extends Controller
     {
 //        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
 
-        $timePerOneRide = $this->getDoctrine()->getManager()->getRepository(RideTimeDictionary::class)->getTimePerOneRide();
-        if(!$timePerOneRide) {
-
-        }
         return $this->render('views/controllers/reservation/index.html.twig', [
-                'timePerOneRide' => $timePerOneRide
+
             ]
         );
+    }
+    /**
+     * @Route("/reservation/getTimePerOneRide", name="reservation/getTimePerOneRide")
+     */
+    public function getTimePerOneRideAction(Request $request)
+    {
+        $timePerOneRideTemp = $this->getDoctrine()->getManager()->getRepository(RideTimeDictionary::class)->getTimePerOneRide();
+
+        if(!$timePerOneRideTemp) {
+            return new JsonResponse([], 404);
+        }
+        $timePerOneRide = [
+            'id' => $timePerOneRideTemp->getId(),
+            'rideCount' => $timePerOneRideTemp->getRideCount(),
+            'timePerRide' => $timePerOneRideTemp->getTimePerRide()
+        ];
+        return new JsonResponse($timePerOneRide, 200);
+
     }
 
     /**

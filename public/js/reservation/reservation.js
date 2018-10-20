@@ -33,6 +33,34 @@ $(document).ready(function () {
         maxHour: 21
     });
 
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/reservation/getTimePerOneRide',
+        success: function (data) {
+            console.log(data);
+            // $('.loader').css('display', 'none');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            let statusCode = xhr.status;
+            switch (statusCode) {
+                default : {
+                    let alertErrorContent =
+                        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                        '<span aria-hidden="true">X</span>' +
+                        '</button>' +
+                        '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+                        '</div>';
+
+                    $('.alertArea').append(alertErrorContent);
+                    break;
+                }
+            }
+            // $('.loader').css('display', 'none');
+        }
+    });
+
     $('#chosenGokartsNumber').text(chosenGokartsNumber + '/');
 
     $('#numberOfPeopleInput').on('change', function (e) {
