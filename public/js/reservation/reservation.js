@@ -38,8 +38,14 @@ $(document).ready(function () {
             let res = getHourAndMinutesFromTimePicker(time);
             let hour = res[0];
             let minute = res[1];
-            console.log(hour);
-            console.log(minute);
+            let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
+            console.log(startDateTemp);
+            let testTime = startDateTemp.getTime() + getMilisecondsFromMinutes(timePerOneRide);
+            console.log(testTime);
+            let test = new Date(testTime);
+            console.log(test);
+
+            console.log(getMilisecondsFromMinutes(timePerOneRide));
         }
     });
 
@@ -50,6 +56,7 @@ $(document).ready(function () {
         success: function (data) {
             // console.log(data);
             timePerOneRide = data.timePerRide;
+            console.log(timePerOneRide);
             // $('.loader').css('display', 'none');
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -84,4 +91,8 @@ $(document).ready(function () {
 function getHourAndMinutesFromTimePicker(time) {
     $res = time.split(':');
     return $res;
+}
+
+function getMilisecondsFromMinutes(minutes) {
+    return minutes * 60 * 1000;
 }
