@@ -20,13 +20,14 @@ $(document).ready(function () {
     };
     $('.datePicker').datepicker({
         todayHighlight: true,
-        defaultTime: 'now',
+        defaultTime: today,
         startDate: today,
         endDate: maxEndDate,
         weekStart: 1,
         format: 'dd-mm-yyyy',
         language: 'pl',
     });
+    $('.datePicker').datepicker('setDate', today);
 
     $('.timePicker').timepicker({
         timeFormat: 'HH:mm',
@@ -47,12 +48,14 @@ $(document).ready(function () {
 
 
 
-            if( $('#numberOfRidesInput').val() !== '') {
+            if( $('#numberOfRidesInput').val() !== '' && time !== '') {
                 let finalTime = convertHourAndMinuteToProperFormat(test);
 
                 let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
                 console.log(hourAndMinuteEndTime);
                 $('#hourEndInput').val(hourAndMinuteEndTime);
+            } else {
+                $('#hourEndInput').val('');
             }
         }
     });
@@ -97,7 +100,7 @@ $(document).ready(function () {
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
-        if($('#hourStartInput').val() !== '') {
+        if($('#hourStartInput').val() !== '' && numberOfRides !== '') {
             let time = $('#hourStartInput').val();
             let res = getHourAndMinutesFromTimePicker(time);
             let hour = res[0];
@@ -111,6 +114,8 @@ $(document).ready(function () {
             let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
             console.log(hourAndMinuteEndTime);
             $('#hourEndInput').val(hourAndMinuteEndTime);
+        } else {
+            $('#hourEndInput').val('');
         }
     });
 });
