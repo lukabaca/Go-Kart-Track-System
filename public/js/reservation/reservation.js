@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+    $('.datePicker').datepicker();
+
     $('#calendar').fullCalendar({
 
 
