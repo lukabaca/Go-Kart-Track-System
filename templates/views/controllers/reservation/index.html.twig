@@ -8,6 +8,8 @@ Rezerwacja
 {% block stylesheets %}
 {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/reservation.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css">
 {% endblock %}
 
 {% block body %}
@@ -61,7 +63,9 @@ Rezerwacja
             <div class="shadow p-3 mb-5 bg-white rounded card">
                 <div class="card-body">
                     <div class="row">
+                        <div id="calendar">
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,4 +76,6 @@ Rezerwacja
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
+    <script src="{{ asset('calendar/fullcalendar.js') }}"></script>
+    <script src="{{ asset('js/reservation/reservation.js') }}"></script>
 {%  endblock %}
