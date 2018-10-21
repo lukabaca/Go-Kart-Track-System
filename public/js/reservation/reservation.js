@@ -200,11 +200,33 @@ $(document).ready(function () {
         e.preventDefault();
         let checkedIds = getCheckedElementsIdsFromTable(table);
         console.log(checkedIds);
-        for(let i = 0; i < checkedIds.length; i++) {
+        let chosenKartIds = [];
+        table2.find('tbody tr').each(function () {
+            let kartId = $(this).attr('record-id');
+            chosenKartIds.push(kartId);
+        });
+        console.log(chosenKartIds);
+
+        //delete ids that already exist in table
+        let kartIdsToLoad = [];
+        let flag = false;
+        for (let i = 0; i < checkedIds.length; i++) {
+            for (let j = 0; j < chosenKartIds.length; j++) {
+                if(checkedIds[i] === chosenKartIds[j]) {
+                    flag = true;
+                }
+            }
+            if(!flag) {
+                kartIdsToLoad.push(checkedIds[i]);
+            }
+            flag = false;
+        }
+        console.log(kartIdsToLoad);
+        for(let i = 0; i < kartIdsToLoad.length; i++) {
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/reservation/getKart/' + checkedIds[i],
+                url: '/reservation/getKart/' + kartIdsToLoad[i],
                 success: function (data) {
                     console.log(data);
                     let isValid = true;
@@ -212,7 +234,6 @@ $(document).ready(function () {
                         let name = (data.name === null || data.name === undefined) ? isValid = false : data.name;
 
                         if(isValid) {
-                            console.log('weszlooo');
                             let recordContent =
                                 '<tr class="record-row" record-id=' + id + '>' +
                                     '<td class="record-info-td">' + id + '</td>' +
