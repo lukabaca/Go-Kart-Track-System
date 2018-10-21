@@ -156,6 +156,7 @@ $(document).ready(function () {
 
     $('#kartBtn').on('click', function (e) {
         let table = $('#kartTable');
+        clearTable(table);
        e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -228,3 +229,10 @@ function convertHourAndMinuteToProperFormat(date) {
     return res;
 }
 
+function clearTable(tableID) {
+    let table = $(tableID);
+
+    table.find('tbody tr').each(function () {
+        $(this).remove();
+    });
+}
