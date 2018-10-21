@@ -113,6 +113,7 @@ $(document).ready(function () {
             $('#numberOfPeoplePerReservation').text(numberOfPeople);
         } else {
             isValidNumberOfPeople = false;
+            $('#numberOfPeoplePerReservation').text('Liczba osób');
         }
         checkButtonStatus();
     });
