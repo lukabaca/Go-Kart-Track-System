@@ -172,7 +172,7 @@ $(document).ready(function () {
                     if(isValid) {
                         let recordContent =
                             '<tr class="record-row" record-id=' + id + '>' +
-                            '<td class="record-info-td">' +  '<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
+                            '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
                             '<td class="record-info-td">' + id + '</td>' +
                             '<td class="record-info-td">' + name + '</td>' +
                             '</tr>';
@@ -181,7 +181,7 @@ $(document).ready(function () {
                         isValid = true;
                     }
                 }
-
+                // '<input type="checkbox" class="form-check-input" value="' + id + '">'
                 // $('.loader').css('display', 'none');
             },
             error: function (xhr, ajaxOptions, thrownError) {
