@@ -138,6 +138,7 @@ $(document).ready(function () {
     }
 
     $('#kartBtn').on('click', function (e) {
+        $('.loader').css('display', 'block');
         let table = $('#kartTableModal');
         clearTable(table);
        e.preventDefault();
@@ -164,7 +165,7 @@ $(document).ready(function () {
                     }
                 }
                 // '<input type="checkbox" class="form-check-input" value="' + id + '">'
-                // $('.loader').css('display', 'none');
+                $('.loader').css('display', 'none');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
@@ -182,7 +183,7 @@ $(document).ready(function () {
                         break;
                     }
                 }
-                // $('.loader').css('display', 'none');
+                $('.loader').css('display', 'none');
             }
         });
     });
@@ -194,7 +195,7 @@ $(document).ready(function () {
 
 
     $('#confirmKartsModalBtn').on('click', function (e) {
-        $('.loader').css('display', 'block');
+
         let table = $('#kartTableModal');
         let table2 = $('#kartTable');
         e.preventDefault();
@@ -223,6 +224,7 @@ $(document).ready(function () {
         }
         console.log(kartIdsToLoad);
         for(let i = 0; i < kartIdsToLoad.length; i++) {
+            $('.loader').css('display', 'block');
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -246,7 +248,7 @@ $(document).ready(function () {
                         }
 
                     // '<input type="checkbox" class="form-check-input" value="' + id + '">'
-                    // $('.loader').css('display', 'none');
+                    $('.loader').css('display', 'none');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     let statusCode = xhr.status;
