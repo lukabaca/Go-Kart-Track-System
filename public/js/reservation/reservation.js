@@ -16,7 +16,6 @@ $(document).ready(function () {
 
     let isValidHourStart = false;
     let isValidNumberOfRides = false;
-    let isValidNumberOfPeople = false;
 
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -105,18 +104,6 @@ $(document).ready(function () {
 
     $('#chosenGokartsNumber').text(chosenGokartsNumber + '/');
 
-    $('#numberOfPeopleInput').on('change', function (e) {
-        e.preventDefault();
-        let numberOfPeople = $(this).val();
-        if(numberOfPeople !== '') {
-            isValidNumberOfPeople = true;
-            $('#numberOfPeoplePerReservation').text(numberOfPeople);
-        } else {
-            isValidNumberOfPeople = false;
-            $('#numberOfPeoplePerReservation').text('Liczba osób');
-        }
-        checkButtonStatus();
-    });
 
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
@@ -145,11 +132,9 @@ $(document).ready(function () {
     });
 
     function checkButtonStatus() {
-        if(isValidHourStart && isValidNumberOfPeople && isValidNumberOfRides) {
-            console.log('weszlo');
+        if(isValidHourStart && isValidNumberOfRides) {
             reserveButton.removeAttr("disabled");
         } else {
-            console.log('nie weszlo');
             reserveButton.attr("disabled", "disabled");
         }
     }
