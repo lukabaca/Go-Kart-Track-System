@@ -140,7 +140,7 @@ $(document).ready(function () {
     }
 
     $('#kartBtn').on('click', function (e) {
-        let table = $('#kartTable');
+        let table = $('#kartTableModal');
         clearTable(table);
        e.preventDefault();
         $.ajax({
@@ -157,9 +157,9 @@ $(document).ready(function () {
                     if(isValid) {
                         let recordContent =
                             '<tr class="record-row" record-id=' + id + '>' +
-                            '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
-                            '<td class="record-info-td">' + id + '</td>' +
-                            '<td class="record-info-td">' + name + '</td>' +
+                                '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
+                                '<td class="record-info-td">' + id + '</td>' +
+                                '<td class="record-info-td">' + name + '</td>' +
                             '</tr>';
 
                         table.find('tbody').append(recordContent);
@@ -188,6 +188,12 @@ $(document).ready(function () {
                 // $('.loader').css('display', 'none');
             }
         });
+    });
+
+    $('#confirmKartsModalBtn').on('click', function (e) {
+        let table = $('#kartTableModal');
+        e.preventDefault();
+        getCheckedElementsFromTable(table);
     });
 });
 
@@ -219,5 +225,22 @@ function clearTable(tableID) {
 
     table.find('tbody tr').each(function () {
         $(this).remove();
+    });
+}
+
+function getCheckedElementsFromTable(tableID) {
+    let table = $(tableID);
+    let table2 = $('#kartTable');
+    table.find('tbody tr').each(function () {
+        let trTemp = $(this);
+        let kartIdChecked = trTemp.find('td input:checked').val();
+        if(kartIdChecked !== '' && kartIdChecked !== undefined) {
+            let row = $(this);
+            row.find('td input:checked').remove();
+            let td = '<td class="record-info-td">' + '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">' + '</i>' + '</td>';
+            row.append(td);
+            table2.find('tbody').append(row);
+        }
+
     });
 }

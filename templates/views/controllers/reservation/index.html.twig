@@ -64,6 +64,18 @@ Rezerwacja
                 <div class="card-body">
                     <span class="vehicleHeader">Wybrane pojazdy</span>
                     <div class="row">
+                        <div class="col-md-12">
+                            <table class="table" id="kartTable">
+                                <thead>
+                                <th>Nazwa gokartu</th>
+                                <th>Moc</th>
+                                <th></th>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,7 +94,7 @@ Rezerwacja
             </div>
             <div class="modal-body">
                 <div class="table-area">
-                    <table class="table" id="kartTable">
+                    <table class="table" id="kartTableModal">
                         <thead>
                             <th></th>
                             <th>Nazwa gokartu</th>
@@ -99,7 +111,7 @@ Rezerwacja
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" data-dismiss="modal">Zatwierdź</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" id="confirmKartsModalBtn">Zatwierdź</button>
             </div>
         </div>
     </div>

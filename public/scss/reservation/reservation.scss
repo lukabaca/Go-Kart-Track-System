@@ -9,7 +9,7 @@
 .table-area {
   max-height: 500px;
   overflow-x: auto;
-  #kartTable {
+  #kartTableModal {
     max-height: inherit;
     .form-check-input {
       margin: 0;
@@ -17,4 +17,7 @@
       overflow: auto;
     }
   }
+}
+#kartTable {
+  margin-top: 25px;
 }

@@ -7,11 +7,14 @@
 .table-area {
   max-height: 500px;
   overflow-x: auto; }
-  .table-area #kartTable {
+  .table-area #kartTableModal {
     max-height: inherit; }
-    .table-area #kartTable .form-check-input {
+    .table-area #kartTableModal .form-check-input {
       margin: 0;
       position: static;
       overflow: auto; }
+
+#kartTable {
+  margin-top: 25px; }
 
 /*# sourceMappingURL=reservation.css.map */
