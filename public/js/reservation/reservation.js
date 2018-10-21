@@ -186,8 +186,15 @@ $(document).ready(function () {
             }
         });
     });
+    $('body').on('click', '.deleteKartIcon', function (e) {
+        e.stopPropagation();
+        let tr = $(this).closest('.record-row');
+        tr.remove();
+    });
+
 
     $('#confirmKartsModalBtn').on('click', function (e) {
+        $('.loader').css('display', 'block');
         let table = $('#kartTableModal');
         let table2 = $('#kartTable');
         e.preventDefault();
@@ -210,7 +217,7 @@ $(document).ready(function () {
                                 '<tr class="record-row" record-id=' + id + '>' +
                                     '<td class="record-info-td">' + id + '</td>' +
                                     '<td class="record-info-td">' + name + '</td>' +
-                                    '<td class="record-info-td">' + '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
+                                    '<td class="record-info-td">' + '<i class="fa fa-trash deleteKartIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
                                 '</tr>';
 
                             table2.find('tbody').append(recordContent);
@@ -240,6 +247,7 @@ $(document).ready(function () {
                 }
             });
         }
+        $('.loader').css('display', 'none');
     });
 });
 
