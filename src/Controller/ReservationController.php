@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Kart;
 use App\Entity\trackConfig\RideTimeDictionary;
 use App\Repository\trackConfig\RideTimeDictionaryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -47,6 +48,27 @@ class ReservationController extends Controller
         ];
         return new JsonResponse($timePerOneRide, 200);
 
+    }
+
+    /**
+     * @Route("/reservation/getKarts", name="reservation/getKarts")
+     */
+    public function getKartsAction(Request $request)
+    {
+       $karts = $this->getDoctrine()->getManager()->getRepository(Kart::class)->findAll();
+       if(!$karts) {
+           return new JsonResponse([], 404);
+       }
+       $kartsRes = [];
+       foreach ($karts as $kart) {
+            $kartTemp = [
+            'id' => $kart->getId(),
+            'name' => $kart->getName(),
+            ];
+            $kartsRes [] = $kartTemp;
+       }
+
+       return new JsonResponse($kartsRes, 200);
     }
 
     /**
