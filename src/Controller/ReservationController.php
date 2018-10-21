@@ -72,6 +72,22 @@ class ReservationController extends Controller
     }
 
     /**
+     * @Route("/reservation/getKart/{id}", name="reservation/getKart/{id}")
+     */
+    public function getKartAction(Request $request, $id)
+    {
+        $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($id);
+        if(!$kart) {
+            return new JsonResponse([], 404);
+        }
+        $kartRes = [
+            'id' => $kart->getId(),
+            'name' => $kart->getName(),
+        ];
+        return new JsonResponse($kartRes, 200);
+    }
+
+    /**
      * @Route("/reservation/calendar", name="reservation/calendar")
      */
     public function calendarAction(Request $request)

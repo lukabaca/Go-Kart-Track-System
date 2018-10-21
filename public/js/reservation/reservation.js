@@ -61,7 +61,6 @@ $(document).ready(function () {
                     let finalTime = convertHourAndMinuteToProperFormat(test);
 
                     let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
-                    console.log(hourAndMinuteEndTime);
                     $('#hourEndInput').val(hourAndMinuteEndTime);
                 } else {
                     $('#hourEndInput').val('');
@@ -121,7 +120,6 @@ $(document).ready(function () {
             let finalTime = convertHourAndMinuteToProperFormat(test);
 
             let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
-            console.log(hourAndMinuteEndTime);
             $('#hourEndInput').val(hourAndMinuteEndTime);
         } else {
             $('#hourEndInput').val('');
@@ -148,7 +146,6 @@ $(document).ready(function () {
             dataType: 'json',
             url: '/reservation/getKarts',
             success: function (data) {
-                console.log(data);
                 let isValid = true;
                 for(let i = 0; i < data.length; i++) {
                     let id = (data[i].id === null || data[i].id === undefined) ? isValid = false : data[i].id;
@@ -192,8 +189,57 @@ $(document).ready(function () {
 
     $('#confirmKartsModalBtn').on('click', function (e) {
         let table = $('#kartTableModal');
+        let table2 = $('#kartTable');
         e.preventDefault();
-        getCheckedElementsFromTable(table);
+        let checkedIds = getCheckedElementsIdsFromTable(table);
+        console.log(checkedIds);
+        for(let i = 0; i < checkedIds.length; i++) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/reservation/getKart/' + checkedIds[i],
+                success: function (data) {
+                    console.log(data);
+                    let isValid = true;
+                        let id = (data.id === null || data.id === undefined) ? isValid = false : data.id;
+                        let name = (data.name === null || data.name === undefined) ? isValid = false : data.name;
+
+                        if(isValid) {
+                            console.log('weszlooo');
+                            let recordContent =
+                                '<tr class="record-row" record-id=' + id + '>' +
+                                    '<td class="record-info-td">' + id + '</td>' +
+                                    '<td class="record-info-td">' + name + '</td>' +
+                                    '<td class="record-info-td">' + '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
+                                '</tr>';
+
+                            table2.find('tbody').append(recordContent);
+                            isValid = true;
+                        }
+
+                    // '<input type="checkbox" class="form-check-input" value="' + id + '">'
+                    // $('.loader').css('display', 'none');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    let statusCode = xhr.status;
+                    switch (statusCode) {
+                        default : {
+                            let alertErrorContent =
+                                '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                '<span aria-hidden="true">X</span>' +
+                                '</button>' +
+                                '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+                                '</div>';
+
+                            $('.alertArea').append(alertErrorContent);
+                            break;
+                        }
+                    }
+                    // $('.loader').css('display', 'none');
+                }
+            });
+        }
     });
 });
 
@@ -228,19 +274,22 @@ function clearTable(tableID) {
     });
 }
 
-function getCheckedElementsFromTable(tableID) {
+function getCheckedElementsIdsFromTable(tableID) {
     let table = $(tableID);
     let table2 = $('#kartTable');
+    let checkedIds = [];
     table.find('tbody tr').each(function () {
         let trTemp = $(this);
         let kartIdChecked = trTemp.find('td input:checked').val();
         if(kartIdChecked !== '' && kartIdChecked !== undefined) {
-            let row = $(this);
-            row.find('td input:checked').remove();
-            let td = '<td class="record-info-td">' + '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">' + '</i>' + '</td>';
-            row.append(td);
-            table2.find('tbody').append(row);
+            checkedIds.push(kartIdChecked);
+            // let row = $(this);
+            // row.find('td input:checked').remove();
+            // let td = '<td class="record-info-td">' + '<i class="fa fa-trash deleteRecordingIcon float-right" aria-hidden="true">' + '</i>' + '</td>';
+            // row.append(td);
+            // table2.find('tbody').append(row);
         }
 
     });
+    return checkedIds;
 }
