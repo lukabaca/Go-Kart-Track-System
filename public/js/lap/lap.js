@@ -73,6 +73,7 @@ function loadRecords(table, recordLimit, timeMode) {
                         '</tr>';
 
                     table.find('tbody').append(recordContent);
+                    isValid = true;
                 }
             }
             $('.loader').css('display', 'none');

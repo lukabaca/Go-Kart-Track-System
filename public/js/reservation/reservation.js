@@ -155,6 +155,7 @@ $(document).ready(function () {
     }
 
     $('#kartBtn').on('click', function (e) {
+        let table = $('#kartTable');
        e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -162,6 +163,23 @@ $(document).ready(function () {
             url: '/reservation/getKarts',
             success: function (data) {
                 console.log(data);
+                let isValid = true;
+                for(let i = 0; i < data.length; i++) {
+                    let id = (data[i].id === null || data[i].id === undefined) ? isValid = false : data[i].id;
+                    let name = (data[i].name === null || data[i].name === undefined) ? isValid = false : data[i].name;
+
+                    if(isValid) {
+                        let recordContent =
+                            '<tr class="record-row" record-id=' + id + '>' +
+                            '<td class="record-info-td">' +  '<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
+                            '<td class="record-info-td">' + id + '</td>' +
+                            '<td class="record-info-td">' + name + '</td>' +
+                            '</tr>';
+
+                        table.find('tbody').append(recordContent);
+                        isValid = true;
+                    }
+                }
 
                 // $('.loader').css('display', 'none');
             },
