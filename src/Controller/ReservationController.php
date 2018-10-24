@@ -37,7 +37,6 @@ class ReservationController extends Controller
     public function getTimePerOneRideAction(Request $request)
     {
         $timePerOneRideTemp = $this->getDoctrine()->getManager()->getRepository(RideTimeDictionary::class)->getTimePerOneRide();
-
         if(!$timePerOneRideTemp) {
             return new JsonResponse([], 404);
         }
@@ -47,8 +46,21 @@ class ReservationController extends Controller
             'timePerRide' => $timePerOneRideTemp->getTimePerRide()
         ];
         return new JsonResponse($timePerOneRide, 200);
-
     }
+//    /**
+//     * @Route("/reservation/getKartPrizePerOneRide/{id}", name="reservation/getKartPrizePerOneRide/{id}")
+//     */
+//    public function getKartPrizePerOneRideAction(Request $request, $id)
+//    {
+//        $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($id);
+//        if(!$kart) {
+//            return new JsonResponse([], 404);
+//        }
+//        $prize = [
+//            'prize' => $kart->getPrize()
+//        ];
+//        return new JsonResponse($prize, 200);
+//    }
 
     /**
      * @Route("/reservation/getKarts", name="reservation/getKarts")
@@ -62,8 +74,10 @@ class ReservationController extends Controller
        $kartsRes = [];
        foreach ($karts as $kart) {
             $kartTemp = [
-            'id' => $kart->getId(),
-            'name' => $kart->getName(),
+                'id' => $kart->getId(),
+                'name' => $kart->getName(),
+                'prize' => $kart->getPrize(),
+                'availability' => $kart->getAvailability(),
             ];
             $kartsRes [] = $kartTemp;
        }
@@ -83,6 +97,7 @@ class ReservationController extends Controller
         $kartRes = [
             'id' => $kart->getId(),
             'name' => $kart->getName(),
+            'prize' => $kart->getPrize(),
         ];
         return new JsonResponse($kartRes, 200);
     }

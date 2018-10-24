@@ -15,8 +15,11 @@ $(document).ready(function () {
     let isValidNumberOfRides = false;
     let isValidChosenKarts = false;
 
-    $('#chosenGokartsNumber').text(chosenGokartsNumber + '/');
+    let karts;
+    let totalPrize = 0;
 
+    $('#chosenGokartsNumber').text(chosenGokartsNumber + '/');
+    loadKarts();
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
         daysShort: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
@@ -117,40 +120,17 @@ $(document).ready(function () {
         checkButtonStatus();
     });
 
-    function checkButtonStatus() {
-        if(isValidHourStart && isValidNumberOfRides && isValidChosenKarts) {
-            reserveButton.removeAttr("disabled");
-        } else {
-            reserveButton.attr("disabled", "disabled");
-        }
-    }
-
-    $('#kartBtn').on('click', function (e) {
-        $('.loader').css('display', 'block');
-        let table = $('#kartTableModal');
-        clearTable(table);
-       e.preventDefault();
+    function loadKarts() {
         $.ajax({
             type: 'POST',
             dataType: 'json',
             url: '/reservation/getKarts',
             success: function (data) {
-                let isValid = true;
-                for(let i = 0; i < data.length; i++) {
-                    let id = (data[i].id === null || data[i].id === undefined) ? isValid = false : data[i].id;
-                    let name = (data[i].name === null || data[i].name === undefined) ? isValid = false : data[i].name;
-                    if(isValid) {
-                        let recordContent =
-                            '<tr class="record-row" record-id=' + id + '>' +
-                                '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
-                                '<td class="record-info-td">' + id + '</td>' +
-                                '<td class="record-info-td">' + name + '</td>' +
-                            '</tr>';
-                        table.find('tbody').append(recordContent);
-                        isValid = true;
-                    }
+                if(data.length > 0) {
+                    karts = data;
+                } else {
+
                 }
-                $('.loader').css('display', 'none');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
@@ -167,22 +147,101 @@ $(document).ready(function () {
                         break;
                     }
                 }
-                $('.loader').css('display', 'none');
             }
         });
+    }
+    function checkButtonStatus() {
+        if(isValidHourStart && isValidNumberOfRides && isValidChosenKarts) {
+            reserveButton.removeAttr("disabled");
+        } else {
+            reserveButton.attr("disabled", "disabled");
+        }
+    }
+
+    $('#kartBtn').on('click', function (e) {
+        e.preventDefault();
+        $('.loader').css('display', 'block');
+        let table = $('#kartTableModal');
+        clearTable(table);
+        let isValid = true;
+
+        for(let i = 0; i < karts.length; i++) {
+            let id = (karts[i].id === null || karts[i].id === undefined) ? isValid = false : karts[i].id;
+            let name = (karts[i].name === null || karts[i].name === undefined) ? isValid = false : karts[i].name;
+            if(isValid) {
+                let recordContent =
+                    '<tr class="record-row" record-id=' + id + '>' +
+                    '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
+                    '<td class="record-info-td">' + id + '</td>' +
+                    '<td class="record-info-td">' + name + '</td>' +
+                    '</tr>';
+                table.find('tbody').append(recordContent);
+                isValid = true;
+            }
+        }
+        $('.loader').css('display', 'none');
+        // $.ajax({
+        //     type: 'POST',
+        //     dataType: 'json',
+        //     url: '/reservation/getKarts',
+        //     success: function (data) {
+        //         let isValid = true;
+        //         for(let i = 0; i < data.length; i++) {
+        //             let id = (data[i].id === null || data[i].id === undefined) ? isValid = false : data[i].id;
+        //             let name = (data[i].name === null || data[i].name === undefined) ? isValid = false : data[i].name;
+        //             if(isValid) {
+        //                 let recordContent =
+        //                     '<tr class="record-row" record-id=' + id + '>' +
+        //                         '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
+        //                         '<td class="record-info-td">' + id + '</td>' +
+        //                         '<td class="record-info-td">' + name + '</td>' +
+        //                     '</tr>';
+        //                 table.find('tbody').append(recordContent);
+        //                 isValid = true;
+        //             }
+        //         }
+        //         $('.loader').css('display', 'none');
+        //     },
+        //     error: function (xhr, ajaxOptions, thrownError) {
+        //         let statusCode = xhr.status;
+        //         switch (statusCode) {
+        //             default : {
+        //                 let alertErrorContent =
+        //                     '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+        //                     '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        //                     '<span aria-hidden="true">X</span>' +
+        //                     '</button>' +
+        //                     '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+        //                     '</div>';
+        //                 $('.alertArea').append(alertErrorContent);
+        //                 break;
+        //             }
+        //         }
+        //         $('.loader').css('display', 'none');
+        //     }
+        // });
     });
     $('body').on('click', '.deleteKartIcon', function (e) {
         e.stopPropagation();
         let table = $('#kartTable');
         let tr = $(this).closest('.record-row');
-        tr.remove();
-        let numberOfRowsInTable = table.find('tbody tr').length;
-        if(numberOfRowsInTable < 1) {
-            isValidChosenKarts = false;
+        let kartId = tr.attr('record-id');
+        let kart = getKartById(karts, kartId);
+        if(kart) {
+            tr.remove();
+            totalPrize -= kart.prize;
+            let numberOfRowsInTable = table.find('tbody tr').length;
+            if (numberOfRowsInTable < 1) {
+                isValidChosenKarts = false;
+                setPrizeInfo($('#reservationPrize'), '');
+            } else {
+                setPrizeInfo($('#reservationPrize'), totalPrize + ' ' + 'zł');
+            }
+        } else {
+            //error bo nie znalazlem katalogu, ups cos poszlo nie tak?
         }
         checkButtonStatus();
     });
-
 
     $('#confirmKartsModalBtn').on('click', function (e) {
         e.preventDefault();
@@ -210,46 +269,74 @@ $(document).ready(function () {
         }
         for(let i = 0; i < kartIdsToLoad.length; i++) {
             $('.loader').css('display', 'block');
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/reservation/getKart/' + kartIdsToLoad[i],
-                success: function (data) {
+            for(let j = 0; j < karts.length; j++) {
+                if(kartIdsToLoad[i] == karts[j].id) {
                     let isValid = true;
-                        let id = (data.id === null || data.id === undefined) ? isValid = false : data.id;
-                        let name = (data.name === null || data.name === undefined) ? isValid = false : data.name;
-                        if(isValid) {
-                            let recordContent =
-                                '<tr class="record-row" record-id=' + id + '>' +
-                                    '<td class="record-info-td">' + id + '</td>' +
-                                    '<td class="record-info-td">' + name + '</td>' +
-                                    '<td class="record-info-td">' + '<i class="fa fa-trash deleteKartIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
-                                '</tr>';
+                    let id = karts[j].id;
+                    let name = (karts[j].name === null || karts[j].name === undefined) ? isValid = false : karts[j].name;
+                    let prize = (karts[j].prize === null || karts[j].prize === undefined) ? isValid = false : karts[j].prize;
+                    if (isValid) {
+                        let recordContent =
+                            '<tr class="record-row" record-id=' + id + '>' +
+                            '<td class="record-info-td">' + id + '</td>' +
+                            '<td class="record-info-td">' + name + '</td>' +
+                            '<td class="record-info-td">' + '<i class="fa fa-trash deleteKartIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
+                            '</tr>';
 
-                            kartTable.find('tbody').append(recordContent);
-                            isValid = true;
-                            isValidChosenKarts = true;
-                            checkButtonStatus();
-                        }
-                    $('.loader').css('display', 'none');
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    let statusCode = xhr.status;
-                    switch (statusCode) {
-                        default : {
-                            let alertErrorContent =
-                                '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                                '<span aria-hidden="true">X</span>' +
-                                '</button>' +
-                                '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
-                                '</div>';
-                            $('.alertArea').append(alertErrorContent);
-                            break;
-                        }
+                        kartTable.find('tbody').append(recordContent);
+                        isValid = true;
+                        isValidChosenKarts = true;
+                        totalPrize += prize;
+                        checkButtonStatus();
                     }
                 }
-            });
+                $('.loader').css('display', 'none');
+            }
+            // $.ajax({
+            //     type: 'POST',
+            //     dataType: 'json',
+            //     url: '/reservation/getKart/' + kartIdsToLoad[i],
+            //     success: function (data) {
+            //         let isValid = true;
+            //             let id = (data.id === null || data.id === undefined) ? isValid = false : data.id;
+            //             let name = (data.name === null || data.name === undefined) ? isValid = false : data.name;
+            //             let prize = (data.prize === null || data.prize === undefined) ? isValid = false : data.prize;
+            //             if(isValid) {
+            //                 let recordContent =
+            //                     '<tr class="record-row" record-id=' + id + '>' +
+            //                         '<td class="record-info-td">' + id + '</td>' +
+            //                         '<td class="record-info-td">' + name + '</td>' +
+            //                         '<td class="record-info-td">' + '<i class="fa fa-trash deleteKartIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
+            //                     '</tr>';
+            //
+            //                 kartTable.find('tbody').append(recordContent);
+            //                 isValid = true;
+            //                 isValidChosenKarts = true;
+            //                 totalPrize += prize;
+            //                 checkButtonStatus();
+            //             }
+            //         $('.loader').css('display', 'none');
+            //     },
+            //     error: function (xhr, ajaxOptions, thrownError) {
+            //         let statusCode = xhr.status;
+            //         switch (statusCode) {
+            //             default : {
+            //                 let alertErrorContent =
+            //                     '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+            //                     '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+            //                     '<span aria-hidden="true">X</span>' +
+            //                     '</button>' +
+            //                     '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+            //                     '</div>';
+            //                 $('.alertArea').append(alertErrorContent);
+            //                 break;
+            //             }
+            //         }
+            //     }
+            // });
+        }
+        if(totalPrize > 0) {
+            setPrizeInfo($('#reservationPrize'), totalPrize + ' ' + 'zł');
         }
         $('.loader').css('display', 'none');
     });
@@ -263,19 +350,32 @@ $(document).ready(function () {
         let kartTable = $('#kartTable');
         let kartIds = getKartIdsFromTable(kartTable);
 
+        let startDate = date + ' ' + hourStart;
+        let endDate = date + ' ' + hourEnd;
+
         console.log(date);
-        console.log(hourStart);
-        console.log(hourEnd);
+        console.log(startDate);
+        console.log(endDate);
         console.log(kartIds);
     });
 });
+function setPrizeInfo(element, prize) {
+    element.text(prize);
+}
+function getKartById(karts, kartId) {
+    for(let i = 0; karts.length; i++) {
+        if(kartId == karts[i].id) {
+            return karts[i];
+        }
+    }
+    return null;
+}
 function getKartIdsFromTable(table) {
     let kartIds = [];
     table.find('tbody tr').each(function () {
         let kartId = $(this).attr('record-id');
         kartIds.push(kartId);
     });
-    console.log(kartIds);
     return kartIds;
 }
 function getHourAndMinutesFromTimePicker(time) {
