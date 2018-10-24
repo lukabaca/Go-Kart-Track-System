@@ -244,7 +244,6 @@ $(document).ready(function () {
                                 '</button>' +
                                 '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
                                 '</div>';
-
                             $('.alertArea').append(alertErrorContent);
                             break;
                         }
@@ -254,8 +253,31 @@ $(document).ready(function () {
         }
         $('.loader').css('display', 'none');
     });
-});
 
+    $('#reservationForm').submit(function (event) {
+        event.preventDefault();
+        console.log('zsubmitowano forma');
+        let date = $('#dateInput').val();
+        let hourStart = $('#hourStartInput').val();
+        let hourEnd = $('#hourEndInput').val();
+        let kartTable = $('#kartTable');
+        let kartIds = getKartIdsFromTable(kartTable);
+
+        console.log(date);
+        console.log(hourStart);
+        console.log(hourEnd);
+        console.log(kartIds);
+    });
+});
+function getKartIdsFromTable(table) {
+    let kartIds = [];
+    table.find('tbody tr').each(function () {
+        let kartId = $(this).attr('record-id');
+        kartIds.push(kartId);
+    });
+    console.log(kartIds);
+    return kartIds;
+}
 function getHourAndMinutesFromTimePicker(time) {
     $res = time.split(':');
     return $res;
@@ -278,8 +300,7 @@ function convertHourAndMinuteToProperFormat(date) {
     return res;
 }
 
-function clearTable(tableID) {
-    let table = $(tableID);
+function clearTable(table) {
     table.find('tbody tr').each(function () {
         $(this).remove();
     });
