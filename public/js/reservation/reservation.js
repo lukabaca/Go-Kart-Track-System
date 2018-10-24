@@ -16,6 +16,7 @@ $(document).ready(function () {
 
     let isValidHourStart = false;
     let isValidNumberOfRides = false;
+    let isValidChosenKarts = false;
 
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -130,7 +131,7 @@ $(document).ready(function () {
     });
 
     function checkButtonStatus() {
-        if(isValidHourStart && isValidNumberOfRides) {
+        if(isValidHourStart && isValidNumberOfRides && isValidChosenKarts) {
             reserveButton.removeAttr("disabled");
         } else {
             reserveButton.attr("disabled", "disabled");
@@ -189,8 +190,16 @@ $(document).ready(function () {
     });
     $('body').on('click', '.deleteKartIcon', function (e) {
         e.stopPropagation();
+        let table = $('#kartTable');
+
         let tr = $(this).closest('.record-row');
         tr.remove();
+        let tbodyLenght = table.find('tbody tr').length;
+        console.log(tbodyLenght);
+        if(tbodyLenght < 1) {
+            isValidChosenKarts = false;
+        }
+        checkButtonStatus();
     });
 
 
@@ -200,13 +209,11 @@ $(document).ready(function () {
         let table2 = $('#kartTable');
         e.preventDefault();
         let checkedIds = getCheckedElementsIdsFromTable(table);
-        console.log(checkedIds);
         let chosenKartIds = [];
         table2.find('tbody tr').each(function () {
             let kartId = $(this).attr('record-id');
             chosenKartIds.push(kartId);
         });
-        console.log(chosenKartIds);
 
         //delete ids that already exist in table
         let kartIdsToLoad = [];
@@ -222,7 +229,6 @@ $(document).ready(function () {
             }
             flag = false;
         }
-        console.log(kartIdsToLoad);
         for(let i = 0; i < kartIdsToLoad.length; i++) {
             $('.loader').css('display', 'block');
             $.ajax({
@@ -245,6 +251,8 @@ $(document).ready(function () {
 
                             table2.find('tbody').append(recordContent);
                             isValid = true;
+                            isValidChosenKarts = true;
+                            checkButtonStatus();
                         }
 
                     // '<input type="checkbox" class="form-check-input" value="' + id + '">'
