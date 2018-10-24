@@ -9,7 +9,10 @@
                 <a class="nav-link" href="#">Aktualności <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Rezerwacja</a>
+                <a class="nav-link" href="{{ asset(path('reservation/index')) }}">Rezerwacja</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ asset(path('reservation/calendar')) }}">Dostępność toru</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -25,7 +28,7 @@
                 <a class="nav-link" href="{{ asset(path('laps/record/index')) }}">Rekordy</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Pojazdy</a>
+                <a class="nav-link" href="{{ asset(path('vehicle/index')) }}">Pojazdy</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Kontakt</a>
@@ -47,18 +50,4 @@
             </li>
         </ul>
     </div>
-
-    {#<ul class="navbar-nav navbarArea">#}
-        {#<li class="nav-item"><p class="nav-link" id="userName"> {{ app.user.name }}</p></li>#}
-        {#<li class="nav-item dropdown">#}
-            {#<i class="far fa-user userIcon dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>#}
-            {#<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">#}
-                {#<a class="dropdown-item" href="#">Twój profil</a>#}
-            {#</div>#}
-        {#</li>#}
-        {#<li class="nav-item">#}
-            {#<a class="nav-link float right" href="{{ asset(path('logout')) }}">Wyloguj się</a>#}
-        {#</li>#}
-    {#</ul>#}
-
 </nav>

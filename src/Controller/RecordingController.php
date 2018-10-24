@@ -39,6 +39,7 @@ class RecordingController extends Controller
             $recordings [] = $recordingTemp;
         }
 
+
         return $this->render('views/controllers/recording/index.html.twig', [
                 'recordingLoginForm' => $recordingLoginForm->createView(),
                 'recordings' => $recordings

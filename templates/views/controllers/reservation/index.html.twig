@@ -1,0 +1,126 @@
+
+{# app/Resources/views/number.html.twig #}
+{%  extends 'base.html.twig'%}
+{% block title %}
+Rezerwacja
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/reservation.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" media="'print">
+    <link rel="stylesheet" type="text/css" href="{{ asset('calendar/materialCalendar.css') }}">
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="loader"></div>
+<div class="container">
+    <div class="col-md-12 alertArea">
+    </div>
+    <h4 class="pageHeader">Rezerwacja</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="shadow p-3 mb-5 bg-white rounded card">
+                <div class="card-body">
+                    <div class="row">
+                        <form method="POST" action="#" id="reservationForm">
+                            <div class="form-group">
+                                <label for="reservationStart">Dzień</label>
+                                <input type="text" class="form-control datePicker" id="dateInput">
+                            </div>
+                            <div class="form-group form-row">
+                                <div class="col">
+                                    <label for="reservationStart">Godzina rozpoczęcia</label>
+                                    <input type="text" class="form-control timePicker" id="hourStartInput" required>
+                                </div>
+                                <div class="col">
+                                    <label for="reservationStart">Godzina zakończenia</label>
+                                    <input type="text" class="form-control" id="hourEndInput" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reservationStart">Ilość przejazdów</label>
+                                <input type="number" class="form-control" id="numberOfRidesInput" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reservationStart">Gokarty</label></br>
+                                <button type="button" class="btn btn-primary" id="kartBtn" data-toggle="modal" data-target="#getKartModal">Wybierz gokarty</button>
+                            </div>
+                            <div class="form-group">
+                                <label for="reservationStart">Cena: </label>
+                                <p id="reservationPrize"></p>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="reserveBtn">Rezerwuj</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="shadow p-3 mb-5 bg-white rounded card">
+                <div class="card-body">
+                    <span class="vehicleHeader">Wybrane pojazdy</span>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table" id="kartTable">
+                                <thead>
+                                <th>Nazwa gokartu</th>
+                                <th>Moc</th>
+                                <th></th>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="getKartModal" tabindex="-1" role="dialog" aria-labelledby="getKartModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addRecordingModalLabel">Gokarty</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="loader"></div>
+                <div class="table-area">
+                    <table class="table" id="kartTableModal">
+                        <thead>
+                            <th></th>
+                            <th>Nazwa gokartu</th>
+                            <th>Moc</th>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12 responseArea">
+                <small class="responseInfo"></small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" id="confirmKartsModalBtn">Zatwierdź</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+    <script src="{{ asset('calendar/fullcalendar.js') }}"></script>
+    <script src="{{ asset('js/reservation/reservation.js') }}"></script>
+{%  endblock %}

@@ -2,18 +2,19 @@ $(document).ready(function (e) {
     let recordTable = $('#recordTable');
     let recordNumber = $('#recordNumber');
     let recordNumberHeader = $('#recordNumberHeader');
-    let timeModeDictionary = {'allTime' : 1, 'month' : 2, 'week' : 3};
+    let timeModeDictionary = {'allTimeRecord' : 1, 'monthRecord' : 2, 'weekRecord' : 3};
     let defaultRecordLimit = 10;
 
     recordNumber.text(defaultRecordLimit);
-    loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['allTime']);
+    loadRecords(recordTable, defaultRecordLimit, timeModeDictionary['allTimeRecord']);
 
     $('#limitRecordSelect').on('change', function (e) {
        e.preventDefault();
        let recordLimit = $('#limitRecordSelect option:selected').val();
        recordNumber.text(recordLimit);
        clearTable(recordTable);
-       loadRecords(recordTable, recordLimit, timeModeDictionary['allTime']);
+       let actualTimeModeSelected = $("ul#myTab li a.active").attr('id');
+       loadRecords(recordTable, recordLimit, timeModeDictionary[actualTimeModeSelected]);
     });
 
 
@@ -21,21 +22,21 @@ $(document).ready(function (e) {
        e.preventDefault();
        let recordLimit = $('#limitRecordSelect option:selected').val();
        clearTable(recordTable);
-       loadRecords(recordTable, recordLimit, timeModeDictionary['allTime']);
+       loadRecords(recordTable, recordLimit, timeModeDictionary['allTimeRecord']);
     });
 
     $('#monthRecord').on('click', function (e) {
         e.preventDefault();
         let recordLimit = $('#limitRecordSelect option:selected').val();
         clearTable(recordTable);
-        loadRecords(recordTable, recordLimit, timeModeDictionary['month']);
+        loadRecords(recordTable, recordLimit, timeModeDictionary['monthRecord']);
     });
 
     $('#weekRecord').on('click', function (e) {
         e.preventDefault();
         let recordLimit = $('#limitRecordSelect option:selected').val();
         clearTable(recordTable);
-        loadRecords(recordTable, recordLimit, timeModeDictionary['week']);
+        loadRecords(recordTable, recordLimit, timeModeDictionary['weekRecord']);
     });
 
 });
@@ -72,6 +73,7 @@ function loadRecords(table, recordLimit, timeMode) {
                         '</tr>';
 
                     table.find('tbody').append(recordContent);
+                    isValid = true;
                 }
             }
             $('.loader').css('display', 'none');

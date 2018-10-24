@@ -11,12 +11,16 @@
 .recordHeaderRow {
   font-weight: 600; }
 
-#recordTable {
-  width: 100%;
-  text-align: center !important; }
-
 .recordCard {
   text-align: center;
   margin-top: 20px; }
+
+.table-fixed {
+  max-height: 580px;
+  overflow-x: auto; }
+  .table-fixed #recordTable {
+    max-height: inherit;
+    width: 100%;
+    text-align: center !important; }
 
 /*# sourceMappingURL=record.css.map */

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,KAAM;EACJ,KAAK,EAAE,eAAe;;AAExB,SAAU;EACR,cAAc,EAAE,UAAU",
+"sources": ["../../scss/vehicle/vehicle.scss"],
+"names": [],
+"file": "vehicle.css"
+}
