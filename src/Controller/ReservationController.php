@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\Kart;
+use App\Entity\Reservation;
 use App\Entity\trackConfig\RideTimeDictionary;
 use App\Repository\trackConfig\RideTimeDictionaryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -47,20 +48,19 @@ class ReservationController extends Controller
         ];
         return new JsonResponse($timePerOneRide, 200);
     }
-//    /**
-//     * @Route("/reservation/getKartPrizePerOneRide/{id}", name="reservation/getKartPrizePerOneRide/{id}")
-//     */
-//    public function getKartPrizePerOneRideAction(Request $request, $id)
-//    {
-//        $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($id);
-//        if(!$kart) {
-//            return new JsonResponse([], 404);
-//        }
-//        $prize = [
-//            'prize' => $kart->getPrize()
-//        ];
-//        return new JsonResponse($prize, 200);
-//    }
+    /**
+     * @Route("/reservation/isReservationValid", name="/reservation/isReservationValid")
+     */
+    public function getKartPrizePerOneRideAction(Request $request)
+    {
+        $kart = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->find(1);
+        if(!$kart) {
+            return new JsonResponse([], 404);
+        }
+       print_r($kart->getId() . $kart->getUser()->getName());
+           exit();
+        return new JsonResponse($prize, 200);
+    }
 
     /**
      * @Route("/reservation/getKarts", name="reservation/getKarts")
