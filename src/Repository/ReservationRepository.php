@@ -9,18 +9,27 @@
 namespace App\Repository;
 
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
 
 class ReservationRepository extends EntityRepository
 {
-    public function insertUserAndRolesIDs($user_id, $role_id) {
-        $sql = 'call insertUserAndRolesIds(?, ?)';
+    public function isReservationValid($user_id, $startDate, $endDate, $cost) {
+        $sql = 'call isReservationValid(?, ?, ?, ?)';
         $conn = $this->getEntityManager()->getConnection();
         try {
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(1, $user_id);
-            $stmt->bindValue(2, $role_id);
-            $stmt->execute();
+            $stmt->bindValue(2, $startDate);
+            $stmt->bindValue(3, $endDate);
+            $stmt->bindValue(4, $cost);
+            $rowCount = $stmt->execute();
+            if($rowCount == 1) {
+                $isReservationValid = $stmt->fetch();
+                return $isReservationValid;
+            } else {
+                return null;
+            }
         } catch (DBALException $e) {
             return null;
         }

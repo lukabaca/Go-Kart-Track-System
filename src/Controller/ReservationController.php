@@ -51,15 +51,29 @@ class ReservationController extends Controller
     /**
      * @Route("/reservation/isReservationValid", name="/reservation/isReservationValid")
      */
-    public function getKartPrizePerOneRideAction(Request $request)
+    public function isReservationValidAction(Request $request)
     {
-        $kart = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->find(1);
-        if(!$kart) {
+        $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
+            '2018-01-01 18:00', '2018-01-01 18:30', 50);
+        if(!$isReservationValid) {
             return new JsonResponse([], 404);
         }
-       print_r($kart->getId() . $kart->getUser()->getName());
-           exit();
-        return new JsonResponse($prize, 200);
+       print_r($isReservationValid[1]);
+       exit();
+       return new JsonResponse($prize, 200);
+    }
+
+    /**
+     * @Route("/reservation/makeReservation", name="/reservation/makeReservation")
+     */
+    public function makeReservationAction(Request $request)
+    {
+        if ($request->request->get('reservationData')) {
+            $reservationData = $request->request->get('reservationData');
+            return new JsonResponse($reservationData, 200);
+        } else {
+            return new JsonResponse([], 500);
+        }
     }
 
     /**
@@ -111,4 +125,5 @@ class ReservationController extends Controller
         return $this->render('views/controllers/reservation/calendar.html.twig', []
         );
     }
+
 }
