@@ -28,9 +28,7 @@ class ReservationController extends Controller
     public function indexAction(Request $request)
     {
 //        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
-
         return $this->render('views/controllers/reservation/index.html.twig', [
-
             ]
         );
     }
@@ -55,7 +53,6 @@ class ReservationController extends Controller
      */
     public function isReservationValidAction(Request $request)
     {
-
         $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
             '2018-10-27 18:00', '2018-10-27 18:30', 50);
         if(!$isReservationValid) {
@@ -83,22 +80,22 @@ class ReservationController extends Controller
             $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
                 $startDate, $endDate, $cost);
             if($isReservationValid == 0) {
-                return new JsonResponse([], 409);
+                return new JsonResponse(['Other reservation in this hour exists'], 409);
             }
             if($isReservationValid == 2) {
-                return new JsonResponse([], 400);
+                return new JsonResponse(['Wrong dates (too early or too late)'], 400);
             }
             $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
                 $startDate, $endDate, $cost);
             if(!$reservation) {
-                return new JsonResponse(['a'], 500);
+                return new JsonResponse(['Error while adding reservation'], 500);
             }
             $reservationId = $reservation->getId();
             foreach ($kartIds as $kartId) {
                 $reservationAndKartIds = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->insertReservationAndKartIds($reservationId, $kartId);
                 if(!$reservationAndKartIds) {
                     //w tym wypadku musisz usunac rezerwacje która się dodałą, masz jej reservationId
-                    return new JsonResponse([$kartId], 500);
+                    return new JsonResponse(['Error while progressing reservation'], 500);
                 }
             }
             $reservation = [
