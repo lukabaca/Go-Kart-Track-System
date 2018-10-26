@@ -56,12 +56,12 @@ class ReservationController extends Controller
     public function isReservationValidAction(Request $request)
     {
 
-        $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
+        $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
             '2018-10-27 18:00', '2018-10-27 18:30', 50);
         if(!$isReservationValid) {
             return new JsonResponse([], 404);
         }
-        print_r($isReservationValid);
+        print_r($isReservationValid->getId());
         exit();
 
        return new JsonResponse($isReservationValid, 200);
@@ -79,7 +79,7 @@ class ReservationController extends Controller
             $endDate = new DateTime($reservationData->{'endDate'});
             $endDate = $endDate->format('Y-m-d H:i:s');
             $cost = $reservationData->{'cost'};
-            $karts = $reservationData->{'karts'};
+            $kartIds = $reservationData->{'karts'};
             $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
                 $startDate, $endDate, $cost);
             if($isReservationValid == 0) {
@@ -88,10 +88,26 @@ class ReservationController extends Controller
             if($isReservationValid == 2) {
                 return new JsonResponse([], 400);
             }
-            foreach ($karts as $kart) {
-                print_r($kart);
+            $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
+                $startDate, $endDate, $cost);
+            if(!$reservation) {
+                return new JsonResponse(['a'], 500);
             }
-            return new JsonResponse($reservationData, 200);
+            $reservationId = $reservation->getId();
+            foreach ($kartIds as $kartId) {
+                $reservationAndKartIds = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->insertReservationAndKartIds($reservationId, $kartId);
+                if(!$reservationAndKartIds) {
+                    //w tym wypadku musisz usunac rezerwacje która się dodałą, masz jej reservationId
+                    return new JsonResponse([$kartId], 500);
+                }
+            }
+            $reservation = [
+                'id' => $reservation->getId(),
+                'startDate' => $reservation->getStartDate(),
+                'endDate' => $reservation->getEndDate(),
+                'cost' => $reservation->getCost()
+            ];
+            return new JsonResponse($reservation, 200);
         } else {
             return new JsonResponse([], 500);
         }

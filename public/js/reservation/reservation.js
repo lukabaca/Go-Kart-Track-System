@@ -352,14 +352,9 @@ function makeReservation(startDate, endDate, cost, karts) {
             clearTable(kartTable);
             $('#reservationPrize').text('');
             $('#reserveBtn').attr("disabled", "disabled");
-            // let reservationID = data.id;
-            // let reservationDate = data.startTime;
-            // (reservationID === null ||reservationID === undefined) ? (window.location.href = '/APIerror') : ('');
-            // (reservationID === null ||reservationID === undefined) ? (window.location.href = '/APIerror') : ('');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
-            // let responseElement = $('.responseInfo');
             switch (statusCode) {
                 case 400: {
                     // responseElement.text('Nie można sparsować przesłanych dat');
