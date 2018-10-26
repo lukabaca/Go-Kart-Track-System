@@ -80,20 +80,26 @@ function loadRecords(table, recordLimit, timeMode) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
+            let errorMessage;
             switch (statusCode) {
+                case 404: {
+                    errorMessage = 'Nie znaleziono rekordów dla tego kryterium';
+                    break;
+                }
                 default : {
-                    let alertErrorContent =
-                        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">X</span>' +
-                        '</button>' +
-                        '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
-                        '</div>';
-
-                    $('.alertArea').append(alertErrorContent);
+                    errorMessage = 'Wystąpił błąd podczas pobierania danych';
                     break;
                 }
             }
+            let alertErrorContent =
+                '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                '<span aria-hidden="true">X</span>' +
+                '</button>' +
+                '<strong>'+errorMessage+'</strong>' +
+                '</div>';
+
+            $('.alertArea').append(alertErrorContent);
             $('.loader').css('display', 'none');
         }
     });

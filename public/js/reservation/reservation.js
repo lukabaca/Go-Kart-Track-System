@@ -369,7 +369,7 @@ function makeReservation(startDate, endDate, cost, karts) {
                     break;
                 }
                 default : {
-                    // window.location.href = '/APIerror';
+                    window.location.href = '/status500';
                     break;
                 }
             }
