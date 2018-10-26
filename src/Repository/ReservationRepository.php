@@ -25,8 +25,15 @@ class ReservationRepository extends EntityRepository
             $stmt->bindValue(4, $cost);
             $rowCount = $stmt->execute();
             if($rowCount == 1) {
-                $isReservationValid = $stmt->fetch();
-                return $isReservationValid;
+                $res = $stmt->fetch();
+                if(!$res) {
+                    return null;
+                }
+                for($i = 0; $i < 3; $i++) {
+                   if(!empty($res[$i])) {
+                       return $res[$i];
+                   }
+                }
             } else {
                 return null;
             }

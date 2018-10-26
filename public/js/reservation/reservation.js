@@ -190,10 +190,9 @@ $(document).ready(function () {
             let numberOfRowsInTable = table.find('tbody tr').length;
             if (numberOfRowsInTable < 1) {
                 isValidChosenKarts = false;
-                setPrizeInfo($('#reservationPrize'), '');
-            } else {
-                setPrizeInfo($('#reservationPrize'), totalPrize + ' ' + 'zł');
+                totalPrize = '';
             }
+            setPrizeInfo($('#reservationPrize'), totalPrize);
         } else {
             //error bo nie znalazlem katalogu, ups cos poszlo nie tak?
         }
@@ -250,7 +249,7 @@ $(document).ready(function () {
             }
         }
         if(totalPrize > 0) {
-            setPrizeInfo($('#reservationPrize'), totalPrize + ' ' + 'zł');
+            setPrizeInfo($('#reservationPrize'), totalPrize);
         }
         $('.loader').css('display', 'none');
     });
@@ -262,11 +261,9 @@ $(document).ready(function () {
         let hourEnd = $('#hourEndInput').val();
         let kartTable = $('#kartTable');
         let kartIds = getKartIdsFromTable(kartTable);
-        let prize = $('#reservationPrize').val();
+        let prize = $('#reservationPrize').text();
         let startDate = date + ' ' + hourStart;
         let endDate = date + ' ' + hourEnd;
-
-
         makeReservation(startDate, endDate, prize, kartIds);
     });
 });

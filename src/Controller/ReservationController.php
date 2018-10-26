@@ -13,10 +13,12 @@ use App\Entity\Kart;
 use App\Entity\Reservation;
 use App\Entity\trackConfig\RideTimeDictionary;
 use App\Repository\trackConfig\RideTimeDictionaryRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class ReservationController extends Controller
 {
@@ -53,14 +55,16 @@ class ReservationController extends Controller
      */
     public function isReservationValidAction(Request $request)
     {
+
         $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
-            '2018-01-01 18:00', '2018-01-01 18:30', 50);
+            '2018-10-27 18:00', '2018-10-27 18:30', 50);
         if(!$isReservationValid) {
             return new JsonResponse([], 404);
         }
-       print_r($isReservationValid[1]);
-       exit();
-       return new JsonResponse($prize, 200);
+        print_r($isReservationValid);
+        exit();
+
+       return new JsonResponse($isReservationValid, 200);
     }
 
     /**
@@ -69,7 +73,24 @@ class ReservationController extends Controller
     public function makeReservationAction(Request $request)
     {
         if ($request->request->get('reservationData')) {
-            $reservationData = $request->request->get('reservationData');
+            $reservationData = json_decode($request->request->get('reservationData'));
+            $startDate = new DateTime($reservationData->{'startDate'});
+            $startDate = $startDate->format('Y-m-d H:i:s');
+            $endDate = new DateTime($reservationData->{'endDate'});
+            $endDate = $endDate->format('Y-m-d H:i:s');
+            $cost = $reservationData->{'cost'};
+            $karts = $reservationData->{'karts'};
+            $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
+                $startDate, $endDate, $cost);
+            if($isReservationValid == 0) {
+                return new JsonResponse([], 409);
+            }
+            if($isReservationValid == 2) {
+                return new JsonResponse([], 400);
+            }
+            foreach ($karts as $kart) {
+                print_r($kart);
+            }
             return new JsonResponse($reservationData, 200);
         } else {
             return new JsonResponse([], 500);
