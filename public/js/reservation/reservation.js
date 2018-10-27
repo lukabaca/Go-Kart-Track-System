@@ -6,21 +6,20 @@ $(document).ready(function () {
     maxEndDate.setDate(maxEndDate.getDate() + maxNumberOfDays);
 
     let timePerOneRide;
-    let chosenGokartsNumber = 0;
     let numberOfRides = 0;
 
     let reserveButton = $('#reserveBtn');
     reserveButton.attr("disabled", "disabled");
 
     let isValidHourStart = false;
-    let isValidNumberOfRides = false;
+    let isValidNumberOfRides = true;
     let isValidChosenKarts = false;
+    let isValidDate = true;
 
     let karts;
     let totalPrize = 0;
 
     $('#numberOfRidesInput').val(minNumberOfRides);
-    $('#chosenGokartsNumber').text(chosenGokartsNumber + '/');
     loadKarts();
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -126,6 +125,17 @@ $(document).ready(function () {
         checkButtonStatus();
     });
 
+    $('#dateInput').on('change', function (e) {
+       e.preventDefault();
+       let date = $(this).val();
+       if(date !== '') {
+           isValidDate = true;
+       } else {
+           isValidDate = false;
+       }
+        checkButtonStatus();
+    });
+
     function loadKarts() {
         $.ajax({
             type: 'POST',
@@ -157,7 +167,7 @@ $(document).ready(function () {
         });
     }
     function checkButtonStatus() {
-        if(isValidHourStart && isValidNumberOfRides && isValidChosenKarts) {
+        if(isValidHourStart && isValidNumberOfRides && isValidChosenKarts && isValidDate) {
             reserveButton.removeAttr("disabled");
         } else {
             reserveButton.attr("disabled", "disabled");
