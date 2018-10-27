@@ -1,5 +1,6 @@
 $(document).ready(function () {
     let maxNumberOfDays = 21;
+    let minNumberOfRides = 1;
     let today = new Date();
     let maxEndDate = new Date();
     maxEndDate.setDate(maxEndDate.getDate() + maxNumberOfDays);
@@ -18,6 +19,7 @@ $(document).ready(function () {
     let karts;
     let totalPrize = 0;
 
+    $('#numberOfRidesInput').val(minNumberOfRides);
     $('#chosenGokartsNumber').text(chosenGokartsNumber + '/');
     loadKarts();
     $.fn.datepicker.dates['pl'] = {
@@ -114,6 +116,10 @@ $(document).ready(function () {
         } else {
             $('#hourEndInput').val('');
             isValidNumberOfRides = false;
+        }
+        if(numberOfRides !== '') {
+            // totalPrize = totalPrize * numberOfRides;
+            // setPrizeInfo($('#reservationPrize'), totalPrize);
         }
         checkButtonStatus();
     });
