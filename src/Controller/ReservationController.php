@@ -73,17 +73,19 @@ class ReservationController extends Controller
     {
         if ($request->request->get('kartData')) {
             $kartData = json_decode($request->request->get('kartData'));
-            print_r($kartData);
-            exit();
-            $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides(1, 2);
-            if (!$prize) {
-                return new JsonResponse([], 404);
+            $numberOfRides = $kartData->{'numberOfRides'};
+            $kartIds = $kartData->{'karts'};
+            $totalPrize = 0;
+            foreach ($kartIds as $kartId) {
+                $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides($kartId, $numberOfRides);
+                if (!$prize) {
+                    return new JsonResponse([], 404);
+                }
+                if ($prize == -1) {
+                    return new JsonResponse(['Bad input value'], 400);
+                }
+                $totalPrize = $totalPrize + $prize;
             }
-            if ($prize == -1) {
-                return new JsonResponse(['Bad input value'], 400);
-            }
-            print_r($prize);
-            exit();
             return new JsonResponse($totalPrize, 200);
         } else {
             return new JsonResponse([], 500);
