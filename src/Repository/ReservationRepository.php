@@ -96,4 +96,26 @@ class ReservationRepository extends EntityRepository
             return null;
         }
     }
+    public function getKartPrizeByNumberOfRides($kart_id, $numberOfRides) {
+        $sql = 'call getKartPrizeByNumberOfRides(?, ?)';
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $kart_id);
+            $stmt->bindValue(2, $numberOfRides);
+            $rowCount = $stmt->execute();
+            if($rowCount == 1) {
+                $res = $stmt->fetch();
+                if(!$res || !$res['NULL']) {
+                    return null;
+                }
+                $prize = $res['totalKartPrize'];
+                return $prize;
+            } else {
+                return null;
+            }
+        } catch (DBALException $e) {
+            return null;
+        }
+    }
 }

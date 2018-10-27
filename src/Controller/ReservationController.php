@@ -53,13 +53,12 @@ class ReservationController extends Controller
      */
     public function isReservationValidAction(Request $request)
     {
-//        $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
-//            '2018-10-27 18:00', '2018-10-27 18:30', 50);
-//        if(!$isReservationValid) {
-//            return new JsonResponse([], 404);
-//        }
-//        print_r($isReservationValid->getId());
-//        exit();
+        $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides(1, 0);
+        if(!$prize) {
+            return new JsonResponse([], 404);
+        }
+        print_r($prize);
+        exit();
 
        return new JsonResponse([], 500);
     }
