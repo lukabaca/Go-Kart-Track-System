@@ -265,7 +265,8 @@ $(document).ready(function () {
             }
         }
         let numberOfRides = $('#numberOfRidesInput').val();
-        getTotalPrizeForKartsInReservation(kartIdsToLoad, numberOfRides);
+        let kartIds = getKartIdsFromTable(kartTable);
+        getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
         $('.loader').css('display', 'none');
     });
 
