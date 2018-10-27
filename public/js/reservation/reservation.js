@@ -355,9 +355,10 @@ function makeReservation(startDate, endDate, cost, karts) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
+            responseElement = $('.reservationResponseErrorMessage');
             switch (statusCode) {
                 case 400: {
-                    // responseElement.text('Nie można sparsować przesłanych dat');
+                    responseElement.text('Nie można sparsować przesłanych dat');
                     break;
                 }
                 case 404: {
@@ -365,7 +366,7 @@ function makeReservation(startDate, endDate, cost, karts) {
                     break;
                 }
                 case 409: {
-                    // responseElement.text('Ten termin jest już zajęty');
+                    responseElement.text('Ten termin jest już zajęty');
                     break;
                 }
                 default : {
@@ -373,7 +374,7 @@ function makeReservation(startDate, endDate, cost, karts) {
                     break;
                 }
             }
-            // $('#modalReservationResponseInfo').modal('open');
+            $('#reservationErrorResponseModal').modal('show');
         }
     });
 }

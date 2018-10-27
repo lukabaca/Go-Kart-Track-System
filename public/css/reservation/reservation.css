@@ -17,4 +17,10 @@
 #kartTable {
   margin-top: 25px; }
 
+.responseArea {
+  text-align: center; }
+  .responseArea .reservationResponseErrorMessage {
+    color: #DC143C;
+    font-size: 18px; }
+
 /*# sourceMappingURL=reservation.css.map */

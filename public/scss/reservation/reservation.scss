@@ -21,3 +21,11 @@
 #kartTable {
   margin-top: 25px;
 }
+
+.responseArea {
+  text-align: center;
+  .reservationResponseErrorMessage {
+    color: $error;
+    font-size: 18px;
+  }
+}
