@@ -53,14 +53,41 @@ class ReservationController extends Controller
      */
     public function isReservationValidAction(Request $request)
     {
-        $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides(1, 0);
+        $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides(1, 2);
         if(!$prize) {
             return new JsonResponse([], 404);
+        }
+        if($prize == -1) {
+            return new JsonResponse(['Bad input value'], 400);
         }
         print_r($prize);
         exit();
 
        return new JsonResponse([], 500);
+    }
+
+    /**
+     * @Route("/reservation/getTotalKartPrizeForReservation", name="/reservation/getTotalKartPrizeForReservation")
+     */
+    public function getTotalKartPrizeForReservationAction(Request $request)
+    {
+        if ($request->request->get('kartData')) {
+            $kartData = json_decode($request->request->get('kartData'));
+            print_r($kartData);
+            exit();
+            $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides(1, 2);
+            if (!$prize) {
+                return new JsonResponse([], 404);
+            }
+            if ($prize == -1) {
+                return new JsonResponse(['Bad input value'], 400);
+            }
+            print_r($prize);
+            exit();
+            return new JsonResponse($totalPrize, 200);
+        } else {
+            return new JsonResponse([], 500);
+        }
     }
 
     /**
@@ -103,7 +130,7 @@ class ReservationController extends Controller
                 'endDate' => $reservation->getEndDate(),
                 'cost' => $reservation->getCost()
             ];
-            return new JsonResponse($reservation, 200);
+            return new JsonResponse($reservation, 201);
         } else {
             return new JsonResponse([], 500);
         }

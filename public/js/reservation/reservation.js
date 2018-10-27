@@ -250,13 +250,15 @@ $(document).ready(function () {
                         kartTable.find('tbody').append(recordContent);
                         isValid = true;
                         isValidChosenKarts = true;
-                        totalPrize += prize;
+                        // totalPrize += prize;
                         checkButtonStatus();
                     }
                 }
                 $('.loader').css('display', 'none');
             }
         }
+        let numberOfRides = $('#numberOfRidesInput').val();
+        getTotalPrizeForKartsInReservation(kartIdsToLoad, numberOfRides);
         if(totalPrize > 0) {
             setPrizeInfo($('#reservationPrize'), totalPrize);
         }
@@ -344,7 +346,50 @@ function getCheckedElementsIdsFromTable(tableID) {
     });
     return checkedIds;
 }
-
+function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
+    let kartData = {
+        "numberOfRides": numberOfRides,
+        "karts": kartIds,
+    };
+    kartData = JSON.stringify(kartData);
+    console.log(kartData);
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/reservation/getTotalKartPrizeForReservation',
+        data: {
+            kartData: kartData
+        },
+        success: function (data) {
+            // $('#modalCorrectReservation').modal('open');
+            console.log(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            let statusCode = xhr.status;
+            // responseElement = $('.reservationResponseErrorMessage');
+            console.log(statusCode);
+            switch (statusCode) {
+                // case 400: {
+                //     responseElement.text('Nie można sparsować przesłanych dat');
+                //     break;
+                // }
+                // case 404: {
+                //     // responseElement.text('Podano złe parametry');
+                //     break;
+                // }
+                // case 409: {
+                //     responseElement.text('Ten termin jest już zajęty');
+                //     break;
+                // }
+                default : {
+                    // window.location.href = '/status500';
+                    break;
+                }
+            }
+            // $('#reservationErrorResponseModal').modal('show');
+        }
+    });
+}
 function makeReservation(startDate, endDate, cost, karts) {
     let reservationData = {
         "startDate": startDate,

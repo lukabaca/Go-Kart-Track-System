@@ -106,7 +106,7 @@ class ReservationRepository extends EntityRepository
             $rowCount = $stmt->execute();
             if($rowCount == 1) {
                 $res = $stmt->fetch();
-                if(!$res || !$res['NULL']) {
+                if(!$res) {
                     return null;
                 }
                 $prize = $res['totalKartPrize'];
