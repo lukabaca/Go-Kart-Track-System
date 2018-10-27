@@ -165,12 +165,14 @@ $(document).ready(function () {
         for(let i = 0; i < karts.length; i++) {
             let id = (karts[i].id === null || karts[i].id === undefined) ? isValid = false : karts[i].id;
             let name = (karts[i].name === null || karts[i].name === undefined) ? isValid = false : karts[i].name;
-            if(isValid) {
+            let prize = (karts[i].prize === null || karts[i].prize === undefined) ? isValid = false : karts[i].prize;
+            let availability = (karts[i].availability === null || karts[i].availability === undefined) ? isValid = false : karts[i].availability;
+            if(isValid && availability == 1) {
                 let recordContent =
-                    '<tr class="record-row" record-id=' + id + '>' +
+                    '<tr class="record-row" kart-id=' + id + '>' +
                     '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
-                    '<td class="record-info-td">' + id + '</td>' +
                     '<td class="record-info-td">' + name + '</td>' +
+                    '<td class="record-info-td">' + prize + '</td>' +
                     '</tr>';
                 table.find('tbody').append(recordContent);
                 isValid = true;
@@ -182,7 +184,7 @@ $(document).ready(function () {
         e.stopPropagation();
         let table = $('#kartTable');
         let tr = $(this).closest('.record-row');
-        let kartId = tr.attr('record-id');
+        let kartId = tr.attr('kart-id');
         let kart = getKartById(karts, kartId);
         if(kart) {
             tr.remove();
@@ -206,7 +208,7 @@ $(document).ready(function () {
         let checkedIds = getCheckedElementsIdsFromTable(kartTableModal);
         let chosenKartIds = [];
         kartTable.find('tbody tr').each(function () {
-            let kartId = $(this).attr('record-id');
+            let kartId = $(this).attr('kart-id');
             chosenKartIds.push(kartId);
         });
         //delete ids that already exist in table
@@ -231,11 +233,12 @@ $(document).ready(function () {
                     let id = karts[j].id;
                     let name = (karts[j].name === null || karts[j].name === undefined) ? isValid = false : karts[j].name;
                     let prize = (karts[j].prize === null || karts[j].prize === undefined) ? isValid = false : karts[j].prize;
+                    let availability = (karts[j].availability === null || karts[j].availability === undefined) ? isValid = false : karts[j].availability;
                     if (isValid) {
                         let recordContent =
-                            '<tr class="record-row" record-id=' + id + '>' +
-                            '<td class="record-info-td">' + id + '</td>' +
+                            '<tr class="record-row" kart-id=' + id + '>' +
                             '<td class="record-info-td">' + name + '</td>' +
+                            '<td class="record-info-td">' + prize + '</td>' +
                             '<td class="record-info-td">' + '<i class="fa fa-trash deleteKartIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
                             '</tr>';
                         kartTable.find('tbody').append(recordContent);
@@ -281,8 +284,16 @@ function getKartById(karts, kartId) {
 function getKartIdsFromTable(table) {
     let kartIds = [];
     table.find('tbody tr').each(function () {
-        let kartId = $(this).attr('record-id');
+        let kartId = $(this).attr('kart-id');
         kartIds.push(kartId);
+    });
+    return kartIds;
+}
+function getTotalKartPrizeFromTable(table) {
+    let totalKartPrize = 0;
+    table.find('tbody tr td').each(function () {
+        let kartPrize = $(this).attr('kart-prize');
+        totalKartPrize = totalKartPrize + kartPrize;
     });
     return kartIds;
 }
@@ -347,11 +358,7 @@ function makeReservation(startDate, endDate, cost, karts) {
         success: function (data) {
             // $('#modalCorrectReservation').modal('open');
             console.log(data);
-            $('#reservationForm')[0].reset();
-            let kartTable = $('#kartTable');
-            clearTable(kartTable);
-            $('#reservationPrize').text('');
-            $('#reserveBtn').attr("disabled", "disabled");
+            resetForm();
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
@@ -377,4 +384,13 @@ function makeReservation(startDate, endDate, cost, karts) {
             $('#reservationErrorResponseModal').modal('show');
         }
     });
+}
+function resetForm() {
+    let today = new Date();
+    $('#reservationForm')[0].reset();
+    let kartTable = $('#kartTable');
+    clearTable(kartTable);
+    $('#reservationPrize').text('');
+    $('#reserveBtn').attr("disabled", "disabled");
+    $('.datePicker').datepicker('setDate', today);
 }
