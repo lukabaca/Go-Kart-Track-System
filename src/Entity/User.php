@@ -151,6 +151,11 @@ class User implements UserInterface
     private $lap;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reservation", mappedBy="user")
+     */
+    private $reservation;
+
+    /**
      * @return mixed
      */
     public function getLap()
@@ -339,6 +344,21 @@ class User implements UserInterface
     public function setTelephoneNumber($telephoneNumber): void
     {
         $this->telephoneNumber = $telephoneNumber;
+    }
+    /**
+     * @return mixed
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
+    }
+
+    /**
+     * @param mixed $reservation
+     */
+    public function setReservation($reservation): void
+    {
+        $this->reservation = $reservation;
     }
     /**
      * @param mixed $roles

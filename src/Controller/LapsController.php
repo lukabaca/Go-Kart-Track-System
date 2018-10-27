@@ -24,7 +24,6 @@ class LapsController extends Controller
      */
     public function indexAction(Request $request)
     {
-
         return $this->render('views/controllers/laps/index.html.twig', []
         );
     }
@@ -48,30 +47,23 @@ class LapsController extends Controller
     public function loadRecordsAction(Request $request, $limit, $timeMode)
     {
         if($limit > 100) {
-            return new JsonResponse([], 400);
+            return new JsonResponse(['max limit of laps to load is 100'], 400);
         }
-
         $recordsTemp = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords($limit, $timeMode);
-
         if(!$recordsTemp) {
-            return new JsonResponse([], 404);
+            return new JsonResponse(['Records for this time has not been found'], 404);
         }
-
         $records = [];
         foreach ($recordsTemp as $recordTemp) {
-
             $userId = $recordTemp->getUser()->getId();
             $kartId = $recordTemp->getKart()->getId();
-
             $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($userId);
             $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($kartId);
-
             if(!$user || !$kart) {
                 return new JsonResponse([], 404);
             }
             $recordTemp->setUser($user);
             $recordTemp->setKart($kart);
-
             $record = [
                 'id' => $recordTemp->getId(),
                 'time' => $recordTemp->getTime(),
@@ -85,7 +77,6 @@ class LapsController extends Controller
                     'name' => $recordTemp->getKart()->getName(),
                 ]
             ];
-
             $records [] = $record;
         }
         return new JsonResponse($records, 200);
@@ -97,26 +88,20 @@ class LapsController extends Controller
     public function test(Request $request)
     {
         $recordsTemp = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords(5, 1);
-
         if(!$recordsTemp) {
             return new JsonResponse([], 404);
         }
-
         $records = [];
         foreach ($recordsTemp as $recordTemp) {
-
             $userId = $recordTemp->getUser()->getId();
             $kartId = $recordTemp->getKart()->getId();
-
             $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($userId);
             $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($kartId);
-
             if(!$user || !$kart) {
                 return new JsonResponse([], 404);
             }
             $recordTemp->setUser($user);
             $recordTemp->setKart($kart);
-
             $record = [
                 'id' => $recordTemp->getId(),
                 'time' => $recordTemp->getTime(),
@@ -129,7 +114,6 @@ class LapsController extends Controller
                     'name' => $recordTemp->getKart()->getName(),
                 ]
             ];
-
             $records [] = $record;
         }
         return new JsonResponse($records, 200);

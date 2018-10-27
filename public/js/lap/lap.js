@@ -20,6 +20,7 @@ $(document).ready(function (e) {
 
     $('#allTimeRecord').on('click', function (e) {
        e.preventDefault();
+       removeAlertLabel('.alert');
        let recordLimit = $('#limitRecordSelect option:selected').val();
        clearTable(recordTable);
        loadRecords(recordTable, recordLimit, timeModeDictionary['allTimeRecord']);
@@ -27,6 +28,7 @@ $(document).ready(function (e) {
 
     $('#monthRecord').on('click', function (e) {
         e.preventDefault();
+        removeAlertLabel('.alert');
         let recordLimit = $('#limitRecordSelect option:selected').val();
         clearTable(recordTable);
         loadRecords(recordTable, recordLimit, timeModeDictionary['monthRecord']);
@@ -34,6 +36,7 @@ $(document).ready(function (e) {
 
     $('#weekRecord').on('click', function (e) {
         e.preventDefault();
+        removeAlertLabel('.alert');
         let recordLimit = $('#limitRecordSelect option:selected').val();
         clearTable(recordTable);
         loadRecords(recordTable, recordLimit, timeModeDictionary['weekRecord']);
@@ -79,21 +82,28 @@ function loadRecords(table, recordLimit, timeMode) {
             $('.loader').css('display', 'none');
         },
         error: function (xhr, ajaxOptions, thrownError) {
+            removeAlertLabel('.alert');
             let statusCode = xhr.status;
+            let errorMessage;
             switch (statusCode) {
+                case 404: {
+                    errorMessage = 'Nie znaleziono rekordów dla tego kryterium';
+                    break;
+                }
                 default : {
-                    let alertErrorContent =
-                        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">X</span>' +
-                        '</button>' +
-                        '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
-                        '</div>';
-
-                    $('.alertArea').append(alertErrorContent);
+                    errorMessage = 'Wystąpił błąd podczas pobierania danych';
                     break;
                 }
             }
+            let alertErrorContent =
+                '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                '<span aria-hidden="true">X</span>' +
+                '</button>' +
+                '<strong>'+errorMessage+'</strong>' +
+                '</div>';
+
+            $('.alertArea').append(alertErrorContent);
             $('.loader').css('display', 'none');
         }
     });
@@ -103,4 +113,7 @@ function clearTable(table) {
     table.find('tbody tr').each(function () {
         $(this).remove();
     });
+}
+function removeAlertLabel(classId) {
+    $(classId).remove();
 }

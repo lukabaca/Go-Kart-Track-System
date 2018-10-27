@@ -51,7 +51,7 @@ Rezerwacja
                             </div>
                             <div class="form-group">
                                 <label for="reservationStart">Cena: </label>
-                                <p id="reservationPrize"></p>
+                                <span id="reservationPrize"></span><span>zł</span>
                             </div>
                             <button type="submit" class="btn btn-primary" id="reserveBtn">Rezerwuj</button>
                         </form>
@@ -68,7 +68,7 @@ Rezerwacja
                             <table class="table" id="kartTable">
                                 <thead>
                                 <th>Nazwa gokartu</th>
-                                <th>Moc</th>
+                                <th>Cena</th>
                                 <th></th>
                                 </thead>
                                 <tbody>
@@ -99,7 +99,7 @@ Rezerwacja
                         <thead>
                             <th></th>
                             <th>Nazwa gokartu</th>
-                            <th>Moc</th>
+                            <th>Cena</th>
                         </thead>
                         <tbody>
 
@@ -111,12 +111,33 @@ Rezerwacja
                 <small class="responseInfo"></small>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
                 <button type="submit" class="btn btn-primary" data-dismiss="modal" id="confirmKartsModalBtn">Zatwierdź</button>
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="reservationErrorResponseModal" tabindex="-1" role="dialog" aria-labelledby="getKartModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                {#<h5 class="modal-title" id="addRecordingModalLabel">Gokarty</h5>#}
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="col-md-12 responseArea">
+                <p class="reservationResponseErrorMessage">sss</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
 {% block javascripts %}

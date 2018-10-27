@@ -10,12 +10,15 @@ namespace App\Controller;
 
 
 use App\Entity\Kart;
+use App\Entity\Reservation;
 use App\Entity\trackConfig\RideTimeDictionary;
 use App\Repository\trackConfig\RideTimeDictionaryRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class ReservationController extends Controller
 {
@@ -25,9 +28,7 @@ class ReservationController extends Controller
     public function indexAction(Request $request)
     {
 //        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
-
         return $this->render('views/controllers/reservation/index.html.twig', [
-
             ]
         );
     }
@@ -47,20 +48,67 @@ class ReservationController extends Controller
         ];
         return new JsonResponse($timePerOneRide, 200);
     }
-//    /**
-//     * @Route("/reservation/getKartPrizePerOneRide/{id}", name="reservation/getKartPrizePerOneRide/{id}")
-//     */
-//    public function getKartPrizePerOneRideAction(Request $request, $id)
-//    {
-//        $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($id);
-//        if(!$kart) {
+    /**
+     * @Route("/reservation/isReservationValid", name="/reservation/isReservationValid")
+     */
+    public function isReservationValidAction(Request $request)
+    {
+//        $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
+//            '2018-10-27 18:00', '2018-10-27 18:30', 50);
+//        if(!$isReservationValid) {
 //            return new JsonResponse([], 404);
 //        }
-//        $prize = [
-//            'prize' => $kart->getPrize()
-//        ];
-//        return new JsonResponse($prize, 200);
-//    }
+//        print_r($isReservationValid->getId());
+//        exit();
+
+       return new JsonResponse([], 500);
+    }
+
+    /**
+     * @Route("/reservation/makeReservation", name="/reservation/makeReservation")
+     */
+    public function makeReservationAction(Request $request)
+    {
+        if ($request->request->get('reservationData')) {
+            $reservationData = json_decode($request->request->get('reservationData'));
+            $startDate = new DateTime($reservationData->{'startDate'});
+            $startDate = $startDate->format('Y-m-d H:i:s');
+            $endDate = new DateTime($reservationData->{'endDate'});
+            $endDate = $endDate->format('Y-m-d H:i:s');
+            $cost = $reservationData->{'cost'};
+            $kartIds = $reservationData->{'karts'};
+            $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
+                $startDate, $endDate, $cost);
+            if($isReservationValid == 0) {
+                return new JsonResponse(['Other reservation in this hour exists'], 409);
+            }
+            if($isReservationValid == 2) {
+                return new JsonResponse(['Wrong dates (too early or too late)'], 400);
+            }
+            $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
+                $startDate, $endDate, $cost);
+            if(!$reservation) {
+                return new JsonResponse(['Error while adding reservation'], 500);
+            }
+            $reservationId = $reservation->getId();
+            foreach ($kartIds as $kartId) {
+                $reservationAndKartIds = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->insertReservationAndKartIds($reservationId, $kartId);
+                if(!$reservationAndKartIds) {
+                    //w tym wypadku musisz usunac rezerwacje która się dodałą, masz jej reservationId
+                    return new JsonResponse(['Error while progressing reservation'], 500);
+                }
+            }
+            $reservation = [
+                'id' => $reservation->getId(),
+                'startDate' => $reservation->getStartDate(),
+                'endDate' => $reservation->getEndDate(),
+                'cost' => $reservation->getCost()
+            ];
+            return new JsonResponse($reservation, 200);
+        } else {
+            return new JsonResponse([], 500);
+        }
+    }
 
     /**
      * @Route("/reservation/getKarts", name="reservation/getKarts")
@@ -111,4 +159,5 @@ class ReservationController extends Controller
         return $this->render('views/controllers/reservation/calendar.html.twig', []
         );
     }
+
 }
