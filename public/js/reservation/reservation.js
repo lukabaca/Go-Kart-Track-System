@@ -19,6 +19,7 @@ $(document).ready(function () {
     let karts;
     let totalPrize = 0;
 
+
     $('#numberOfRidesInput').val(minNumberOfRides);
     loadKarts();
     $.fn.datepicker.dates['pl'] = {
@@ -98,8 +99,7 @@ $(document).ready(function () {
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
-        // console.log(numberOfRides);
-        if($('#hourStartInput').val() !== '' && numberOfRides !== '') {
+        if($('#hourStartInput').val() !== '' && numberOfRides !== '' && numberOfRides > 0) {
             isValidNumberOfRides = true;
             let time = $('#hourStartInput').val();
             let res = getHourAndMinutesFromTimePicker(time);
@@ -389,6 +389,7 @@ function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
             // console.log(statusCode);
             switch (statusCode) {
                 // case 400: {
+
                 //     responseElement.text('Nie można sparsować przesłanych dat');
                 //     break;
                 // }
@@ -430,13 +431,14 @@ function makeReservation(startDate, endDate, cost, karts) {
             // $('#modalCorrectReservation').modal('open');
             console.log(data);
             resetForm();
+            window.location.href = '/getReservationDetails/' + data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
             responseElement = $('.reservationResponseErrorMessage');
             switch (statusCode) {
                 case 400: {
-                    responseElement.text('Nie można sparsować przesłanych dat');
+                    responseElement.text('Wprowadzona data jest niepoprawna');
                     break;
                 }
                 case 404: {
@@ -464,4 +466,11 @@ function resetForm() {
     $('#reservationPrize').text('');
     $('#reserveBtn').attr("disabled", "disabled");
     $('.datePicker').datepicker('setDate', today);
+}
+
+function setInitialFlags(isValidHourStart, isValidNumberOfRides, isValidChosenKarts, isValidDate) {
+    isValidHourStart = false;
+    isValidNumberOfRides = true;
+    isValidChosenKarts = false;
+    isValidDate = true;
 }

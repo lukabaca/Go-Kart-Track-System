@@ -179,6 +179,39 @@ class ReservationController extends Controller
     }
 
     /**
+     * @Route("/reservation/getReservationDetails/{id}", name="reservation/getReservationDetails/{id}")
+     */
+    public function getReservationDetailsAction(Request $request, $id)
+    {
+        //sprawdz czy dla id tej rezerwacji nalezy do zalogowanego uzytkwonika, jesli tak to pokaz szczegoly rezerwacji
+        //jesli nie to przekieruj na nie masz dostepu do tej strony
+        $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->find($id);
+        if(!$reservation) {
+//            404 przejdz na strone
+        }
+        $kartsInReservation = $this->getDoctrine()->getManager()->getRepository(Kart::class)->getKartsInReservation($id);
+        if(!$kartsInReservation) {
+
+        }
+        $kartsRes = [];
+        foreach ($kartsInReservation as $kart) {
+            $kartTemp = [
+                'id' => $kart->getId(),
+                'name' => $kart->getName(),
+                'prize' => $kart->getPrize(),
+                'availability' => $kart->getAvailability(),
+            ];
+            $kartsRes [] = $kartTemp;
+        }
+        print_r($kartsRes);
+        exit();
+        return $this->render('views/controllers/reservation/calendar.html.twig', [
+            'karts' => $kartsRes
+        ]
+        );
+    }
+
+    /**
      * @Route("/reservation/calendar", name="reservation/calendar")
      */
     public function calendarAction(Request $request)
