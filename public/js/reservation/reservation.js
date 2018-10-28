@@ -190,7 +190,7 @@ $(document).ready(function () {
                     '<tr class="record-row" kart-id=' + id + '>' +
                     '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
                     '<td class="record-info-td">' + name + '</td>' +
-                    '<td class="record-info-td">' + prize + '</td>' +
+                    '<td class="record-info-td">' + prize + 'zł</td>' +
                     '</tr>';
                 table.find('tbody').append(recordContent);
                 isValid = true;
@@ -261,7 +261,7 @@ $(document).ready(function () {
                         let recordContent =
                             '<tr class="record-row" kart-id=' + id + '>' +
                             '<td class="record-info-td">' + name + '</td>' +
-                            '<td class="record-info-td">' + prize + '</td>' +
+                            '<td class="record-info-td">' + prize + 'zł</td>' +
                             '<td class="record-info-td">' + '<i class="fa fa-trash deleteKartIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
                             '</tr>';
                         kartTable.find('tbody').append(recordContent);
@@ -376,8 +376,6 @@ function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
             kartData: kartData
         },
         success: function (data) {
-            // $('#modalCorrectReservation').modal('open');
-            // console.log(data);
             let totalPrize = data;
             if(totalPrize > 0) {
                 setPrizeInfo($('#reservationPrize'), totalPrize);
@@ -385,8 +383,6 @@ function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
-            // responseElement = $('.reservationResponseErrorMessage');
-            // console.log(statusCode);
             switch (statusCode) {
                 // case 400: {
 
@@ -402,11 +398,10 @@ function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
                 //     break;
                 // }
                 default : {
-                    // window.location.href = '/status500';
+                    window.location.href = '/status500';
                     break;
                 }
             }
-            // $('#reservationErrorResponseModal').modal('show');
         }
     });
 }
@@ -421,15 +416,12 @@ function makeReservation(startDate, endDate, cost, karts) {
     console.log(reservationData);
     $.ajax({
         type: 'POST',
-
         dataType: 'json',
         url: '/reservation/makeReservation',
         data: {
             reservationData: reservationData
         },
         success: function (data) {
-            // $('#modalCorrectReservation').modal('open');
-            console.log(data);
             resetForm();
             window.location.href = '/reservation/getReservationDetails/' + data.id;
         },

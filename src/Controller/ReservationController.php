@@ -187,7 +187,7 @@ class ReservationController extends Controller
         //jesli nie to przekieruj na nie masz dostepu do tej strony
         $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->find($id);
         if(!$reservation) {
-//            404 przejdz na strone
+            return $this->render('views/alerts/404.html.twig', []);
         }
         $userIdForReservation = $reservation->getUser()->getId();
         if($userIdForReservation != $this->getUser()->getId()) {
