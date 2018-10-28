@@ -10,17 +10,45 @@
 
 {% block body %}
     {{ parent() }}
-
     <div class="loader"></div>
     <div class="container">
         <div class="col-md-12 alertArea">
         </div>
         <h4 class="pageHeader">Szczegóły rezerwacji</h4>
         <div class="row">
-            sss
+            <div class="col-md-12">
+                <table class="table reservationDetailsTable" reservation-id="{{ reservation.id }}">
+
+                    <tbody>
+                    <tr>
+                        <td class="headerRow">Dokonał rezerwacji</td>
+                        <td class="infoRow">{{ reservation.startDate }}</td>
+                    </tr>
+                    <tr>
+                        <td class="headerRow">Dokonał rezerwacji</td>
+                        <td class="infoRow">{{ reservation.endDate }}</td>
+                    </tr>
+                    <tr>
+                        <td class="headerRow">Dokonał rezerwacji</td>
+                        <td class="infoRow">{{ reservation.cost }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <li class="list-group-item"><h5>Pojazdy</h5></li>
+                    {% if not karts %}
+                        <li class="list-group-item">Brak pojazdow uczestników</li>
+                    {% endif %}
+                    {% for kart in karts %}
+                        <li class="list-group-item">{{ kart.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
-
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

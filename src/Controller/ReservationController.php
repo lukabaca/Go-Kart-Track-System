@@ -189,6 +189,10 @@ class ReservationController extends Controller
         if(!$reservation) {
 //            404 przejdz na strone
         }
+        $userIdForReservation = $reservation->getUser()->getId();
+        if($userIdForReservation != $this->getUser()->getId()) {
+            //nie mozesz przegladac czyich szczegolow rezerwacji
+        }
         $kartsInReservation = $this->getDoctrine()->getManager()->getRepository(Kart::class)->getKartsInReservation($id);
         if(!$kartsInReservation) {
 
@@ -203,10 +207,13 @@ class ReservationController extends Controller
             ];
             $kartsRes [] = $kartTemp;
         }
-        print_r($kartsRes);
-        exit();
-        return $this->render('views/controllers/reservation/calendar.html.twig', [
-            'karts' => $kartsRes
+//        $reservationId = $reservation->getId();
+//        $startDate = $reservation->getStartDate();
+//        $endDate = $reservation->getEndDate();
+//        $cost = $reservation->getCost();
+        return $this->render('views/controllers/reservation/reservationDetails.html.twig', [
+            'reservation' => $reservation,
+            'karts' => $kartsInReservation
         ]
         );
     }
