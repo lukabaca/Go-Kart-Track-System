@@ -431,7 +431,7 @@ function makeReservation(startDate, endDate, cost, karts) {
             // $('#modalCorrectReservation').modal('open');
             console.log(data);
             resetForm();
-            window.location.href = '/getReservationDetails/' + data.id;
+            window.location.href = '/reservation/getReservationDetails/' + data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;

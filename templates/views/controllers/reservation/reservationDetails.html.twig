@@ -21,16 +21,20 @@
 
                     <tbody>
                     <tr>
-                        <td class="headerRow">Dokonał rezerwacji</td>
-                        <td class="infoRow">{{ reservation.startDate }}</td>
+                        <td class="headerRow">Data</td>
+                        <td class="infoRow">{{ date }}</td>
                     </tr>
                     <tr>
-                        <td class="headerRow">Dokonał rezerwacji</td>
-                        <td class="infoRow">{{ reservation.endDate }}</td>
+                        <td class="headerRow">Godzina rozpoczęcia</td>
+                        <td class="infoRow">{{ startDateHour }}</td>
                     </tr>
                     <tr>
-                        <td class="headerRow">Dokonał rezerwacji</td>
-                        <td class="infoRow">{{ reservation.cost }}</td>
+                        <td class="headerRow">Godzina zakończenia</td>
+                        <td class="infoRow">{{ endDateHour }}</td>
+                    </tr>
+                    <tr>
+                        <td class="headerRow">Całkowita suma za przejazdy</td>
+                        <td class="infoRow">{{ reservation.cost }} zł</td>
                     </tr>
 
                     </tbody>

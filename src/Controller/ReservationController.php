@@ -208,10 +208,17 @@ class ReservationController extends Controller
             $kartsRes [] = $kartTemp;
         }
 //        $reservationId = $reservation->getId();
-//        $startDate = $reservation->getStartDate();
+        $startDate = date_create($reservation->getStartDate());
+        $startDateHour = date_format($startDate, 'H:i');
+        $endDate = date_create($reservation->getEndDate());
+        $endDateHour = date_format($endDate, 'H:i');
+        $date = date_format($startDate, 'd-m-Y');
 //        $endDate = $reservation->getEndDate();
 //        $cost = $reservation->getCost();
         return $this->render('views/controllers/reservation/reservationDetails.html.twig', [
+            'date' => $date,
+            'startDateHour' => $startDateHour,
+            'endDateHour' => $endDateHour,
             'reservation' => $reservation,
             'karts' => $kartsInReservation
         ]
