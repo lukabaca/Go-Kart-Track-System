@@ -230,9 +230,21 @@ class ReservationController extends Controller
      */
     public function calendarAction(Request $request)
     {
-
         return $this->render('views/controllers/reservation/calendar.html.twig', []
         );
     }
 
+    /**
+     * @Route("/reservation/getReservations/{date}/{viewType}", name="reservation/getKart/{date}/{viewType}")
+     */
+    public function getReservationsAction(Request $request, $date, $viewType)
+    {
+        $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getReservationsForViewType($date, $viewType);
+        if(!$reservations) {
+            return new JsonResponse([], 404);
+        }
+        print_r($reservations);
+        exit();
+        return new JsonResponse($reservations, 200);
+    }
 }

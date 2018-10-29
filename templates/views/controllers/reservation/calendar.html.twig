@@ -1,16 +1,12 @@
-
-{# app/Resources/views/number.html.twig #}
 {%  extends 'base.html.twig'%}
 {% block title %}
-Rezerwacja
+Dostępność toru
 {% endblock %}
 
 {% block stylesheets %}
 {{ parent() }}
-{#<link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/reservation.css') }}">#}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" media="'print">
-<link rel="stylesheet" type="text/css" href="{{ asset('calendar/materialCalendar.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -34,6 +30,6 @@ Rezerwacja
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset('calendar/fullcalendar.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 <script src="{{ asset('js/reservation/calendar.js') }}"></script>
 {%  endblock %}
