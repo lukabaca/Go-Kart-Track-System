@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 class ReservationController extends Controller
@@ -243,8 +244,44 @@ class ReservationController extends Controller
         if(!$reservations) {
             return new JsonResponse([], 404);
         }
-        print_r($reservations);
-        exit();
-        return new JsonResponse($reservations, 200);
+        $reservationRes = [];
+        foreach ($reservations as $reservation) {
+            $dateStart = new DateTime($reservation->getStartDate());
+            $dateEnd = new DateTime($reservation->getEndDate());
+
+            $yearStart = date_format($dateStart, 'Y');
+            $monthStart = date_format($dateStart, 'm');
+            $dayStart = date_format($dateStart, 'd');
+            $hourStart = date_format($dateStart, 'H');
+            $minuteStart = date_format($dateStart, 'i');
+
+            $yearEnd = date_format($dateEnd, 'Y');
+            $monthEnd = date_format($dateEnd, 'm');
+            $dayEnd = date_format($dateEnd, 'd');
+            $hourEnd = date_format($dateEnd, 'H');
+            $minuteEnd = date_format($dateEnd, 'i');
+
+            $reservationTemp = [
+                'id' => $reservation->getId(),
+                'start' => [
+                    'year' => $yearStart,
+                    'month' => $monthStart,
+                    'day' => $dayStart,
+                    'hour' => $hourStart,
+                    'minute' => $minuteStart
+                ],
+                'end' => [
+                    'year' => $yearEnd,
+                    'month' => $monthEnd,
+                    'day' => $dayEnd,
+                    'hour' => $hourEnd,
+                    'minute' => $minuteEnd
+                ],
+            ];
+            $reservationRes [] = $reservationTemp;
+        }
+//        print_r($reservationRes);
+//        exit();
+        return new JsonResponse($reservationRes, 200);
     }
 }
