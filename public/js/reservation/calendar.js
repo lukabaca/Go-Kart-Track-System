@@ -1,32 +1,10 @@
+let calendarViewType = {'day': 1,'week': 2,'month': 3};
+let calendarDefaultView = {1 : 'agendaDay', 2 : 'agendaWeek', 3 : 'month'};
 $(document).ready(function () {
+    let actualDate = new Date();
     defaultView = 'agendaWeek';
-    events = [
-        {
-            id: 1,
-            title: 'a',
-            start: new Date(2018, 9, 29, 10, 0),
-            end: new Date(2018, 9, 29, 10, 30),
-            backgroundColor: 'grey',
-            borderColor: 'red',
-        },
-        // {
-        //     id: 2,
-        //     title: 'b',
-        //     start: new Date(yearStart, monthStart, dayStart, hourStart, minuteStart),
-        //     end: new Date(yearEnd, monthEnd, dayEnd, hourEnd, minuteEnd),
-        //     backgroundColor: 'blue',
-        //     borderColor: 'red',
-        // },
-        // {
-        //     id: 3,
-        //     title: 'c',
-        //     start: new Date(yearStart, monthStart, dayStart, hourStart, minuteStart),
-        //     end: new Date(yearEnd, monthEnd, dayEnd, hourEnd, minuteEnd),
-        //     backgroundColor: 'blue',
-        //     borderColor: 'red',
-        // }
-    ];
-    initCalendar(events, defaultView);
+    getReservations(getProperDateFormat(actualDate), calendarViewType['week'], actualDate);
+});
 function initCalendar(eventArray, defaultView) {
     $('#calendar').fullCalendar({
         customButtons: {
@@ -40,7 +18,7 @@ function initCalendar(eventArray, defaultView) {
             myDay: {
                 text: 'Dzień',
                 click: function () {
-                    // loadReservationsForCertainView('day');
+                    loadReservationsForCertainView('day');
                     $('#calendar').fullCalendar('changeView', 'agendaDay');
                     console.log('dzień');
                 }
@@ -125,7 +103,7 @@ function initCalendar(eventArray, defaultView) {
         height: 'auto',
         // contentHeight: 500,
         aspectRatio: 2,
-        events: events,
+        events: eventArray,
         slotLabelFormat: 'H:mm',
         editable: false,
         // //might be used in future
@@ -136,7 +114,6 @@ function initCalendar(eventArray, defaultView) {
         // },
     });
 }
-
     function destroyCalendar() {
         $('#calendar').fullCalendar('destroy');
     }
@@ -147,10 +124,9 @@ function initCalendar(eventArray, defaultView) {
         $('.loader').css('display', 'none');
     }
     function loadReservationsForCertainView(viewName) {
-        startLoadingProgress();
         let moment = $('#calendar').fullCalendar('getDate');
         let date = moment.format('DD-MM-YYYY');
-        getReservations(selectedHallID, date, calendarViewType[viewName], onlyMine, moment);
+        getReservations(date, calendarViewType[viewName], moment);
     }
     function getCalendarViewType() {
         let actualView = $('#calendar').fullCalendar('getView');
@@ -179,6 +155,7 @@ function initCalendar(eventArray, defaultView) {
         return type;
     }
     function getReservations(date, viewType, calendarActualDate) {
+        startLoadingProgress();
         let colorPrivate = '##b3e5fc';
         let colorTeam = '#f56954 ';
         let borderColor = '#424242 ';
@@ -196,7 +173,6 @@ function initCalendar(eventArray, defaultView) {
                     let isValid = true;
                     for (let i = 0; i < reservations.length; i++) {
                         let id = (reservations[i].id === null || reservations[i].id === undefined) ? (isValid = false) : reservations[i].id;
-                        let title = (reservations[i].title === null || reservations[i].title === undefined) ? (isValid = false) : reservations[i].title;
                         let start = (reservations[i].start === null || reservations[i].start === undefined) ? (isValid = false) : reservations[i].start;
                         let end = (reservations[i].end === null || reservations[i].end === undefined) ? (isValid = false) : reservations[i].end;
 
@@ -219,7 +195,6 @@ function initCalendar(eventArray, defaultView) {
                         if(isValid) {
                             reservationsEvents.push({
                                 id: id,
-                                title: title,
                                 start: new Date(yearStart, monthStart, dayStart, hourStart, minuteStart),
                                 end: new Date(yearEnd, monthEnd, dayEnd, hourEnd, minuteEnd),
                                 backgroundColor: backgroundColor,
@@ -233,22 +208,29 @@ function initCalendar(eventArray, defaultView) {
                     let calendarView = calendarDefaultView[viewType];
                     initCalendar(reservationsEvents, calendarView);
                     stopLoadingProgress();
-                    // $('.loadingProgress').css('display', 'none');
-                    //
-                    // $('.myReservationFilterArea').css('display', 'block');
                     $('#calendar').fullCalendar( 'gotoDate', calendarActualDate);
                 } else {
                     stopLoadingProgress();
-                    // $('.errorReservationsForHall').text('Obecnie nie ma żadnych rezerwacji dla tej sali');
-                    // $('.loadingProgress').css('display', 'none');
-                    // $('.myReservationFilterArea').css('display', 'none');
                 }
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                window.location.href = '/404';
+                let statusCode = xhr.status;
+                // window.location.href = '/404';
+                console.log(statusCode);
             }
         });
     }
-
-});
+function getProperDateFormat(date) {
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    if(day < 10) {
+        day = '0' + day;
+    }
+    if(month < 10) {
+        month = '0' + month;
+    }
+    let dateFormatted = year + '-' + month + '-' + day;
+    return dateFormatted;
+}

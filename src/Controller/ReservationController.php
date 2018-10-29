@@ -280,8 +280,9 @@ class ReservationController extends Controller
             ];
             $reservationRes [] = $reservationTemp;
         }
-//        print_r($reservationRes);
-//        exit();
+        $reservationRes = [
+            'reservations' => $reservationRes
+        ];
         return new JsonResponse($reservationRes, 200);
     }
 }
