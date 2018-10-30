@@ -96,4 +96,52 @@ class ReservationRepository extends EntityRepository
             return null;
         }
     }
+    public function getKartPrizeByNumberOfRides($kart_id, $numberOfRides) {
+        $sql = 'call getKartPrizeByNumberOfRides(?, ?)';
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $kart_id);
+            $stmt->bindValue(2, $numberOfRides);
+            $rowCount = $stmt->execute();
+            if($rowCount == 1) {
+                $res = $stmt->fetch();
+                if(!$res) {
+                    return null;
+                }
+                $prize = $res['totalKartPrize'];
+                return $prize;
+            } else {
+                return null;
+            }
+        } catch (DBALException $e) {
+            return null;
+        }
+    }
+    public function getReservationsForViewType($date, $viewType) {
+        $sql = 'call getReservationsForViewType(?, ?)';
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $date);
+            $stmt->bindValue(2, $viewType);
+            $rowCount = $stmt->execute();
+            if($rowCount > 0) {
+                $reservationsTemp = $stmt->fetchAll();
+                $reservations = [];
+                foreach ($reservationsTemp as $reservationTemp) {
+                    $reservation = new Reservation();
+                    $reservation->setId($reservationTemp['id']);
+                    $reservation->setStartDate($reservationTemp['start_date']);
+                    $reservation->setEndDate($reservationTemp['end_date']);
+                    $reservations [] = $reservation;
+                }
+                return $reservations;
+            } else {
+                return [];
+            }
+        } catch (DBALException $e) {
+            return [];
+        }
+    }
 }

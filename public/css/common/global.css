@@ -68,7 +68,7 @@ a:hover {
 .loader {
   height: 4px;
   width: 100%;
-  position: relative;
+  position: fixed;
   overflow: hidden;
   background-color: #ddd;
   display: none; }

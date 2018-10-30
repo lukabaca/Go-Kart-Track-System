@@ -6,21 +6,21 @@ $(document).ready(function () {
     maxEndDate.setDate(maxEndDate.getDate() + maxNumberOfDays);
 
     let timePerOneRide;
-    let chosenGokartsNumber = 0;
     let numberOfRides = 0;
 
     let reserveButton = $('#reserveBtn');
     reserveButton.attr("disabled", "disabled");
 
     let isValidHourStart = false;
-    let isValidNumberOfRides = false;
+    let isValidNumberOfRides = true;
     let isValidChosenKarts = false;
+    let isValidDate = true;
 
     let karts;
     let totalPrize = 0;
 
+
     $('#numberOfRidesInput').val(minNumberOfRides);
-    $('#chosenGokartsNumber').text(chosenGokartsNumber + '/');
     loadKarts();
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -52,7 +52,8 @@ $(document).ready(function () {
         dropdown: true,
         change: function () {
             let time = $(this).val();
-            if(time !== '') {
+            if ($('#numberOfRidesInput').val() !== '' && time !== '') {
+                numberOfRides = $('#numberOfRidesInput').val();
                 isValidHourStart = true;
                 let res = getHourAndMinutesFromTimePicker(time);
                 let hour = res[0];
@@ -60,14 +61,11 @@ $(document).ready(function () {
                 let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
                 let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
                 let endDate = new Date(endDateTemp);
-                if ($('#numberOfRidesInput').val() !== '' && time !== '') {
-                    let finalTime = convertHourAndMinuteToProperFormat(endDate);
-                    let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
-                    $('#hourEndInput').val(hourAndMinuteEndTime);
-                } else {
-                    $('#hourEndInput').val('');
-                }
+                let finalTime = convertHourAndMinuteToProperFormat(endDate);
+                let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
+                $('#hourEndInput').val(hourAndMinuteEndTime);
             } else {
+                $('#hourEndInput').val('');
                 isValidHourStart = false;
             }
             checkButtonStatus();
@@ -101,7 +99,7 @@ $(document).ready(function () {
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
-        if($('#hourStartInput').val() !== '' && numberOfRides !== '') {
+        if($('#hourStartInput').val() !== '' && numberOfRides !== '' && numberOfRides > 0) {
             isValidNumberOfRides = true;
             let time = $('#hourStartInput').val();
             let res = getHourAndMinutesFromTimePicker(time);
@@ -117,10 +115,24 @@ $(document).ready(function () {
             $('#hourEndInput').val('');
             isValidNumberOfRides = false;
         }
+
         if(numberOfRides !== '') {
-            // totalPrize = totalPrize * numberOfRides;
-            // setPrizeInfo($('#reservationPrize'), totalPrize);
+            let kartTable = $('#kartTable');
+            let kartIds = getKartIdsFromTable(kartTable);
+            // console.log(numberOfRides);
+            getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
         }
+        checkButtonStatus();
+    });
+
+    $('#dateInput').on('change', function (e) {
+       e.preventDefault();
+       let date = $(this).val();
+       if(date !== '') {
+           isValidDate = true;
+       } else {
+           isValidDate = false;
+       }
         checkButtonStatus();
     });
 
@@ -155,7 +167,7 @@ $(document).ready(function () {
         });
     }
     function checkButtonStatus() {
-        if(isValidHourStart && isValidNumberOfRides && isValidChosenKarts) {
+        if(isValidHourStart && isValidNumberOfRides && isValidChosenKarts && isValidDate) {
             reserveButton.removeAttr("disabled");
         } else {
             reserveButton.attr("disabled", "disabled");
@@ -178,7 +190,7 @@ $(document).ready(function () {
                     '<tr class="record-row" kart-id=' + id + '>' +
                     '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
                     '<td class="record-info-td">' + name + '</td>' +
-                    '<td class="record-info-td">' + prize + '</td>' +
+                    '<td class="record-info-td">' + prize + 'zł</td>' +
                     '</tr>';
                 table.find('tbody').append(recordContent);
                 isValid = true;
@@ -192,9 +204,14 @@ $(document).ready(function () {
         let tr = $(this).closest('.record-row');
         let kartId = tr.attr('kart-id');
         let kart = getKartById(karts, kartId);
+        let numberOfRides = $('#numberOfRidesInput').val();
+        console.log(numberOfRides);
         if(kart) {
             tr.remove();
-            totalPrize -= kart.prize;
+            // totalPrize -= kart.prize;
+            let kartTable = $('#kartTable');
+            let kartIds = getKartIdsFromTable(kartTable);
+            getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
             let numberOfRowsInTable = table.find('tbody tr').length;
             if (numberOfRowsInTable < 1) {
                 isValidChosenKarts = false;
@@ -244,22 +261,22 @@ $(document).ready(function () {
                         let recordContent =
                             '<tr class="record-row" kart-id=' + id + '>' +
                             '<td class="record-info-td">' + name + '</td>' +
-                            '<td class="record-info-td">' + prize + '</td>' +
+                            '<td class="record-info-td">' + prize + 'zł</td>' +
                             '<td class="record-info-td">' + '<i class="fa fa-trash deleteKartIcon float-right" aria-hidden="true">' + '</i>' + '</td>' +
                             '</tr>';
                         kartTable.find('tbody').append(recordContent);
                         isValid = true;
                         isValidChosenKarts = true;
-                        totalPrize += prize;
+                        // totalPrize += prize;
                         checkButtonStatus();
                     }
                 }
                 $('.loader').css('display', 'none');
             }
         }
-        if(totalPrize > 0) {
-            setPrizeInfo($('#reservationPrize'), totalPrize);
-        }
+        let numberOfRides = $('#numberOfRidesInput').val();
+        let kartIds = getKartIdsFromTable(kartTable);
+        getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
         $('.loader').css('display', 'none');
     });
 
@@ -344,7 +361,50 @@ function getCheckedElementsIdsFromTable(tableID) {
     });
     return checkedIds;
 }
+function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
+    let kartData = {
+        "numberOfRides": numberOfRides,
+        "karts": kartIds,
+    };
+    kartData = JSON.stringify(kartData);
+    console.log(kartData);
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/reservation/getTotalKartPrizeForReservation',
+        data: {
+            kartData: kartData
+        },
+        success: function (data) {
+            let totalPrize = data;
+            if(totalPrize > 0) {
+                setPrizeInfo($('#reservationPrize'), totalPrize);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            let statusCode = xhr.status;
+            switch (statusCode) {
+                // case 400: {
 
+                //     responseElement.text('Nie można sparsować przesłanych dat');
+                //     break;
+                // }
+                // case 404: {
+                //     // responseElement.text('Podano złe parametry');
+                //     break;
+                // }
+                // case 409: {
+                //     responseElement.text('Ten termin jest już zajęty');
+                //     break;
+                // }
+                default : {
+                    window.location.href = '/status500';
+                    break;
+                }
+            }
+        }
+    });
+}
 function makeReservation(startDate, endDate, cost, karts) {
     let reservationData = {
         "startDate": startDate,
@@ -362,16 +422,15 @@ function makeReservation(startDate, endDate, cost, karts) {
             reservationData: reservationData
         },
         success: function (data) {
-            // $('#modalCorrectReservation').modal('open');
-            console.log(data);
             resetForm();
+            window.location.href = '/reservation/getReservationDetails/' + data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
             responseElement = $('.reservationResponseErrorMessage');
             switch (statusCode) {
                 case 400: {
-                    responseElement.text('Nie można sparsować przesłanych dat');
+                    responseElement.text('Wprowadzona data jest niepoprawna');
                     break;
                 }
                 case 404: {
@@ -399,4 +458,11 @@ function resetForm() {
     $('#reservationPrize').text('');
     $('#reserveBtn').attr("disabled", "disabled");
     $('.datePicker').datepicker('setDate', today);
+}
+
+function setInitialFlags(isValidHourStart, isValidNumberOfRides, isValidChosenKarts, isValidDate) {
+    isValidHourStart = false;
+    isValidNumberOfRides = true;
+    isValidChosenKarts = false;
+    isValidDate = true;
 }

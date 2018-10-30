@@ -1,0 +1,14 @@
+@import "../common/colors";
+.eventCalendar {
+  text-align: center;
+  font-size: 18px;
+}
+.datepicker {
+  margin-bottom: 10px;
+  display: none;
+  position: absolute !important;
+  top: 15% !important;
+}
+#emptyCalendarHeader {
+  text-align: center;
+}

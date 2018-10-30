@@ -1,0 +1,57 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Rezerwacja
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/reservationDetails.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="loader"></div>
+    <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Szczegóły rezerwacji</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table reservationDetailsTable" reservation-id="{{ reservation.id }}">
+                    <tbody>
+                    <tr>
+                        <td class="headerRow">Data</td>
+                        <td class="infoRow">{{ date }}</td>
+                    </tr>
+                    <tr>
+                        <td class="headerRow">Godzina rozpoczęcia</td>
+                        <td class="infoRow">{{ startDateHour }}</td>
+                    </tr>
+                    <tr>
+                        <td class="headerRow">Godzina zakończenia</td>
+                        <td class="infoRow">{{ endDateHour }}</td>
+                    </tr>
+                    <tr>
+                        <td class="headerRow">Całkowita suma za przejazdy</td>
+                        <td class="infoRow">{{ reservation.cost }} zł</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <li class="list-group-item"><h5>Pojazdy</h5></li>
+                    {% if not karts %}
+                        <li class="list-group-item">Brak pojazdow uczestników</li>
+                    {% endif %}
+                    {% for kart in karts %}
+                        <li class="list-group-item">{{ kart.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{%  endblock %}

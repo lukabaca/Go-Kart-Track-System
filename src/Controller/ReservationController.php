@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 class ReservationController extends Controller
@@ -53,15 +54,43 @@ class ReservationController extends Controller
      */
     public function isReservationValidAction(Request $request)
     {
-//        $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
-//            '2018-10-27 18:00', '2018-10-27 18:30', 50);
-//        if(!$isReservationValid) {
-//            return new JsonResponse([], 404);
-//        }
-//        print_r($isReservationValid->getId());
-//        exit();
+        $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides(1, 2);
+        if(!$prize) {
+            return new JsonResponse([], 404);
+        }
+        if($prize == -1) {
+            return new JsonResponse(['Bad input value'], 400);
+        }
+        print_r($prize);
+        exit();
 
        return new JsonResponse([], 500);
+    }
+
+    /**
+     * @Route("/reservation/getTotalKartPrizeForReservation", name="/reservation/getTotalKartPrizeForReservation")
+     */
+    public function getTotalKartPrizeForReservationAction(Request $request)
+    {
+        if ($request->request->get('kartData')) {
+            $kartData = json_decode($request->request->get('kartData'));
+            $numberOfRides = $kartData->{'numberOfRides'};
+            $kartIds = $kartData->{'karts'};
+            $totalPrize = 0;
+            foreach ($kartIds as $kartId) {
+                $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides($kartId, $numberOfRides);
+                if (!$prize) {
+                    return new JsonResponse([], 404);
+                }
+                if ($prize == -1) {
+                    return new JsonResponse(['Bad input value'], 400);
+                }
+                $totalPrize = $totalPrize + $prize;
+            }
+            return new JsonResponse($totalPrize, 200);
+        } else {
+            return new JsonResponse([], 500);
+        }
     }
 
     /**
@@ -104,7 +133,7 @@ class ReservationController extends Controller
                 'endDate' => $reservation->getEndDate(),
                 'cost' => $reservation->getCost()
             ];
-            return new JsonResponse($reservation, 200);
+            return new JsonResponse($reservation, 201);
         } else {
             return new JsonResponse([], 500);
         }
@@ -151,13 +180,103 @@ class ReservationController extends Controller
     }
 
     /**
+     * @Route("/reservation/getReservationDetails/{id}", name="reservation/getReservationDetails/{id}")
+     */
+    public function getReservationDetailsAction(Request $request, $id)
+    {
+        //sprawdz czy dla id tej rezerwacji nalezy do zalogowanego uzytkwonika, jesli tak to pokaz szczegoly rezerwacji
+        //jesli nie to przekieruj na nie masz dostepu do tej strony
+        $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->find($id);
+        if(!$reservation) {
+            return $this->render('views/alerts/404.html.twig', []);
+        }
+        $userIdForReservation = $reservation->getUser()->getId();
+        if($userIdForReservation != $this->getUser()->getId()) {
+            //nie mozesz przegladac czyich szczegolow rezerwacji
+        }
+        $kartsInReservation = $this->getDoctrine()->getManager()->getRepository(Kart::class)->getKartsInReservation($id);
+        if(!$kartsInReservation) {
+
+        }
+        $kartsRes = [];
+        foreach ($kartsInReservation as $kart) {
+            $kartTemp = [
+                'id' => $kart->getId(),
+                'name' => $kart->getName(),
+                'prize' => $kart->getPrize(),
+                'availability' => $kart->getAvailability(),
+            ];
+            $kartsRes [] = $kartTemp;
+        }
+        $startDate = date_create($reservation->getStartDate());
+        $startDateHour = date_format($startDate, 'H:i');
+        $endDate = date_create($reservation->getEndDate());
+        $endDateHour = date_format($endDate, 'H:i');
+        $date = date_format($startDate, 'd-m-Y');
+        return $this->render('views/controllers/reservation/reservationDetails.html.twig', [
+            'date' => $date,
+            'startDateHour' => $startDateHour,
+            'endDateHour' => $endDateHour,
+            'reservation' => $reservation,
+            'karts' => $kartsInReservation
+        ]
+        );
+    }
+
+    /**
      * @Route("/reservation/calendar", name="reservation/calendar")
      */
     public function calendarAction(Request $request)
     {
-
         return $this->render('views/controllers/reservation/calendar.html.twig', []
         );
     }
 
+    /**
+     * @Route("/reservation/getReservations/{date}/{viewType}", name="reservation/getKart/{date}/{viewType}")
+     */
+    public function getReservationsAction(Request $request, $date, $viewType)
+    {
+        $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getReservationsForViewType($date, $viewType);
+        $reservationRes = [];
+        foreach ($reservations as $reservation) {
+            $dateStart = new DateTime($reservation->getStartDate());
+            $dateEnd = new DateTime($reservation->getEndDate());
+
+            $yearStart = date_format($dateStart, 'Y');
+            $monthStart = date_format($dateStart, 'm');
+            $dayStart = date_format($dateStart, 'd');
+            $hourStart = date_format($dateStart, 'H');
+            $minuteStart = date_format($dateStart, 'i');
+
+            $yearEnd = date_format($dateEnd, 'Y');
+            $monthEnd = date_format($dateEnd, 'm');
+            $dayEnd = date_format($dateEnd, 'd');
+            $hourEnd = date_format($dateEnd, 'H');
+            $minuteEnd = date_format($dateEnd, 'i');
+
+            $reservationTemp = [
+                'id' => $reservation->getId(),
+                'start' => [
+                    'year' => $yearStart,
+                    'month' => $monthStart,
+                    'day' => $dayStart,
+                    'hour' => $hourStart,
+                    'minute' => $minuteStart
+                ],
+                'end' => [
+                    'year' => $yearEnd,
+                    'month' => $monthEnd,
+                    'day' => $dayEnd,
+                    'hour' => $hourEnd,
+                    'minute' => $minuteEnd
+                ],
+            ];
+            $reservationRes [] = $reservationTemp;
+        }
+        $reservationRes = [
+            'reservations' => $reservationRes
+        ];
+        return new JsonResponse($reservationRes, 200);
+    }
 }
