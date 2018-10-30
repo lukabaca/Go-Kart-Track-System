@@ -132,7 +132,6 @@ class ReservationRepository extends EntityRepository
                 foreach ($reservationsTemp as $reservationTemp) {
                     $reservation = new Reservation();
                     $reservation->setId($reservationTemp['id']);
-//                    $reservation->setUser()->setId($reservationTemp['user_id']);
                     $reservation->setStartDate($reservationTemp['start_date']);
                     $reservation->setEndDate($reservationTemp['end_date']);
                     $reservations [] = $reservation;

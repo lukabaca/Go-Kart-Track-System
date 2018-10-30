@@ -208,14 +208,11 @@ class ReservationController extends Controller
             ];
             $kartsRes [] = $kartTemp;
         }
-//        $reservationId = $reservation->getId();
         $startDate = date_create($reservation->getStartDate());
         $startDateHour = date_format($startDate, 'H:i');
         $endDate = date_create($reservation->getEndDate());
         $endDateHour = date_format($endDate, 'H:i');
         $date = date_format($startDate, 'd-m-Y');
-//        $endDate = $reservation->getEndDate();
-//        $cost = $reservation->getCost();
         return $this->render('views/controllers/reservation/reservationDetails.html.twig', [
             'date' => $date,
             'startDateHour' => $startDateHour,
@@ -241,9 +238,6 @@ class ReservationController extends Controller
     public function getReservationsAction(Request $request, $date, $viewType)
     {
         $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getReservationsForViewType($date, $viewType);
-//        if(!$reservations) {
-//            return new JsonResponse([], 404);
-//        }
         $reservationRes = [];
         foreach ($reservations as $reservation) {
             $dateStart = new DateTime($reservation->getStartDate());
