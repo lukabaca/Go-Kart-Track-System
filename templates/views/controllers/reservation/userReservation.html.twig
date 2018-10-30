@@ -1,0 +1,27 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Twoje rezerwacje
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/userReservation.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="loader"></div>
+    <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Twoje rezerwacje</h4>
+        <div class="row">
+            <div class="col-md-12">
+                sss
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{%  endblock %}
