@@ -4,8 +4,6 @@ $(document).ready(function () {
     let actualDate = new Date();
     defaultView = 'agendaWeek';
     getReservations(getProperDateFormat(actualDate), calendarViewType['week'], actualDate);
-
-    //date picker do zrobienia albo wyrzucenia, TO DO
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
         daysShort: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
@@ -20,10 +18,8 @@ $(document).ready(function () {
         // format: 'dd-mm-yyyy',
         language: 'pl',
         onSelect: function() {
-
         }
     }).on("change", function() {
-        console.log('zmiana');
         $('#calendar').fullCalendar( 'gotoDate', this.value );
         let moment = $('#calendar').fullCalendar('getDate');
         let date = moment.format('YYYY-MM-DD');
@@ -40,7 +36,6 @@ function initCalendar(eventArray, defaultView) {
                 text: 'Wybierz dzień',
                 click: function () {
                     $('.datepicker').datepicker('show');
-                    console.log('wybierz dzień');
                 }
             },
             myDay: {
@@ -48,7 +43,6 @@ function initCalendar(eventArray, defaultView) {
                 click: function () {
                     loadReservationsForCertainView('day');
                     $('#calendar').fullCalendar('changeView', 'agendaDay');
-                    console.log('dzień');
                 }
             },
             myWeek: {
@@ -56,7 +50,6 @@ function initCalendar(eventArray, defaultView) {
                 click: function () {
                     loadReservationsForCertainView('week');
                     $('#calendar').fullCalendar('changeView', 'agendaWeek');
-                    console.log('tydzień');
                 }
             },
             myMonth: {
@@ -64,7 +57,6 @@ function initCalendar(eventArray, defaultView) {
                 click: function () {
                     loadReservationsForCertainView('month');
                     $('#calendar').fullCalendar('changeView', 'month');
-                    console.log('miesiąc');
                 }
             },
             myToday: {
@@ -73,7 +65,6 @@ function initCalendar(eventArray, defaultView) {
                     $('#calendar').fullCalendar('today');
                     loadReservationsForCertainView('day');
                     $('#calendar').fullCalendar('changeView', 'agendaDay');
-                    console.log('dzisiaj');
                 }
             },
             myLeftArrow: {
@@ -84,7 +75,6 @@ function initCalendar(eventArray, defaultView) {
                     loadReservationsForCertainView(calendarViewType);
                     let actualView = $('#calendar').fullCalendar('getView');
                     $('#calendar').fullCalendar('changeView', actualView.name);
-                    console.log('wstecz');
                 }
             },
             myRightArrow: {
@@ -95,7 +85,6 @@ function initCalendar(eventArray, defaultView) {
                     loadReservationsForCertainView(calendarViewType);
                     let actualView = $('#calendar').fullCalendar('getView');
                     $('#calendar').fullCalendar('changeView', actualView.name);
-                    console.log('do przodu');
                 }
             },
         },
@@ -133,12 +122,6 @@ function initCalendar(eventArray, defaultView) {
         slotDuration: '00:10:00',
         //slotLabelInterval pomysl czy ma zostac czy nie
         // slotLabelInterval: 10,
-        // //might be used in future
-        // // slotDuration: '00:15:00',
-        //
-        // eventClick: function(calEvent, jsEvent, view) {
-        //     window.location.href = "meeting/detailsReservation/" + calEvent.id;
-        // },
     });
 }
     function destroyCalendar() {
@@ -242,10 +225,6 @@ function initCalendar(eventArray, defaultView) {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
-                // window.location.href = '/404';
-                // if(statusCode === 404) {
-                //     $('#emptyCalendarHeader').text('Nie ma obecnie żadnych rezerwacji');
-                // }
                 stopLoadingProgress();
             }
         });
