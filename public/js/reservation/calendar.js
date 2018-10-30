@@ -26,7 +26,7 @@ function initCalendar(eventArray, defaultView) {
             myWeek: {
                 text: 'Tydzień',
                 click: function () {
-                    // loadReservationsForCertainView('week');
+                    loadReservationsForCertainView('week');
                     $('#calendar').fullCalendar('changeView', 'agendaWeek');
                     console.log('tydzień');
                 }
@@ -34,7 +34,7 @@ function initCalendar(eventArray, defaultView) {
             myMonth: {
                 text: 'Miesiąc',
                 click: function () {
-                    // loadReservationsForCertainView('month');
+                    loadReservationsForCertainView('month');
                     $('#calendar').fullCalendar('changeView', 'month');
                     console.log('miesiąc');
                 }
@@ -43,7 +43,7 @@ function initCalendar(eventArray, defaultView) {
                 text: 'Dzisiaj',
                 click: function () {
                     $('#calendar').fullCalendar('today');
-                    // loadReservationsForCertainView('day');
+                    loadReservationsForCertainView('day');
                     $('#calendar').fullCalendar('changeView', 'agendaDay');
                     console.log('dzisiaj');
                 }
@@ -52,13 +52,10 @@ function initCalendar(eventArray, defaultView) {
                 text: '<',
                 click: function () {
                     $('#calendar').fullCalendar('prev');
-                    //     let calendarViewType = getCalendarViewType();
-                    //     // loadReservationsForCertainView(calendarViewType);
-                    //
-                    //     let actualView = $('#calendar').fullCalendar('getView');
-                    //     $('#calendar').fullCalendar('changeView', actualView.name);
-                    //
-                    // }
+                    let calendarViewType = getCalendarViewType();
+                    loadReservationsForCertainView(calendarViewType);
+                    let actualView = $('#calendar').fullCalendar('getView');
+                    $('#calendar').fullCalendar('changeView', actualView.name);
                     console.log('wstecz');
                 }
             },
@@ -66,11 +63,10 @@ function initCalendar(eventArray, defaultView) {
                 text: '>',
                 click: function () {
                     $('#calendar').fullCalendar('next');
-                    // let calendarViewType = getCalendarViewType();
-                    // // loadReservationsForCertainView(calendarViewType);
-                    //
-                    // let actualView = $('#calendar').fullCalendar('getView');
-                    // $('#calendar').fullCalendar('changeView', actualView.name);
+                    let calendarViewType = getCalendarViewType();
+                    loadReservationsForCertainView(calendarViewType);
+                    let actualView = $('#calendar').fullCalendar('getView');
+                    $('#calendar').fullCalendar('changeView', actualView.name);
                     console.log('do przodu');
                 }
             },
@@ -100,12 +96,15 @@ function initCalendar(eventArray, defaultView) {
             week: 'tydzień',
             day: 'dzień'
         },
-        height: 'auto',
-        // contentHeight: 500,
+        height: 600,
+        contentHeight: 600,
         aspectRatio: 2,
         events: eventArray,
         slotLabelFormat: 'H:mm',
         editable: false,
+        slotDuration: '00:10:00',
+        //slotLabelInterval pomysl czy ma zostac czy nie
+        // slotLabelInterval: 10,
         // //might be used in future
         // // slotDuration: '00:15:00',
         //
@@ -125,7 +124,7 @@ function initCalendar(eventArray, defaultView) {
     }
     function loadReservationsForCertainView(viewName) {
         let moment = $('#calendar').fullCalendar('getDate');
-        let date = moment.format('DD-MM-YYYY');
+        let date = moment.format('YYYY-MM-DD');
         getReservations(date, calendarViewType[viewName], moment);
     }
     function getCalendarViewType() {
