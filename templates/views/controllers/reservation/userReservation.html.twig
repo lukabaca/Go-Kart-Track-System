@@ -17,11 +17,35 @@
         <h4 class="pageHeader">Twoje rezerwacje</h4>
         <div class="row">
             <div class="col-md-12">
-                sss
+                {% if reservations %}
+                <table class="table ">
+                    <thead>
+                        <th>id</th>
+                        <th>godzina start</th>
+                        <th>godzina end</th>
+                        <th>koszt</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations %}
+                        <tr reservation-id="{{ reservation.id }}">
+                            <td>{{ reservation.id }}</td>
+                            <td>{{ reservation.startDate }}</td>
+                            <td>{{ reservation.endDate }}e</td>
+                            <td>{{ reservation.cost }}</td>
+                            <td><button type="button" class="deleteReservationBtn btn btn-primary">Anuluj rezerwacje</button> </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p>Brak twoich rezerwacji</p>
+                {% endif %}
             </div>
         </div>
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/reservation/userReservation.js') }}"></script>
 {%  endblock %}

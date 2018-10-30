@@ -40,7 +40,10 @@ class ReservationController extends Controller
     public function userReservationAction(Request $request)
     {
 //        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
+        $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->findAll();
+//        $reservations = [];
         return $this->render('views/controllers/reservation/userReservation.html.twig', [
+                'reservations' => $reservations
             ]
         );
     }
