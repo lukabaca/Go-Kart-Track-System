@@ -4,6 +4,31 @@ $(document).ready(function () {
     let actualDate = new Date();
     defaultView = 'agendaWeek';
     getReservations(getProperDateFormat(actualDate), calendarViewType['week'], actualDate);
+
+    $.fn.datepicker.dates['pl'] = {
+        days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
+        daysShort: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
+        daysMin: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
+        months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec',
+            'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+        monthsShort: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec',
+            'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+    };
+    $('.datepicker').datepicker({
+        weekStart: 1,
+        // format: 'dd-mm-yyyy',
+        language: 'pl',
+        onSelect: function(dateText) {
+
+        }
+    }).on("change", function() {
+        console.log('zmiana');
+        $('#calendar').fullCalendar( 'gotoDate', this.value );
+        let moment = $('#calendar').fullCalendar('getDate');
+        let date = moment.format('YYYY-MM-DD');
+        getReservations(date, calendarViewType['day'], moment);
+        $('#calendar').fullCalendar('changeView', 'agendaDay');
+    });
 });
 function initCalendar(eventArray, defaultView) {
     $('#calendar').fullCalendar({
@@ -216,6 +241,7 @@ function initCalendar(eventArray, defaultView) {
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
                 // window.location.href = '/404';
+                stopLoadingProgress();
                 console.log(statusCode);
             }
         });
