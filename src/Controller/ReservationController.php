@@ -180,9 +180,9 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/reservation/getReservationDetails/{id}", name="reservation/getReservationDetails/{id}")
+     * @Route("/reservation/reservationDetails/{id}", name="reservation/reservationDetails/{id}")
      */
-    public function getReservationDetailsAction(Request $request, $id)
+    public function reservationDetailsAction(Request $request, $id)
     {
         //sprawdz czy dla id tej rezerwacji nalezy do zalogowanego uzytkwonika, jesli tak to pokaz szczegoly rezerwacji
         //jesli nie to przekieruj na nie masz dostepu do tej strony

@@ -423,7 +423,7 @@ function makeReservation(startDate, endDate, cost, karts) {
         },
         success: function (data) {
             resetForm();
-            window.location.href = '/reservation/getReservationDetails/' + data.id;
+            window.location.href = '/reservation/reservationDetails/' + data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
