@@ -5,6 +5,7 @@ $(document).ready(function () {
     defaultView = 'agendaWeek';
     getReservations(getProperDateFormat(actualDate), calendarViewType['week'], actualDate);
 
+    //date picker do zrobienia albo wyrzucenia, TO DO
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
         daysShort: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
@@ -18,7 +19,7 @@ $(document).ready(function () {
         weekStart: 1,
         // format: 'dd-mm-yyyy',
         language: 'pl',
-        onSelect: function(dateText) {
+        onSelect: function() {
 
         }
     }).on("change", function() {
@@ -28,8 +29,10 @@ $(document).ready(function () {
         let date = moment.format('YYYY-MM-DD');
         getReservations(date, calendarViewType['day'], moment);
         $('#calendar').fullCalendar('changeView', 'agendaDay');
+        $(this).datepicker('setDate', null);
     });
 });
+
 function initCalendar(eventArray, defaultView) {
     $('#calendar').fullCalendar({
         customButtons: {
@@ -192,7 +195,6 @@ function initCalendar(eventArray, defaultView) {
             success: function (data) {
                 let reservations = data.reservations;
                 if(reservations !== null && reservations !== undefined) {
-                    $('.errorReservationsForHall').text('');
                     let reservationsEvents = [];
                     let isValid = true;
                     for (let i = 0; i < reservations.length; i++) {
@@ -233,16 +235,18 @@ function initCalendar(eventArray, defaultView) {
                     initCalendar(reservationsEvents, calendarView);
                     stopLoadingProgress();
                     $('#calendar').fullCalendar( 'gotoDate', calendarActualDate);
+                    $('#emptyCalendarHeader').text('');
                 } else {
                     stopLoadingProgress();
                 }
-
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
                 // window.location.href = '/404';
+                // if(statusCode === 404) {
+                //     $('#emptyCalendarHeader').text('Nie ma obecnie żadnych rezerwacji');
+                // }
                 stopLoadingProgress();
-                console.log(statusCode);
             }
         });
     }

@@ -241,9 +241,9 @@ class ReservationController extends Controller
     public function getReservationsAction(Request $request, $date, $viewType)
     {
         $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getReservationsForViewType($date, $viewType);
-        if(!$reservations) {
-            return new JsonResponse([], 404);
-        }
+//        if(!$reservations) {
+//            return new JsonResponse([], 404);
+//        }
         $reservationRes = [];
         foreach ($reservations as $reservation) {
             $dateStart = new DateTime($reservation->getStartDate());
