@@ -2,10 +2,9 @@ $(document).ready(function () {
     let reservation_id;
     $('.table').DataTable({
         "columns": [
-            { "width": "20%" },
-            { "width": "20%" },
-            { "width": "20%" },
-            { "width": "20%" },
+            { "width": "25%" },
+            { "width": "25%" },
+            { "width": "25%" },
             { "width": "5%" }
         ]
     });

@@ -20,20 +20,18 @@
                 {% if reservations %}
                 <table class="table reservationTable">
                     <thead>
-                        <th>id</th>
-                        <th>godzina start</th>
-                        <th>godzina end</th>
-                        <th>koszt</th>
+                        <th>Data rozpoczęcia</th>
+                        <th>Data zakończenia</th>
+                        <th>Koszt</th>
                         <th></th>
                     </thead>
                     <tbody>
                     {% for reservation in reservations %}
                         <tr reservation-id="{{ reservation.id }}">
-                            <td>{{ reservation.id }}</td>
                             <td>{{ reservation.startDate }}</td>
                             <td>{{ reservation.endDate }}</td>
                             <td>{{ reservation.cost }}zł</td>
-                            <td><button type="button" class="deleteReservationBtn btn btn-primary">Anuluj rezerwacje</button> </td>
+                            <td><button type="button" class="deleteReservationBtn btn btn-danger">Anuluj rezerwacje</button> </td>
                         </tr>
                     {% endfor %}
                     </tbody>
