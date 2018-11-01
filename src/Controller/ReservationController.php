@@ -83,6 +83,27 @@ class ReservationController extends Controller
     }
 
     /**
+     * @Route("/reservation/deleteReservation/{id}", name="/reservation/deleteReservation/{id}")
+     */
+    public function deleteReservationAction(Request $request, $id)
+    {
+        $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->find($id);
+        if(!$reservation) {
+            return new JsonResponse([], 404);
+        }
+        $user_id = $reservation->getUser()->getId();
+        if($user_id != $this->getUser()->getId()) {
+            return new JsonResponse(['cant delete someones reservation'], 403);
+        }
+        $result = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->deleteReservation($id);
+        if(!$result) {
+            return new JsonResponse(['error in deleting reservation'], 500);
+        }
+        return new JsonResponse([], 200);
+
+    }
+
+    /**
      * @Route("/reservation/getTotalKartPrizeForReservation", name="/reservation/getTotalKartPrizeForReservation")
      */
     public function getTotalKartPrizeForReservationAction(Request $request)
