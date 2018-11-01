@@ -36,6 +36,12 @@ class KartTechnicalData
     private $engine;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Kart", inversedBy="kartTechnicalData")
+     */
+    private $kart;
+
+
+    /**
      * KartTechnicalData constructor.
      * @param $id
      * @param $power
@@ -112,5 +118,20 @@ class KartTechnicalData
     public function setEngine($engine): void
     {
         $this->engine = $engine;
+    }
+    /**
+     * @return mixed
+     */
+    public function getKart()
+    {
+        return $this->kart;
+    }
+
+    /**
+     * @param mixed $kart
+     */
+    public function setKart($kart): void
+    {
+        $this->kart = $kart;
     }
 }

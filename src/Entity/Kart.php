@@ -48,6 +48,11 @@ class Kart
     private $lap;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\KartTechnicalData", mappedBy ="kart")
+     */
+    private $kartTechnicalData;
+
+    /**
      * Kart constructor.
      * @param $id
      * @param $availability
@@ -159,5 +164,21 @@ class Kart
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKartTechnicalData()
+    {
+        return $this->kartTechnicalData;
+    }
+
+    /**
+     * @param mixed $kartTechnicalData
+     */
+    public function setKartTechnicalData($kartTechnicalData): void
+    {
+        $this->kartTechnicalData = $kartTechnicalData;
     }
 }

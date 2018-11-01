@@ -23,11 +23,9 @@ class VehicleController extends Controller
     public function indexAction(Request $request) {
 
         $kartsTemp = $this->getDoctrine()->getRepository(Kart::class)->findAll();
-
         if(!$kartsTemp) {
             echo 'blad';
         }
-
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
             'karts' => $kartsTemp
         ]);
@@ -43,7 +41,7 @@ class VehicleController extends Controller
         if(!$kartsTemp) {
             echo 'blad';
         }
-        print_r($kartsTemp);
+        print_r($kartsTemp[0]->getKart()->getName());
         exit();
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
             'karts' => $kartsTemp

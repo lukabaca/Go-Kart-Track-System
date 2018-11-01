@@ -30,9 +30,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="list-group">
-                                        <li class="list-group-item">First item</li>
-                                        <li class="list-group-item">Second item</li>
-                                        <li class="list-group-item">Third item</li>
+                                        <li class="list-group-item">Moc:
+                                            {% for technicalData in kart.kartTechnicalData %}
+                                                <span>{{ technicalData.power }}km</span>
+                                            {%endfor %}
+                                        </li>
+                                        <li class="list-group-item">Prędkość maksymalna:
+                                            {% for technicalData in kart.kartTechnicalData %}
+                                                <span>{{ technicalData.vmax }}km/h</span>
+                                            {%endfor %}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
