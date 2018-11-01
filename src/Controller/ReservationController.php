@@ -100,7 +100,6 @@ class ReservationController extends Controller
             return new JsonResponse(['error in deleting reservation'], 500);
         }
         return new JsonResponse([], 200);
-
     }
 
     /**
