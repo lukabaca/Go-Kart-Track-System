@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 use App\Entity\Kart;
+use App\Entity\KartTechnicalData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,23 @@ class VehicleController extends Controller
             echo 'blad';
         }
 
+        return $this->render('views/controllers/vehicle/index.html.twig' ,[
+            'karts' => $kartsTemp
+        ]);
+    }
+
+    /**
+     * @Route("/vehicle/test", name="vehicle/test")
+     */
+    public function aaAction(Request $request) {
+
+        $kartsTemp = $this->getDoctrine()->getRepository(KartTechnicalData::class)->findAll();
+
+        if(!$kartsTemp) {
+            echo 'blad';
+        }
+        print_r($kartsTemp);
+        exit();
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
             'karts' => $kartsTemp
         ]);
