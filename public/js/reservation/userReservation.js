@@ -1,14 +1,19 @@
 $(document).ready(function () {
     let reservation_id;
     $('.table').DataTable({
+        "columns": [
+            { "width": "20%" },
+            { "width": "20%" },
+            { "width": "20%" },
+            { "width": "20%" },
+            { "width": "5%" }
+        ]
     });
     $('.deleteReservationBtn').on('click', function (e) {
        e.preventDefault();
        reservation_id = $(this).closest('tr').attr('reservation-id');
-       console.log(reservation_id);
        $('#reservationDeleteConfirmationModal').modal('show');
     });
-
     $('#confirmDeletetingReservationBtn').on('click', function (e) {
        e.preventDefault();
        console.log('usun rezerwacje');
@@ -47,9 +52,7 @@ $(document).ready(function () {
 function deleteReservationFromTable(table, reservation_id) {
     table.find('tbody tr').each(function () {
         let actualReservationId = $(this).attr('reservation-id');
-        console.log(actualReservationId);
         if(actualReservationId == reservation_id) {
-            console.log(actualReservationId, 'weszlo');
             $(this).remove();
         }
     });
@@ -60,7 +63,7 @@ function successAlert(message) {
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
         '<span aria-hidden="true">X</span>' +
         '</button>' +
-        '<strong>message</strong>' +
+        '<strong>'+message+'</strong>' +
         '</div>';
     $('.alertArea').append(alertSuccessContent);
 }
@@ -70,7 +73,7 @@ function errorAlert(message) {
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
         '<span aria-hidden="true">X</span>' +
         '</button>' +
-        '<strong>message</strong>' +
+        '<strong>'+message+'</strong>' +
         '</div>';
     $('.alertArea').append(alertErrorContent);
 }

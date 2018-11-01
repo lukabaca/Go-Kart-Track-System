@@ -94,16 +94,7 @@ $(document).ready(function () {
 
                     switch (statusCode) {
                         default : {
-                            let alertErrorContent =
-                                '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                                '<span aria-hidden="true">X</span>' +
-                                '</button>' +
-                                '<strong>Wystąpił błąd podczas usuwania nagrania</strong>' +
-                                '</div>';
-
-                            $('.alertArea').append(alertErrorContent);
-                            // $('.alert-danger').css('display', 'block');
+                            errorAlert('Wystąpił błąd podczas usuwania nagrania');
                             break;
                         }
                     }
@@ -154,21 +145,9 @@ $(document).ready(function () {
                             '</div>' +
                             '</div>' +
                             '</div>';
-
                         $('.recordingArea').append(content);
-
                         $('#addRecordingModal').modal('hide');
-
-                        let alertSuccessContent =
-                            '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
-                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                            '<span aria-hidden="true">X</span>' +
-                            '</button>' +
-                            '<strong>Dodano nagranie</strong>' +
-                            '</div>';
-
-                        $('.alertArea').append(alertSuccessContent);
-                        // $('.alert-success').css('display', 'block');
+                        successAlert('Dodano nagranie');
                     } else {
 
                     }
@@ -196,4 +175,25 @@ $(document).ready(function () {
         }
     }
 });
+
+function successAlert(message) {
+    let alertSuccessContent =
+        '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">X</span>' +
+        '</button>' +
+        '<strong>'+message+'</strong>' +
+        '</div>';
+    $('.alertArea').append(alertSuccessContent);
+}
+function errorAlert(message) {
+    let alertErrorContent =
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">X</span>' +
+        '</button>' +
+        '<strong>'+message+'</strong>' +
+        '</div>';
+    $('.alertArea').append(alertErrorContent);
+}
 
