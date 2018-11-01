@@ -33,6 +33,21 @@ class ReservationController extends Controller
             ]
         );
     }
+
+    /**
+     * @Route("/reservation/userReservation", name="reservation/userReservation")
+     */
+    public function userReservationAction(Request $request)
+    {
+//        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
+        $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->findAll();
+//        $reservations = [];
+        return $this->render('views/controllers/reservation/userReservation.html.twig', [
+                'reservations' => $reservations
+            ]
+        );
+    }
+
     /**
      * @Route("/reservation/getTimePerOneRide", name="reservation/getTimePerOneRide")
      */
@@ -65,6 +80,26 @@ class ReservationController extends Controller
         exit();
 
        return new JsonResponse([], 500);
+    }
+
+    /**
+     * @Route("/reservation/deleteReservation/{id}", name="/reservation/deleteReservation/{id}")
+     */
+    public function deleteReservationAction(Request $request, $id)
+    {
+        $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->find($id);
+        if(!$reservation) {
+            return new JsonResponse([], 404);
+        }
+        $user_id = $reservation->getUser()->getId();
+        if($user_id != $this->getUser()->getId()) {
+            return new JsonResponse(['cant delete someones reservation'], 403);
+        }
+        $result = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->deleteReservation($id);
+        if(!$result) {
+            return new JsonResponse(['error in deleting reservation'], 500);
+        }
+        return new JsonResponse([], 200);
     }
 
     /**
@@ -180,9 +215,9 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/reservation/getReservationDetails/{id}", name="reservation/getReservationDetails/{id}")
+     * @Route("/reservation/reservationDetails/{id}", name="reservation/reservationDetails/{id}")
      */
-    public function getReservationDetailsAction(Request $request, $id)
+    public function reservationDetailsAction(Request $request, $id)
     {
         //sprawdz czy dla id tej rezerwacji nalezy do zalogowanego uzytkwonika, jesli tak to pokaz szczegoly rezerwacji
         //jesli nie to przekieruj na nie masz dostepu do tej strony

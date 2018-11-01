@@ -144,4 +144,22 @@ class ReservationRepository extends EntityRepository
             return [];
         }
     }
+    public function deleteReservation($reservation_id) {
+        $sql = 'call deleteReservation(?)';
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $reservation_id);
+            $rowCount = $stmt->execute();
+            if($rowCount > 0) {
+                $result = $stmt->fetch();
+                $res = $result['success'];
+                return $res;
+            } else {
+                return null;
+            }
+        } catch (DBALException $e) {
+            return null;
+        }
+    }
 }
