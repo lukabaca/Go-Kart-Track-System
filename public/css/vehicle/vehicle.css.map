@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAEA,KAAM;EACJ,KAAK,EAAE,eAAe;;AAExB,SAAU;EACR,cAAc,EAAE,UAAU",
+"mappings": "AAEA,KAAM;EACJ,KAAK,EAAE,eAAe;EACtB,UAAU,EAAE,IAAI;EAEhB,sBAAiB;IACf,UAAU,EAAE,IAAI;IAChB,SAAS,EAAE,IAAI;EAEjB,kBAAa;IACX,cAAc,EAAE,GAAG;IACnB,aAAa,EAAE,IAAI;;AAGvB,SAAU;EACR,cAAc,EAAE,UAAU",
 "sources": ["../../scss/vehicle/vehicle.scss"],
 "names": [],
 "file": "vehicle.css"

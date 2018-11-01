@@ -1,5 +1,12 @@
 .card {
-  width: 100% !important; }
+  width: 100% !important;
+  margin-top: 20px; }
+  .card .descriptionArea {
+    margin-top: 15px;
+    font-size: 14px; }
+  .card .card-header {
+    padding-bottom: 5px;
+    margin-bottom: 10px; }
 
 .kartName {
   text-transform: capitalize; }
