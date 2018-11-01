@@ -14,9 +14,17 @@ class StatusCodeController extends Controller
     /**
      * @Route("/status500", name="/status500")
      */
-    public function indexAction(Request $request)
+    public function status500Action(Request $request)
     {
         return $this->render('views/alerts/500.html.twig', []
+        );
+    }
+    /**
+     * @Route("/status404", name="/status404")
+     */
+    public function status404Action(Request $request)
+    {
+        return $this->render('views/alerts/404.html.twig', []
         );
     }
 }

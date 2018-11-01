@@ -6,4 +6,10 @@
 .reservationTable {
   margin-left: 0px !important;
   margin-right: 0px !important;
+  .reservation-options {
+    display: flex;
+  }
+  .showDetailsReservationBtn {
+    margin-right: 15px;
+  }
 }

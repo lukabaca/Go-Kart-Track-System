@@ -4,5 +4,9 @@
 .reservationTable {
   margin-left: 0px !important;
   margin-right: 0px !important; }
+  .reservationTable .reservation-options {
+    display: flex; }
+  .reservationTable .showDetailsReservationBtn {
+    margin-right: 15px; }
 
 /*# sourceMappingURL=userReservation.css.map */

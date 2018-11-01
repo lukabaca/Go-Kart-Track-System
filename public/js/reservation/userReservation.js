@@ -8,6 +8,11 @@ $(document).ready(function () {
             { "width": "5%" }
         ]
     });
+    $('.showDetailsReservationBtn').on('click', function (e) {
+       e.preventDefault();
+       reservation_id = $(this).closest('tr').attr('reservation-id');
+       window.location.href = '/reservation/reservationDetails/' + reservation_id;
+    });
     $('.deleteReservationBtn').on('click', function (e) {
        e.preventDefault();
        reservation_id = $(this).closest('tr').attr('reservation-id');
@@ -15,14 +20,12 @@ $(document).ready(function () {
     });
     $('#confirmDeletetingReservationBtn').on('click', function (e) {
        e.preventDefault();
-       console.log('usun rezerwacje');
        if(reservation_id !== null && reservation_id !== undefined) {
            $.ajax({
                type: 'POST',
                dataType: 'json',
                url: '/reservation/deleteReservation/' + reservation_id,
                success: function (data) {
-                    console.log('usunieto rezerwacje');
                     let reservationTable = $('.reservationTable');
                     deleteReservationFromTable(reservationTable, reservation_id);
                     successAlert('Poprawnie anulowano rezerwacje');
@@ -30,10 +33,14 @@ $(document).ready(function () {
                error: function (xhr, ajaxOptions, thrownError) {
                    let statusCode = xhr.status;
                    let errorMessage;
-                   console.log(statusCode);
                    switch (statusCode) {
                        case 403: {
                            errorMessage = 'Nie można usuwać czyichś rezerwacji';
+                           errorAlert(errorMessage);
+                           break;
+                       }
+                       case 404: {
+                           window.location.href = '/status404';
                            break;
                        }
                        default : {
@@ -41,7 +48,6 @@ $(document).ready(function () {
                            break;
                        }
                    }
-                   errorAlert(errorMessage);
                }
            });
        }
