@@ -24,7 +24,8 @@ class VehicleController extends Controller
 
         $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
         if(!$karts) {
-            echo 'blad';
+            return $this->render('views/alerts/404.html.twig' ,[
+            ]);
         }
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
             'karts' => $karts
