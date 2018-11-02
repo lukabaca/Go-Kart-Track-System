@@ -52,28 +52,26 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{ form(kartForm) }}
-                    {#{{ form_start(kartForm) }}#}
-                    {#<div class="form-group">#}
-                        {#{{ form_label(kartForm.name) }}#}
-                        {#{{ form_widget(kartForm.name) }}#}
-                        {#<small class="formErrorMessage">{{ form_errors(kartForm.name) }}</small>#}
-                        {#{{ form_help(kartForm.name) }}#}
-                    {#</div>#}
-                    {#<div class="form-group">#}
-                        {#{{ form_label(kartForm.prize) }}#}
-                        {#{{ form_widget(kartForm.prize) }}#}
-                        {#<small class="formErrorMessage">{{ form_errors(kartForm.prize) }}</small>#}
-                        {#{{ form_help(kartForm.prize) }}#}
-                    {#</div>#}
-                    {#<div class="form-group">#}
-                        {#{{ form_row(kartForm.submit, {'label': 'Zapisz zmiany'}) }}#}
-                    {#</div>#}
-                    {#{{ form_end(kartForm) }}#}
+                    {#{{ form(kartForm) }}#}
+                    {{ form_start(kartForm) }}
+                    <div class="form-group">
+                        {{ form_label(kartForm.name) }}
+                        {{ form_widget(kartForm.name) }}
+                        <small class="formErrorMessage">{{ form_errors(kartForm.name) }}</small>
+                        {{ form_help(kartForm.name) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(kartForm.prize) }}
+                        {{ form_widget(kartForm.prize) }}
+                        <small class="formErrorMessage">{{ form_errors(kartForm.prize) }}</small>
+                        {{ form_help(kartForm.prize) }}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    {{ form_row(kartForm.submit, {'label': 'Zapisz zmiany'}) }}
+                    {{ form_end(kartForm) }}
+                    {#<button type="button" class="btn btn-primary">Save changes</button>#}
                 </div>
             </div>
         </div>
