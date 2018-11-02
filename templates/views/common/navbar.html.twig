@@ -8,25 +8,31 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">Aktualności <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ asset(path('reservation/index')) }}">Rezerwacja</a>
-            </li>
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ asset(path('reservation/index')) }}">Rezerwacja</a>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ asset(path('reservation/calendar')) }}">Dostępność toru</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   Strefa klienta
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{{ asset(path('recording/index')) }}">Twoje nagrania</a>
-                    <a class="dropdown-item" href="#">Twoje przejazdy</a>
-                    <a class="dropdown-item" href="{{ asset(path('reservation/userReservation')) }}">Twoje rezerwacje</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ asset(path('laps/record/index')) }}">Rekordy</a>
-            </li>
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       Strefa klienta
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ asset(path('recording/index')) }}">Twoje nagrania</a>
+                        <a class="dropdown-item" href="#">Twoje przejazdy</a>
+                        <a class="dropdown-item" href="{{ asset(path('reservation/userReservation')) }}">Twoje rezerwacje</a>
+                    </div>
+                </li>
+            {% endif %}
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ asset(path('laps/record/index')) }}">Rekordy</a>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ asset(path('vehicle/index')) }}">Pojazdy</a>
             </li>
