@@ -31,4 +31,18 @@ class VehicleController extends Controller
             'karts' => $karts
         ]);
     }
+
+    /**
+     * @Route("/vehicle/manageVehicles", name="/vehicle/manageVehicles")
+     */
+    public function manageVehiclesAction(Request $request) {
+
+//        $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
+//        if(!$karts) {
+//            return $this->render('views/alerts/404.html.twig' ,[
+//            ]);
+//        }
+        return $this->render('views/controllers/vehicle/manageVehicles.html.twig' ,[
+        ]);
+    }
 }
