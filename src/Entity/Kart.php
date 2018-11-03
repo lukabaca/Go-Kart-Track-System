@@ -55,6 +55,11 @@ class Kart
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=60)
+     */
+    private $file;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Lap", mappedBy="kart")
      */
     private $lap;
@@ -73,7 +78,7 @@ class Kart
      * @param $description
      * @param $lap
      */
-    public function __construct($id = null, $availability = null, $prize = null, $name = null, $description = null, $lap = null)
+    public function __construct($id = null, $availability = null, $prize = null, $name = null, $description = null, $lap = null, $file = null)
     {
         $this->id = $id;
         $this->availability = $availability;
@@ -81,7 +86,7 @@ class Kart
         $this->name = $name;
         $this->description = $description;
         $this->lap = $lap;
-//        $this->kartTechnicalData = new ArrayCollection();
+        $this->file = $file;
     }
 
     /**
@@ -194,5 +199,21 @@ class Kart
     {
         $this->kartTechnicalData = $kartTechnicalData;
         $kartTechnicalData->setKart($this);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file): void
+    {
+        $this->file = $file;
     }
 }

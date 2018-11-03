@@ -14,6 +14,7 @@ use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -65,6 +66,10 @@ class KartType extends AbstractType
             ],
         ));
         $builder->add('kartTechnicalData', KartTechnicalDataType::class);
+        $builder->add('file', FileType::class, array(
+            'label' => 'Plik',
+            'required' => FALSE,
+        ));
         $builder->add('submit', SubmitType::class, array(
             'label' => 'Zapisz',
             'attr' => ['id' => 'addKartButton',

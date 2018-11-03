@@ -58,6 +58,12 @@
                     {{ form_help(kartForm.kartTechnicalData.engine) }}
                 </div>
                 <div class="form-group">
+                    {{ form_label(kartForm.file) }}
+                    {{ form_widget(kartForm.file) }}
+                    <small class="formErrorMessage">{{ form_errors(kartForm.file) }}</small>
+                    {{ form_help(kartForm.file) }}
+                </div>
+                <div class="form-group">
                     {{ form_label(kartForm.submit) }}
                     {{ form_widget(kartForm.submit) }}
                 </div>
