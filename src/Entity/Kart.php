@@ -27,7 +27,7 @@ class Kart
      */
     private $id;
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="boolean")
      */
     private $availability;
     /**

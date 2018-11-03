@@ -46,7 +46,6 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -76,42 +75,18 @@
                         {{ form_label(kartForm.description) }}
                         {{ form_widget(kartForm.description) }}
                         <small class="formErrorMessage">{{ form_errors(kartForm.description) }}</small>
-                        {{ form_help(kartForm.description) }}
+                        <small class="form-text text-muted">{{ form_help(kartForm.description) }}</small>
                     </div>
-
-                        <div class="form-group">
-                            {#{% for kartTechnicalData in kartForm.kartTechnicalData %}#}
-                            {#{{ form_row(kartTechnicalData.power) }}#}
-                        {#{{ form_label(kartForm.kartTechnicalData) }}#}
+                    <div class="form-group">
                         {{ form_widget(kartForm.kartTechnicalData) }}
                         <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData) }}</small>
                         {{ form_help(kartForm.kartTechnicalData) }}
-                            {#{% endfor %}#}
-                        </div>
-                    {#<div class="form-group">#}
-                        {#{{ form_label(kartForm.kartTechnicalData.power) }}#}
-                        {#{{ form_widget(kartForm.kartTechnicalData.power) }}#}
-                        {#<small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData.power) }}</small>#}
-                        {#{{ form_help(kartForm.kartTechnicalData.power) }}#}
-                    {#</div>#}
-                    {#<div class="form-group">#}
-                        {#{{ form_label(kartForm.vmax) }}#}
-                        {#{{ form_widget(kartForm.vmax) }}#}
-                        {#<small class="formErrorMessage">{{ form_errors(kartForm.vmax) }}</small>#}
-                        {#{{ form_help(kartForm.vmax) }}#}
-                    {#</div>#}
-                    {#<div class="form-group">#}
-                        {#{{ form_label(kartForm.engine) }}#}
-                        {#{{ form_widget(kartForm.engine) }}#}
-                        {#<small class="formErrorMessage">{{ form_errors(kartForm.engine) }}</small>#}
-                        {#{{ form_help(kartForm.engine) }}#}
-                    {#</div>#}
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
                     {{ form_row(kartForm.submit, {'label': 'Zapisz zmiany'}) }}
                     {{ form_end(kartForm) }}
-                    {#<button type="button" class="btn btn-primary">Save changes</button>#}
                 </div>
             </div>
         </div>

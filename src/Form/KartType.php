@@ -58,35 +58,6 @@ class KartType extends AbstractType
             ],
         ));
         $builder->add('kartTechnicalData', KartTechnicalDataType::class);
-//        $builder->add('kartTechnicalData', CollectionType::class, array(
-//            'entry_type' => KartTechnicalDataType::class,
-//            'entry_options' => array('label' => false),
-//            'allow_add' => true,
-//        ));
-//        $builder->add('kartTechnicalData', NumberType::class, array(
-//            'label' => 'Moc',
-//            'required' => FALSE,
-//            'attr' => [
-//                'placeholder' => 'Moc',
-//                'class' => 'form-control'
-//            ],
-//        ));
-//        $builder->add('vmax', NumberType::class, array(
-//            'label' => 'Moc',
-//            'required' => FALSE,
-//            'attr' => [
-//                'placeholder' => 'Prędkość maksymalna',
-//                'class' => 'form-control'
-//            ],
-//        ));
-//        $builder->add('engine', TextType::class, array(
-//            'label' => 'Moc',
-//            'required' => FALSE,
-//            'attr' => [
-//                'placeholder' => 'Silnik',
-//                'class' => 'form-control'
-//            ],
-//        ));
         $builder->add('submit', SubmitType::class, array(
 
             'label' => 'Dodaj',
