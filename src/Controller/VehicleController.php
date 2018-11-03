@@ -23,12 +23,7 @@ class VehicleController extends Controller
      * @Route("/vehicle/index", name="vehicle/index")
      */
     public function indexAction(Request $request) {
-
         $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
-        if(!$karts) {
-            return $this->render('views/alerts/404.html.twig' ,[
-            ]);
-        }
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
             'karts' => $karts
         ]);
@@ -53,30 +48,25 @@ class VehicleController extends Controller
             if(!$kart) {
                 return $this->render('views/alerts/404.html.twig', []);
             }
-//            $kartTechnicalDataTemp = $kart->getKartTechnicalData();
-//            $kart->setKartTechnicalData($kartTechnicalDataTemp[0]);
+            $actionMode = 'Edytuj gokart';
         } else {
             $kart = new Kart();
+            $actionMode = 'Dodaj gokart';
         }
         $kartForm = $this->createForm(KartType::class, $kart);
         $kartForm->handleRequest($request);
         if($kartForm->isSubmitted() && $kartForm->isValid()) {
-//            print_r($kart->getId());
-//            exit();
             $em = $this->getDoctrine()->getManager();
-//            $test = new ArrayCollection();
-//            $test->add($kart->getKartTechnicalData());
-//            $kart->setKartTechnicalData($test);
             $em->persist($kart);
             $em->flush();
-
             $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
             return $this->render('views/controllers/vehicle/manageVehicles.html.twig' ,[
                 'karts' => $karts
             ]);
         }
         return $this->render('views/controllers/vehicle/addKart.html.twig' ,[
-            'kartForm' => $kartForm->createView()
+            'kartForm' => $kartForm->createView(),
+            'actionMode' => $actionMode,
         ]);
     }
 }

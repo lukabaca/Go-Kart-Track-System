@@ -19,38 +19,46 @@
         </div>
         <h4 class="pageHeader">Pojazdy</h4>
         <div class="row">
-            {% for kart in karts %}
-                <div class="col-md-6">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title kartName">{{ kart.name }}</h5>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <img class="card-img-top" src="{{ asset('images/karts/gokart.png') }}" alt="Card image cap">
-                                </div>
-                                <div class="col-md-6">
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Moc:
-                                            {% for technicalData in kart.kartTechnicalData %}
-                                                <span>{{ technicalData.power }}km</span>
-                                            {%endfor %}
-                                        </li>
-                                        <li class="list-group-item">Prędkość maksymalna:
-                                            {% for technicalData in kart.kartTechnicalData %}
-                                                <span>{{ technicalData.vmax }}km/h</span>
-                                            {%endfor %}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-12 descriptionArea">
-                                    <div class="card-header">Opis pojazdu</div>
-                                    {{ kart.description }}
+            <div class="col-md-12">
+                {% if karts %}
+                    {% for kart in karts %}
+                        {% if kart.availability %}
+                            <div class="col-md-6">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title kartName">{{ kart.name }}</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img class="card-img-top" src="{{ asset('images/karts/gokart.png') }}" alt="Card image cap">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item">Moc:
+                                                        {% for technicalData in kart.kartTechnicalData %}
+                                                            <span>{{ technicalData.power }}km</span>
+                                                        {%endfor %}
+                                                    </li>
+                                                    <li class="list-group-item">Prędkość maksymalna:
+                                                        {% for technicalData in kart.kartTechnicalData %}
+                                                            <span>{{ technicalData.vmax }}km/h</span>
+                                                        {%endfor %}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-12 descriptionArea">
+                                                <div class="card-header">Opis pojazdu</div>
+                                                {{ kart.description }}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="noData">Aktualnie brak dostępnych pojazdów</p>
+                {% endif %}
+            </div>
         </div>
     </div>
     </div>
