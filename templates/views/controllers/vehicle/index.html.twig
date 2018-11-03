@@ -28,7 +28,9 @@
                                         <h5 class="card-title kartName">{{ kart.name }}</h5>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <img class="card-img-top" src="{{ asset('images/karts/gokart.png') }}" alt="Card image cap">
+                                                {% if kart.file %}
+                                                    <img class="card-img-top" src="{{ asset('images/karts/'~kart.file~'') }}" alt="Card image cap">
+                                                {% endif %}
                                             </div>
                                             <div class="col-md-6">
                                                 <ul class="list-group">

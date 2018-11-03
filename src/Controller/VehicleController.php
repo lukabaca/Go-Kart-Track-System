@@ -31,7 +31,9 @@ class VehicleController extends Controller
             if($kartTemp->getAvailability()) {
                 $karts [] = $kartTemp;
             }
+//            print_r($kartTemp->getFile());
         }
+//        exit();
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
             'karts' => $karts
         ]);
@@ -51,18 +53,22 @@ class VehicleController extends Controller
      * @Route("/vehicle/addKart/{id}", name="/vehicle/addKart", defaults={"id"=null})
      */
     public function addKartAction(Request $request, $id) {
+        $isEditingKart = false;
         if($id) {
             $kart = $this->getDoctrine()->getRepository(Kart::class)->find($id);
             if(!$kart) {
                 return $this->render('views/alerts/404.html.twig', []);
             }
             try {
-                $kart->setFile(
-                    new File($this->getParameter('kartImage_directory') . '/' . $kart->getFile())
-                );
+                $fileTemp = new File($this->getParameter('kartImage_directory') . '/' . $kart->getFile());
+                $fileTempName =  $kart->getFile();
+                $kart->setFile($fileTemp);
+//                print_r($kart->getFile());
+//                exit();
             }catch (FileException $e) {
-                
+
             }
+            $isEditingKart = true;
             $actionMode = 'Edytuj gokart';
         } else {
             $kart = new Kart();
@@ -74,14 +80,18 @@ class VehicleController extends Controller
             try {
                 $file = $kart->getFile();
                 if($file) {
+//                    print_r('aaa');
                     $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
                     $file->move($this->getParameter('kartImage_directory'), $fileName);
                     $kart->setFile($fileName);
+                } else {
+                    if($isEditingKart) {
+                        $kart->setFile($fileTempName);
+                    }
                 }
             } catch (FileException $e) {
                 print_r('expcetion przy filu');
             }
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($kart);
             $em->flush();
