@@ -38,7 +38,7 @@ class Kart
     /**
      * @ORM\Column(type="string", length=45)
      * @Assert\Regex(
-     *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ0-9]+$/",
+     *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ0-9 ]+$/",
      *     message="Wartość {{ value }} nie jest w poprawnym formacie"
      * )
      * @Assert\Length(
@@ -60,7 +60,7 @@ class Kart
     private $lap;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\KartTechnicalData", mappedBy ="kart")
+     * @ORM\OneToOne(targetEntity="App\Entity\KartTechnicalData", mappedBy ="kart", cascade={"persist", "remove"})
      */
     private $kartTechnicalData;
 
@@ -193,5 +193,6 @@ class Kart
     public function setKartTechnicalData($kartTechnicalData): void
     {
         $this->kartTechnicalData = $kartTechnicalData;
+        $kartTechnicalData->setKart($this);
     }
 }

@@ -20,6 +20,7 @@ class KartTechnicalData
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     /**
@@ -40,7 +41,7 @@ class KartTechnicalData
     private $engine;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Kart", inversedBy="kartTechnicalData")
+     * @ORM\OneToOne(targetEntity="App\Entity\Kart", inversedBy="kartTechnicalData")
      */
     private $kart;
 

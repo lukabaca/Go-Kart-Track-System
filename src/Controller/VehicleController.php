@@ -10,6 +10,7 @@ namespace App\Controller;
 use App\Entity\Kart;
 use App\Entity\KartTechnicalData;
 use App\Form\KartType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,16 +53,27 @@ class VehicleController extends Controller
             if(!$kart) {
                 return $this->render('views/alerts/404.html.twig', []);
             }
-            $kartTechnicalDataTemp = $kart->getKartTechnicalData();
-            $kart->setKartTechnicalData($kartTechnicalDataTemp[0]);
+//            $kartTechnicalDataTemp = $kart->getKartTechnicalData();
+//            $kart->setKartTechnicalData($kartTechnicalDataTemp[0]);
         } else {
             $kart = new Kart();
         }
         $kartForm = $this->createForm(KartType::class, $kart);
         $kartForm->handleRequest($request);
         if($kartForm->isSubmitted() && $kartForm->isValid()) {
-            print_r($kart);
-            exit();
+//            print_r($kart->getId());
+//            exit();
+            $em = $this->getDoctrine()->getManager();
+//            $test = new ArrayCollection();
+//            $test->add($kart->getKartTechnicalData());
+//            $kart->setKartTechnicalData($test);
+            $em->persist($kart);
+            $em->flush();
+
+            $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
+            return $this->render('views/controllers/vehicle/manageVehicles.html.twig' ,[
+                'karts' => $karts
+            ]);
         }
         return $this->render('views/controllers/vehicle/addKart.html.twig' ,[
             'kartForm' => $kartForm->createView()
