@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACA,EAAG;EACD,UAAU,EAAE,IAAI;EAChB,OAAO,EAAE,GAAG",
+"sources": ["../../scss/vehicle/addKart.scss"],
+"names": [],
+"file": "addKart.css"
+}

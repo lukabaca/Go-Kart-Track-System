@@ -24,6 +24,10 @@ class KartTechnicalData
     private $id;
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Regex(
+     *     pattern = "/^[0-9]",
+     *     message="Moc pojazdu musi być wyrażona jako liczba całkowita"
+     * )
      */
     private $power;
     /**

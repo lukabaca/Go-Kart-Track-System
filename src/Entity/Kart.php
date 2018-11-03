@@ -32,10 +32,21 @@ class Kart
     private $availability;
     /**
      * @ORM\Column(type="float")
+    *
      */
     private $prize;
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\Regex(
+     *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ0-9]+$/",
+     *     message="Wartość {{ value }} nie jest w poprawnym formacie"
+     * )
+     * @Assert\Length(
+     *    max = 45,
+     *    min = 2,
+     *    maxMessage = "Maksymalna liczba znaków to 45",
+     *    minMessage = "Minimalna liczba znaków to 2"
+     * )
      */
     private $name;
     /**

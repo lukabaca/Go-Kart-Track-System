@@ -10,9 +10,13 @@ namespace App\Form;
 
 
 use App\Entity\KartTechnicalData;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -37,12 +41,15 @@ class KartType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
-        $builder->add('prize', TextType::class, array(
+        $builder->add('prize', IntegerType::class, array(
             'label' => 'Cena za przejazd',
             'required' => TRUE,
+            'invalid_message' => 'Proszę wprowadzić liczbę',
+            'help' => 'Cena jest wyrażona w zł',
             'attr' => [
                 'placeholder' => 'Cena za przejazd',
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'min' => 1,
             ],
         ));
         $builder->add('availability', CheckboxType::class, array(

@@ -20,7 +20,7 @@ class KartTechnicalDataType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('power', NumberType::class, array(
+        $builder->add('power', TextType::class, array(
             'label' => 'Moc',
             'required' => FALSE,
             'attr' => [
@@ -28,7 +28,7 @@ class KartTechnicalDataType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
-        $builder->add('vmax', NumberType::class, array(
+        $builder->add('vmax', TextType::class, array(
 
             'label' => 'Prędkość maksymalna',
             'required' => FALSE,
