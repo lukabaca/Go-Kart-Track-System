@@ -19,26 +19,32 @@
                 <a class="btn btn-primary" id="addKartBtn" href="{{ asset(path('/vehicle/addKart')) }}">Dodaj gokart</a>
             </div>
             <div class="col-md-12 tableArea">
-                <table class="table kartTable">
-                    <thead>
-                    <th>Nazwa</th>
-                    <th>Cena za przejazd</th>
-                    <th>Dostępność</th>
-                    </thead>
-                    <tbody>
-                    {#{% for reservation in reservations %}#}
-                        {#<tr class="reservation-row" reservation-id="{{ reservation.id }}">#}
-                            {#<td>{{ reservation.startDate }}</td>#}
-                            {#<td>{{ reservation.endDate }}</td>#}
-                            {#<td>{{ reservation.cost }}zł</td>#}
-                            {#<td class="reservation-options">#}
-                                {#<button type="button" class="showDetailsReservationBtn btn btn-info">Szczegóły rezerwacji</button>#}
-                                {#<button type="button" class="deleteReservationBtn btn btn-danger">Anuluj rezerwacje</button>#}
-                            {#</td>#}
-                        {#</tr>#}
-                    {#{% endfor %}#}
-                    </tbody>
-                </table>
+                {% if karts %}
+                    <table class="table kartTable">
+                        <thead>
+                        <th>Nazwa</th>
+                        <th>Cena za przejazd</th>
+                        <th>Dostępność</th>
+                        </thead>
+                        <tbody>
+                            {% for kart in karts %}
+                            <tr class="kart-row" kart-id="{{ kart.id }}">
+                                <td>{{ kart.name }}</td>
+                                <td>{{ kart.prize }}zł</td>
+                                <td>
+                                    {% if kart.availability %}
+                                        Dostępny
+                                    {% else %}
+                                        Niedostępny
+                                    {% endif %}
+                                </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Brak pojazdów</p>
+                {% endif %}
             </div>
         </div>
     </div>
