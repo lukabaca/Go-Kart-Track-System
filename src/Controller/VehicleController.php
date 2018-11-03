@@ -34,16 +34,24 @@ class VehicleController extends Controller
     }
 
     /**
-     * @Route("/vehicle/manageVehicles/{id}", name="/vehicle/manageVehicles", defaults={"id"=null})
+     * @Route("/vehicle/manageVehicles", name="/vehicle/manageVehicles")
      */
-    public function manageVehiclesAction(Request $request, $id) {
+    public function manageVehiclesAction(Request $request) {
+        return $this->render('views/controllers/vehicle/manageVehicles.html.twig' ,[
+        ]);
+    }
+
+    /**
+     * @Route("/vehicle/addKart/{id}", name="/vehicle/addKart", defaults={"id"=null})
+     */
+    public function addKartAction(Request $request, $id) {
         if($id) {
             $kart = $this->getDoctrine()->getRepository(Kart::class)->find($id);
-            $kartTechnicalDataTemp = $kart->getKartTechnicalData();
-            $kart->setKartTechnicalData($kartTechnicalDataTemp[0]);
             if(!$kart) {
                 return $this->render('views/alerts/404.html.twig', []);
             }
+            $kartTechnicalDataTemp = $kart->getKartTechnicalData();
+            $kart->setKartTechnicalData($kartTechnicalDataTemp[0]);
         } else {
             $kart = new Kart();
         }
@@ -53,7 +61,7 @@ class VehicleController extends Controller
             print_r($kart);
             exit();
         }
-        return $this->render('views/controllers/vehicle/manageVehicles.html.twig' ,[
+        return $this->render('views/controllers/vehicle/addKart.html.twig' ,[
             'kartForm' => $kartForm->createView()
         ]);
     }

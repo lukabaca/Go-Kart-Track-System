@@ -47,7 +47,7 @@ class KartType extends AbstractType
         ));
         $builder->add('availability', CheckboxType::class, array(
             'label' => 'Dostępność',
-            'required' => TRUE,
+            'required' => FALSE,
         ));
         $builder->add('description', TextareaType::class, array(
             'label' => 'Opis',
@@ -59,7 +59,6 @@ class KartType extends AbstractType
         ));
         $builder->add('kartTechnicalData', KartTechnicalDataType::class);
         $builder->add('submit', SubmitType::class, array(
-
             'label' => 'Dodaj',
             'attr' => ['id' => 'addKartButton',
                 'class' => 'btn btn-primary submitButton'

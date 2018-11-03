@@ -16,7 +16,7 @@
         <h4 class="pageHeader">Zarządzaj pojazdami</h4>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-primary" id="addKartBtn" data-toggle="modal" data-target="#manageKartModal">Dodaj gokart</button>
+                <a class="btn btn-primary" id="addKartBtn" href="{{ asset(path('/vehicle/addKart')) }}">Dodaj gokart</a>
             </div>
             <div class="col-md-12 tableArea">
                 <table class="table kartTable">
@@ -39,55 +39,6 @@
                     {#{% endfor %}#}
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="manageKartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    {#{{ form(kartForm) }}#}
-                    {{ form_start(kartForm) }}
-                    <div class="form-group">
-                        {{ form_label(kartForm.name) }}
-                        {{ form_widget(kartForm.name) }}
-                        <small class="formErrorMessage">{{ form_errors(kartForm.name) }}</small>
-                        {{ form_help(kartForm.name) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(kartForm.prize) }}
-                        {{ form_widget(kartForm.prize) }}
-                        <small class="formErrorMessage">{{ form_errors(kartForm.prize) }}</small>
-                        {{ form_help(kartForm.prize) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(kartForm.availability) }}
-                        {{ form_widget(kartForm.availability) }}
-                        <small class="formErrorMessage">{{ form_errors(kartForm.availability) }}</small>
-                        {{ form_help(kartForm.availability) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(kartForm.description) }}
-                        {{ form_widget(kartForm.description) }}
-                        <small class="formErrorMessage">{{ form_errors(kartForm.description) }}</small>
-                        <small class="form-text text-muted">{{ form_help(kartForm.description) }}</small>
-                    </div>
-                    <div class="form-group">
-                        {{ form_widget(kartForm.kartTechnicalData) }}
-                        <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData) }}</small>
-                        {{ form_help(kartForm.kartTechnicalData) }}
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                    {{ form_row(kartForm.submit, {'label': 'Zapisz zmiany'}) }}
-                    {{ form_end(kartForm) }}
-                </div>
             </div>
         </div>
     </div>

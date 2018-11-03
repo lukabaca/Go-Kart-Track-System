@@ -1,0 +1,59 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Zarządzaj pojazdami
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/vehicle/manageVehicles.css') }}">
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Dodaj gokart</h4>
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_start(kartForm) }}
+                <div class="form-group">
+                    {{ form_label(kartForm.name) }}
+                    {{ form_widget(kartForm.name) }}
+                    <small class="formErrorMessage">{{ form_errors(kartForm.name) }}</small>
+                    {{ form_help(kartForm.name) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(kartForm.prize) }}
+                    {{ form_widget(kartForm.prize) }}
+                    <small class="formErrorMessage">{{ form_errors(kartForm.prize) }}</small>
+                    {{ form_help(kartForm.prize) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(kartForm.availability) }}
+                    {{ form_widget(kartForm.availability) }}
+                    <small class="formErrorMessage">{{ form_errors(kartForm.availability) }}</small>
+                    {{ form_help(kartForm.availability) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(kartForm.description) }}
+                    {{ form_widget(kartForm.description) }}
+                    <small class="formErrorMessage">{{ form_errors(kartForm.description) }}</small>
+                    <small class="form-text text-muted">{{ form_help(kartForm.description) }}</small>
+                </div>
+                <div class="form-group">
+                    {{ form_widget(kartForm.kartTechnicalData) }}
+                    <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData) }}</small>
+                    {{ form_help(kartForm.kartTechnicalData) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(kartForm.submit) }}
+                    {{ form_widget(kartForm.submit) }}
+                </div>
+                {{ form_end(kartForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/vehicle/manageVehicles.js') }}"></script>
+{%  endblock %}
