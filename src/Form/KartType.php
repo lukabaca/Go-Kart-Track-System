@@ -66,7 +66,7 @@ class KartType extends AbstractType
         ));
         $builder->add('kartTechnicalData', KartTechnicalDataType::class);
         $builder->add('submit', SubmitType::class, array(
-            'label' => 'Dodaj',
+            'label' => 'Zapisz',
             'attr' => ['id' => 'addKartButton',
                 'class' => 'btn btn-primary submitButton'
             ]

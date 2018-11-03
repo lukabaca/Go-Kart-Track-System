@@ -22,7 +22,6 @@
             <div class="col-md-12">
                 {% if karts %}
                     {% for kart in karts %}
-                        {% if kart.availability %}
                             <div class="col-md-6">
                                 <div class="card" style="width: 18rem;">
                                     <div class="card-body">
@@ -33,16 +32,16 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <ul class="list-group">
-                                                    <li class="list-group-item">Moc:
-                                                        {% for technicalData in kart.kartTechnicalData %}
-                                                            <span>{{ technicalData.power }}km</span>
-                                                        {%endfor %}
-                                                    </li>
-                                                    <li class="list-group-item">Prędkość maksymalna:
-                                                        {% for technicalData in kart.kartTechnicalData %}
-                                                            <span>{{ technicalData.vmax }}km/h</span>
-                                                        {%endfor %}
-                                                    </li>
+                                                    {% if kart.kartTechnicalData.power %}
+                                                        <li class="list-group-item">Moc:
+                                                            <span>{{ kart.kartTechnicalData.power }}</span>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if kart.kartTechnicalData.vmax %}
+                                                        <li class="list-group-item">Prędkość maksymalna:
+                                                            <span>{{ kart.kartTechnicalData.vmax }}km/h</span>
+                                                        </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                             <div class="col-md-12 descriptionArea">
@@ -53,7 +52,6 @@
                                     </div>
                                 </div>
                             </div>
-                        {% endif %}
                     {% endfor %}
                 {% else %}
                     <p class="noData">Aktualnie brak dostępnych pojazdów</p>
@@ -62,8 +60,6 @@
         </div>
     </div>
     </div>
-
-
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

@@ -23,7 +23,13 @@ class VehicleController extends Controller
      * @Route("/vehicle/index", name="vehicle/index")
      */
     public function indexAction(Request $request) {
-        $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
+        $kartsTemp = $this->getDoctrine()->getRepository(Kart::class)->findAll();
+        $karts = [];
+        foreach ($kartsTemp as $kartTemp) {
+            if($kartTemp->getAvailability()) {
+                $karts [] = $kartTemp;
+            }
+        }
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
             'karts' => $karts
         ]);
