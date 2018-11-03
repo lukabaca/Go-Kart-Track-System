@@ -38,6 +38,9 @@ class VehicleController extends Controller
      */
     public function manageVehiclesAction(Request $request) {
         $kart = new Kart();
+//        $kartTechnicalData = new KartTechnicalData();
+//        $array = array($kartTechnicalData);
+//        $kart->setKartTechnicalData($array);
         $kartForm = $this->createForm(KartType::class, $kart);
 //        $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
 //        if(!$karts) {

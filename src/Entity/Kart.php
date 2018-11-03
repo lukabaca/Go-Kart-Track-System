@@ -7,6 +7,7 @@
  */
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -69,6 +70,7 @@ class Kart
         $this->name = $name;
         $this->description = $description;
         $this->lap = $lap;
+//        $this->kartTechnicalData = new ArrayCollection();
     }
 
     /**

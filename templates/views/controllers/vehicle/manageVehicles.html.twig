@@ -66,6 +66,46 @@
                         <small class="formErrorMessage">{{ form_errors(kartForm.prize) }}</small>
                         {{ form_help(kartForm.prize) }}
                     </div>
+                    <div class="form-group">
+                        {{ form_label(kartForm.availability) }}
+                        {{ form_widget(kartForm.availability) }}
+                        <small class="formErrorMessage">{{ form_errors(kartForm.availability) }}</small>
+                        {{ form_help(kartForm.availability) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(kartForm.description) }}
+                        {{ form_widget(kartForm.description) }}
+                        <small class="formErrorMessage">{{ form_errors(kartForm.description) }}</small>
+                        {{ form_help(kartForm.description) }}
+                    </div>
+
+                        <div class="form-group">
+                            {#{% for kartTechnicalData in kartForm.kartTechnicalData %}#}
+                            {#{{ form_row(kartTechnicalData.power) }}#}
+                        {#{{ form_label(kartForm.kartTechnicalData) }}#}
+                        {{ form_widget(kartForm.kartTechnicalData) }}
+                        <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData) }}</small>
+                        {{ form_help(kartForm.kartTechnicalData) }}
+                            {#{% endfor %}#}
+                        </div>
+                    {#<div class="form-group">#}
+                        {#{{ form_label(kartForm.kartTechnicalData.power) }}#}
+                        {#{{ form_widget(kartForm.kartTechnicalData.power) }}#}
+                        {#<small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData.power) }}</small>#}
+                        {#{{ form_help(kartForm.kartTechnicalData.power) }}#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#{{ form_label(kartForm.vmax) }}#}
+                        {#{{ form_widget(kartForm.vmax) }}#}
+                        {#<small class="formErrorMessage">{{ form_errors(kartForm.vmax) }}</small>#}
+                        {#{{ form_help(kartForm.vmax) }}#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#{{ form_label(kartForm.engine) }}#}
+                        {#{{ form_widget(kartForm.engine) }}#}
+                        {#<small class="formErrorMessage">{{ form_errors(kartForm.engine) }}</small>#}
+                        {#{{ form_help(kartForm.engine) }}#}
+                    {#</div>#}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
