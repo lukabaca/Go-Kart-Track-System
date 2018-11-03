@@ -4,4 +4,8 @@
 .form-control {
   margin-bottom: 10px; }
 
+.kart-row:hover {
+  background-color: #e0e0e0;
+  cursor: pointer; }
+
 /*# sourceMappingURL=manageVehicles.css.map */

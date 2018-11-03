@@ -107,4 +107,9 @@ footer {
   z-index: 999;
   color: #e0e0e0; }
 
+.goBack {
+  margin-right: 10px;
+  font-size: 25px;
+  cursor: pointer; }
+
 /*# sourceMappingURL=global.css.map */

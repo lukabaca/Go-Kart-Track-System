@@ -6,3 +6,7 @@
 .form-control {
   margin-bottom: 10px;
 }
+.kart-row:hover {
+  background-color: $mainAccentLight;
+  cursor: pointer;
+}
