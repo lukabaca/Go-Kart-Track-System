@@ -54,6 +54,7 @@ class VehicleController extends Controller
      */
     public function addKartAction(Request $request, $id) {
         $isEditingKart = false;
+        $filePath = null;
         if($id) {
             $kart = $this->getDoctrine()->getRepository(Kart::class)->find($id);
             if(!$kart) {
@@ -62,6 +63,7 @@ class VehicleController extends Controller
             try {
                 $fileTemp = new File($this->getParameter('kartImage_directory') . '/' . $kart->getFile());
                 $fileTempName =  $kart->getFile();
+                $filePath = $fileTempName;
                 $kart->setFile($fileTemp);
 //                print_r($kart->getFile());
 //                exit();
@@ -101,6 +103,7 @@ class VehicleController extends Controller
             ]);
         }
         return $this->render('views/controllers/vehicle/addKart.html.twig' ,[
+            'filePath' => $filePath,
             'kartForm' => $kartForm->createView(),
             'actionMode' => $actionMode,
         ]);
