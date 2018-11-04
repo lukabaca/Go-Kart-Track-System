@@ -1,14 +1,16 @@
-.card {
-  width: 100% !important;
-  margin-top: 20px; }
-  .card .descriptionArea {
-    margin-top: 15px;
-    font-size: 14px; }
-  .card .card-header {
-    padding-bottom: 5px;
-    margin-bottom: 10px; }
-
-.kartName {
-  text-transform: capitalize; }
+.kartCol {
+  margin-bottom: 20px; }
+  .kartCol .card {
+    width: 100% !important;
+    margin-top: 20px;
+    height: 100%; }
+    .kartCol .card .descriptionArea {
+      margin-top: 15px;
+      font-size: 14px; }
+    .kartCol .card .card-header {
+      padding-bottom: 5px;
+      margin-bottom: 10px; }
+  .kartCol .kartName {
+    text-transform: capitalize; }
 
 /*# sourceMappingURL=vehicle.css.map */
