@@ -13,25 +13,25 @@
         </div>
         <h4 class="pageHeader"><i class="fas fa-angle-left goBack"></i>{{ actionMode }}</h4>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 {{ form_start(kartForm) }}
-                <div class="form-group">
-                    {{ form_label(kartForm.name) }}
-                    {{ form_widget(kartForm.name) }}
-                    <small class="formErrorMessage">{{ form_errors(kartForm.name) }}</small>
-                    {{ form_help(kartForm.name) }}
-                </div>
-                <div class="form-group">
-                    {{ form_label(kartForm.prize) }}
-                    {{ form_widget(kartForm.prize) }}
-                    <small class="formErrorMessage">{{ form_errors(kartForm.prize) }}</small>
-                    <small class="form-text text-muted">{{ form_help(kartForm.prize) }}</small>
-                </div>
-                <div class="form-group">
-                    {{ form_label(kartForm.availability) }}
-                    {{ form_widget(kartForm.availability) }}
-                    <small class="formErrorMessage">{{ form_errors(kartForm.availability) }}</small>
-                    {{ form_help(kartForm.availability) }}
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(kartForm.name) }}
+                            {{ form_widget(kartForm.name) }}
+                            <small class="formErrorMessage">{{ form_errors(kartForm.name) }}</small>
+                            {{ form_help(kartForm.name) }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(kartForm.prize) }}
+                            {{ form_widget(kartForm.prize) }}
+                            <small class="formErrorMessage">{{ form_errors(kartForm.prize) }}</small>
+                            <small class="form-text text-muted">{{ form_help(kartForm.prize) }}</small>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     {{ form_label(kartForm.description) }}
@@ -39,23 +39,31 @@
                     <small class="formErrorMessage">{{ form_errors(kartForm.description) }}</small>
                     {{ form_help(kartForm.description) }}
                 </div>
-                <div class="form-group">
-                    {{ form_label(kartForm.kartTechnicalData.power) }}
-                    {{ form_widget(kartForm.kartTechnicalData.power) }}
-                    <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData.power) }}</small>
-                    {{ form_help(kartForm.kartTechnicalData.power) }}
-                </div>
-                <div class="form-group">
-                    {{ form_label(kartForm.kartTechnicalData.vmax) }}
-                    {{ form_widget(kartForm.kartTechnicalData.vmax) }}
-                    <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData.vmax) }}</small>
-                    {{ form_help(kartForm.kartTechnicalData.vmax) }}
-                </div>
-                <div class="form-group">
-                    {{ form_label(kartForm.kartTechnicalData.engine) }}
-                    {{ form_widget(kartForm.kartTechnicalData.engine) }}
-                    <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData.engine) }}</small>
-                    {{ form_help(kartForm.kartTechnicalData.engine) }}
+                <div class="form-row">
+                    <div class="col">
+                    <div class="form-group">
+                        {{ form_label(kartForm.kartTechnicalData.power) }}
+                        {{ form_widget(kartForm.kartTechnicalData.power) }}
+                        <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData.power) }}</small>
+                        {{ form_help(kartForm.kartTechnicalData.power) }}
+                    </div>
+                    </div>
+                    <div class="col">
+                    <div class="form-group">
+                        {{ form_label(kartForm.kartTechnicalData.vmax) }}
+                        {{ form_widget(kartForm.kartTechnicalData.vmax) }}
+                        <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData.vmax) }}</small>
+                        {{ form_help(kartForm.kartTechnicalData.vmax) }}
+                    </div>
+                    </div>
+                    <div class="col">
+                    <div class="form-group">
+                        {{ form_label(kartForm.kartTechnicalData.engine) }}
+                        {{ form_widget(kartForm.kartTechnicalData.engine) }}
+                        <small class="formErrorMessage">{{ form_errors(kartForm.kartTechnicalData.engine) }}</small>
+                        {{ form_help(kartForm.kartTechnicalData.engine) }}
+                    </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     {{ form_label(kartForm.file) }}
@@ -64,14 +72,29 @@
                     {{ form_help(kartForm.file) }}
                 </div>
                 <div class="form-group">
+                    {{ form_label(kartForm.availability) }}
+                    {{ form_widget(kartForm.availability) }}
+                    <small class="formErrorMessage">{{ form_errors(kartForm.availability) }}</small>
+                    {{ form_help(kartForm.availability) }}
+                </div>
+                <div class="form-group">
                     {{ form_label(kartForm.submit) }}
                     {{ form_widget(kartForm.submit) }}
                 </div>
                 {{ form_end(kartForm) }}
+            </div>
+            <div class="col-md-6 imageArea">
+                {#<img src="{{ asset('images/karts/5f4eccbc454d600bf5843f9ea08f008f.png') }}" class="rounded mx-auto d-block" alt="Responsive image" height="300" width="300">#}
+                {#<div class="card">#}
+                    {#<div class="card-body">#}
+                        {#<img id="imageUploaded" class="img-fluid rounded mx-auto d-block">#}
+                    {#</div>#}
+                {#</div>#}
             </div>
         </div>
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/vehicle/addKart.js') }}"></script>
 {%  endblock %}
