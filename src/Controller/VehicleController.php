@@ -12,6 +12,7 @@ use App\Entity\KartTechnicalData;
 use App\Form\KartType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,9 +32,7 @@ class VehicleController extends Controller
             if($kartTemp->getAvailability()) {
                 $karts [] = $kartTemp;
             }
-//            print_r($kartTemp->getFile());
         }
-//        exit();
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
             'karts' => $karts
         ]);
@@ -65,8 +64,6 @@ class VehicleController extends Controller
                 $fileTempName =  $kart->getFile();
                 $filePath = $fileTempName;
                 $kart->setFile($fileTemp);
-//                print_r($kart->getFile());
-//                exit();
             }catch (FileException $e) {
 
             }
@@ -82,17 +79,20 @@ class VehicleController extends Controller
             try {
                 $file = $kart->getFile();
                 if($file) {
-//                    print_r('aaa');
                     $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
                     $file->move($this->getParameter('kartImage_directory'), $fileName);
                     $kart->setFile($fileName);
+                    if($isEditingKart) {
+                        $fileSystem = new Filesystem();
+                        $fileSystem->remove($this->getParameter('kartImage_directory') . '/' . $fileTempName);
+                    }
                 } else {
                     if($isEditingKart) {
                         $kart->setFile($fileTempName);
                     }
                 }
             } catch (FileException $e) {
-                print_r('expcetion przy filu');
+                print_r($e);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($kart);
