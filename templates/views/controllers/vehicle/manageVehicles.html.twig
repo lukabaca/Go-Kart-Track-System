@@ -19,7 +19,6 @@
                 <a class="btn btn-primary" id="addKartBtn" href="{{ asset(path('/vehicle/addKart')) }}">Dodaj gokart</a>
             </div>
             <div class="col-md-12 tableArea">
-                {% if karts %}
                     <table class="table kartTable">
                         <thead>
                         <th>Nazwa</th>
@@ -27,24 +26,8 @@
                         <th>Dostępność</th>
                         </thead>
                         <tbody>
-                            {% for kart in karts %}
-                            <tr class="kart-row" kart-id="{{ kart.id }}">
-                                <td>{{ kart.name }}</td>
-                                <td>{{ kart.prize }}zł</td>
-                                <td>
-                                    {% if kart.availability %}
-                                        Dostępny
-                                    {% else %}
-                                        Niedostępny
-                                    {% endif %}
-                                </td>
-                                </tr>
-                            {% endfor %}
                         </tbody>
                     </table>
-                {% else %}
-                    <p class="noData">Brak pojazdów</p>
-                {% endif %}
             </div>
         </div>
     </div>

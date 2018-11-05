@@ -40,6 +40,57 @@ class VehicleController extends Controller
     }
 
     /**
+     * @Route("/vehicle/datatable", name="vehicle/datatable")
+     */
+    public function datatableAction(Request $request) {
+        if ($request->getMethod() == 'POST')
+        {
+            $draw = intval($request->request->get('draw'));
+            $start = $request->request->get('start');
+            $length = $request->request->get('length');
+            $search = $request->request->get('search');
+            $orders = $request->request->get('order');
+            $columns = $request->request->get('columns');
+//            return new JsonResponse($orders, 200);
+        }
+        else // If the request is not a POST one, die hard
+            die;
+        $orderColumn = $orders[0]['column'];
+        $orderDir = $orders[0]['dir'];
+        foreach ($columns as $key => $column)
+        {
+            if ($orderColumn == $key) {
+               $orderColumnName = $column['name'];
+            }
+        }
+        $temp = [$orderColumn, $orderDir, $orderColumnName];
+        $res = $this->getDoctrine()->getRepository(Kart::class)->
+        getKarts($start, $length, $orderColumnName, $orderDir, $search, $columns);
+//        print_r($res);
+        $recordsFileredCount = count($res);
+        $recordsTotalCount = count($this->getDoctrine()->getRepository(Kart::class)->findAll());
+        $response = [
+            "draw" => $draw,
+            "recordsTotal" => $recordsTotalCount,
+            "recordsFiltered" => $recordsFileredCount,
+            "data" => $res,
+        ];
+        $test = [
+            "draw" => 1,
+            "recordsTotal" => 57,
+            "recordsFiltered" => 57,
+            "data" => [
+                [
+                   "Angelica",
+                    "Ramos",
+                   "System Architect",
+                ],
+            ]
+        ];
+        return new JsonResponse($response, 200);
+    }
+
+    /**
      * @Route("/vehicle/manageVehicles", name="/vehicle/manageVehicles")
      */
     public function manageVehiclesAction(Request $request) {
