@@ -56,6 +56,7 @@ class VehicleController extends Controller
             die;
         $orderColumn = $orders[0]['column'];
         $orderDir = $orders[0]['dir'];
+        $searchValue = $search['value'];
         foreach ($columns as $key => $column)
         {
             if ($orderColumn == $key) {
@@ -64,7 +65,7 @@ class VehicleController extends Controller
         }
         $temp = [$orderColumn, $orderDir, $orderColumnName];
         $res = $this->getDoctrine()->getRepository(Kart::class)->
-        getKarts($start, $length, $orderColumnName, $orderDir, $search, $columns);
+        getKarts($start, $length, $orderColumnName, $orderDir, $searchValue);
         $recordsTotalCount = count($this->getDoctrine()->getRepository(Kart::class)->findAll());
         $response = [
             "draw" => $draw,

@@ -39,10 +39,10 @@ class KartRepository extends EntityRepository
             return [];
         }
     }
-    public function getKarts($start, $length, $columnName, $orderDir, $search, $columns) {
+    public function getKarts($start, $length, $columnName, $orderDir, $search) {
 //        $start od kiedy zaczynam -offset
 //        $length to ile, czyli limit
-        $sql = 'call getKarts(?, ?, ?, ?)';
+        $sql = 'call getKarts(?, ?, ?, ?, ?)';
         $conn = $this->getEntityManager()->getConnection();
         try {
             $stmt = $conn->prepare($sql);
@@ -50,6 +50,7 @@ class KartRepository extends EntityRepository
             $stmt->bindValue(2, $length);
             $stmt->bindValue(3, $columnName);
             $stmt->bindValue(4, $orderDir);
+            $stmt->bindValue(5, $search);
             $rowCount = $stmt->execute();
             if($rowCount > 0) {
                 $kartsTemp = $stmt->fetchAll();
