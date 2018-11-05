@@ -1,20 +1,22 @@
 $(document).ready(function () {
     $('.table').DataTable({
+        "language": {
+            "lengthMenu": "Wybierz _MENU_ rekordów na strone",
+            "zeroRecords": "Brak danych",
+            "info": "Strona _PAGE_ z _PAGES_",
+            "infoEmpty": "Brak danych",
+            "infoFiltered": "(przefiltrowane z _MAX_ total records)",
+            "search": "Szukaj",
+            "paginate": {
+                "previous": "Poprzednia strona",
+                "next": "Następna strona",
+            },
+        },
         "columnDefs": [
             { "data": "name", "name": "name",   "targets": 0, "defaultContent": "-", },
             { "data": "prize", "name": "prize",   "targets": 1, "defaultContent": "-", },
             { "data": "availability", "name": "availability",  "targets": 2, "defaultContent": "-", },
         ],
-        // "columnDefs": [
-        //     { "data": "name", "name": "name"},
-        //     { "data": "prize", "name": "prize"},
-        //     { "data": "availability", "name": "availability"},
-        // ],
-        // "columns": [
-        //     { "data": "name" },
-        //     { "data": "prize" },
-        //     { "data": "availability" },
-        // ],
         // Server-side parameters
         "processing": true,
         "serverSide": true,
@@ -23,19 +25,13 @@ $(document).ready(function () {
             "url": '/vehicle/datatable',
             // "url": "{{ path('/vehicle/datatable') }}",
             "type": "POST",
-            // success: function (data) {
-            //
-            // },
-            // error: function (error) {
-            //
-            // }
         },
         // Classic DataTables parameters
         "paging" : true,
         "info" : true,
         "searching": true,
         "pageLength": 10,
-        "order": [[2, 'asc']],
+        "order": [[1, 'asc']],
     });
     // let pos = 1;
     // table.columns().every( function () {
