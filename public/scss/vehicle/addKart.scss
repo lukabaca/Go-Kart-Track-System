@@ -1,0 +1,12 @@
+@import "../common/colors";
+ul {
+  list-style: none;
+  padding: 0px;
+}
+#imageUploaded {
+  max-width: 400px;
+  max-height: 300px;
+}
+.noImageHeader {
+  text-align: center;
+}

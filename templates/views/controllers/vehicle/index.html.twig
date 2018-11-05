@@ -1,10 +1,7 @@
-
-{# app/Resources/views/number.html.twig #}
 {%  extends 'base.html.twig'%}
 {% block title %}
-    Rekordy
+    Pojazdy
 {% endblock %}
-
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/vehicle/vehicle.css') }}">
@@ -19,43 +16,51 @@
         </div>
         <h4 class="pageHeader">Pojazdy</h4>
         <div class="row">
-            {% for kart in karts %}
-                <div class="col-md-6">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title kartName">{{ kart.name }}</h5>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <img class="card-img-top" src="{{ asset('images/karts/gokart.png') }}" alt="Card image cap">
-                                </div>
-                                <div class="col-md-6">
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Moc:
-                                            {% for technicalData in kart.kartTechnicalData %}
-                                                <span>{{ technicalData.power }}km</span>
-                                            {%endfor %}
-                                        </li>
-                                        <li class="list-group-item">Prędkość maksymalna:
-                                            {% for technicalData in kart.kartTechnicalData %}
-                                                <span>{{ technicalData.vmax }}km/h</span>
-                                            {%endfor %}
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-12 descriptionArea">
-                                    <div class="card-header">Opis pojazdu</div>
-                                    {{ kart.description }}
+            <div class="col-md-12">
+                <div class="row">
+                {% if karts %}
+                    {% for kart in karts %}
+                            <div class="col-md-6 kartCol">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title kartName">{{ kart.name }}</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                {% if kart.file %}
+                                                    <img class="card-img-top" src="{{ asset('images/karts/'~kart.file~'') }}" alt="Card image cap">
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="list-group">
+                                                    {% if kart.kartTechnicalData.power %}
+                                                        <li class="list-group-item">Moc:
+                                                            <span>{{ kart.kartTechnicalData.power }}</span>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if kart.kartTechnicalData.vmax %}
+                                                        <li class="list-group-item">Prędkość maksymalna:
+                                                            <span>{{ kart.kartTechnicalData.vmax }}km/h</span>
+                                                        </li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-12 descriptionArea">
+                                                <div class="card-header">Opis pojazdu</div>
+                                                {{ kart.description }}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="noData">Aktualnie brak dostępnych pojazdów</p>
+                {% endif %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
     </div>
     </div>
-
-
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

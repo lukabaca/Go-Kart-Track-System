@@ -40,12 +40,6 @@ html, body {
 .navbarArea {
   height: 50px; }
 
-a {
-  color: #495057; }
-
-a:hover {
-  color: #868686 !important; }
-
 .navbar {
   background-color: #494949 !important; }
   .navbar a, .navbar span, .navbar i {
@@ -106,5 +100,14 @@ footer {
   bottom: 0;
   z-index: 999;
   color: #e0e0e0; }
+
+.goBack {
+  margin-right: 10px;
+  font-size: 25px;
+  cursor: pointer; }
+
+.noData {
+  text-align: center;
+  font-size: 20px; }
 
 /*# sourceMappingURL=global.css.map */

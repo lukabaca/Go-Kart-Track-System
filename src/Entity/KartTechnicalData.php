@@ -8,7 +8,7 @@
 
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  *
  * @ORM\Table(name="kart_technical_data")
@@ -20,10 +20,15 @@ class KartTechnicalData
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Regex(
+     *     pattern = "/^[0-9]",
+     *     message="Moc pojazdu musi być wyrażona jako liczba całkowita"
+     * )
      */
     private $power;
     /**
@@ -36,7 +41,7 @@ class KartTechnicalData
     private $engine;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Kart", inversedBy="kartTechnicalData")
+     * @ORM\OneToOne(targetEntity="App\Entity\Kart", inversedBy="kartTechnicalData")
      */
     private $kart;
 

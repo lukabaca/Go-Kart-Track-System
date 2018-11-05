@@ -7,6 +7,7 @@
  */
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,15 +27,26 @@ class Kart
      */
     private $id;
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="boolean")
      */
     private $availability;
     /**
      * @ORM\Column(type="float")
+    *
      */
     private $prize;
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\Regex(
+     *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ0-9 ]+$/",
+     *     message="Wartość {{ value }} nie jest w poprawnym formacie"
+     * )
+     * @Assert\Length(
+     *    max = 45,
+     *    min = 2,
+     *    maxMessage = "Maksymalna liczba znaków to 45",
+     *    minMessage = "Minimalna liczba znaków to 2"
+     * )
      */
     private $name;
     /**
@@ -43,12 +55,17 @@ class Kart
     private $description;
 
     /**
+     * @ORM\Column(type="string", length=60)
+     */
+    private $file;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Lap", mappedBy="kart")
      */
     private $lap;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\KartTechnicalData", mappedBy ="kart")
+     * @ORM\OneToOne(targetEntity="App\Entity\KartTechnicalData", mappedBy ="kart", cascade={"persist", "remove"})
      */
     private $kartTechnicalData;
 
@@ -61,7 +78,7 @@ class Kart
      * @param $description
      * @param $lap
      */
-    public function __construct($id = null, $availability = null, $prize = null, $name = null, $description = null, $lap = null)
+    public function __construct($id = null, $availability = null, $prize = null, $name = null, $description = null, $lap = null, $file = null)
     {
         $this->id = $id;
         $this->availability = $availability;
@@ -69,6 +86,7 @@ class Kart
         $this->name = $name;
         $this->description = $description;
         $this->lap = $lap;
+        $this->file = $file;
     }
 
     /**
@@ -180,5 +198,22 @@ class Kart
     public function setKartTechnicalData($kartTechnicalData): void
     {
         $this->kartTechnicalData = $kartTechnicalData;
+        $kartTechnicalData->setKart($this);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file): void
+    {
+        $this->file = $file;
     }
 }

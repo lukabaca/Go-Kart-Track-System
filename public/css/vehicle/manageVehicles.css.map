@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,UAAW;EACT,UAAU,EAAE,IAAI;;AAElB,aAAc;EACZ,aAAa,EAAE,IAAI;;AAErB,eAAgB;EACd,gBAAgB,ECJA,OAAO;EDKvB,MAAM,EAAE,OAAO",
+"sources": ["../../scss/vehicle/manageVehicles.scss","../../scss/common/_colors.scss"],
+"names": [],
+"file": "manageVehicles.css"
+}

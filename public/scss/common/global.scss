@@ -5,7 +5,6 @@ html, body {
   height: 100%;
   font-family: $mainFont;
 }
-
 .container {
   margin-top: 40px;
   margin-left: 0px;
@@ -45,24 +44,22 @@ html, body {
 .navbarArea {
   height: 50px;
 }
-a {
-  color: #495057;
-}
-a:hover {
-  color: #868686 !important;
-  //#868686
-}
+//TO DO potem ogarnij to
+//a {
+//  color: #495057;
+//}
+//a:hover {
+//  color: #868686 !important;
+//}
 .navbar {
   background-color: $mainAccent !important;
   a, span, i {
     color: $mainAccentLight !important;
-    //#cfcfcf
   }
   a:hover {
     color: #ffffff !important;
     background-color: $mainAccent !important;
   }
-
   .dropdown-menu {
     background-color: $mainAccent !important;
   }
@@ -111,18 +108,24 @@ a:hover {
   95% {left: 120%;}
   to {left: 100%;}
 }
-//
-
 //footer
 .page-footer {
   background-color: $mainAccent;
 }
-
 footer {
   width: 100%;
   position: fixed;
   bottom: 0;
   z-index: 999;
-
   color: $mainAccentLight;
+}
+
+.goBack {
+  margin-right: 10px;
+  font-size: 25px;
+  cursor: pointer;
+}
+.noData {
+  text-align: center;
+  font-size: 20px;
 }
