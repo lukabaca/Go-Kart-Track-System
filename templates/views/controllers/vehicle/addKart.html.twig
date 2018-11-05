@@ -84,14 +84,15 @@
                 {{ form_end(kartForm) }}
             </div>
             <div class="col-md-6 imageArea">
+                <div class="card">
+                    <div class="card-body">
                 {% if filePath %}
-                    {#<img src="{{ asset('images/karts/'~filePath~'') }}" class="img img-responsive img-preview thumbnail"/>#}
-                    <div class="card">
-                        <div class="card-body">
                             <img src="{{ asset('images/karts/'~filePath~'') }}" id="imageUploaded" class="img-fluid rounded mx-auto d-block">
-                        </div>
-                    </div>
+                {% else %}
+                    <p class="noImageHeader">Brak zdjęcia</p>
                 {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

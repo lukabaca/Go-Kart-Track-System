@@ -11,6 +11,7 @@ use App\Entity\Kart;
 use App\Entity\KartTechnicalData;
 use App\Form\KartType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -54,6 +55,7 @@ class VehicleController extends Controller
     public function addKartAction(Request $request, $id) {
         $isEditingKart = false;
         $filePath = null;
+        $fileTempName = null;
         if($id) {
             $kart = $this->getDoctrine()->getRepository(Kart::class)->find($id);
             if(!$kart) {
@@ -65,7 +67,8 @@ class VehicleController extends Controller
                 $filePath = $fileTempName;
                 $kart->setFile($fileTemp);
             }catch (FileException $e) {
-
+//                print_r('exception przy wczytywaniu');
+                $kart->setFile(null);
             }
             $isEditingKart = true;
             $actionMode = 'Edytuj gokart';
@@ -83,6 +86,7 @@ class VehicleController extends Controller
                     $file->move($this->getParameter('kartImage_directory'), $fileName);
                     $kart->setFile($fileName);
                     if($isEditingKart) {
+//                        print_r('wbilo w usuwanie fotek');
                         $fileSystem = new Filesystem();
                         $fileSystem->remove($this->getParameter('kartImage_directory') . '/' . $fileTempName);
                     }
@@ -92,14 +96,15 @@ class VehicleController extends Controller
                     }
                 }
             } catch (FileException $e) {
-                print_r($e);
+                //poki co rzucaj 500 server error jak nie uda sie wrzucic foto
+                return $this->render('views/alerts/500.html.twig' , []);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($kart);
             $em->flush();
             $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
             return $this->render('views/controllers/vehicle/manageVehicles.html.twig' ,[
-                'karts' => $karts
+                'karts' => $karts,
             ]);
         }
         return $this->render('views/controllers/vehicle/addKart.html.twig' ,[
