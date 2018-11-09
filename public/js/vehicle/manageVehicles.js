@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    $('.table').DataTable({
+   $('.table').DataTable({
+        "stripeClasses": [],
         "language": {
             "lengthMenu": "Wybierz _MENU_ rekordów na strone",
             "zeroRecords": "Brak danych",
@@ -25,6 +26,10 @@ $(document).ready(function () {
             "url": '/vehicle/datatable',
             "type": "POST",
         },
+        createdRow: function(row, data, dataIndex, cells) {
+            // Set the data-status attribute, and add a class
+            $(row).addClass('kart-row').attr('kart-id', data.id);
+        },
         // Classic DataTables parameters
         "paging" : true,
         "info" : true,
@@ -32,9 +37,10 @@ $(document).ready(function () {
         "pageLength": 10,
         "order": [[1, 'asc']],
     });
-    $('.kart-row').on('click', function (e) {
-       e.preventDefault();
-       let kartId = $(this).attr('kart-id');
-       window.location.href = '/vehicle/addKart/' + kartId;
+    $('.table tbody').on( 'click', 'tr', function (e) {
+        e.preventDefault();
+        let kartId = $(this).attr('kart-id');
+        console.log(kartId);
+        window.location.href = '/vehicle/addKart/' + kartId;
     });
 });
