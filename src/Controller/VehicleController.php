@@ -100,11 +100,11 @@ class VehicleController extends Controller
                 $fileTempName =  $kart->getFile();
                 $filePath = $fileTempName;
                 $kart->setFile($fileTemp);
+                $isEditingKart = true;
             }catch (FileException $e) {
 //                print_r('exception przy wczytywaniu');
                 $kart->setFile(null);
             }
-            $isEditingKart = true;
             $actionMode = 'Edytuj gokart';
         } else {
             $kart = new Kart();
@@ -131,7 +131,9 @@ class VehicleController extends Controller
                 }
             } catch (FileException $e) {
                 //poki co rzucaj 500 server error jak nie uda sie wrzucic foto
-                return $this->render('views/alerts/500.html.twig' , []);
+//                print_r($e);
+//                exit();
+//                return $this->render('views/alerts/500.html.twig' , []);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($kart);
