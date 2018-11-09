@@ -21,8 +21,10 @@ $(document).ready(function () {
             { "data": "availability", "name": "availability",  "targets": 2, "defaultContent": "-", "className":"kart-availability"},
             { "data": "", "targets": 3, "orderable": false, "render":
                     function ( data, type, row ) {
-                    return '<button class="btn btn-secondary editKartBtn"><i class="far fa-edit"></i></button>' +
-                           '<button class="btn btn-secondary editAvailabilityBtn"><i class="fa fa-exchange-alt"></i></button>';
+                    return '<div class="optionsArea">' +
+                        '<button class="btn btn-secondary editKartBtn"><i class="far fa-edit"></i></button>' +
+                        '<button class="btn btn-secondary editAvailabilityBtn"><i class="fa fa-exchange-alt"></i></button>' +
+                        '</div>';
                     }
             },
         ],

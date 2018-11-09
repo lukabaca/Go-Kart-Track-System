@@ -9,10 +9,11 @@
   font-size: 30px;
   text-align: center; }
 
-.editAvailabilityBtn, .editKartBtn {
-  width: 100px; }
-
-.editAvailabilityBtn {
-  margin-left: 10px; }
+.optionsArea {
+  display: flex; }
+  .optionsArea .editAvailabilityBtn {
+    margin-left: 10px; }
+  .optionsArea .editAvailabilityBtn, .optionsArea .editKartBtn {
+    width: 100%; }
 
 /*# sourceMappingURL=manageVehicles.css.map */
