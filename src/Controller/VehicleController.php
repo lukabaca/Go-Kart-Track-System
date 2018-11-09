@@ -79,9 +79,7 @@ class VehicleController extends Controller
      * @Route("/vehicle/manageVehicles", name="/vehicle/manageVehicles")
      */
     public function manageVehiclesAction(Request $request) {
-        $karts = $this->getDoctrine()->getRepository(Kart::class)->findAll();
         return $this->render('views/controllers/vehicle/manageVehicles.html.twig' ,[
-            'karts' => $karts
         ]);
     }
 

@@ -21,10 +21,8 @@ $(document).ready(function () {
         // Server-side parameters
         "processing": true,
         "serverSide": true,
-        // Ajax call
         "ajax": {
             "url": '/vehicle/datatable',
-            // "url": "{{ path('/vehicle/datatable') }}",
             "type": "POST",
         },
         // Classic DataTables parameters
@@ -34,20 +32,6 @@ $(document).ready(function () {
         "pageLength": 10,
         "order": [[1, 'asc']],
     });
-    // let pos = 1;
-    // table.columns().every( function () {
-    //     var that = this;
-    //
-    //     $("#input"+pos).on( 'keyup change', function () {
-    //         if ( that.search() !== this.value )
-    //         {
-    //             that
-    //                 .search( this.value )
-    //                 .draw();
-    //         }
-    //     });
-    //     pos++;
-    // });
     $('.kart-row').on('click', function (e) {
        e.preventDefault();
        let kartId = $(this).attr('kart-id');
