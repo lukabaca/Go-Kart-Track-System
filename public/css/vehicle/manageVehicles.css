@@ -8,4 +8,9 @@
   background-color: #e0e0e0;
   cursor: pointer; }
 
+.dataTables_wrapper .dataTables_processing {
+  color: #A8A8A8;
+  font-size: 30px;
+  text-align: center; }
+
 /*# sourceMappingURL=manageVehicles.css.map */

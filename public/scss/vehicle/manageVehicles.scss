@@ -10,3 +10,8 @@
   background-color: $mainAccentLight;
   cursor: pointer;
 }
+.dataTables_wrapper .dataTables_processing {
+  color: $pageHeader;
+  font-size: 30px;
+  text-align: center;
+}
