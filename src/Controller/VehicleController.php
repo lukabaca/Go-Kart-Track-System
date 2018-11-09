@@ -42,38 +42,37 @@ class VehicleController extends Controller
     /**
      * @Route("/vehicle/datatable", name="vehicle/datatable")
      */
-    public function datatableAction(Request $request) {
-        if ($request->getMethod() == 'POST')
-        {
+    public function datatableAction(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
             $draw = intval($request->request->get('draw'));
             $start = $request->request->get('start');
             $length = $request->request->get('length');
             $search = $request->request->get('search');
             $orders = $request->request->get('order');
             $columns = $request->request->get('columns');
-        }
-        else // If the request is not a POST one, die hard
-            die;
-        $orderColumn = $orders[0]['column'];
-        $orderDir = $orders[0]['dir'];
-        $searchValue = $search['value'];
-        foreach ($columns as $key => $column)
-        {
-            if ($orderColumn == $key) {
-               $orderColumnName = $column['name'];
+            $orderColumn = $orders[0]['column'];
+            $orderDir = $orders[0]['dir'];
+            $searchValue = $search['value'];
+            foreach ($columns as $key => $column)
+            {
+                if ($orderColumn == $key) {
+                    $orderColumnName = $column['name'];
+                }
             }
+            $res = $this->getDoctrine()->getRepository(Kart::class)->
+            getKarts($start, $length, $orderColumnName, $orderDir, $searchValue);
+            $recordsTotalCount = count($this->getDoctrine()->getRepository(Kart::class)->findAll());
+            $response = [
+                "draw" => $draw,
+                "recordsTotal" => $recordsTotalCount,
+                "recordsFiltered" => $recordsTotalCount,
+                "data" => $res,
+            ];
+            return new JsonResponse($response, 200);
+        } else {
+            return new JsonResponse([], 400);
         }
-        $temp = [$orderColumn, $orderDir, $orderColumnName];
-        $res = $this->getDoctrine()->getRepository(Kart::class)->
-        getKarts($start, $length, $orderColumnName, $orderDir, $searchValue);
-        $recordsTotalCount = count($this->getDoctrine()->getRepository(Kart::class)->findAll());
-        $response = [
-            "draw" => $draw,
-            "recordsTotal" => $recordsTotalCount,
-            "recordsFiltered" => $recordsTotalCount,
-            "data" => $res,
-        ];
-        return new JsonResponse($response, 200);
     }
 
     /**

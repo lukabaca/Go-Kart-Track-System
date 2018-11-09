@@ -11,6 +11,7 @@ $(document).ready(function () {
                 "previous": "Poprzednia strona",
                 "next": "Następna strona",
             },
+            "processing": "Wczytywanie...",
         },
         "columnDefs": [
             { "data": "name", "name": "name",   "targets": 0, "defaultContent": "-", },

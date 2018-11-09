@@ -39,9 +39,7 @@ class KartRepository extends EntityRepository
             return [];
         }
     }
-    public function getKarts($start, $length, $columnName, $orderDir, $search) {
-//        $start od kiedy zaczynam -offset
-//        $length to ile, czyli limit
+    public function getKarts($start, $length, $columnName, $orderDir, $searchValue) {
         $sql = 'call getKarts(?, ?, ?, ?, ?)';
         $conn = $this->getEntityManager()->getConnection();
         try {
@@ -50,24 +48,11 @@ class KartRepository extends EntityRepository
             $stmt->bindValue(2, $length);
             $stmt->bindValue(3, $columnName);
             $stmt->bindValue(4, $orderDir);
-            $stmt->bindValue(5, $search);
+            $stmt->bindValue(5, $searchValue);
             $rowCount = $stmt->execute();
             if($rowCount > 0) {
-                $kartsTemp = $stmt->fetchAll();
-                return $kartsTemp;
-//                $karts = [];
-//                foreach ($kartsTemp as $kartTemp) {
-//                    $kart = new Kart();
-//                    $kart->setId($kartTemp['id']);
-//                    $kart->setAvailability($kartTemp['availability']);
-//                    $kart->setPrize($kartTemp['prize']);
-//                    $kart->setName($kartTemp['name']);
-//                    $kart->setDescription($kartTemp['description']);
-//                    $kart->setFile($kartTemp['file']);
-////                    print_r($kart);
-//                    $karts [] = $kart;
-//                }
-//                return $karts;
+                $karts = $stmt->fetchAll();
+                return $karts;
             } else {
                 return [];
             }
