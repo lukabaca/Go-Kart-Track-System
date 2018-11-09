@@ -1,17 +1,21 @@
 @import "../common/colors";
-
 .tableArea {
   margin-top: 40px;
 }
 .form-control {
   margin-bottom: 10px;
 }
-.kart-row:hover {
-  background-color: $mainAccentLight;
-  cursor: pointer;
-}
 .dataTables_wrapper .dataTables_processing {
   color: $pageHeader;
   font-size: 30px;
   text-align: center;
+}
+.optionsArea {
+  display: flex;
+  .editAvailabilityBtn {
+    margin-left: 10px;
+  }
+  .editAvailabilityBtn, .editKartBtn {
+    width: 100%;
+  }
 }

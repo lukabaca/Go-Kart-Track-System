@@ -12,6 +12,7 @@ use App\Entity\KartTechnicalData;
 use App\Form\KartType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
+use function MongoDB\BSON\toJSON;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -84,6 +85,31 @@ class VehicleController extends Controller
     }
 
     /**
+     * @Route("/vehicle/editKartAvailability/{id}/{availability}", name="/vehicle/editKartAvailability/{id}/{availability}")
+     */
+    public function editKartAvailabilityAction(Request $request, $id, $availability) {
+        $kart = $this->getDoctrine()->getRepository(Kart::class)->find($id);
+        if(!$kart) {
+            return new JsonResponse([], 404);
+        }
+        if ($availability != 0 && $availability != 1) {
+            return new JsonResponse(['Availabilty value must be 0 or 1'], 400);
+        }
+        $kart->setAvailability($availability);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($kart);
+        $em->flush();
+        $kart = [
+          'id' => $kart->getId(),
+            'availability' => $kart->getAvailability(),
+            'prize' => $kart->getPrize(),
+            'name' => $kart->getName(),
+            'description' => $kart->getDescription(),
+            'file' => $kart->getFile(),
+        ];
+        return new JsonResponse($kart, 200);
+    }
+    /**
      * @Route("/vehicle/addKart/{id}", name="/vehicle/addKart", defaults={"id"=null})
      */
     public function addKartAction(Request $request, $id) {
@@ -100,11 +126,11 @@ class VehicleController extends Controller
                 $fileTempName =  $kart->getFile();
                 $filePath = $fileTempName;
                 $kart->setFile($fileTemp);
+                $isEditingKart = true;
             }catch (FileException $e) {
 //                print_r('exception przy wczytywaniu');
                 $kart->setFile(null);
             }
-            $isEditingKart = true;
             $actionMode = 'Edytuj gokart';
         } else {
             $kart = new Kart();

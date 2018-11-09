@@ -4,13 +4,16 @@
 .form-control {
   margin-bottom: 10px; }
 
-.kart-row:hover {
-  background-color: #e0e0e0;
-  cursor: pointer; }
-
 .dataTables_wrapper .dataTables_processing {
   color: #A8A8A8;
   font-size: 30px;
   text-align: center; }
+
+.optionsArea {
+  display: flex; }
+  .optionsArea .editAvailabilityBtn {
+    margin-left: 10px; }
+  .optionsArea .editAvailabilityBtn, .optionsArea .editKartBtn {
+    width: 100%; }
 
 /*# sourceMappingURL=manageVehicles.css.map */

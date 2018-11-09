@@ -32,15 +32,17 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <ul class="list-group">
-                                                    {% if kart.kartTechnicalData.power %}
-                                                        <li class="list-group-item">Moc:
-                                                            <span>{{ kart.kartTechnicalData.power }}</span>
-                                                        </li>
-                                                    {% endif %}
-                                                    {% if kart.kartTechnicalData.vmax %}
-                                                        <li class="list-group-item">Prędkość maksymalna:
-                                                            <span>{{ kart.kartTechnicalData.vmax }}km/h</span>
-                                                        </li>
+                                                    {% if kart.kartTechnicalData %}
+                                                        {% if kart.kartTechnicalData.power %}
+                                                            <li class="list-group-item">Moc:
+                                                                <span>{{ kart.kartTechnicalData.power }}</span>
+                                                            </li>
+                                                        {% endif %}
+                                                        {% if kart.kartTechnicalData.vmax %}
+                                                            <li class="list-group-item">Prędkość maksymalna:
+                                                                <span>{{ kart.kartTechnicalData.vmax }}km/h</span>
+                                                            </li>
+                                                        {% endif %}
                                                     {% endif %}
                                                 </ul>
                                             </div>
