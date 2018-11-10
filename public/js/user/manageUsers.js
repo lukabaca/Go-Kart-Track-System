@@ -24,7 +24,21 @@ $(document).ready(function () {
             { "data": "document_id", "name": "document_id",  "targets": 4, "defaultContent": "-", },
             { "data": "email", "name": "email",  "targets": 5, "defaultContent": "-", },
             { "data": "telephone_number", "name": "telephone_number",  "targets": 6, "defaultContent": "-", },
-            { "data": "role_name", "name": "role_name",  "targets": 7, "defaultContent": "-", },
+            { "data": "role_name", "name": "role_name",  "targets": 7, "defaultContent": "-",
+                "render": function ( data, type, row, meta ) {
+                    let roleName;
+                    switch (data) {
+                        case 'ROLE_USER': {
+                            roleName = 'Użytkownik';
+                            break;
+                        }
+                        case 'ROLE_ADMIN': {
+                            roleName = 'Administrator';
+                            break;
+                        }
+                    }
+                    return roleName;
+                },},
         ],
         // Server-side parameters
         "processing": true,
@@ -45,5 +59,8 @@ $(document).ready(function () {
     });
     $('.table tbody').on('click', '.user-row', function (e) {
        e.preventDefault();
+       let userId = $(this).closest('tr').attr('user-id');
+       console.log(userId);
+       window.location.href = '/user/admin/userDetails/' + userId;
     });
 });

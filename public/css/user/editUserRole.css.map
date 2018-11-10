@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEE,kBAAO;EACL,YAAY,EAAE,IAAI;;AAGtB,WAAY;EACV,UAAU,EAAE,MAAM",
+"sources": ["../../scss/user/editUserRole.scss"],
+"names": [],
+"file": "editUserRole.css"
+}

@@ -1,18 +1,12 @@
-
-{# app/Resources/views/number.html.twig #}
 {%  extends 'base.html.twig'%}
 {% block title %}
     Rejestracja
 {% endblock %}
-
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/registration/registration.css') }}">
 {% endblock %}
-
 {% block body %}
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -28,68 +22,52 @@
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.email) }}</small>
                         {{ form_help(userLoginForm.email) }}
                     </div>
-
                     <div class="form-group">
                         {{ form_label(userLoginForm.password.first) }}
                         {{ form_widget(userLoginForm.password.first) }}
                         {{ form_help(userLoginForm.password.first) }}
-
                     </div>
-
                     <div class="form-group">
                         {{ form_label(userLoginForm.password.second) }}
                         {{ form_widget(userLoginForm.password.second) }}
                         {{ form_help(userLoginForm.password.second) }}
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.password.first) }}</small>
                     </div>
-
                     <div class="form-group">
                         {{ form_label(userLoginForm.name) }}
                         {{ form_widget(userLoginForm.name) }}
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.name) }}</small>
                         {{ form_help(userLoginForm.name) }}
-
                     </div>
-
                     <div class="form-group">
                         {{ form_label(userLoginForm.surname) }}
                         {{ form_widget(userLoginForm.surname) }}
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.surname) }}</small>
                         {{ form_help(userLoginForm.surname) }}
-
                     </div>
-
                     <div class="form-group">
-
                         {{ form_label(userLoginForm.birthDate) }}
                         {{ form_widget(userLoginForm.birthDate) }}
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.birthDate) }}</small>
                         {{ form_help(userLoginForm.birthDate) }}
-
                     </div>
-
                     <div class="form-group">
                         {{ form_label(userLoginForm.pesel) }}
                         {{ form_widget(userLoginForm.pesel) }}
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.pesel) }}</small>
                         {{ form_help(userLoginForm.pesel) }}
-
                     </div>
-
                     <div class="form-group">
                         {{ form_label(userLoginForm.documentID) }}
                         {{ form_widget(userLoginForm.documentID) }}
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.documentID) }}</small>
                         {{ form_help(userLoginForm.documentID) }}
-
                     </div>
-
                     <div class="form-group">
                         {{ form_label(userLoginForm.telephoneNumber) }}
                         {{ form_widget(userLoginForm.telephoneNumber) }}
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.telephoneNumber) }}</small>
                         {{ form_help(userLoginForm.telephoneNumber) }}
-
                     </div>
                     <div class="form-group">
                         {{ form_label(userLoginForm.submit) }}

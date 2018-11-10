@@ -7,12 +7,15 @@
  */
 
 namespace App\Controller;
+use App\Entity\Role;
 use App\Entity\User;
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends Controller
 {
     /**
@@ -22,7 +25,80 @@ class UserController extends Controller
     {
        return $this->render('views/controllers/user/manageUsers.html.twig', []);
     }
+    /**
+     * @Route("/user/getRoles", name="/user/getRoles")
+     */
+    public function getRolesAction(Request $request)
+    {
+        $rolesTemp = $this->getDoctrine()->getRepository(Role::class)->findAll();
+        if(!$rolesTemp) {
+            return new JsonResponse([], 404);
+        }
+        $roles = [];
+        foreach ($rolesTemp as $roleTemp) {
+            $role = [
+                'id' => $roleTemp->getId(),
+                'name' => $roleTemp->getName(),
+            ];
+            $roles [] = $role;
+        }
+        return new JsonResponse($roles, 200);
+    }
 
+    /**
+ * @Route("/user/admin/userDetails/{id}", name="/user/admin/userDetails/{id}")
+ * @IsGranted("ROLE_ADMIN")
+ */
+    public function userDetailsAction(Request $request, $id)
+    {
+        $roleDictionary = [
+            'ROLE_USER' => 'Użytkownik',
+            'ROLE_ADMIN' => 'Administrator',
+        ];
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        if(!$user) {
+            return $this->render('views/alerts/404.html.twig', []);
+        }
+        $rolesTemp = $this->getDoctrine()->getRepository(Role::class)->findAll();
+        if(!$rolesTemp) {
+            return $this->render('views/alerts/404.html.twig', []);
+        }
+        $roles = [];
+        foreach ($rolesTemp as $roleTemp) {
+            $roleName = $roleDictionary[$roleTemp->getName()];
+            $role = [
+                'id' => $roleTemp->getId(),
+                'name' => $roleName,
+            ];
+            $roles [] = $role;
+        }
+        return $this->render('views/controllers/user/editUserRole.html.twig', [
+            'user' => $user,
+            'roles' => $roles,
+        ]);
+    }
+    /**
+     * @Route("/user/editUserRole/{userId}/{roleId}", name="/user/editUserRole/{userId}/{roleId}")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function editUserRoleAction(Request $request, $userId, $roleId)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        if(!$user) {
+            return new JsonResponse(['user not found'], 404);
+        }
+        $role = $this->getDoctrine()->getRepository(Role::class)->find($roleId);
+        if(!$role) {
+            return new JsonResponse(['role not found'], 404);
+        }
+        $array = new ArrayCollection();
+        $array [] = $role;
+        $user->setRoles($array);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        return new JsonResponse($user, 200);
+    }
     /**
      * @Route("/user/datatable", name="user/datatable")
      */

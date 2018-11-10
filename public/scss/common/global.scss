@@ -21,23 +21,13 @@ html, body {
   font-weight: 100 !important;
   color: $pageHeader;
 }
-.arrowBack {
-  font-size: 45px;
-  color: $labelsAccent;
-  margin-top: 20px;
-}
 .formErrorMessage {
   color: $error;
 }
 //navbar
-.userIcon {
-  font-size: 40px;
-  margin-right: 10px;
-}
-
 #userName {
   text-transform: capitalize;
-  font-size: 30px;
+  font-size: 25px;
   margin-right: 25px;
   padding-top: 0;
   padding-bottom: 0;
@@ -67,14 +57,18 @@ html, body {
   .dropdown-menu > li > a:hover {
     background-color: $mainAccent !important;
   }
+  .nav-item {
+    font-size: 16px;
+  }
+  .userIcon {
+    font-size: 30px;
+    margin-right: 10px;
+  }
 }
 
 //
 #logout {
   //font-size:30p
-}
-.nav-item {
-  font-size: 18px;
 }
 .logoTitle {
   font-size: 30px;

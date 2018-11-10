@@ -19,21 +19,12 @@ html, body {
   font-weight: 100 !important;
   color: #A8A8A8; }
 
-.arrowBack {
-  font-size: 45px;
-  color: #C8C8C8;
-  margin-top: 20px; }
-
 .formErrorMessage {
   color: #DC143C; }
 
-.userIcon {
-  font-size: 40px;
-  margin-right: 10px; }
-
 #userName {
   text-transform: capitalize;
-  font-size: 30px;
+  font-size: 25px;
   margin-right: 25px;
   padding-top: 0;
   padding-bottom: 0; }
@@ -52,9 +43,11 @@ html, body {
     background-color: #494949 !important; }
   .navbar .dropdown-menu > li > a:hover {
     background-color: #494949 !important; }
-
-.nav-item {
-  font-size: 18px; }
+  .navbar .nav-item {
+    font-size: 16px; }
+  .navbar .userIcon {
+    font-size: 30px;
+    margin-right: 10px; }
 
 .logoTitle {
   font-size: 30px;

@@ -1,27 +1,15 @@
-
-{# app/Resources/views/number.html.twig #}
 {%  extends 'base.html.twig'%}
 {% block title %}
     Login
 {% endblock %}
-
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/login/login.css') }}">
-    {#<style>#}
-    {#body{#}
-    {#background:url({{ asset('images/track.png') }}) no-repeat center;#}
-
-    {#}#}
-    {#</style>#}
 {% endblock %}
-
 {% block body %}
-
     <div class="imageBackground">
-
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 offset-md-4 loginArea">
                 <div class="shadow p-3 mb-5 bg-white rounded card loginCard">
@@ -50,8 +38,6 @@
                                 <input type="hidden" name="_target_path" value="{{ path('dashboard/index') }}" />
                                 <p class="logoutMessage">Poprawnie wylogowano</p>
                             </form>
-
-
                         </div>
                     </div>
                 </div>
@@ -59,7 +45,6 @@
         </div>
     </div>
 {% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
 {%  endblock %}

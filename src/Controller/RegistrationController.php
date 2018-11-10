@@ -15,7 +15,9 @@ use App\Entity\UserRoles;
 use App\Form\UserType;
 use App\Repository\RoleRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -31,7 +33,6 @@ class RegistrationController extends Controller
           $user = new User();
           return $this->handleForm($request, $user, $passwordEncoder);
     }
-
     /**
      * @Route("/registration/editUserData", name="registration/editUserData")
      */
@@ -41,46 +42,40 @@ class RegistrationController extends Controller
         $userID = $user->getId();
         $repository = $this->getDoctrine()->getRepository(User::class);
         $userToEdit = $repository->find($userID);
-
         if(!$userToEdit) {
             throw $this->createNotFoundException(
                 'No user found for id '.$userID
             );
         }
-
         return $this->handleForm($request, $userToEdit, $passwordEncoder, true);
     }
-
-
-
     private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder, $isEditingUser = false)
     {
         $userLoginForm = $this->createForm(UserType::class, $user);
-
         $userLoginForm->handleRequest($request);
-
         if($userLoginForm->isSubmitted() && $userLoginForm->isValid())
         {
             $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encodedPassword);
-
-
+            $role = $this->getDoctrine()->getRepository(Role::class)->findOneBy(array('name' => 'ROLE_USER'));
+            if(!$role) {
+                return $this->render('views/alerts/500.html.twig', []);
+            }
+            $roleArray = new ArrayCollection();
+            $roleArray [] = $role;
+            $user->setRoles($roleArray);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
             if(!$isEditingUser) {
-                $em->getRepository(UserRoles::class)->insertUserAndRolesIDs($user->getId(), 1);
                 return $this->render('views/controllers/registration/index.html.twig', [
                     'userLoginForm' => $userLoginForm->createView(),
                     'sucessfulRegistration' => true
                 ]);
             }
             //tutaj przekieruj na dashboard
-            return $this->render('views/controllers/laps/index.html.twig', []);
-
+            return $this->render('views/controllers/dashboard/index.html.twig', []);
         }
-
         if(!$isEditingUser) {
             return $this->render('views/controllers/registration/index.html.twig', [
                 'userLoginForm' => $userLoginForm->createView(),
