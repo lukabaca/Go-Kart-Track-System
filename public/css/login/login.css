@@ -31,7 +31,7 @@
 .headerLogin {
   font-weight: 300; }
 
-.container {
+.container-fluid {
   position: absolute;
   top: 0;
   width: 100%;
@@ -45,7 +45,7 @@
   height: 100%;
   width: 100%;
   position: relative;
-  background-image: url("../../images/track.png");
+  background-image: url("../../images/login_background.png");
   top: 0;
   left: 0;
   opacity: 0.5; }

@@ -1,17 +1,13 @@
 @import "../common/colors";
-
 .submitButton {
   margin-top: 10px;
 }
-
 .form-control {
   font-size: 12px;
-  //height: 30px;
 }
 .registrationArea {
   margin-top: 10px;
 }
-
 ul {
   list-style: none;
   padding: 0px;
@@ -25,4 +21,11 @@ ul {
   text-align: center;
   color: $confirmation;
   font-size: 24px;
+}
+.arrowBack {
+  font-size: 45px;
+  color: $labelsAccent;
+}
+.container {
+  margin-top: 15px;
 }

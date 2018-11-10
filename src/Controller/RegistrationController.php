@@ -34,26 +34,6 @@ class RegistrationController extends Controller
           return $this->handleForm($request, $user, $passwordEncoder);
     }
     /**
-     * @Route("/registration/test", name="registration/test")
-     */
-    public function registartionTestAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $role = $this->getDoctrine()->getRepository(Role::class)->findOneBy(array('name' => 'ROLE_USER'));
-        if(!$role) {
-            return new JsonResponse([], 404);
-        } else {
-            $user = new User('gałgan@gmail.com', 'asdsa', 'a', 'b', new DateTime(), 'asd', 'aasd', '213');
-            $array = new ArrayCollection();
-            $array [] = $role;
-            $user->setRoles($array);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            return new JsonResponse($user, 201);
-        }
-    }
-
-    /**
      * @Route("/registration/editUserData", name="registration/editUserData")
      */
     public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
