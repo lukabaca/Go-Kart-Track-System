@@ -17,20 +17,12 @@ class TrackInfoController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $trackInfo = $this->getDoctrine()->getRepository(TrackInfo::class)->find(1);
+        $trackInfo = $this->getDoctrine()->getRepository(TrackInfo::class)->findAll();
         if(!$trackInfo) {
-            return $this->render('views/alerts/404.index.html.twig', []
+            return $this->render('views/alerts/404.html.twig', []
             );
         }
-//        $trackInfo = [
-//            'street' => $trackInfoTemp->getStreet() ? $trackInfoTemp->getStreet() : '',
-//            'city' => $trackInfoTemp->getCity() ? $trackInfoTemp->getCity() : '',
-//            'telephoneNumber' => $trackInfoTemp->getTelephoneNumber() ? $trackInfoTemp->getTelephoneNumber() : '',
-//            'hourStart' => $trackInfoTemp->getHourStart() ? $trackInfoTemp->getHourStart() : '',
-//            'hourEnd' => $trackInfoTemp->getHourEnd() ? $trackInfoTemp->getHourEnd() : '',
-//            'facebookLink' => $trackInfoTemp->getFacebookLink() ? $trackInfoTemp->getFacebookLink() : '',
-//            'instagramLink' => $trackInfoTemp->getInstagramLink() ? $trackInfoTemp->getInstagramLink() : '',
-//        ];
+        $trackInfo = $trackInfo[0];
         return $this->render('views/controllers/trackInfo/index.html.twig', [
             'trackInfo' => $trackInfo,
         ]
