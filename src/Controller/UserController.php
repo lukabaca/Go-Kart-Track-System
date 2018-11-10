@@ -10,6 +10,7 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\User;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,10 +46,10 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/editUserRole/{id}", name="/user/editUserRole/{id}")
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function editUserRoleAction(Request $request, $id)
+ * @Route("/user/admin/userDetails/{id}", name="/user/admin/userDetails/{id}")
+ * @IsGranted("ROLE_ADMIN")
+ */
+    public function userDetailsAction(Request $request, $id)
     {
         $roleDictionary = [
             'ROLE_USER' => 'Użytkownik',
@@ -76,7 +77,28 @@ class UserController extends Controller
             'roles' => $roles,
         ]);
     }
-
+    /**
+     * @Route("/user/editUserRole/{userId}/{roleId}", name="/user/editUserRole/{userId}/{roleId}")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function editUserRoleAction(Request $request, $userId, $roleId)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+        if(!$user) {
+            return new JsonResponse(['user not found'], 404);
+        }
+        $role = $this->getDoctrine()->getRepository(Role::class)->find($roleId);
+        if(!$role) {
+            return new JsonResponse(['role not found'], 404);
+        }
+        $array = new ArrayCollection();
+        $array [] = $role;
+        $user->setRoles($array);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        return new JsonResponse($user, 200);
+    }
     /**
      * @Route("/user/datatable", name="user/datatable")
      */

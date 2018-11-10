@@ -26,7 +26,7 @@
                                 <li class="list-group-item"><strong>Numer telefonu:</strong>{{ user.telephoneNumber }}</li>
                                 <li class="list-group-item">
                                     <strong>Role: </strong>
-                                    <select>
+                                    <select id="roleSelect">
                                         {% for role in roles %}
                                             {% if user.roles[0].id == role.id %}
                                                 <option selected value="{{ role.id }}">{{ role.name }}</option>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                    <button type="button" class="btn btn-primary">Zatwierdź</button>
+                    <button type="button" class="btn btn-primary" id="confirmChangesBtn">Zatwierdź</button>
                 </div>
             </div>
         </div>

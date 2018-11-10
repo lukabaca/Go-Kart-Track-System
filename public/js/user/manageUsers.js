@@ -61,6 +61,6 @@ $(document).ready(function () {
        e.preventDefault();
        let userId = $(this).closest('tr').attr('user-id');
        console.log(userId);
-       window.location.href = '/user/editUserRole/' + userId;
+       window.location.href = '/user/admin/userDetails/' + userId;
     });
 });
