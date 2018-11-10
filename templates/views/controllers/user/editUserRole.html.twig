@@ -11,12 +11,12 @@
     <div class="container">
         <div class="col-md-12 alertArea">
         </div>
-        <h4 class="pageHeader">Edytuj role użytkownika</h4>
+        <h4 class="pageHeader"><i class="fas fa-angle-left goBack"></i>Edytuj role użytkownika</h4>
         <div class="row">
             <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12">
-                            <ul class="list-group">
+                            <ul class="list-group user-info-list" user-id="{{ user.id }}">
                                 <li class="list-group-item"><strong>Imię:</strong>{{ user.name }}</li>
                                 <li class="list-group-item"><strong>Nazwisko:</strong>{{ user.surname }}</li>
                                 <li class="list-group-item"><strong>Data urodzenia:</strong>{{ user.birthdate|date('Y-m-d') }}</li>
@@ -24,9 +24,42 @@
                                 <li class="list-group-item"><strong>Numer i seria dowodu osobistego:</strong>{{ user.documentId }}</li>
                                 <li class="list-group-item"><strong>Adres email:</strong>{{ user.email }}</li>
                                 <li class="list-group-item"><strong>Numer telefonu:</strong>{{ user.telephoneNumber }}</li>
+                                <li class="list-group-item">
+                                    <strong>Role: </strong>
+                                    <select>
+                                        {% for role in roles %}
+                                            {% if user.roles[0].id == role.id %}
+                                                <option selected value="{{ role.id }}">{{ role.name }}</option>
+                                            {% else %}
+                                                <option value="{{ role.id }}">{{ role.name }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </li>
+                                <li class="list-group-item">
+                                    <button class="btn btn-primary" id="saveChangesBtn" data-toggle="modal" data-target="#confirmationModal">Zapisz</button>
+                                </li>
                             </ul>
                         </div>
                     </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Czy na pewno chcesz zmienić uprawnienia użytkownika?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                    <button type="button" class="btn btn-primary">Zatwierdź</button>
+                </div>
             </div>
         </div>
     </div>

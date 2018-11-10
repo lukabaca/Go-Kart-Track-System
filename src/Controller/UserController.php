@@ -7,6 +7,7 @@
  */
 
 namespace App\Controller;
+use App\Entity\Role;
 use App\Entity\User;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,6 +24,25 @@ class UserController extends Controller
     {
        return $this->render('views/controllers/user/manageUsers.html.twig', []);
     }
+    /**
+     * @Route("/user/getRoles", name="/user/getRoles")
+     */
+    public function getRolesAction(Request $request)
+    {
+        $rolesTemp = $this->getDoctrine()->getRepository(Role::class)->findAll();
+        if(!$rolesTemp) {
+            return new JsonResponse([], 404);
+        }
+        $roles = [];
+        foreach ($rolesTemp as $roleTemp) {
+            $role = [
+                'id' => $roleTemp->getId(),
+                'name' => $roleTemp->getName(),
+            ];
+            $roles [] = $role;
+        }
+        return new JsonResponse($roles, 200);
+    }
 
     /**
      * @Route("/user/editUserRole/{id}", name="/user/editUserRole/{id}")
@@ -30,12 +50,30 @@ class UserController extends Controller
      */
     public function editUserRoleAction(Request $request, $id)
     {
+        $roleDictionary = [
+            'ROLE_USER' => 'Użytkownik',
+            'ROLE_ADMIN' => 'Administrator',
+        ];
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
         if(!$user) {
             return $this->render('views/alerts/404.html.twig', []);
         }
+        $rolesTemp = $this->getDoctrine()->getRepository(Role::class)->findAll();
+        if(!$rolesTemp) {
+            return $this->render('views/alerts/404.html.twig', []);
+        }
+        $roles = [];
+        foreach ($rolesTemp as $roleTemp) {
+            $roleName = $roleDictionary[$roleTemp->getName()];
+            $role = [
+                'id' => $roleTemp->getId(),
+                'name' => $roleName,
+            ];
+            $roles [] = $role;
+        }
         return $this->render('views/controllers/user/editUserRole.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'roles' => $roles,
         ]);
     }
 
