@@ -42,9 +42,15 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role")
+     * @ORM\JoinTable(
+     * name="user_roles",
+     * joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     * inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     */
     private $roles;
-
-
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -198,7 +204,6 @@ class User implements UserInterface
         $this->pesel = $pesel;
         $this->documentID = $documentID;
         $this->telephoneNumber = $telephoneNumber;
-
         $this->roles = new ArrayCollection();
         $this->recording = new ArrayCollection();
     }

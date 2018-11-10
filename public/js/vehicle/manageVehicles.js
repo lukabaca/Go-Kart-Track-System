@@ -18,7 +18,15 @@ $(document).ready(function () {
         "columnDefs": [
             { "data": "name", "name": "name",   "targets": 0, "defaultContent": "-", },
             { "data": "prize", "name": "prize",   "targets": 1, "defaultContent": "-", },
-            { "data": "availability", "name": "availability",  "targets": 2, "defaultContent": "-", "className":"kart-availability"},
+            { "data": "availability", "name": "availability",  "targets": 2, "defaultContent": "-",
+                "className":"kart-availability",
+                "render": function ( data, type, row, meta ) {
+                    return (data == 1) ? 'Dostępny' : 'Niedostępny';
+                },
+                'createdCell':  function (td, cellData, rowData, row, col) {
+                    $(td).attr('kart-availability', rowData.availability);
+                }
+            },
             { "data": "", "targets": 3, "orderable": false, "render":
                     function ( data, type, row ) {
                     return '<div class="optionsArea">' +
@@ -56,7 +64,7 @@ $(document).ready(function () {
         e.preventDefault();
         let closestTr = $(this).closest('tr');
         let kartId = closestTr.attr('kart-id');
-        let availability = closestTr.find('.kart-availability').text();
+        let availability = closestTr.find('.kart-availability').attr('kart-availability');
         availability = (availability == 1) ? '0' : '1';
         $.ajax({
             type: 'POST',

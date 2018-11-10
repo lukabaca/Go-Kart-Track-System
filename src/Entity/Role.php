@@ -40,7 +40,15 @@ class Role
      */
     private $name;
 
-
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     * @ORM\JoinTable(
+     * name="user_roles",
+     * joinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")},
+     * inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
+     */
+    private $user;
     /**
      * @return mixed
      */
@@ -75,7 +83,7 @@ class Role
 
     public function __construct()
     {
-
+        $this->user = new ArrayCollection();
     }
 
 
