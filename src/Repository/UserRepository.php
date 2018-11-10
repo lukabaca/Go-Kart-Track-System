@@ -38,15 +38,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             if($rowCount == 1) {
                 $tempUser = $stmt->fetchAll();
                 $userID = $tempUser[0]['id'];
-
                 $stmt = $conn->prepare($sql2);
                 $stmt->bindValue(1, $userID);
                 $rowCount = $stmt->execute();
                 if($rowCount > 0) {
                     $tempRoles = $stmt->fetchAll();
-
                     $user = new User();
-
                     $user->setId($tempUser[0]['id']);
                     $user->setPassword(($tempUser[0]['password']));
                     $user->setName($tempUser[0]['name']);
@@ -56,7 +53,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                     $user->setDocumentID($tempUser[0]['document_id']);
                     $user->setEmail( $tempUser[0]['email']);
                     $user->setTelephoneNumber($tempUser[0]['telephone_number']);
-
                     $roles = [];
                     foreach($tempRoles as $role) {
                         $roles [] = $role['name'];
@@ -68,9 +64,29 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                     return null;
                 }
             }
-
         } catch (DBALException $e) {
             return null;
+        }
+    }
+    public function getUsers($start, $length, $columnName, $orderDir, $searchValue) {
+        $sql = 'call getUsers(?, ?, ?, ?, ?)';
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $start);
+            $stmt->bindValue(2, $length);
+            $stmt->bindValue(3, $columnName);
+            $stmt->bindValue(4, $orderDir);
+            $stmt->bindValue(5, $searchValue);
+            $rowCount = $stmt->execute();
+            if($rowCount > 0) {
+                $users = $stmt->fetchAll();
+                return $users;
+            } else {
+                return [];
+            }
+        } catch (DBALException $e) {
+            return [];
         }
     }
 }
