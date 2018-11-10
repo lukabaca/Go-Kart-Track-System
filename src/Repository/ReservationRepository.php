@@ -162,4 +162,30 @@ class ReservationRepository extends EntityRepository
             return null;
         }
     }
+    public function getUserReservations($user_id) {
+        $sql = 'call getUserReservations(?)';
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $user_id);
+            $rowCount = $stmt->execute();
+            if($rowCount > 0) {
+                $reservationsTemp = $stmt->fetchAll();
+                $reservations = [];
+                foreach ($reservationsTemp as $reservationTemp) {
+                    $reservation = new Reservation();
+                    $reservation->setId($reservationTemp['id']);
+                    $reservation->setStartDate($reservationTemp['start_date']);
+                    $reservation->setEndDate($reservationTemp['end_date']);
+                    $reservation->setCost($reservationsTemp['cost']);
+                    $reservations [] = $reservation;
+                }
+                return $reservations;
+            } else {
+                return [];
+            }
+        } catch (DBALException $e) {
+            return [];
+        }
+    }
 }
