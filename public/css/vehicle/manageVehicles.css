@@ -4,11 +4,6 @@
 .form-control {
   margin-bottom: 10px; }
 
-.dataTables_wrapper .dataTables_processing {
-  color: #A8A8A8;
-  font-size: 30px;
-  text-align: center; }
-
 .optionsArea {
   display: flex; }
   .optionsArea .editAvailabilityBtn {
