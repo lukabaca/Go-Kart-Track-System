@@ -45,5 +45,8 @@ $(document).ready(function () {
     });
     $('.table tbody').on('click', '.user-row', function (e) {
        e.preventDefault();
+       let userId = $(this).closest('tr').attr('user-id');
+       console.log(userId);
+       window.location.href = '/user/editUserRole/' + userId;
     });
 });

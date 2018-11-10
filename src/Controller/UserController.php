@@ -8,11 +8,12 @@
 
 namespace App\Controller;
 use App\Entity\User;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends Controller
 {
     /**
@@ -21,6 +22,21 @@ class UserController extends Controller
     public function manageUsersAction(Request $request)
     {
        return $this->render('views/controllers/user/manageUsers.html.twig', []);
+    }
+
+    /**
+     * @Route("/user/editUserRole/{id}", name="/user/editUserRole/{id}")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function editUserRoleAction(Request $request, $id)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        if(!$user) {
+            return $this->render('views/alerts/404.html.twig', []);
+        }
+        return $this->render('views/controllers/user/editUserRole.html.twig', [
+            'user' => $user
+        ]);
     }
 
     /**

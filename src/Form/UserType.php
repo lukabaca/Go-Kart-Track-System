@@ -11,6 +11,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -86,7 +87,6 @@ class UserType extends AbstractType
             ]
         ));
         $builder->add('telephoneNumber', TextType::class, array(
-
             'label' => 'Numer telefonu',
             'required' => TRUE,
             'attr' => [
@@ -95,7 +95,6 @@ class UserType extends AbstractType
             ]
         ));
         $builder->add('submit', SubmitType::class, array(
-
             'label' => 'Zarejestruj się',
             'attr' => ['id' => 'submitButton',
                 'class' => 'btn btn-info submitButton'

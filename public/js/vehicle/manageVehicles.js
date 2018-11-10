@@ -51,7 +51,6 @@ $(document).ready(function () {
         },
         createdRow: function(row, data, dataIndex, cells) {
             $(row).addClass('kart-row').attr('kart-id', data.id);
-            $(row).attr('kart-id', data.id);
         },
         // Classic DataTables parameters
         "paging" : true,
