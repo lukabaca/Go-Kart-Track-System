@@ -26,12 +26,6 @@ $(document).ready(function () {
             { "data": "telephone_number", "name": "telephone_number",  "targets": 6, "defaultContent": "-", },
             { "data": "role_name", "name": "role_name",  "targets": 7, "defaultContent": "-", },
         ],
-        // "columns": [
-        //     { "width": "25%" },
-        //     { "width": "25%" },
-        //     { "width": "10%" },
-        //     { "width": "10%" },
-        // ],
         // Server-side parameters
         "processing": true,
         "serverSide": true,
@@ -41,7 +35,6 @@ $(document).ready(function () {
         },
         createdRow: function(row, data, dataIndex, cells) {
             $(row).addClass('user-row').attr('user-id', data.id);
-            // $(row).attr('user-id', data.id);
         },
         // Classic DataTables parameters
         "paging" : true,
@@ -52,6 +45,5 @@ $(document).ready(function () {
     });
     $('.table tbody').on('click', '.user-row', function (e) {
        e.preventDefault();
-       console.log('user row');
     });
 });
