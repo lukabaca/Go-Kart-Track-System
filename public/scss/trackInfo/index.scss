@@ -1,0 +1,20 @@
+@import "../common/colors";
+.contactArea {
+  ul {
+    vertical-align: middle;
+      list-style-type: none;
+      padding-left: 0;
+      font-size: 22px;
+      i {
+        color: $pageHeader;
+        font-size: 45px;
+      }
+  }
+  li {
+    margin-top: 20px;
+    border-bottom: 1px solid $mainAccentLight;
+  }
+  .contact-data {
+    margin-left: 45px;
+  }
+}

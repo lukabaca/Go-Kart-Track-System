@@ -33,7 +33,6 @@ class RideTimeDictionaryRepository extends EntityRepository
             else {
                 return null;
             }
-
         } catch (DBALException $e) {
             return null;
         }
