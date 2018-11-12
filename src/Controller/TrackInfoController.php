@@ -36,7 +36,9 @@ class TrackInfoController extends Controller
         $trackInfoForm = $this->createForm(TrackInfoType::class, $trackInfo);
         $trackInfoForm->handleRequest($request);
         if ($trackInfoForm->isSubmitted() && $trackInfoForm->isValid()) {
-            print_r('submiteed');
+           $em = $this->getDoctrine()->getManager();
+           $em->persist($trackInfo);
+           $em->flush();
         }
         return $this->render('views/controllers/trackInfo/addTrackInfo.html.twig', [
                 'trackInfoForm' => $trackInfoForm->createView(),

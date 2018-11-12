@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAEE,oBAAG;EACD,WAAW,EAAE,GAAG;EAChB,YAAY,EAAE,CAAC",
+"sources": ["../../scss/trackInfo/addTrackInfo.scss"],
 "names": [],
 "file": "addTrackInfo.css"
 }

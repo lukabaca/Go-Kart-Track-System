@@ -43,7 +43,8 @@ class TrackInfoType extends AbstractType
             'attr' => [
                 'placeholder' => 'Numer kontaktowy',
                 'class' => 'form-control'
-            ]
+            ],
+            'help' => 'Proponowany format to xxx-yyy-zzz',
         ));
         $builder->add('hourStart', TimeType::class, array(
             'label' => 'Godzina otwarcia',
