@@ -37,7 +37,7 @@
                 <a class="nav-link" href="{{ asset(path('vehicle/index')) }}">Pojazdy</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Kontakt</a>
+                <a class="nav-link" href="{{ asset(path('trackInfo/index')) }}">Kontakt</a>
             </li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item dropdown">
@@ -47,6 +47,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ asset(path('/vehicle/manageVehicles')) }}">Zarządzaj pojazdami</a>
                         <a class="dropdown-item" href="{{ asset(path('/user/manageUsers')) }}">Zarządzaj użytkownikami</a>
+                        <a class="dropdown-item" href="#">Dane toru</a>
                     </div>
                 </li>
             {% endif %}
