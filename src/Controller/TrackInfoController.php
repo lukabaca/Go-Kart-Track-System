@@ -7,6 +7,7 @@
  */
 namespace App\Controller;
 use App\Entity\trackConfig\TrackInfo;
+use App\Form\TrackInfoType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,8 +34,14 @@ class TrackInfoController extends Controller
      */
     public function addTrackInfoAction(Request $request)
     {
-
+        $trackInfo = new TrackInfo();
+        $trackInfoForm = $this->createForm(TrackInfoType::class, $trackInfo);
+        $trackInfoForm->handleRequest($request);
+        if ($trackInfoForm->isSubmitted() && $trackInfoForm->isValid()) {
+            print_r('submiteed');
+        }
         return $this->render('views/controllers/trackInfo/addTrackInfo.html.twig', [
+                'trackInfoForm' => $trackInfoForm->createView(),
             ]
         );
     }

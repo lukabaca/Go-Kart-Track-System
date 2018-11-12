@@ -1,21 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-12
- * Time: 12:18
- */
-
 namespace App\Form;
-
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Time;
 
 class TrackInfoType extends AbstractType
 {
@@ -45,7 +37,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
-        $builder->add('telephoneNumber', TextType::class, array(
+        $builder->add('telephone_number', TextType::class, array(
             'label' => 'Numer kontaktowy',
             'required' => FALSE,
             'attr' => [
@@ -53,7 +45,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
-        $builder->add('hourOpen', Time::class, array(
+        $builder->add('hourStart', TimeType::class, array(
             'label' => 'Godzina otwarcia',
             'required' => FALSE,
             'attr' => [
@@ -61,7 +53,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
-        $builder->add('hourEnd', Time::class, array(
+        $builder->add('hourEnd', TimeType::class, array(
             'label' => 'Godzina zamknięcia',
             'required' => FALSE,
             'attr' => [
@@ -97,7 +89,7 @@ class TrackInfoType extends AbstractType
         $resolver->setDefaults(
             [
                 'submit_label' => 'Wyslij zgloszenie',
-                'data_class' => 'App\Entity\Kart',
+                'data_class' => 'App\Entity\trackConfig\TrackInfo',
                 'validation_groups' => ['Default'],
             ]
         );
