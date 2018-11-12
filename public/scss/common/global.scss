@@ -23,6 +23,9 @@ html, body {
 }
 .formErrorMessage {
   color: $error;
+  ul {
+    list-style-type: none;
+  }
 }
 //navbar
 #userName {

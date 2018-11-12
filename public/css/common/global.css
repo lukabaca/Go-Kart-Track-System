@@ -21,6 +21,8 @@ html, body {
 
 .formErrorMessage {
   color: #DC143C; }
+  .formErrorMessage ul {
+    list-style-type: none; }
 
 #userName {
   text-transform: capitalize;

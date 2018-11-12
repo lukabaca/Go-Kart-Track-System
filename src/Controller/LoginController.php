@@ -23,6 +23,9 @@ class LoginController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils, $afterLogout = false)
     {
+        if($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('dashboard/index');
+        }
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUserEmail = $authenticationUtils->getLastUsername();
         $view = $afterLogout ? 'views/controllers/login/logout.html.twig' : 'views/controllers/login/index.html.twig';

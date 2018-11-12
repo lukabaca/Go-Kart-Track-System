@@ -1,0 +1,101 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Kontakt
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/trackInfo/addTrackInfo.css') }}">
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="loader"></div>
+    <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Kontakt</h4>
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_start(trackInfoForm) }}
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(trackInfoForm.street) }}
+                            {{ form_widget(trackInfoForm.street) }}
+                            <small class="formErrorMessage">{{ form_errors(trackInfoForm.street) }}</small>
+                            {{ form_help(trackInfoForm.street) }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(trackInfoForm.city) }}
+                            {{ form_widget(trackInfoForm.city) }}
+                            <small class="formErrorMessage">{{ form_errors(trackInfoForm.city) }}</small>
+                            <small class="form-text text-muted">{{ form_help(trackInfoForm.city) }}</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(trackInfoForm.email) }}
+                            {{ form_widget(trackInfoForm.email) }}
+                            <small class="formErrorMessage">{{ form_errors(trackInfoForm.email) }}</small>
+                            <small class="form-text text-muted">{{ form_help(trackInfoForm.email) }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(trackInfoForm.telephone_number) }}
+                            {{ form_widget(trackInfoForm.telephone_number) }}
+                            <small class="formErrorMessage">{{ form_errors(trackInfoForm.telephone_number) }}</small>
+                            <small class="form-text text-muted">{{ form_help(trackInfoForm.telephone_number) }}</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(trackInfoForm.hourStart) }}
+                            {{ form_widget(trackInfoForm.hourStart) }}
+                            <small class="formErrorMessage">{{ form_errors(trackInfoForm.hourStart) }}</small>
+                            <small class="form-text text-muted">{{ form_help(trackInfoForm.hourStart) }}</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(trackInfoForm.hourEnd) }}
+                            {{ form_widget(trackInfoForm.hourEnd) }}
+                            <small class="formErrorMessage">{{ form_errors(trackInfoForm.hourEnd) }}</small>
+                            <small class="form-text text-muted">{{ form_help(trackInfoForm.hourEnd) }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(trackInfoForm.facebookLink) }}
+                            {{ form_widget(trackInfoForm.facebookLink) }}
+                            <small class="formErrorMessage">{{ form_errors(trackInfoForm.facebookLink) }}</small>
+                            <small class="form-text text-muted">{{ form_help(trackInfoForm.facebookLink) }}</small>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            {{ form_label(trackInfoForm.instagramLink) }}
+                            {{ form_widget(trackInfoForm.instagramLink) }}
+                            <small class="formErrorMessage">{{ form_errors(trackInfoForm.instagramLink) }}</small>
+                            <small class="form-text text-muted">{{ form_help(trackInfoForm.instagramLink) }}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(trackInfoForm.submit) }}
+                    {{ form_widget(trackInfoForm.submit) }}
+                </div>
+                {{ form_end(trackInfoForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {#<script src="{{ asset('js/trackInfo/index.js') }}"></script>#}
+{%  endblock %}

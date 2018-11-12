@@ -9,6 +9,7 @@
 namespace App\Entity\trackConfig;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  *
  * @ORM\Table(name="trackInfo")
@@ -25,22 +26,44 @@ class TrackInfo
     private $id;
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\Length(
+     *    max = 45,
+     *    maxMessage = "Maksymalna liczba znaków to 45",
+     * )
      */
     private $street;
     /**
      * @ORM\Column(type="string", length=30)
+     *  @Assert\Regex(
+     *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ-]+$/",
+     *     message="Wartość {{ value }} nie jest w poprawnym formacie"
+     * )
+     * @Assert\Length(
+     *    max = 30,
+     *    min = 2,
+     *    maxMessage = "Maksymalna liczba znaków to 30",
+     *    minMessage = "Minimalna liczba znaków to 2"
+     * )
      */
     private $city;
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\Regex(
+     *     pattern = "/^[0-9-+ ]+$/",
+     *     message="Wartość {{ value }} nie jest w poprawnym formacie"
+     * )
+     * @Assert\Length(
+     *    max = 20,
+     *    maxMessage = "Maksymalna liczba znaków to 20",
+     * )
      */
     private $telephone_number;
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="time")
      */
     private $hourStart;
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="time")
      */
     private $hourEnd;
     /**
@@ -53,6 +76,10 @@ class TrackInfo
     private $instagramLink;
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\Email(
+     *     message = "'{{ value }}' nie jest adresem email",
+     *     checkMX = true
+     * )
      */
     private $email;
 
