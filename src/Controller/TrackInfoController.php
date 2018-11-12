@@ -19,10 +19,10 @@ class TrackInfoController extends Controller
     {
         $trackInfo = $this->getDoctrine()->getRepository(TrackInfo::class)->findAll();
         if(!$trackInfo) {
-            return $this->render('views/alerts/404.html.twig', []
-            );
+            $trackInfo = null;
+        } else {
+            $trackInfo = $trackInfo[0];
         }
-        $trackInfo = $trackInfo[0];
         return $this->render('views/controllers/trackInfo/index.html.twig', [
             'trackInfo' => $trackInfo,
         ]
