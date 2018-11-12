@@ -14,6 +14,7 @@ use App\Entity\Reservation;
 use App\Entity\trackConfig\RideTimeDictionary;
 use App\Repository\trackConfig\RideTimeDictionaryRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,24 +64,6 @@ class ReservationController extends Controller
         ];
         return new JsonResponse($timePerOneRide, 200);
     }
-    /**
-     * @Route("/reservation/isReservationValid", name="/reservation/isReservationValid")
-     */
-    public function isReservationValidAction(Request $request)
-    {
-        $prize = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getKartPrizeByNumberOfRides(1, 2);
-        if(!$prize) {
-            return new JsonResponse([], 404);
-        }
-        if($prize == -1) {
-            return new JsonResponse(['Bad input value'], 400);
-        }
-        print_r($prize);
-        exit();
-
-       return new JsonResponse([], 500);
-    }
-
     /**
      * @Route("/reservation/deleteReservation/{id}", name="/reservation/deleteReservation/{id}")
      */
@@ -148,21 +131,35 @@ class ReservationController extends Controller
             if($isReservationValid == 2) {
                 return new JsonResponse(['Wrong dates (too early or too late)'], 400);
             }
-            $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
-                $startDate, $endDate, $cost);
-            if(!$reservation) {
-                return new JsonResponse(['Error while adding reservation'], 500);
-            }
-            $reservationId = $reservation->getId();
+            $reservation = new Reservation($startDate, $endDate, $cost, $this->getUser());
+            $karts = new ArrayCollection();
             foreach ($kartIds as $kartId) {
-                $reservationAndKartIds = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->insertReservationAndKartIds($reservationId, $kartId);
-                if(!$reservationAndKartIds) {
-                    //w tym wypadku musisz usunac rezerwacje która się dodałą, masz jej reservationId
-                    return new JsonResponse(['Error while progressing reservation'], 500);
+                $kart = $this->getDoctrine()->getRepository(Kart::class)->find($kartId);
+                if(!$kart) {
+                    return new JsonResponse('couldnt find send karts', 500);
                 }
+                $karts [] = $kart;
             }
+            $reservation->setKarts($karts);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reservation);
+            $em->flush();
+//            $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
+//                $startDate, $endDate, $cost);
+//            if(!$reservation) {
+//                return new JsonResponse(['Error while adding reservation'], 500);
+//            }
+//            $reservationId = $reservation->getId();
+//            foreach ($kartIds as $kartId) {
+//                $reservationAndKartIds = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->insertReservationAndKartIds($reservationId, $kartId);
+//                if(!$reservationAndKartIds) {
+//                    //w tym wypadku musisz usunac rezerwacje która się dodałą, masz jej reservationId
+//                    return new JsonResponse(['Error while progressing reservation'], 500);
+//                }
+//            }
             $reservation = [
                 'id' => $reservation->getId(),
+                'user_id' => $reservation->getUser()->getId(),
                 'startDate' => $reservation->getStartDate(),
                 'endDate' => $reservation->getEndDate(),
                 'cost' => $reservation->getCost()
