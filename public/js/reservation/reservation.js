@@ -1,3 +1,17 @@
+let isPageReady = [
+    {
+        'name': 'loadedTimePerRide',
+        'status': false
+    },
+    {
+        'name': 'loadedTrackWorkingHours',
+        'status': false
+    },
+    {
+        'name': 'loadedKarts',
+        'status': false
+    },
+];
 $(document).ready(function () {
     let maxNumberOfDays = 21;
     let minNumberOfRides = 1;
@@ -5,7 +19,7 @@ $(document).ready(function () {
     let maxEndDate = new Date();
     maxEndDate.setDate(maxEndDate.getDate() + maxNumberOfDays);
 
-    let timePerOneRide;
+    let timePerOneRide = 0;
     let numberOfRides = 0;
 
     let reserveButton = $('#reserveBtn');
@@ -19,8 +33,13 @@ $(document).ready(function () {
     let karts;
     let totalPrize = 0;
 
+    let trackHourStart = 12;
+    let trackHourEnd = 22;
 
     $('#numberOfRidesInput').val(minNumberOfRides);
+    startLoadingProgress();
+    loadTimePerOneRide();
+    loadTrackWorkingHours();
     loadKarts();
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -46,8 +65,8 @@ $(document).ready(function () {
         timeFormat: 'HH:mm',
         interval: 30,
         scrollbar: true,
-        minHour: 12,
-        maxHour: 21,
+        minHour: trackHourStart,
+        maxHour: trackHourEnd,
         dynamic: true,
         dropdown: true,
         change: function () {
@@ -71,31 +90,6 @@ $(document).ready(function () {
             checkButtonStatus();
         }
     });
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '/reservation/getTimePerOneRide',
-        success: function (data) {
-            timePerOneRide = data.timePerRide;
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            let statusCode = xhr.status;
-            switch (statusCode) {
-                default : {
-                    let alertErrorContent =
-                        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">X</span>' +
-                        '</button>' +
-                        '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
-                        '</div>';
-                    $('.alertArea').append(alertErrorContent);
-                    break;
-                }
-            }
-        }
-    });
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
@@ -107,6 +101,7 @@ $(document).ready(function () {
             let minute = res[1];
             let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
             let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
+            // console.log(timePerOneRide);
             let endDate = new Date(endDateTemp);
             let finalTime = convertHourAndMinuteToProperFormat(endDate);
             let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
@@ -147,6 +142,8 @@ $(document).ready(function () {
                 } else {
 
                 }
+                setIsPageReadyStatus('loadedKarts', true);
+                showReservationForm();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
@@ -176,7 +173,7 @@ $(document).ready(function () {
 
     $('#kartBtn').on('click', function (e) {
         e.preventDefault();
-        $('.loader').css('display', 'block');
+        startLoadingProgress();
         let table = $('#kartTableModal');
         clearTable(table);
         let isValid = true;
@@ -196,7 +193,7 @@ $(document).ready(function () {
                 isValid = true;
             }
         }
-        $('.loader').css('display', 'none');
+        stopLoadingProgress();
     });
     $('body').on('click', '.deleteKartIcon', function (e) {
         e.stopPropagation();
@@ -249,7 +246,7 @@ $(document).ready(function () {
             flag = false;
         }
         for(let i = 0; i < kartIdsToLoad.length; i++) {
-            $('.loader').css('display', 'block');
+            startLoadingProgress();
             for(let j = 0; j < karts.length; j++) {
                 if(kartIdsToLoad[i] == karts[j].id) {
                     let isValid = true;
@@ -271,13 +268,13 @@ $(document).ready(function () {
                         checkButtonStatus();
                     }
                 }
-                $('.loader').css('display', 'none');
+                stopLoadingProgress();
             }
         }
         let numberOfRides = $('#numberOfRidesInput').val();
         let kartIds = getKartIdsFromTable(kartTable);
         getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
-        $('.loader').css('display', 'none');
+        stopLoadingProgress();
     });
 
     $('#reservationForm').submit(function (event) {
@@ -292,7 +289,72 @@ $(document).ready(function () {
         let endDate = date + ' ' + hourEnd;
         makeReservation(startDate, endDate, prize, kartIds);
     });
+    function loadTimePerOneRide() {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/reservation/getTimePerOneRide',
+            success: function (data) {
+                timePerOneRide = data.timePerRide;
+                setIsPageReadyStatus('loadedTimePerRide', true);
+                showReservationForm();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                let statusCode = xhr.status;
+                switch (statusCode) {
+                    default : {
+                        let alertErrorContent =
+                            '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                            '<span aria-hidden="true">X</span>' +
+                            '</button>' +
+                            '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+                            '</div>';
+                        $('.alertArea').append(alertErrorContent);
+                        break;
+                    }
+                }
+            }
+        });
+    }
+    function loadTrackWorkingHours() {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/reservation/getTrackConfig',
+            success: function (data) {
+               if(data.hourStart && data.hourEnd) {
+                   trackHourStart = getHourAsNumberFromTime(data.hourStart);
+                   trackHourEnd = getHourAsNumberFromTime(data.hourEnd);
+               } else {
+                   trackHourStart = 12;
+                   trackHourEnd = 22;
+               }
+               console.log(trackHourStart);
+               console.log(trackHourEnd);
+               setIsPageReadyStatus('loadedTrackWorkingHours', true);
+               showReservationForm();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                let statusCode = xhr.status;
+                switch (statusCode) {
+                    default : {
+                        let alertErrorContent =
+                            '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                            '<span aria-hidden="true">X</span>' +
+                            '</button>' +
+                            '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+                            '</div>';
+                        $('.alertArea').append(alertErrorContent);
+                        break;
+                    }
+                }
+            }
+        });
+    }
 });
+
 function setPrizeInfo(element, prize) {
     element.text(prize);
 }
@@ -465,4 +527,40 @@ function setInitialFlags(isValidHourStart, isValidNumberOfRides, isValidChosenKa
     isValidNumberOfRides = true;
     isValidChosenKarts = false;
     isValidDate = true;
+}
+function getHourAsNumberFromTime(time) {
+    if(time) {
+        arraySplit = time.split(':');
+        return arraySplit[0];
+    }
+}
+function startLoadingProgress() {
+    $('.loader').css('display', 'block');
+}
+function stopLoadingProgress() {
+    $('.loader').css('display', 'none');
+}
+function showReservationForm() {
+    let isPageReadyFinally = false;
+    for(let i = 0; i < isPageReady.length; i++) {
+        if(!isPageReady[i].status) {
+            isPageReadyFinally = false;
+            break;
+        } else {
+            isPageReadyFinally = true;
+        }
+    }
+    console.log(isPageReadyFinally);
+    // console.log(isPageReady);
+    if(isPageReadyFinally) {
+        stopLoadingProgress();
+        $('.reservation-area').css('display', 'flex');
+    }
+}
+function setIsPageReadyStatus(name, status) {
+    for(let i = 0; i < isPageReady.length; i++) {
+        if(isPageReady[i].name === name) {
+            isPageReady[i].status = status;
+        }
+    }
 }

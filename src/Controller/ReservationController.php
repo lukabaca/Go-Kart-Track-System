@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Kart;
 use App\Entity\Reservation;
 use App\Entity\trackConfig\RideTimeDictionary;
+use App\Entity\trackConfig\TrackInfo;
 use App\Repository\trackConfig\RideTimeDictionaryRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -63,6 +64,25 @@ class ReservationController extends Controller
             'timePerRide' => $timePerOneRideTemp->getTimePerRide()
         ];
         return new JsonResponse($timePerOneRide, 200);
+    }
+    /**
+     * @Route("/reservation/getTrackConfig", name="reservation/getTrackConfig")
+     */
+    public function getTrackConfigeAction(Request $request)
+    {
+        $trackInfo = $this->getDoctrine()->getRepository(TrackInfo::class)->find(1);
+        if(!$trackInfo) {
+            return new JsonResponse(['no track config data'], 404);
+        }
+//        $hourStart = $trackInfo->getHourStart() ? $trackInfo->getHourStart() : null;
+//        $hourEnd = $trackInfo->getHourEnd() ? $trackInfo->getHourEnd() : null;
+        $hourStart = $trackInfo->getHourStart()->format('H:i');
+        $hourEnd = $trackInfo->getHourEnd()->format('H:i');
+        $trackInfo = [
+            'hourStart' => $hourStart,
+            'hourEnd' => $hourEnd,
+        ];
+        return new JsonResponse($trackInfo, 200);
     }
     /**
      * @Route("/reservation/deleteReservation/{id}", name="/reservation/deleteReservation/{id}")
@@ -144,19 +164,6 @@ class ReservationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
-//            $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->makeReservation($this->getUser()->getId(),
-//                $startDate, $endDate, $cost);
-//            if(!$reservation) {
-//                return new JsonResponse(['Error while adding reservation'], 500);
-//            }
-//            $reservationId = $reservation->getId();
-//            foreach ($kartIds as $kartId) {
-//                $reservationAndKartIds = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->insertReservationAndKartIds($reservationId, $kartId);
-//                if(!$reservationAndKartIds) {
-//                    //w tym wypadku musisz usunac rezerwacje która się dodałą, masz jej reservationId
-//                    return new JsonResponse(['Error while progressing reservation'], 500);
-//                }
-//            }
             $reservation = [
                 'id' => $reservation->getId(),
                 'user_id' => $reservation->getUser()->getId(),
