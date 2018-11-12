@@ -36,11 +36,11 @@ class TrackInfo
      */
     private $telephone_number;
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="time")
      */
     private $hourStart;
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="time")
      */
     private $hourEnd;
     /**
