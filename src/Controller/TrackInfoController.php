@@ -28,4 +28,14 @@ class TrackInfoController extends Controller
         ]
         );
     }
+    /**
+     * @Route("/trackInfo/addTrackInfo", name="/trackInfo/addTrackInfo")
+     */
+    public function addTrackInfoAction(Request $request)
+    {
+
+        return $this->render('views/controllers/trackInfo/addTrackInfo.html.twig', [
+            ]
+        );
+    }
 }
