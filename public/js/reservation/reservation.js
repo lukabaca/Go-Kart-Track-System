@@ -101,7 +101,6 @@ $(document).ready(function () {
             let minute = res[1];
             let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
             let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
-            // console.log(timePerOneRide);
             let endDate = new Date(endDateTemp);
             let finalTime = convertHourAndMinuteToProperFormat(endDate);
             let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
@@ -110,11 +109,9 @@ $(document).ready(function () {
             $('#hourEndInput').val('');
             isValidNumberOfRides = false;
         }
-
         if(numberOfRides !== '') {
             let kartTable = $('#kartTable');
             let kartIds = getKartIdsFromTable(kartTable);
-            // console.log(numberOfRides);
             getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
         }
         checkButtonStatus();
@@ -202,7 +199,6 @@ $(document).ready(function () {
         let kartId = tr.attr('kart-id');
         let kart = getKartById(karts, kartId);
         let numberOfRides = $('#numberOfRidesInput').val();
-        console.log(numberOfRides);
         if(kart) {
             tr.remove();
             // totalPrize -= kart.prize;
@@ -330,8 +326,6 @@ $(document).ready(function () {
                    trackHourStart = 12;
                    trackHourEnd = 22;
                }
-               console.log(trackHourStart);
-               console.log(trackHourEnd);
                setIsPageReadyStatus('loadedTrackWorkingHours', true);
                showReservationForm();
             },
@@ -429,7 +423,6 @@ function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
         "karts": kartIds,
     };
     kartData = JSON.stringify(kartData);
-    console.log(kartData);
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -475,7 +468,6 @@ function makeReservation(startDate, endDate, cost, karts) {
         "karts": karts,
     };
     reservationData = JSON.stringify(reservationData);
-    console.log(reservationData);
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -550,8 +542,6 @@ function showReservationForm() {
             isPageReadyFinally = true;
         }
     }
-    console.log(isPageReadyFinally);
-    // console.log(isPageReady);
     if(isPageReadyFinally) {
         stopLoadingProgress();
         $('.reservation-area').css('display', 'flex');
