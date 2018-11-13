@@ -60,36 +60,6 @@ $(document).ready(function () {
         language: 'pl',
     });
     $('.datePicker').datepicker('setDate', today);
-
-    $('.timePicker').timepicker({
-        timeFormat: 'HH:mm',
-        interval: 30,
-        scrollbar: true,
-        minHour: trackHourStart,
-        maxHour: trackHourEnd,
-        dynamic: true,
-        dropdown: true,
-        change: function () {
-            let time = $(this).val();
-            if ($('#numberOfRidesInput').val() !== '' && time !== '') {
-                numberOfRides = $('#numberOfRidesInput').val();
-                isValidHourStart = true;
-                let res = getHourAndMinutesFromTimePicker(time);
-                let hour = res[0];
-                let minute = res[1];
-                let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-                let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
-                let endDate = new Date(endDateTemp);
-                let finalTime = convertHourAndMinuteToProperFormat(endDate);
-                let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
-                $('#hourEndInput').val(hourAndMinuteEndTime);
-            } else {
-                $('#hourEndInput').val('');
-                isValidHourStart = false;
-            }
-            checkButtonStatus();
-        }
-    });
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
@@ -347,6 +317,53 @@ $(document).ready(function () {
             }
         });
     }
+    function initTimePickerOptions() {
+        $('.timePicker').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            scrollbar: true,
+            minHour: trackHourStart,
+            maxHour: trackHourEnd,
+            dynamic: true,
+            dropdown: true,
+            change: function () {
+                let time = $(this).val();
+                if ($('#numberOfRidesInput').val() !== '' && time !== '') {
+                    numberOfRides = $('#numberOfRidesInput').val();
+                    isValidHourStart = true;
+                    let res = getHourAndMinutesFromTimePicker(time);
+                    let hour = res[0];
+                    let minute = res[1];
+                    let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
+                    let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
+                    let endDate = new Date(endDateTemp);
+                    let finalTime = convertHourAndMinuteToProperFormat(endDate);
+                    let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
+                    $('#hourEndInput').val(hourAndMinuteEndTime);
+                } else {
+                    $('#hourEndInput').val('');
+                    isValidHourStart = false;
+                }
+                checkButtonStatus();
+            }
+        });
+    }
+    function showReservationForm() {
+        let isPageReadyFinally = false;
+        for(let i = 0; i < isPageReady.length; i++) {
+            if(!isPageReady[i].status) {
+                isPageReadyFinally = false;
+                break;
+            } else {
+                isPageReadyFinally = true;
+            }
+        }
+        if(isPageReadyFinally) {
+            stopLoadingProgress();
+            initTimePickerOptions();
+            $('.reservation-area').css('display', 'flex');
+        }
+    }
 });
 
 function setPrizeInfo(element, prize) {
@@ -533,21 +550,6 @@ function startLoadingProgress() {
 }
 function stopLoadingProgress() {
     $('.loader').css('display', 'none');
-}
-function showReservationForm() {
-    let isPageReadyFinally = false;
-    for(let i = 0; i < isPageReady.length; i++) {
-        if(!isPageReady[i].status) {
-            isPageReadyFinally = false;
-            break;
-        } else {
-            isPageReadyFinally = true;
-        }
-    }
-    if(isPageReadyFinally) {
-        stopLoadingProgress();
-        $('.reservation-area').css('display', 'flex');
-    }
 }
 function setIsPageReadyStatus(name, status) {
     for(let i = 0; i < isPageReady.length; i++) {
