@@ -20,7 +20,7 @@ $(document).ready(function () {
     maxEndDate.setDate(maxEndDate.getDate() + maxNumberOfDays);
 
     let timePerOneRide = 0;
-    let numberOfRides = 0;
+    let numberOfRides = 1;
 
     let reserveButton = $('#reserveBtn');
     reserveButton.attr("disabled", "disabled");
@@ -66,18 +66,25 @@ $(document).ready(function () {
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
+        console.log(numberOfRides);
         if($('#hourStartInput').val() !== '' && numberOfRides !== '' && numberOfRides > 0) {
             let startTime = $('#hourStartInput').val();
-            hourAndMinuteEndTime = getEndTime(startTime, numberOfRides, timePerOneRide);
-            arrayStart = hourAndMinuteEndTime.split(':');
-            arrayEnd = trackHourEnd.split(':');
-            dateStart = new Date(today.getFullYear(), today.getMonth(), today.getDate(), arrayStart[0], arrayStart[1]);
-            dateEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate(), arrayEnd[0], arrayEnd[1]);
-            if(dateStart <= dateEnd) {
+            let hourAndMinuteStartTime = startTime.split(':');
+            let hourAndMinuteEndTime = getEndTime(startTime, numberOfRides, timePerOneRide);
+            let arrayEnd = hourAndMinuteEndTime.split(':');
+            let dateEnd = new Date(trackEndTime.getFullYear(), trackEndTime.getMonth(), trackEndTime.getDate(), arrayEnd[0], arrayEnd[1]);
+            let dateStart = new Date(trackEndTime.getFullYear(), trackEndTime.getMonth(), trackEndTime.getDate(), hourAndMinuteStartTime[0], hourAndMinuteStartTime[1]);
+            if(dateEnd <= trackEndTime) {
                 isValidNumberOfRides = true;
                 $('#hourEndInput').val(hourAndMinuteEndTime);
             } else {
                 console.log('nie spelnia');
+                console.log(dateStart);
+                console.log(trackEndTime);
+                let milisecondsBetweenDates = Math.abs(dateStart.getTime() - trackEndTime.getTime());
+                let minutesBetweenDates = milisecondsBetweenDates / (1000 * 60);
+                console.log(minutesBetweenDates);
+                $(this).val(minutesBetweenDates / timePerOneRide);
             }
         } else {
             $('#hourEndInput').val('');
@@ -304,8 +311,12 @@ $(document).ready(function () {
                    // trackHourStart = '12:00';
                    // trackHourEnd = '22:00';
                }
+               let startTrackHourAndMinutes = convertHourAndMinuteToProperFormat(trackStartTime);
+               let endTrackHourAndMinutes = convertHourAndMinuteToProperFormat(trackEndTime);
+               let trackStart = startTrackHourAndMinutes[0] + ':' + startTrackHourAndMinutes[1];
+               let trackEnd = endTrackHourAndMinutes[0] + ':' + endTrackHourAndMinutes[1];
                setIsPageReadyStatus('loadedTrackWorkingHours', true);
-               $('#trackWorkingHoursInfo').text('Godziny pracy toru: ' + trackHourStart + '-' + trackHourEnd);
+               $('#trackWorkingHoursInfo').text('Godziny pracy toru: ' + trackStart + '-' + trackEnd);
                showReservationForm();
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -331,8 +342,6 @@ $(document).ready(function () {
             timeFormat: 'HH:mm',
             interval: timePerOneRide,
             scrollbar: true,
-            // minHour: getHourAsNumberFromTime(trackHourStart),
-            // maxHour: getHourAsNumberFromTime(trackHourEnd),
             minTime: trackStartTime,
             maxTime: trackEndTime,
             dynamic: true,
@@ -363,11 +372,6 @@ $(document).ready(function () {
             }
         }
         if(isPageReadyFinally) {
-            console.log(trackStartTime.getHours() + ' ' + trackStartTime.getMinutes());
-            console.log(trackEndTime.getHours() + ' ' + trackEndTime.getMinutes());
-            console.log(timePerOneRide);
-            trackEndTime = new Date(trackEndTime - timePerOneRide * 60 * 1000);
-            console.log(trackEndTime);
             stopLoadingProgress();
             initTimePickerOptions();
             $('.reservation-area').css('display', 'flex');
