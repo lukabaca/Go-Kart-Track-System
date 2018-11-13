@@ -74,16 +74,12 @@ $(document).ready(function () {
             let arrayEnd = hourAndMinuteEndTime.split(':');
             let dateEnd = new Date(trackEndTime.getFullYear(), trackEndTime.getMonth(), trackEndTime.getDate(), arrayEnd[0], arrayEnd[1]);
             let dateStart = new Date(trackEndTime.getFullYear(), trackEndTime.getMonth(), trackEndTime.getDate(), hourAndMinuteStartTime[0], hourAndMinuteStartTime[1]);
+            /*popraw porownywanie samych godzin i minut a nie dat calych, bo mzoe przejsc z inputa na nastepny dzien i wtedy sie wywali */
             if(dateEnd <= trackEndTime) {
                 isValidNumberOfRides = true;
                 $('#hourEndInput').val(hourAndMinuteEndTime);
             } else {
-                console.log('nie spelnia');
-                console.log(dateStart);
-                console.log(trackEndTime);
-                let milisecondsBetweenDates = Math.abs(dateStart.getTime() - trackEndTime.getTime());
-                let minutesBetweenDates = milisecondsBetweenDates / (1000 * 60);
-                console.log(minutesBetweenDates);
+                let minutesBetweenDates = getMinutesBetweenDates(dateStart, trackEndTime);
                 $(this).val(minutesBetweenDates / timePerOneRide);
             }
         } else {
@@ -581,4 +577,9 @@ function getEndTime(startTime, numberOfRides, timePerOneRide) {
     let finalTime = convertHourAndMinuteToProperFormat(endDate);
     let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
     return hourAndMinuteEndTime;
+}
+function getMinutesBetweenDates(date1, date2) {
+    let milisecondsBetweenDates = Math.abs(date1.getTime() - date2.getTime());
+    let minutesBetweenDates = milisecondsBetweenDates / (1000 * 60);
+    return minutesBetweenDates;
 }

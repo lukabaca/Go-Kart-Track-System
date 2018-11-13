@@ -47,13 +47,14 @@
                                 {% if trackInfo.facebookLink %}
                                     <li class="d-flex justify-content-between align-items-center">
                                         <i class="fab fa-facebook-square"></i>
-                                        <a href="#" class="contact-data">{{ trackInfo.facebookLink }}</a>
+                                        {#<a href="{{ path('trackInfo/redirectToUrl', {'url': trackInfo.facebookLink}) }}" class="contact-data">facebook</a>#}
+                                        <a href="{{ trackInfo.facebookLink }}" class="contact-data">Facebook</a>
                                     </li>
                                 {% endif %}
                                 {% if trackInfo.instagramLink %}
                                     <li class="d-flex justify-content-between align-items-center">
                                         <i class="fab fa-instagram"></i>
-                                        <a href="#" class="contact-data">{{ trackInfo.instagramLink }}</a>
+                                        <a href="{{ trackInfo.instagramLink }}">Instagram</a>
                                     </li>
                                 {% endif %}
                             </ul>
