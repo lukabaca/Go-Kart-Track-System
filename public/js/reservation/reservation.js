@@ -33,8 +33,11 @@ $(document).ready(function () {
     let karts;
     let totalPrize = 0;
 
-    let trackHourStart = 12;
-    let trackHourEnd = 22;
+    let trackHourStart = '12:00';
+    let trackHourEnd = '22:00';
+
+    let trackStartTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0);
+    let trackEndTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 22, 0);
 
     $('#numberOfRidesInput').val(minNumberOfRides);
     startLoadingProgress();
@@ -64,17 +67,18 @@ $(document).ready(function () {
         e.preventDefault();
         numberOfRides = $(this).val();
         if($('#hourStartInput').val() !== '' && numberOfRides !== '' && numberOfRides > 0) {
-            isValidNumberOfRides = true;
-            let time = $('#hourStartInput').val();
-            let res = getHourAndMinutesFromTimePicker(time);
-            let hour = res[0];
-            let minute = res[1];
-            let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-            let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
-            let endDate = new Date(endDateTemp);
-            let finalTime = convertHourAndMinuteToProperFormat(endDate);
-            let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
-            $('#hourEndInput').val(hourAndMinuteEndTime);
+            let startTime = $('#hourStartInput').val();
+            hourAndMinuteEndTime = getEndTime(startTime, numberOfRides, timePerOneRide);
+            arrayStart = hourAndMinuteEndTime.split(':');
+            arrayEnd = trackHourEnd.split(':');
+            dateStart = new Date(today.getFullYear(), today.getMonth(), today.getDate(), arrayStart[0], arrayStart[1]);
+            dateEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate(), arrayEnd[0], arrayEnd[1]);
+            if(dateStart <= dateEnd) {
+                isValidNumberOfRides = true;
+                $('#hourEndInput').val(hourAndMinuteEndTime);
+            } else {
+                console.log('nie spelnia');
+            }
         } else {
             $('#hourEndInput').val('');
             isValidNumberOfRides = false;
@@ -290,13 +294,18 @@ $(document).ready(function () {
             url: '/reservation/getTrackConfig',
             success: function (data) {
                if(data.hourStart && data.hourEnd) {
-                   trackHourStart = getHourAsNumberFromTime(data.hourStart);
-                   trackHourEnd = getHourAsNumberFromTime(data.hourEnd);
+                   // trackHourStart = data.hourStart;
+                   // trackHourEnd = data.hourEnd;
+                   trackStartTime = new Date(data.hourStart.date);
+                   trackEndTime = new Date(data.hourEnd.date);
                } else {
-                   trackHourStart = 12;
-                   trackHourEnd = 22;
+                   trackStartTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0);
+                   trackEndTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 22, 0)
+                   // trackHourStart = '12:00';
+                   // trackHourEnd = '22:00';
                }
                setIsPageReadyStatus('loadedTrackWorkingHours', true);
+               $('#trackWorkingHoursInfo').text('Godziny pracy toru: ' + trackHourStart + '-' + trackHourEnd);
                showReservationForm();
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -320,10 +329,12 @@ $(document).ready(function () {
     function initTimePickerOptions() {
         $('.timePicker').timepicker({
             timeFormat: 'HH:mm',
-            interval: 30,
+            interval: timePerOneRide,
             scrollbar: true,
-            minHour: trackHourStart,
-            maxHour: trackHourEnd,
+            // minHour: getHourAsNumberFromTime(trackHourStart),
+            // maxHour: getHourAsNumberFromTime(trackHourEnd),
+            minTime: trackStartTime,
+            maxTime: trackEndTime,
             dynamic: true,
             dropdown: true,
             change: function () {
@@ -331,14 +342,7 @@ $(document).ready(function () {
                 if ($('#numberOfRidesInput').val() !== '' && time !== '') {
                     numberOfRides = $('#numberOfRidesInput').val();
                     isValidHourStart = true;
-                    let res = getHourAndMinutesFromTimePicker(time);
-                    let hour = res[0];
-                    let minute = res[1];
-                    let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-                    let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
-                    let endDate = new Date(endDateTemp);
-                    let finalTime = convertHourAndMinuteToProperFormat(endDate);
-                    let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
+                    let hourAndMinuteEndTime = getEndTime(time, numberOfRides, timePerOneRide);
                     $('#hourEndInput').val(hourAndMinuteEndTime);
                 } else {
                     $('#hourEndInput').val('');
@@ -359,6 +363,11 @@ $(document).ready(function () {
             }
         }
         if(isPageReadyFinally) {
+            console.log(trackStartTime.getHours() + ' ' + trackStartTime.getMinutes());
+            console.log(trackEndTime.getHours() + ' ' + trackEndTime.getMinutes());
+            console.log(timePerOneRide);
+            trackEndTime = new Date(trackEndTime - timePerOneRide * 60 * 1000);
+            console.log(trackEndTime);
             stopLoadingProgress();
             initTimePickerOptions();
             $('.reservation-area').css('display', 'flex');
@@ -557,4 +566,15 @@ function setIsPageReadyStatus(name, status) {
             isPageReady[i].status = status;
         }
     }
+}
+function getEndTime(startTime, numberOfRides, timePerOneRide) {
+    let res = getHourAndMinutesFromTimePicker(startTime);
+    let hour = res[0];
+    let minute = res[1];
+    let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
+    let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
+    let endDate = new Date(endDateTemp);
+    let finalTime = convertHourAndMinuteToProperFormat(endDate);
+    let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
+    return hourAndMinuteEndTime;
 }

@@ -76,8 +76,10 @@ class ReservationController extends Controller
         }
 //        $hourStart = $trackInfo->getHourStart() ? $trackInfo->getHourStart() : null;
 //        $hourEnd = $trackInfo->getHourEnd() ? $trackInfo->getHourEnd() : null;
-        $hourStart = $trackInfo->getHourStart()->format('H:i');
-        $hourEnd = $trackInfo->getHourEnd()->format('H:i');
+//        $hourStart = $trackInfo->getHourStart()->format('H:i');
+//        $hourEnd = $trackInfo->getHourEnd()->format('H:i');
+        $hourStart = $trackInfo->getHourStart();
+        $hourEnd = $trackInfo->getHourEnd();
         $trackInfo = [
             'hourStart' => $hourStart,
             'hourEnd' => $hourEnd,
