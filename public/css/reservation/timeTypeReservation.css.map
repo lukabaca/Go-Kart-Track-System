@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AACA,gBAAiB;EACf,KAAK,EAAE,IAAI;EACX,0BAAU;IACR,KAAK,EAAE,IAAI;EAEb,qBAAK;IACH,aAAa,EAAE,IAAI;EAErB,gCAAgB;IACd,aAAa,EAAE,CAAC",
+"sources": ["../../scss/reservation/timeTypeReservation.scss"],
 "names": [],
 "file": "timeTypeReservation.css"
 }

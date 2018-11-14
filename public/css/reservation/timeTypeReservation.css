@@ -1,3 +1,10 @@
-
+#reservationForm {
+  width: 100%; }
+  #reservationForm .form-row {
+    width: 100%; }
+  #reservationForm .col {
+    padding-right: 20px; }
+  #reservationForm .col:last-child {
+    padding-right: 0; }
 
 /*# sourceMappingURL=timeTypeReservation.css.map */

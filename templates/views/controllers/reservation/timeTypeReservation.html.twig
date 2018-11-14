@@ -14,7 +14,51 @@
         </div>
         <h4 class="pageHeader">Rezerwacja</h4>
         <div class="row">
-
+            <div class="col-md-12">
+                <div class="shadow p-3 mb-5 bg-white rounded card">
+                    <div class="card-body">
+                        <div class="row">
+                            <form method="POST" action="#" id="reservationForm">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationStart">Dzień</label>
+                                            <input type="text" class="form-control datePicker" id="dateInput" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationStart">Godzina rozpoczęcia</label>
+                                            <input type="text" class="form-control timePicker" id="hourStartInput" required>
+                                            <small class="form-text text-muted" id="trackWorkingHoursInfo"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationStart">Godzina zakończenia</label>
+                                            <input type="text" class="form-control" id="hourEndInput" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationPrize">Cena</label>
+                                            <input type="text" class="form-control" id="reservationPrize" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationPrize">Opis</label>
+                                            <textarea class="form-control" id="reservationDescription"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
