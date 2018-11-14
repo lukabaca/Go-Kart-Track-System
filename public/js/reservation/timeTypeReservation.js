@@ -1,3 +1,4 @@
+let flag = false;
 $(document).ready(function () {
     let today = new Date();
     let defaultMinTime = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0);
@@ -5,12 +6,15 @@ $(document).ready(function () {
     let reserveButton = $('#reserveBtn');
     let hourStartInput = $('#startHourInput');
     let hourEndInput = $('#endHourInput');
+    let prizeInput = $('#reservationPrize');
+    let dateInput = $('#dateInput');
     reserveButton.attr("disabled", "disabled");
 
     let isValidHourStart = false;
     let isValidHourEnd = true;
     let isValidPrice = false;
     let isValidDate = true;
+
 
     $(hourStartInput).timepicker({
         timeFormat: 'HH:mm',
@@ -20,14 +24,16 @@ $(document).ready(function () {
         dropdown: true,
         change: function () {
             let time = $(this).val();
-            console.log(time);
+            console.log('weszlo w start');
             if(time !== '') {
                 array = getHourAndMinutesFromTimePicker(time);
                 time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
                 setMinTime(hourEndInput, time);
+                isValidHourStart = true;
             } else {
                 setMaxTime(hourEndInput, defaultMaxTime);
                 setMinTime(hourEndInput, defaultMinTime);
+                isValidHourStart = false;
             }
             checkButtonStatus();
         }
@@ -40,8 +46,10 @@ $(document).ready(function () {
         dropdown: true,
         change: function () {
             let time = $(this).val();
-            console.log(time);
+            console.log('weszlo w end');
             if(time !== '') {
+                console.log('weszlo true');
+                isValidHourEnd = true;
                 array = getHourAndMinutesFromTimePicker(time);
                 time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
                 setMaxTime(hourStartInput, time);
@@ -49,11 +57,31 @@ $(document).ready(function () {
                 console.log('weszlo');
                 setMaxTime(hourStartInput, defaultMaxTime);
                 setMinTime(hourStartInput, defaultMinTime);
+                isValidHourEnd = false;
             }
             checkButtonStatus();
         }
     });
-
+    $(dateInput).on('change', function (e) {
+        e.preventDefault();
+        let date = $(this).val();
+        if(date !== '') {
+            isValidDate = true;
+        } else {
+            isValidDate = false;
+        }
+        checkButtonStatus();
+    });
+    $(prizeInput).on('change', function (e) {
+       e.preventDefault();
+       let prize = $(this).val();
+       if(prize !== '') {
+           isValidPrice = true;
+       } else {
+           isValidPrice = false;
+       }
+        checkButtonStatus();
+    });
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
         daysShort: ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
@@ -81,10 +109,20 @@ $(document).ready(function () {
         }
     }
     function setMinTime(element, minTime) {
+        if (flag === true)
+            return;
+        else
+            flag = true;
         $(element).timepicker('option', 'minTime', minTime);
+        flag = false;
     }
     function setMaxTime(element, maxTime) {
+        if (flag === true)
+            return;
+        else
+            flag = true;
         $(element).timepicker('option', 'maxTime', maxTime);
+        flag = false;
     }
 });
 function getHourAndMinutesFromTimePicker(time) {

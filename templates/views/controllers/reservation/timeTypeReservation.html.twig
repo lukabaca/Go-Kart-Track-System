@@ -42,7 +42,9 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="reservationPrize">Cena</label>
-                                            <input type="text" class="form-control" id="reservationPrize" required>
+                                            <input type="number" min="1.00" max="10000.00" step="0.01"class="form-control" id="reservationPrize"
+                                                   placeholder="Wprowadź cenę" required>
+                                            <small class="form-text text-muted" id="trackWorkingHoursInfo">Cena wyrażona w zł, separatorem dziesiętnym jest przecinek</small>
                                         </div>
                                     </div>
                                 </div>
