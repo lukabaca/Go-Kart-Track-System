@@ -24,7 +24,6 @@ $(document).ready(function () {
         dropdown: true,
         change: function () {
             let time = $(this).val();
-            console.log('weszlo w start');
             if(time !== '') {
                 array = getHourAndMinutesFromTimePicker(time);
                 time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
@@ -46,15 +45,12 @@ $(document).ready(function () {
         dropdown: true,
         change: function () {
             let time = $(this).val();
-            console.log('weszlo w end');
             if(time !== '') {
-                console.log('weszlo true');
                 isValidHourEnd = true;
                 array = getHourAndMinutesFromTimePicker(time);
                 time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
                 setMaxTime(hourStartInput, time);
             } else {
-                console.log('weszlo');
                 setMaxTime(hourStartInput, defaultMaxTime);
                 setMinTime(hourStartInput, defaultMinTime);
                 isValidHourEnd = false;
@@ -109,18 +105,22 @@ $(document).ready(function () {
         }
     }
     function setMinTime(element, minTime) {
-        if (flag === true)
+        if (flag === true) {
             return;
-        else
+        }
+        else {
             flag = true;
+        }
         $(element).timepicker('option', 'minTime', minTime);
         flag = false;
     }
     function setMaxTime(element, maxTime) {
-        if (flag === true)
+        if (flag === true) {
             return;
-        else
+        }
+        else {
             flag = true;
+        }
         $(element).timepicker('option', 'maxTime', maxTime);
         flag = false;
     }
