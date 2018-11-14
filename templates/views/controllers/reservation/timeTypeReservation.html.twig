@@ -29,14 +29,14 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="reservationStart">Godzina rozpoczęcia</label>
-                                            <input type="text" class="form-control timePicker" id="hourStartInput" required>
+                                            <input type="text" class="form-control" id="startHourInput" required>
                                             <small class="form-text text-muted" id="trackWorkingHoursInfo"></small>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="reservationStart">Godzina zakończenia</label>
-                                            <input type="text" class="form-control" id="hourEndInput" required>
+                                            <input type="text" class="form-control" id="endHourInput" required>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -54,6 +54,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <button type="submit" class="btn btn-primary" id="reserveBtn">Rezerwuj</button>
                             </form>
                         </div>
                     </div>
