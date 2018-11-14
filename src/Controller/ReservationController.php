@@ -35,6 +35,16 @@ class ReservationController extends Controller
             ]
         );
     }
+    /**
+     * @Route("/reservation/timeTypeReservation", name="reservation/timeTypeReservation")
+     */
+    public function timeTypeReservationAction(Request $request)
+    {
+//        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
+        return $this->render('views/controllers/reservation/timeTypeReservation.html.twig', [
+            ]
+        );
+    }
 
     /**
      * @Route("/reservation/userReservation", name="reservation/userReservation")
