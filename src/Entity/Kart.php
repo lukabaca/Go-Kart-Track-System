@@ -70,6 +70,15 @@ class Kart
     private $kartTechnicalData;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Reservation")
+     * @ORM\JoinTable(
+     * name="reservation_kart",
+     * joinColumns={@ORM\JoinColumn(name="kart_id", referencedColumnName="id")},
+     * inverseJoinColumns={@ORM\JoinColumn(name="reservation_id", referencedColumnName="id")}
+     * )
+     */
+    private $reservations;
+    /**
      * Kart constructor.
      * @param $id
      * @param $availability
@@ -87,6 +96,7 @@ class Kart
         $this->description = $description;
         $this->lap = $lap;
         $this->file = $file;
+        $this->reservations = new ArrayCollection();
     }
 
     /**

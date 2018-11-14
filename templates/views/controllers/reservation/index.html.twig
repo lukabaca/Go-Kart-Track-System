@@ -16,7 +16,7 @@ Rezerwacja
     <div class="col-md-12 alertArea">
     </div>
     <h4 class="pageHeader">Rezerwacja</h4>
-    <div class="row">
+    <div class="row reservation-area">
         <div class="col-md-6 reservationLeftArea">
             <div class="shadow p-3 mb-5 bg-white rounded card">
                 <div class="card-body">
@@ -30,6 +30,7 @@ Rezerwacja
                                 <div class="col">
                                     <label for="reservationStart">Godzina rozpoczęcia</label>
                                     <input type="text" class="form-control timePicker" id="hourStartInput" required>
+                                    <small class="form-text text-muted" id="trackWorkingHoursInfo"></small>
                                 </div>
                                 <div class="col">
                                     <label for="reservationStart">Godzina zakończenia</label>
@@ -38,7 +39,8 @@ Rezerwacja
                             </div>
                             <div class="form-group">
                                 <label for="reservationStart">Ilość przejazdów</label>
-                                <input type="number" class="form-control" id="numberOfRidesInput" min="1" required>
+                                <input type="number" class="form-control" id="numberOfRidesInput" min="1" max="5" required>
+                                <small class="form-text text-muted" id="trackWorkingHoursInfo">Maksymalna liczba przejazdów na rezerwacje to 5</small>
                             </div>
                             <div class="form-group">
                                 <button type="button" class="btn btn-primary" id="kartBtn" data-toggle="modal" data-target="#getKartModal">Wybierz gokarty</button>

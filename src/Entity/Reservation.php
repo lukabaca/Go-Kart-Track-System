@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 /**
  *
@@ -17,17 +18,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Reservation
 {
-
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservation")
-     */
-    private $user;
     /**
      * @ORM\Column(type="string")
      */
@@ -40,6 +36,40 @@ class Reservation
      * @ORM\Column(type="decimal")
      */
     private $cost;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservation")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Kart")
+     * @ORM\JoinTable(
+     * name="reservation_kart",
+     * joinColumns={@ORM\JoinColumn(name="reservation_id", referencedColumnName="id")},
+     * inverseJoinColumns={@ORM\JoinColumn(name="kart_id", referencedColumnName="id")}
+     * )
+     */
+    private $karts;
+
+    /**
+     * Reservation constructor.
+     * @param $id
+     * @param $startDate
+     * @param $endDate
+     * @param $cost
+     * @param $user
+     * @param $karts
+     */
+    public function __construct($startDate = null, $endDate = null, $cost = null, $user = null)
+    {
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $this->cost = $cost;
+        $this->user = $user;
+        $this->karts = new ArrayCollection();
+    }
+
+
     /**
      * @return mixed
      */
@@ -118,5 +148,21 @@ class Reservation
     public function setCost($cost): void
     {
         $this->cost = $cost;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKarts()
+    {
+        return $this->karts;
+    }
+
+    /**
+     * @param mixed $karts
+     */
+    public function setKarts($karts): void
+    {
+        $this->karts = $karts;
     }
 }

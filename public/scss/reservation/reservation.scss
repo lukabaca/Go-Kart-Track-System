@@ -21,7 +21,6 @@
 #kartTable {
   margin-top: 25px;
 }
-
 .responseArea {
   text-align: center;
   .reservationResponseErrorMessage {
@@ -29,8 +28,10 @@
     font-size: 18px;
   }
 }
-
 #kartBtn {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.reservation-area {
+  display: none;
 }

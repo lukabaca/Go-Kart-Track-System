@@ -1,3 +1,17 @@
+let isPageReady = [
+    {
+        'name': 'loadedTimePerRide',
+        'status': false
+    },
+    {
+        'name': 'loadedTrackWorkingHours',
+        'status': false
+    },
+    {
+        'name': 'loadedKarts',
+        'status': false
+    },
+];
 $(document).ready(function () {
     let maxNumberOfDays = 21;
     let minNumberOfRides = 1;
@@ -5,8 +19,8 @@ $(document).ready(function () {
     let maxEndDate = new Date();
     maxEndDate.setDate(maxEndDate.getDate() + maxNumberOfDays);
 
-    let timePerOneRide;
-    let numberOfRides = 0;
+    let timePerOneRide = 0;
+    let numberOfRides = 1;
 
     let reserveButton = $('#reserveBtn');
     reserveButton.attr("disabled", "disabled");
@@ -19,8 +33,16 @@ $(document).ready(function () {
     let karts;
     let totalPrize = 0;
 
+    let trackHourStart = '12:00';
+    let trackHourEnd = '22:00';
+
+    let trackStartTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0);
+    let trackEndTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 22, 0);
 
     $('#numberOfRidesInput').val(minNumberOfRides);
+    startLoadingProgress();
+    loadTimePerOneRide();
+    loadTrackWorkingHours();
     loadKarts();
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -41,85 +63,32 @@ $(document).ready(function () {
         language: 'pl',
     });
     $('.datePicker').datepicker('setDate', today);
-
-    $('.timePicker').timepicker({
-        timeFormat: 'HH:mm',
-        interval: 30,
-        scrollbar: true,
-        minHour: 12,
-        maxHour: 21,
-        dynamic: true,
-        dropdown: true,
-        change: function () {
-            let time = $(this).val();
-            if ($('#numberOfRidesInput').val() !== '' && time !== '') {
-                numberOfRides = $('#numberOfRidesInput').val();
-                isValidHourStart = true;
-                let res = getHourAndMinutesFromTimePicker(time);
-                let hour = res[0];
-                let minute = res[1];
-                let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-                let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
-                let endDate = new Date(endDateTemp);
-                let finalTime = convertHourAndMinuteToProperFormat(endDate);
-                let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
-                $('#hourEndInput').val(hourAndMinuteEndTime);
-            } else {
-                $('#hourEndInput').val('');
-                isValidHourStart = false;
-            }
-            checkButtonStatus();
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '/reservation/getTimePerOneRide',
-        success: function (data) {
-            timePerOneRide = data.timePerRide;
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            let statusCode = xhr.status;
-            switch (statusCode) {
-                default : {
-                    let alertErrorContent =
-                        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                        '<span aria-hidden="true">X</span>' +
-                        '</button>' +
-                        '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
-                        '</div>';
-                    $('.alertArea').append(alertErrorContent);
-                    break;
-                }
-            }
-        }
-    });
     $('#numberOfRidesInput').on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
+        console.log(numberOfRides);
         if($('#hourStartInput').val() !== '' && numberOfRides !== '' && numberOfRides > 0) {
-            isValidNumberOfRides = true;
-            let time = $('#hourStartInput').val();
-            let res = getHourAndMinutesFromTimePicker(time);
-            let hour = res[0];
-            let minute = res[1];
-            let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
-            let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
-            let endDate = new Date(endDateTemp);
-            let finalTime = convertHourAndMinuteToProperFormat(endDate);
-            let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
-            $('#hourEndInput').val(hourAndMinuteEndTime);
+            let startTime = $('#hourStartInput').val();
+            let hourAndMinuteStartTime = startTime.split(':');
+            let hourAndMinuteEndTime = getEndTime(startTime, numberOfRides, timePerOneRide);
+            let arrayEnd = hourAndMinuteEndTime.split(':');
+            let dateEnd = new Date(trackEndTime.getFullYear(), trackEndTime.getMonth(), trackEndTime.getDate(), arrayEnd[0], arrayEnd[1]);
+            let dateStart = new Date(trackEndTime.getFullYear(), trackEndTime.getMonth(), trackEndTime.getDate(), hourAndMinuteStartTime[0], hourAndMinuteStartTime[1]);
+            /*popraw porownywanie samych godzin i minut a nie dat calych, bo mzoe przejsc z inputa na nastepny dzien i wtedy sie wywali */
+            if(dateEnd <= trackEndTime) {
+                isValidNumberOfRides = true;
+                $('#hourEndInput').val(hourAndMinuteEndTime);
+            } else {
+                let minutesBetweenDates = getMinutesBetweenDates(dateStart, trackEndTime);
+                $(this).val(minutesBetweenDates / timePerOneRide);
+            }
         } else {
             $('#hourEndInput').val('');
             isValidNumberOfRides = false;
         }
-
         if(numberOfRides !== '') {
             let kartTable = $('#kartTable');
             let kartIds = getKartIdsFromTable(kartTable);
-            // console.log(numberOfRides);
             getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
         }
         checkButtonStatus();
@@ -147,6 +116,8 @@ $(document).ready(function () {
                 } else {
 
                 }
+                setIsPageReadyStatus('loadedKarts', true);
+                showReservationForm();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
@@ -176,7 +147,7 @@ $(document).ready(function () {
 
     $('#kartBtn').on('click', function (e) {
         e.preventDefault();
-        $('.loader').css('display', 'block');
+        startLoadingProgress();
         let table = $('#kartTableModal');
         clearTable(table);
         let isValid = true;
@@ -196,7 +167,7 @@ $(document).ready(function () {
                 isValid = true;
             }
         }
-        $('.loader').css('display', 'none');
+        stopLoadingProgress();
     });
     $('body').on('click', '.deleteKartIcon', function (e) {
         e.stopPropagation();
@@ -205,7 +176,6 @@ $(document).ready(function () {
         let kartId = tr.attr('kart-id');
         let kart = getKartById(karts, kartId);
         let numberOfRides = $('#numberOfRidesInput').val();
-        console.log(numberOfRides);
         if(kart) {
             tr.remove();
             // totalPrize -= kart.prize;
@@ -249,7 +219,7 @@ $(document).ready(function () {
             flag = false;
         }
         for(let i = 0; i < kartIdsToLoad.length; i++) {
-            $('.loader').css('display', 'block');
+            startLoadingProgress();
             for(let j = 0; j < karts.length; j++) {
                 if(kartIdsToLoad[i] == karts[j].id) {
                     let isValid = true;
@@ -271,13 +241,13 @@ $(document).ready(function () {
                         checkButtonStatus();
                     }
                 }
-                $('.loader').css('display', 'none');
+                stopLoadingProgress();
             }
         }
         let numberOfRides = $('#numberOfRidesInput').val();
         let kartIds = getKartIdsFromTable(kartTable);
         getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
-        $('.loader').css('display', 'none');
+        stopLoadingProgress();
     });
 
     $('#reservationForm').submit(function (event) {
@@ -292,7 +262,119 @@ $(document).ready(function () {
         let endDate = date + ' ' + hourEnd;
         makeReservation(startDate, endDate, prize, kartIds);
     });
+    function loadTimePerOneRide() {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/reservation/getTimePerOneRide',
+            success: function (data) {
+                timePerOneRide = data.timePerRide;
+                setIsPageReadyStatus('loadedTimePerRide', true);
+                showReservationForm();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                let statusCode = xhr.status;
+                switch (statusCode) {
+                    default : {
+                        let alertErrorContent =
+                            '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                            '<span aria-hidden="true">X</span>' +
+                            '</button>' +
+                            '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+                            '</div>';
+                        $('.alertArea').append(alertErrorContent);
+                        break;
+                    }
+                }
+            }
+        });
+    }
+    function loadTrackWorkingHours() {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/reservation/getTrackConfig',
+            success: function (data) {
+               if(data.hourStart && data.hourEnd) {
+                   // trackHourStart = data.hourStart;
+                   // trackHourEnd = data.hourEnd;
+                   trackStartTime = new Date(data.hourStart.date);
+                   trackEndTime = new Date(data.hourEnd.date);
+               } else {
+                   trackStartTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0);
+                   trackEndTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 22, 0)
+                   // trackHourStart = '12:00';
+                   // trackHourEnd = '22:00';
+               }
+               let startTrackHourAndMinutes = convertHourAndMinuteToProperFormat(trackStartTime);
+               let endTrackHourAndMinutes = convertHourAndMinuteToProperFormat(trackEndTime);
+               let trackStart = startTrackHourAndMinutes[0] + ':' + startTrackHourAndMinutes[1];
+               let trackEnd = endTrackHourAndMinutes[0] + ':' + endTrackHourAndMinutes[1];
+               setIsPageReadyStatus('loadedTrackWorkingHours', true);
+               $('#trackWorkingHoursInfo').text('Godziny pracy toru: ' + trackStart + '-' + trackEnd);
+               showReservationForm();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                let statusCode = xhr.status;
+                switch (statusCode) {
+                    default : {
+                        let alertErrorContent =
+                            '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                            '<span aria-hidden="true">X</span>' +
+                            '</button>' +
+                            '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
+                            '</div>';
+                        $('.alertArea').append(alertErrorContent);
+                        break;
+                    }
+                }
+            }
+        });
+    }
+    function initTimePickerOptions() {
+        $('.timePicker').timepicker({
+            timeFormat: 'HH:mm',
+            interval: timePerOneRide,
+            scrollbar: true,
+            minTime: trackStartTime,
+            maxTime: trackEndTime,
+            dynamic: true,
+            dropdown: true,
+            change: function () {
+                let time = $(this).val();
+                if ($('#numberOfRidesInput').val() !== '' && time !== '') {
+                    numberOfRides = $('#numberOfRidesInput').val();
+                    isValidHourStart = true;
+                    let hourAndMinuteEndTime = getEndTime(time, numberOfRides, timePerOneRide);
+                    $('#hourEndInput').val(hourAndMinuteEndTime);
+                } else {
+                    $('#hourEndInput').val('');
+                    isValidHourStart = false;
+                }
+                checkButtonStatus();
+            }
+        });
+    }
+    function showReservationForm() {
+        let isPageReadyFinally = false;
+        for(let i = 0; i < isPageReady.length; i++) {
+            if(!isPageReady[i].status) {
+                isPageReadyFinally = false;
+                break;
+            } else {
+                isPageReadyFinally = true;
+            }
+        }
+        if(isPageReadyFinally) {
+            stopLoadingProgress();
+            initTimePickerOptions();
+            $('.reservation-area').css('display', 'flex');
+        }
+    }
 });
+
 function setPrizeInfo(element, prize) {
     element.text(prize);
 }
@@ -362,48 +444,49 @@ function getCheckedElementsIdsFromTable(tableID) {
     return checkedIds;
 }
 function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
-    let kartData = {
-        "numberOfRides": numberOfRides,
-        "karts": kartIds,
-    };
-    kartData = JSON.stringify(kartData);
-    console.log(kartData);
-    $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '/reservation/getTotalKartPrizeForReservation',
-        data: {
-            kartData: kartData
-        },
-        success: function (data) {
-            let totalPrize = data;
-            if(totalPrize > 0) {
-                setPrizeInfo($('#reservationPrize'), totalPrize);
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            let statusCode = xhr.status;
-            switch (statusCode) {
-                // case 400: {
+    if(numberOfRides > 0) {
+        let kartData = {
+            "numberOfRides": numberOfRides,
+            "karts": kartIds,
+        };
+        kartData = JSON.stringify(kartData);
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/reservation/getTotalKartPrizeForReservation',
+            data: {
+                kartData: kartData
+            },
+            success: function (data) {
+                let totalPrize = data;
+                if (totalPrize > 0) {
+                    setPrizeInfo($('#reservationPrize'), totalPrize);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                let statusCode = xhr.status;
+                switch (statusCode) {
+                    // case 400: {
 
-                //     responseElement.text('Nie można sparsować przesłanych dat');
-                //     break;
-                // }
-                // case 404: {
-                //     // responseElement.text('Podano złe parametry');
-                //     break;
-                // }
-                // case 409: {
-                //     responseElement.text('Ten termin jest już zajęty');
-                //     break;
-                // }
-                default : {
-                    window.location.href = '/status500';
-                    break;
+                    //     responseElement.text('Nie można sparsować przesłanych dat');
+                    //     break;
+                    // }
+                    // case 404: {
+                    //     // responseElement.text('Podano złe parametry');
+                    //     break;
+                    // }
+                    // case 409: {
+                    //     responseElement.text('Ten termin jest już zajęty');
+                    //     break;
+                    // }
+                    default : {
+                        window.location.href = '/status500';
+                        break;
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 }
 function makeReservation(startDate, endDate, cost, karts) {
     let reservationData = {
@@ -413,7 +496,6 @@ function makeReservation(startDate, endDate, cost, karts) {
         "karts": karts,
     };
     reservationData = JSON.stringify(reservationData);
-    console.log(reservationData);
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -465,4 +547,39 @@ function setInitialFlags(isValidHourStart, isValidNumberOfRides, isValidChosenKa
     isValidNumberOfRides = true;
     isValidChosenKarts = false;
     isValidDate = true;
+}
+function getHourAsNumberFromTime(time) {
+    if(time) {
+        arraySplit = time.split(':');
+        return arraySplit[0];
+    }
+}
+function startLoadingProgress() {
+    $('.loader').css('display', 'block');
+}
+function stopLoadingProgress() {
+    $('.loader').css('display', 'none');
+}
+function setIsPageReadyStatus(name, status) {
+    for(let i = 0; i < isPageReady.length; i++) {
+        if(isPageReady[i].name === name) {
+            isPageReady[i].status = status;
+        }
+    }
+}
+function getEndTime(startTime, numberOfRides, timePerOneRide) {
+    let res = getHourAndMinutesFromTimePicker(startTime);
+    let hour = res[0];
+    let minute = res[1];
+    let startDateTemp = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hour, minute);
+    let endDateTemp = startDateTemp.getTime() + getMilisecondsFromMinutes(numberOfRides * timePerOneRide);
+    let endDate = new Date(endDateTemp);
+    let finalTime = convertHourAndMinuteToProperFormat(endDate);
+    let hourAndMinuteEndTime = finalTime[0] + ':' + finalTime[1];
+    return hourAndMinuteEndTime;
+}
+function getMinutesBetweenDates(date1, date2) {
+    let milisecondsBetweenDates = Math.abs(date1.getTime() - date2.getTime());
+    let minutesBetweenDates = milisecondsBetweenDates / (1000 * 60);
+    return minutesBetweenDates;
 }

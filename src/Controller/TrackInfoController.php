@@ -8,6 +8,7 @@
 namespace App\Controller;
 use App\Entity\trackConfig\TrackInfo;
 use App\Form\TrackInfoType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,5 +45,13 @@ class TrackInfoController extends Controller
                 'trackInfoForm' => $trackInfoForm->createView(),
             ]
         );
+    }
+    /**
+     * @Route("/trackInfo/redirectToUrl/{url}", name="trackInfo/redirectToUrl", requirements={"url" = "[/]+"})
+     */
+//requirements={"url" = "[^/]++"}
+    public function redirectToUrlAction(Request $request, $url)
+    {
+        return $this->redirect($url);
     }
 }
