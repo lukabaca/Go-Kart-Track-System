@@ -10,18 +10,34 @@ $(document).ready(function () {
     let isValidPrice = false;
     let isValidDate = true;
 
-    initTimePickerOptions(hourStartInput, today, today, hourEndInput);
-    initTimePickerOptions(hourEndInput, today, today, hourStartInput);
-
-    // hourStartInput.on('change', function (e) {
-    //     e.preventDefault();
-    //     let time = $(this).val();
-    //     console.log('start ', time);
-    //     setMinTime(hourEndInput, time);
-    // });
-    // hourEndInput.on('change', function (e) {
-    //     e.preventDefault();
-    // });
+    $(hourStartInput).timepicker({
+        timeFormat: 'HH:mm',
+        interval: 10,
+        scrollbar: true,
+        dynamic: true,
+        dropdown: true,
+        change: function () {
+            let time = $(this).val();
+            array = getHourAndMinutesFromTimePicker(time);
+            time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
+            setMinTime(hourEndInput, time);
+            checkButtonStatus();
+        }
+    });
+    $(hourEndInput).timepicker({
+        timeFormat: 'HH:mm',
+        interval: 10,
+        scrollbar: true,
+        dynamic: true,
+        dropdown: true,
+        change: function () {
+            let time = $(this).val();
+            array = getHourAndMinutesFromTimePicker(time);
+            time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
+            setMaxTime(hourStartInput, time);
+            checkButtonStatus();
+        }
+    });
 
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -48,25 +64,6 @@ $(document).ready(function () {
         } else {
             reserveButton.attr("disabled", "disabled");
         }
-    }
-    function initTimePickerOptions(element, minTime, maxTime, secondElement) {
-        $(element).timepicker({
-            timeFormat: 'HH:mm',
-            interval: 10,
-            scrollbar: true,
-            dynamic: true,
-            dropdown: true,
-            change: function () {
-                let time = $(this).val();
-                // console.log(time);
-                array = getHourAndMinutesFromTimePicker(time);
-                console.log(array);
-                time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
-                console.log(time);
-                setMinTime(secondElement, time);
-                checkButtonStatus();
-            }
-        });
     }
     function setMinTime(element, minTime) {
         $(element).timepicker('option', 'minTime', minTime);
