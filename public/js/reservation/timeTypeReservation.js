@@ -1,5 +1,7 @@
 $(document).ready(function () {
     let today = new Date();
+    let defaultMinTime = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0);
+    let defaultMaxTime = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59);
     let reserveButton = $('#reserveBtn');
     let hourStartInput = $('#startHourInput');
     let hourEndInput = $('#endHourInput');
@@ -18,9 +20,15 @@ $(document).ready(function () {
         dropdown: true,
         change: function () {
             let time = $(this).val();
-            array = getHourAndMinutesFromTimePicker(time);
-            time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
-            setMinTime(hourEndInput, time);
+            console.log(time);
+            if(time !== '') {
+                array = getHourAndMinutesFromTimePicker(time);
+                time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
+                setMinTime(hourEndInput, time);
+            } else {
+                setMaxTime(hourEndInput, defaultMaxTime);
+                setMinTime(hourEndInput, defaultMinTime);
+            }
             checkButtonStatus();
         }
     });
@@ -32,9 +40,16 @@ $(document).ready(function () {
         dropdown: true,
         change: function () {
             let time = $(this).val();
-            array = getHourAndMinutesFromTimePicker(time);
-            time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
-            setMaxTime(hourStartInput, time);
+            console.log(time);
+            if(time !== '') {
+                array = getHourAndMinutesFromTimePicker(time);
+                time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
+                setMaxTime(hourStartInput, time);
+            } else {
+                console.log('weszlo');
+                setMaxTime(hourStartInput, defaultMaxTime);
+                setMinTime(hourStartInput, defaultMinTime);
+            }
             checkButtonStatus();
         }
     });
