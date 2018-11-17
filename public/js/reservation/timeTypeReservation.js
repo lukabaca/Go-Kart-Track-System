@@ -94,6 +94,7 @@ $(document).ready(function () {
         weekStart: 1,
         format: 'dd-mm-yyyy',
         language: 'pl',
+        autoclose: true,
     });
     $('.datePicker').datepicker('setDate', today);
 
