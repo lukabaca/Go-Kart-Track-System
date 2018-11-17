@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 class ReservationController extends Controller
@@ -30,7 +31,6 @@ class ReservationController extends Controller
      */
     public function indexAction(Request $request)
     {
-//        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
         return $this->render('views/controllers/reservation/index.html.twig', [
             ]
         );
@@ -40,7 +40,6 @@ class ReservationController extends Controller
      */
     public function timeTypeReservationAction(Request $request)
     {
-//        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
         return $this->render('views/controllers/reservation/timeTypeReservation.html.twig', [
             ]
         );
@@ -51,13 +50,34 @@ class ReservationController extends Controller
      */
     public function userReservationAction(Request $request)
     {
-//        godzina rozpoczecia, to godzina otwarcia toru dla klientow, to tez mozesz trzymac w bazie
         $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getUserReservations($this->getUser()->getId());
         return $this->render('views/controllers/reservation/userReservation.html.twig', [
                 'reservations' => $reservations
             ]
         );
     }
+    /**
+     * @Route("/reservation/timeTypeReservations", name="reservation/timeTypeReservations")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function timeTypeReservationsAction(Request $request)
+    {
+        $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getTimeTypeReservations();
+        return new JsonResponse($reservations, 200);
+//        return $this->render('views/controllers/reservation/userReservation.html.twig', [
+//                'reservations' => $reservations
+//            ]
+//        );
+    }
+
+    /**
+     * @Route("/reservation/manageReservations", name="/reservation/manageReservations")
+     */
+    public function manageVehiclesAction(Request $request) {
+        return $this->render('views/controllers/reservation/manageReservations.html.twig' ,[
+        ]);
+    }
+
 
     /**
      * @Route("/reservation/getTimePerOneRide", name="reservation/getTimePerOneRide")

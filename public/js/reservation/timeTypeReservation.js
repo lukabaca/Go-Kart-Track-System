@@ -134,11 +134,7 @@ $(document).ready(function () {
         let description = $('#reservationDescription').val();
         let startDate = date + ' ' + hourStart;
         let endDate = date + ' ' + hourEnd;
-        console.log(startDate, endDate);
-        console.log(cost);
-        console.log(description);
         if(date && hourStart && hourEnd && cost) {
-            console.log('poprawna walidacja');
             makeReservation(startDate, endDate, cost, true, description, null);
         }
     });
@@ -197,9 +193,4 @@ function getHourAndMinutesFromTimePicker(time) {
 function resetForm() {
     let today = new Date();
     $('#reservationForm')[0].reset();
-    // let kartTable = $('#kartTable');
-    // clearTable(kartTable);
-    // $('#reservationPrize').text('');
-    // $('#reserveBtn').attr("disabled", "disabled");
-    // $('.datePicker').datepicker('setDate', today);
 }
