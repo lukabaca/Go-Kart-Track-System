@@ -57,17 +57,40 @@ class ReservationController extends Controller
         );
     }
     /**
-     * @Route("/reservation/timeTypeReservations", name="reservation/timeTypeReservations")
+     * @Route("/reservation/datatable", name="reservation/datatable")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function timeTypeReservationsAction(Request $request)
+    public function datatableAction(Request $request)
     {
-        $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getTimeTypeReservations();
-        return new JsonResponse($reservations, 200);
-//        return $this->render('views/controllers/reservation/userReservation.html.twig', [
-//                'reservations' => $reservations
-//            ]
-//        );
+        if ($request->getMethod() == 'POST') {
+            $draw = intval($request->request->get('draw'));
+            $start = $request->request->get('start');
+            $length = $request->request->get('length');
+            $search = $request->request->get('search');
+            $orders = $request->request->get('order');
+            $columns = $request->request->get('columns');
+            $orderColumn = $orders[0]['column'];
+            $orderDir = $orders[0]['dir'];
+            $searchValue = $search['value'];
+            foreach ($columns as $key => $column)
+            {
+                if ($orderColumn == $key) {
+                    $orderColumnName = $column['name'];
+                }
+            }
+            $res = $this->getDoctrine()->getRepository(Reservation::class)->
+            getReservations($start, $length, $orderColumnName, $orderDir, $searchValue);
+            $recordsTotalCount = count($this->getDoctrine()->getRepository(Kart::class)->findAll());
+            $response = [
+                "draw" => $draw,
+                "recordsTotal" => $recordsTotalCount,
+                "recordsFiltered" => $recordsTotalCount,
+                "data" => $res,
+            ];
+            return new JsonResponse($response, 200);
+        } else {
+            return new JsonResponse([], 400);
+        }
     }
 
     /**

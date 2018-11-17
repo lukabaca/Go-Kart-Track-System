@@ -214,4 +214,26 @@ class ReservationRepository extends EntityRepository
             return [];
         }
     }
+
+    public function getReservations($start, $length, $columnName, $orderDir, $searchValue) {
+        $sql = 'call getReservations(?, ?, ?, ?, ?)';
+        $conn = $this->getEntityManager()->getConnection();
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(1, $start);
+            $stmt->bindValue(2, $length);
+            $stmt->bindValue(3, $columnName);
+            $stmt->bindValue(4, $orderDir);
+            $stmt->bindValue(5, $searchValue);
+            $rowCount = $stmt->execute();
+            if($rowCount > 0) {
+                $karts = $stmt->fetchAll();
+                return $karts;
+            } else {
+                return [];
+            }
+        } catch (DBALException $e) {
+            return [];
+        }
+    }
 }
