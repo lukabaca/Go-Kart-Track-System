@@ -143,11 +143,11 @@ $(document).ready(function () {
         }
     });
 });
-function makeReservation(startDate, endDate, prize, description) {
+function makeReservation(startDate, endDate, cost, description) {
     let reservationData = {
         "startDate": startDate,
         "endDate": endDate,
-        "prize": prize,
+        "cost": cost,
         "description": description,
     };
     reservationData = JSON.stringify(reservationData);
@@ -155,7 +155,7 @@ function makeReservation(startDate, endDate, prize, description) {
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: '/reservation/makeReservation/timeType',
+        url: '/reservation/makeReservation/true',
         data: {
             reservationData: reservationData
         },

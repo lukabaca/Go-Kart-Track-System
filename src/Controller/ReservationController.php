@@ -149,12 +149,16 @@ class ReservationController extends Controller
     {
         if ($request->request->get('reservationData')) {
             $reservationData = json_decode($request->request->get('reservationData'));
+
             $startDate = new DateTime($reservationData->{'startDate'});
             $startDate = $startDate->format('Y-m-d H:i:s');
             $endDate = new DateTime($reservationData->{'endDate'});
             $endDate = $endDate->format('Y-m-d H:i:s');
             $cost = $reservationData->{'cost'};
+            $byTimeReservationType = $reservationData->{'byTimeReservationType'};
+            $description = $reservationData->{'description'};
             $kartIds = $reservationData->{'karts'};
+
             $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
                 $startDate, $endDate, $cost);
             if($isReservationValid == 0) {
@@ -163,16 +167,18 @@ class ReservationController extends Controller
             if($isReservationValid == 2) {
                 return new JsonResponse(['Wrong dates (too early or too late)'], 400);
             }
-            $reservation = new Reservation($startDate, $endDate, $cost, $this->getUser());
-            $karts = new ArrayCollection();
-            foreach ($kartIds as $kartId) {
-                $kart = $this->getDoctrine()->getRepository(Kart::class)->find($kartId);
-                if(!$kart) {
-                    return new JsonResponse('couldnt find send karts', 500);
+            $reservation = new Reservation($startDate, $endDate, $cost, $byTimeReservationType, $description, $this->getUser());
+            if(!$byTimeReservationType) {
+                $karts = new ArrayCollection();
+                foreach ($kartIds as $kartId) {
+                    $kart = $this->getDoctrine()->getRepository(Kart::class)->find($kartId);
+                    if(!$kart) {
+                        return new JsonResponse('couldnt find send karts', 500);
+                    }
+                    $karts [] = $kart;
                 }
-                $karts [] = $kart;
+                $reservation->setKarts($karts);
             }
-            $reservation->setKarts($karts);
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
@@ -181,11 +187,13 @@ class ReservationController extends Controller
                 'user_id' => $reservation->getUser()->getId(),
                 'startDate' => $reservation->getStartDate(),
                 'endDate' => $reservation->getEndDate(),
-                'cost' => $reservation->getCost()
+                'cost' => $reservation->getCost(),
+                'by_time_reservation_type' => $reservation->getByTimeReservationType(),
+                'description' => $reservation->getDescription(),
             ];
             return new JsonResponse($reservation, 201);
         } else {
-            return new JsonResponse([], 500);
+            return new JsonResponse(['nie otrzymano danych'], 500);
         }
     }
     /**

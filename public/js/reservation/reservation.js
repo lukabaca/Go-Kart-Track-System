@@ -260,7 +260,7 @@ $(document).ready(function () {
         let prize = $('#reservationPrize').text();
         let startDate = date + ' ' + hourStart;
         let endDate = date + ' ' + hourEnd;
-        makeReservation(startDate, endDate, prize, kartIds);
+        makeReservation(startDate, endDate, prize, false, null, kartIds);
     });
     function loadTimePerOneRide() {
         $.ajax({
@@ -488,11 +488,13 @@ function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
         });
     }
 }
-function makeReservation(startDate, endDate, cost, karts) {
+function makeReservation(startDate, endDate, cost, byTimeReservationType, description, karts) {
     let reservationData = {
         "startDate": startDate,
         "endDate": endDate,
         "cost": cost,
+        "byTimeReservationType": byTimeReservationType,
+        "description": description,
         "karts": karts,
     };
     reservationData = JSON.stringify(reservationData);
@@ -504,6 +506,7 @@ function makeReservation(startDate, endDate, cost, karts) {
             reservationData: reservationData
         },
         success: function (data) {
+            console.log(data);
             resetForm();
             window.location.href = '/reservation/reservationDetails/' + data.id;
         },

@@ -44,6 +44,8 @@ class Reservation
      * @ORM\Column(type="text")
      */
     private $description;
+
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservation")
      */
@@ -174,5 +176,36 @@ class Reservation
     public function setKarts($karts): void
     {
         $this->karts = $karts;
+    }
+    /**
+     * @return mixed
+     */
+    public function getByTimeReservationType()
+    {
+        return $this->byTimeReservationType;
+    }
+
+    /**
+     * @param mixed $byTimeReservationType
+     */
+    public function setByTimeReservationType($byTimeReservationType): void
+    {
+        $this->byTimeReservationType = $byTimeReservationType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
     }
 }
