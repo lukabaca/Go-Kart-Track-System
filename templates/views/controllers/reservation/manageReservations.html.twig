@@ -4,7 +4,7 @@
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/vehicle/manageReservations.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/manageReservations.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -18,11 +18,12 @@
             <div class="col-md-12 tableArea">
                 <table class="table reservationsTable">
                     <thead>
-                    <th>Data rozpoczęcia</th>
-                    <th>Data zakończenia</th>
-                    <th>Cena</th>
-                    <th>Typ rezerwacji</th>
-                    {#<th>Dokonał rezerwacji</th>#}
+                        <th>Data rozpoczęcia</th>
+                        <th>Data zakończenia</th>
+                        <th>Cena</th>
+                        <th>Typ rezerwacji</th>
+                        <th>Imię</th>
+                        <th>Nazwisko</th>
                     </thead>
                     <tbody>
                     </tbody>

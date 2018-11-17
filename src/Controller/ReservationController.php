@@ -80,7 +80,7 @@ class ReservationController extends Controller
             }
             $res = $this->getDoctrine()->getRepository(Reservation::class)->
             getReservations($start, $length, $orderColumnName, $orderDir, $searchValue);
-            $recordsTotalCount = count($this->getDoctrine()->getRepository(Kart::class)->findAll());
+            $recordsTotalCount = count($this->getDoctrine()->getRepository(Reservation::class)->findAll());
             $response = [
                 "draw" => $draw,
                 "recordsTotal" => $recordsTotalCount,

@@ -20,19 +20,21 @@ $(document).ready(function () {
             { "data": "end_date", "name": "end_date",   "targets": 1, "defaultContent": "-", },
             { "data": "cost", "name": "cost",   "targets": 2, "defaultContent": "-", },
             { "data": "by_time_reservation_type", "name": "by_time_reservation_type",  "targets": 3, "defaultContent": "-",
-                "className":"reservation-typey",
+                // "className":"reservation-typey",
                 "render": function ( data, type, row, meta ) {
-                    return (data == 1) ? 'Dostępny' : 'Niedostępny';
+                    return (data == 1) ? 'Czasowa' : 'Użytkownika';
                 },
             },
-            // { "data": "user.name", "name": "user.name",   "targets": 1, "defaultContent": "-", },
+            { "data": "name", "name": "name",   "targets": 4, "defaultContent": "-", },
+            { "data": "surname", "name": "surname",   "targets": 5, "defaultContent": "-", },
         ],
-        "columns": [
-            { "width": "25%" },
-            { "width": "25%" },
-            { "width": "10%" },
-            { "width": "10%" },
-        ],
+        // "columns": [
+        //     { "width": "25%" },
+        //     { "width": "25%" },
+        //     { "width": "10%" },
+        //     { "width": "10%" },
+        //     { "width": "10%"},
+        // ],
         // Server-side parameters
         "processing": true,
         "serverSide": true,
@@ -40,7 +42,11 @@ $(document).ready(function () {
             "url": '/reservation/datatable',
             "type": "POST",
         },
-        createdRow: function(row, data, dataIndex, cells) {
+        "createdRow": function(row, data, dataIndex, cells) {
+            if(data.by_time_reservation_type == 1) {
+                console.log(data);
+                $(row).addClass('timeTypeReservation');
+            }
             $(row).addClass('reservation-row').attr('reservation-id', data.id);
         },
         // Classic DataTables parameters
@@ -48,6 +54,6 @@ $(document).ready(function () {
         "info" : true,
         "searching": true,
         "pageLength": 10,
-        "order": [[1, 'asc']],
+        "order": [[1, 'desc']],
     });
 });
