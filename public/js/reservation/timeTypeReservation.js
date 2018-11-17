@@ -130,42 +130,44 @@ $(document).ready(function () {
         let date = $('#dateInput').val();
         let hourStart = $('#startHourInput').val();
         let hourEnd = $('#endHourInput').val();
-        let prize = $('#reservationPrize').val();
-        let description = $('#reservationDescription').text();
+        let cost = $('#reservationPrize').val();
+        let description = $('#reservationDescription').val();
         let startDate = date + ' ' + hourStart;
         let endDate = date + ' ' + hourEnd;
         console.log(startDate, endDate);
-        console.log(prize);
+        console.log(cost);
         console.log(description);
-        if(date && hourStart && hourEnd && prize) {
+        if(date && hourStart && hourEnd && cost) {
             console.log('poprawna walidacja');
-            makeReservation(startDate, endDate, prize, description);
+            makeReservation(startDate, endDate, cost, true, description, null);
         }
     });
 });
-function makeReservation(startDate, endDate, cost, description) {
+function makeReservation(startDate, endDate, cost, byTimeReservationType, description, karts) {
     let reservationData = {
         "startDate": startDate,
         "endDate": endDate,
         "cost": cost,
+        "byTimeReservationType": byTimeReservationType,
         "description": description,
+        "karts": karts,
     };
     reservationData = JSON.stringify(reservationData);
-    console.log(reservationData);
     $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: '/reservation/makeReservation/true',
+        url: '/reservation/makeReservation',
         data: {
             reservationData: reservationData
         },
         success: function (data) {
+            console.log(data);
             resetForm();
             window.location.href = '/reservation/reservationDetails/' + data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
             let statusCode = xhr.status;
-            let responseElement = $('.reservationResponseErrorMessage');
+            responseElement = $('.reservationResponseErrorMessage');
             switch (statusCode) {
                 case 400: {
                     responseElement.text('Wprowadzona data jest niepoprawna');

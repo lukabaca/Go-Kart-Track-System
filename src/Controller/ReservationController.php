@@ -109,10 +109,13 @@ class ReservationController extends Controller
         if($user_id != $this->getUser()->getId()) {
             return new JsonResponse(['cant delete someones reservation'], 403);
         }
-        $result = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->deleteReservation($id);
-        if(!$result) {
-            return new JsonResponse(['error in deleting reservation'], 500);
-        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($reservation);
+        $em->flush();
+//        $result = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->deleteReservation($id);
+//        if(!$result) {
+//            return new JsonResponse(['error in deleting reservation'], 500);
+//        }
         return new JsonResponse([], 200);
     }
 
@@ -196,43 +199,6 @@ class ReservationController extends Controller
             return new JsonResponse(['nie otrzymano danych'], 500);
         }
     }
-    /**
-     * @Route("/reservation/makeReservation/timeType", name="/reservation/makeReservation/timeType")
-     */
-    public function makeReservationTimeTypeAction(Request $request)
-    {
-        if ($request->request->get('reservationData')) {
-            $reservationData = json_decode($request->request->get('reservationData'));
-            $startDate = new DateTime($reservationData->{'startDate'});
-            $startDate = $startDate->format('Y-m-d H:i:s');
-            $endDate = new DateTime($reservationData->{'endDate'});
-            $endDate = $endDate->format('Y-m-d H:i:s');
-            $prize = $reservationData->{'prize'};
-            $description = $reservationData->{'description'};
-            $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
-                $startDate, $endDate, $prize);
-            if($isReservationValid == 0) {
-                return new JsonResponse(['Other reservation in this hour exists'], 409);
-            }
-            if($isReservationValid == 2) {
-                return new JsonResponse(['Wrong dates (too early or too late)'], 400);
-            }
-            $reservation = new Reservation($startDate, $endDate, $prize, true, $description, $this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($reservation);
-            $em->flush();
-            $reservation = [
-                'id' => $reservation->getId(),
-                'user_id' => $reservation->getUser()->getId(),
-                'startDate' => $reservation->getStartDate(),
-                'endDate' => $reservation->getEndDate(),
-                'cost' => $reservation->getCost()
-            ];
-            return new JsonResponse($reservation, 201);
-        } else {
-            return new JsonResponse([], 500);
-        }
-    }
 
     /**
      * @Route("/reservation/getKarts", name="reservation/getKarts")
@@ -289,20 +255,8 @@ class ReservationController extends Controller
         if($userIdForReservation != $this->getUser()->getId()) {
             //nie mozesz przegladac czyich szczegolow rezerwacji
         }
-        $kartsInReservation = $this->getDoctrine()->getManager()->getRepository(Kart::class)->getKartsInReservation($id);
-        if(!$kartsInReservation) {
-
-        }
-        $kartsRes = [];
-        foreach ($kartsInReservation as $kart) {
-            $kartTemp = [
-                'id' => $kart->getId(),
-                'name' => $kart->getName(),
-                'prize' => $kart->getPrize(),
-                'availability' => $kart->getAvailability(),
-            ];
-            $kartsRes [] = $kartTemp;
-        }
+        $kartsInReservation = new ArrayCollection();
+        $kartsInReservation = $reservation->getKarts();
         $startDate = date_create($reservation->getStartDate());
         $startDateHour = date_format($startDate, 'H:i');
         $endDate = date_create($reservation->getEndDate());
