@@ -124,8 +124,80 @@ $(document).ready(function () {
         $(element).timepicker('option', 'maxTime', maxTime);
         flag = false;
     }
+    $('#reservationForm').submit(function (event) {
+        event.preventDefault();
+        console.log('submit forma');
+        let date = $('#dateInput').val();
+        let hourStart = $('#startHourInput').val();
+        let hourEnd = $('#endHourInput').val();
+        let prize = $('#reservationPrize').val();
+        let description = $('#reservationDescription').text();
+        let startDate = date + ' ' + hourStart;
+        let endDate = date + ' ' + hourEnd;
+        console.log(startDate, endDate);
+        console.log(prize);
+        console.log(description);
+        if(date && hourStart && hourEnd && prize) {
+            console.log('poprawna walidacja');
+            makeReservation(startDate, endDate, prize, description);
+        }
+    });
 });
+function makeReservation(startDate, endDate, prize, description) {
+    let reservationData = {
+        "startDate": startDate,
+        "endDate": endDate,
+        "prize": prize,
+        "description": description,
+    };
+    reservationData = JSON.stringify(reservationData);
+    console.log(reservationData);
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/reservation/makeReservation/timeType',
+        data: {
+            reservationData: reservationData
+        },
+        success: function (data) {
+            resetForm();
+            window.location.href = '/reservation/reservationDetails/' + data.id;
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            let statusCode = xhr.status;
+            let responseElement = $('.reservationResponseErrorMessage');
+            switch (statusCode) {
+                case 400: {
+                    responseElement.text('Wprowadzona data jest niepoprawna');
+                    break;
+                }
+                case 404: {
+                    // responseElement.text('Podano złe parametry');
+                    break;
+                }
+                case 409: {
+                    responseElement.text('Ten termin jest już zajęty');
+                    break;
+                }
+                default : {
+                    window.location.href = '/status500';
+                    break;
+                }
+            }
+            $('#reservationErrorResponseModal').modal('show');
+        }
+    });
+}
 function getHourAndMinutesFromTimePicker(time) {
     $res = time.split(':');
     return $res;
+}
+function resetForm() {
+    let today = new Date();
+    $('#reservationForm')[0].reset();
+    // let kartTable = $('#kartTable');
+    // clearTable(kartTable);
+    // $('#reservationPrize').text('');
+    // $('#reserveBtn').attr("disabled", "disabled");
+    // $('.datePicker').datepicker('setDate', today);
 }

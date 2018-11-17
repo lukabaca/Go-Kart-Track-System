@@ -37,6 +37,14 @@ class Reservation
      */
     private $cost;
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $byTimeReservationType;
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservation")
      */
     private $user;
@@ -60,11 +68,13 @@ class Reservation
      * @param $user
      * @param $karts
      */
-    public function __construct($startDate = null, $endDate = null, $cost = null, $user = null)
+    public function __construct($startDate = null, $endDate = null, $cost = null, $byTimeReservationType = null, $description = null, $user = null)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->cost = $cost;
+        $this->byTimeReservationType = $byTimeReservationType;
+        $this->description = $description;
         $this->user = $user;
         $this->karts = new ArrayCollection();
     }
