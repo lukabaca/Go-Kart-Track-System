@@ -37,6 +37,16 @@ class Reservation
      */
     private $cost;
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $byTimeReservationType;
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservation")
      */
     private $user;
@@ -60,11 +70,13 @@ class Reservation
      * @param $user
      * @param $karts
      */
-    public function __construct($startDate = null, $endDate = null, $cost = null, $user = null)
+    public function __construct($startDate = null, $endDate = null, $cost = null, $byTimeReservationType = null, $description = null, $user = null)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->cost = $cost;
+        $this->byTimeReservationType = $byTimeReservationType;
+        $this->description = $description;
         $this->user = $user;
         $this->karts = new ArrayCollection();
     }
@@ -164,5 +176,36 @@ class Reservation
     public function setKarts($karts): void
     {
         $this->karts = $karts;
+    }
+    /**
+     * @return mixed
+     */
+    public function getByTimeReservationType()
+    {
+        return $this->byTimeReservationType;
+    }
+
+    /**
+     * @param mixed $byTimeReservationType
+     */
+    public function setByTimeReservationType($byTimeReservationType): void
+    {
+        $this->byTimeReservationType = $byTimeReservationType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
     }
 }

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,oBAAqB;EACnB,gBAAgB,EAAE,kBAAkB",
+"sources": ["../../scss/reservation/manageReservations.scss"],
+"names": [],
+"file": "manageReservations.css"
+}

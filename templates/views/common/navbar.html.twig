@@ -13,6 +13,11 @@
                     <a class="nav-link" href="{{ asset(path('reservation/index')) }}">Rezerwacja</a>
                 </li>
             {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ asset(path('reservation/timeTypeReservation')) }}">Rezerwacja</a>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ asset(path('reservation/calendar')) }}">Dostępność toru</a>
             </li>
@@ -47,6 +52,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ asset(path('/vehicle/manageVehicles')) }}">Zarządzaj pojazdami</a>
                         <a class="dropdown-item" href="{{ asset(path('/user/manageUsers')) }}">Zarządzaj użytkownikami</a>
+                        <a class="dropdown-item" href="{{ asset(path('/reservation/manageReservations')) }}">Zarządzaj rezerwacjami</a>
                         <a class="dropdown-item" href="{{ asset(path('/trackInfo/addTrackInfo')) }}">Dane toru</a>
                     </div>
                 </li>

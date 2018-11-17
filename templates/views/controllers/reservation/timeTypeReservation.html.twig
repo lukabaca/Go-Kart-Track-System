@@ -1,0 +1,90 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Rezerwacja
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/timeTypeReservation.css') }}">
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="loader"></div>
+    <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Rezerwacja</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="shadow p-3 mb-5 bg-white rounded card">
+                    <div class="card-body">
+                        <div class="row">
+                            <form method="POST" action="#" id="reservationForm">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationStart">Dzień</label>
+                                            <input type="text" class="form-control datePicker" id="dateInput" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationStart">Godzina rozpoczęcia</label>
+                                            <input type="text" class="form-control" id="startHourInput" required>
+                                            <small class="form-text text-muted" id="trackWorkingHoursInfo"></small>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationStart">Godzina zakończenia</label>
+                                            <input type="text" class="form-control" id="endHourInput" required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationPrize">Cena</label>
+                                            <input type="number" min="1.00" max="10000.00" step="0.01"class="form-control" id="reservationPrize"
+                                                   placeholder="Wprowadź cenę" required>
+                                            <small class="form-text text-muted" id="trackWorkingHoursInfo">Cena wyrażona w zł, separatorem dziesiętnym jest przecinek</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="reservationPrize">Opis</label>
+                                            <textarea class="form-control" id="reservationDescription"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="reserveBtn">Rezerwuj</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="reservationErrorResponseModal" tabindex="-1" role="dialog" aria-labelledby="getKartModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="col-md-12 responseArea">
+                    <p class="reservationResponseErrorMessage">sss</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/reservation/timeTypeReservation.js') }}"></script>
+{%  endblock %}

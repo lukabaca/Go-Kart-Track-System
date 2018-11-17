@@ -32,23 +32,34 @@
                         <td class="infoRow">{{ endDateHour }}</td>
                     </tr>
                     <tr>
-                        <td class="headerRow">Całkowita suma za przejazdy</td>
+                        <td class="headerRow">Cena</td>
                         <td class="infoRow">{{ reservation.cost }} zł</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-12">
-                <ul class="list-group">
-                    <li class="list-group-item"><h5>Pojazdy</h5></li>
-                    {% if not karts %}
-                        <li class="list-group-item">Brak pojazdow uczestników</li>
-                    {% endif %}
-                    {% for kart in karts %}
-                        <li class="list-group-item">{{ kart.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% if not reservation.byTimeReservationType %}
+                <div class="col-md-12">
+                    <ul class="list-group">
+                        <li class="list-group-item"><h5>Pojazdy</h5></li>
+                        {% if not karts %}
+                            <li class="list-group-item">Brak pojazdow uczestników</li>
+                        {% endif %}
+                        {% for kart in karts %}
+                            <li class="list-group-item">{{ kart.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% elseif reservation.description %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <h5 class="card-header">Opis i informacje pomocnicze</h5>
+                        <div class="card-body">
+                            {{ reservation.description }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
