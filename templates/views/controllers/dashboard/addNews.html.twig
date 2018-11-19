@@ -11,7 +11,23 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                {{ form_start(newsForm) }}
+                    {{ form_start(newsForm) }}
+                    <div class="form-group">
+                        {{ form_label(newsForm.description) }}
+                        {{ form_widget(newsForm.description) }}
+                        <small class="formErrorMessage">{{ form_errors(newsForm.description) }}</small>
+                        {{ form_help(newsForm.description) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(newsForm.file) }}
+                        {{ form_widget(newsForm.file) }}
+                        <small class="formErrorMessage">{{ form_errors(newsForm.file) }}</small>
+                        {{ form_help(newsForm.file) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(newsForm.submit) }}
+                        {{ form_widget(newsForm.submit) }}
+                    </div>
                 {{ form_end(newsForm) }}
             </div>
             <div class="col-md-6 imageArea">
