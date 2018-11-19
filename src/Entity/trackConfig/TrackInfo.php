@@ -60,10 +60,18 @@ class TrackInfo
     private $telephone_number;
     /**
      * @ORM\Column(type="time")
+     * @Assert\LessThan(
+     *     propertyPath="hourEnd",
+     *     message="Wartość musi być mniejsza niż zakończenie"
+     * )
      */
     private $hourStart;
     /**
      * @ORM\Column(type="time")
+     * @Assert\GreaterThan(
+     *     propertyPath="hourStart",
+     *     message="Wartość musi być większa niż rozpoczęcie"
+     * )
      */
     private $hourEnd;
     /**

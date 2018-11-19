@@ -134,6 +134,7 @@ class ReservationRepository extends EntityRepository
                     $reservation->setId($reservationTemp['id']);
                     $reservation->setStartDate($reservationTemp['start_date']);
                     $reservation->setEndDate($reservationTemp['end_date']);
+                    $reservation->setByTimeReservationType($reservationTemp['by_time_reservation_type']);
                     $reservations [] = $reservation;
                 }
                 return $reservations;

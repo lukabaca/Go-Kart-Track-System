@@ -5,7 +5,7 @@ $(document).ready(function () {
         "language": {
             "lengthMenu": "Wybierz _MENU_ rekordów na strone",
             "zeroRecords": "Brak danych",
-            "info": "Strona _PAGE_ z _PAGES_",
+            "info": "Strona _PAGE_ z _PAGES_ z _MAX_ wszystkich rekordów",
             "infoEmpty": "Brak danych",
             "infoFiltered": "(przefiltrowane z _MAX_ total records)",
             "search": "Szukaj",

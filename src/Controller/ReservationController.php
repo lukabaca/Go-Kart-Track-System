@@ -363,6 +363,7 @@ class ReservationController extends Controller
                     'hour' => $hourEnd,
                     'minute' => $minuteEnd
                 ],
+                'timeReservationType' => $reservation->getByTimeReservationType(),
             ];
             $reservationRes [] = $reservationTemp;
         }
