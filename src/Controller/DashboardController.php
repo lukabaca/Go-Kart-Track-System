@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Entity\News;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +19,10 @@ class DashboardController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('views/controllers/dashboard/index.html.twig', []
+        $news = $this->getDoctrine()->getRepository(News::class)->findAll();
+        return $this->render('views/controllers/dashboard/index.html.twig', [
+                'news' => $news,
+            ]
         );
     }
 }

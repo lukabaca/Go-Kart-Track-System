@@ -4,14 +4,24 @@
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/dashboard.css') }}">
 {% endblock %}
-
 {% block body %}
     {{ parent() }}
-
     <div class="container">
         <div class="row">
-            tutaj beda aktualnosci
+           {% if news %}
+               {% for kart in karts %}
+                   <div class="col-md-12">
+                       <div class="card">
+                           <div class="card-body">
+                           </div>
+                       </div>
+                   </div>
+               {% endfor %}
+           {% else %}
+               <p>Obecnie brak aktualności</p>
+           {% endif %}
         </div>
     </div>
 {% endblock %}
