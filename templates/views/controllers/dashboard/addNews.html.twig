@@ -1,0 +1,23 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Dodaj aktualność
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    {#<link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/dashboard.css') }}">#}
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_start(newsForm) }}
+                {{ form_end(newsForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{%  endblock %}
