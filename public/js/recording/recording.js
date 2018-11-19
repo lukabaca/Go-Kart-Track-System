@@ -60,7 +60,6 @@ $(document).ready(function () {
     $('body').on('click', '.deleteRecordingIcon', function (e) {
         e.stopPropagation();
         let recordingId = $(this).closest('.col').attr('recording-id');
-
         deleteRecording(recordingId);
     });
 

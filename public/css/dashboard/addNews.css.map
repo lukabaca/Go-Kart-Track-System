@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACA,gBAAiB;EACf,UAAU,EAAE,GAAG;EACf,WAAW,EAAE,GAAG;EAChB,KAAK,EAAE,KAAK;EACZ,QAAQ,EAAE,QAAQ;EAClB,KAAK,EAAE,GAAG;;AAEZ,UAAW;EACT,UAAU,EAAE,IAAI",
+"sources": ["../../scss/dashboard/addNews.scss"],
+"names": [],
+"file": "addNews.css"
+}

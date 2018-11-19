@@ -15,11 +15,19 @@ $(document).ready(function () {
         $('.card').remove();
         let content =
             '<div class="card">' +
+            '<i class="fa fa-trash deleteImageIcon"></i>' +
             '<div class="card-body">' +
             '<img id="imageUploaded" class="img-fluid rounded mx-auto d-block">' +
             '</div>' +
             '</div>';
         $('.imageArea').append(content);
         readURL(this);
+    });
+
+    $('body').on('click', '.deleteImageIcon', function (e) {
+        e.stopPropagation();
+        console.log('usun zdjecie');
+        // let recordingId = $(this).closest('.col').attr('recording-id');
+        // deleteRecording(recordingId);
     });
 });
