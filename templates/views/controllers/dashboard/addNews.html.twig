@@ -10,9 +10,20 @@
     {{ parent() }}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 {{ form_start(newsForm) }}
                 {{ form_end(newsForm) }}
+            </div>
+            <div class="col-md-6 imageArea">
+                <div class="card">
+                    <div class="card-body">
+                        {% if filePath %}
+                            <img src="{{ asset('images/karts/'~filePath~'') }}" id="imageUploaded" class="img-fluid rounded mx-auto d-block">
+                        {% else %}
+                            <p class="noImageHeader">Brak zdjęcia</p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -20,4 +31,5 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/dashboard/addNews.js') }}"></script>
 {%  endblock %}
