@@ -24,7 +24,7 @@ class DashboardController extends Controller
     {
         $news = $this->getDoctrine()->getRepository(News::class)->findAll();
         return $this->render('views/controllers/dashboard/index.html.twig', [
-                'news' => $news,
+                'newsList' => $news,
             ]
         );
     }
@@ -52,9 +52,10 @@ class DashboardController extends Controller
                 //poki co rzucaj 500 server error jak nie uda sie wrzucic foto
                 return $this->render('views/alerts/500.html.twig' , []);
             }
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($trackInfo);
-//            $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
+            return $this->redirectToRoute('dashboard/index');
         }
         return $this->render('views/controllers/dashboard/addNews.html.twig', [
                 'newsForm' => $newsForm->createView(),
