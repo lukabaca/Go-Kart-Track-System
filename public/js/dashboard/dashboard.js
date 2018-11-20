@@ -2,16 +2,13 @@ $(document).ready(function () {
     let newsId;
    $('.deleteNewsIcon').on('click', function (e) {
       e.preventDefault();
-      console.log('usun');
       newsId = $(this).closest('.news').attr('news-id');
-      console.log(newsId);
       $('#newsDeleteConfirmationModal').modal('show');
    });
     $('#confirmDeletetingNewsBtn').on('click', function (e) {
         e.preventDefault();
         if(newsId !== null && newsId !== undefined) {
-            startLoadingProgress()
-            console.log(newsId);
+            startLoadingProgress();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -41,10 +38,6 @@ $(document).ready(function () {
         }
     });
 });
-function f() {
-
-}
-
 function successAlert(message) {
     let alertSuccessContent =
         '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
@@ -65,7 +58,6 @@ function errorAlert(message) {
         '</div>';
     $('.alertArea').append(alertErrorContent);
 }
-
 function startLoadingProgress() {
     $('.loader').css('display', 'block');
 }
