@@ -1,1 +1,12 @@
 @import "../common/colors";
+.news {
+  display: flex;
+  .delete-area {
+    margin-bottom: 5px;
+    .deleteNewsIcon {
+      font-size: 20px;
+      margin-top: 5px;
+      margin-left: 5px;
+    }
+  }
+}
