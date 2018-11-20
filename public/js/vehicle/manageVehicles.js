@@ -57,7 +57,7 @@ $(document).ready(function () {
         "info" : true,
         "searching": true,
         "pageLength": 10,
-        "order": [[1, 'asc']],
+        "order": [[2, 'desc']],
     });
     $('.table tbody').on( 'click', '.editAvailabilityBtn', function (e) {
         e.preventDefault();

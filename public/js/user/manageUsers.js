@@ -55,7 +55,7 @@ $(document).ready(function () {
         "info" : true,
         "searching": true,
         "pageLength": 10,
-        "order": [[1, 'asc']],
+        "order": [[0, 'asc'], [1, 'asc']],
     });
     $('.table tbody').on('click', '.user-row', function (e) {
        e.preventDefault();

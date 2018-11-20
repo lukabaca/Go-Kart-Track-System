@@ -54,6 +54,6 @@ $(document).ready(function () {
         "info" : true,
         "searching": true,
         "pageLength": 10,
-        "order": [[1, 'desc']],
+        "order": [[0, 'desc']],
     });
 });

@@ -5,14 +5,15 @@ $(document).ready(function () {
             { "width": "25%" },
             { "width": "25%" },
             { "width": "25%" },
-            { "width": "5%" }
+            { "width": "25%" },
+            { "width": "5%" },
         ],
         "language": {
             "lengthMenu": "Wybierz _MENU_ rekordów na strone",
             "zeroRecords": "Brak danych",
             "info": "Strona _PAGE_ z _PAGES_",
             "infoEmpty": "Brak danych",
-            "infoFiltered": "(przefiltrowane z _MAX_ total records)",
+            "infoFiltered": "(przefiltrowane z _MAX_ wszystkich rekordów)",
             "search": "Szukaj",
             "paginate": {
                 "previous": "Poprzednia strona",
@@ -20,6 +21,7 @@ $(document).ready(function () {
             },
             "processing": "Wczytywanie...",
         },
+        "order": [[0, 'desc']],
     });
     $('.showDetailsReservationBtn').on('click', function (e) {
        e.preventDefault();
