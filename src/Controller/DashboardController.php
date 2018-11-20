@@ -13,8 +13,10 @@ use App\Form\NewsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class DashboardController extends Controller
 {
     /**
@@ -65,38 +67,19 @@ class DashboardController extends Controller
     }
 
     /**
-     * @Route("/dashboard/deleteNews", name="/dashboard/deleteNews")
+     * @Route("/dashboard/deleteNews/{id}", name="/dashboard/deleteNews/{id}")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function deleteNewsAction(Request $request)
+    public function deleteNewsAction(Request $request, $id)
     {
-        $filePath = null;
-        $news = new News();
-        $newsForm = $this->createForm(NewsType::class, $news);
-        $newsForm->handleRequest($request);
-        if ($newsForm->isSubmitted() && $newsForm->isValid()) {
-            try {
-                $file = $news->getFile();
-                if($file) {
-                    $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-                    $file->move($this->getParameter('newsImage_directory'), $fileName);
-                    $news->setFile($fileName);
-                } else {
-
-                }
-            } catch (FileException $e) {
-                //poki co rzucaj 500 server error jak nie uda sie wrzucic foto
-                return $this->render('views/alerts/500.html.twig' , []);
-            }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($news);
-            $em->flush();
-            return $this->redirectToRoute('dashboard/index');
+        $news = $this->getDoctrine()->getManager()->getRepository(News::class)->find($id);
+        if(!$news) {
+            return new JsonResponse([], 404);
         }
-        return $this->render('views/controllers/dashboard/addNews.html.twig', [
-                'newsForm' => $newsForm->createView(),
-                'filePath' => $filePath,
-            ]
-        );
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($news);
+        $em->flush();
+        return new JsonResponse([$news], 200);
     }
 
     /**

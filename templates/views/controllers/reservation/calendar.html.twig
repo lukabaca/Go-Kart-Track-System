@@ -2,17 +2,14 @@
 {% block title %}
 Dostępność toru
 {% endblock %}
-
 {% block stylesheets %}
 {{ parent() }}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" media="'print">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/reservation/calendar.css') }}">
 {% endblock %}
-
 {% block body %}
 {{ parent() }}
-
 <div class="loader"></div>
 <div class="container">
     <div class="col-md-12 alertArea">
@@ -28,7 +25,6 @@ Dostępność toru
         </div>
     </div>
 </div>
-
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}

@@ -1,10 +1,8 @@
-.news {
-  display: flex; }
-  .news .delete-area {
-    margin-bottom: 5px; }
-    .news .delete-area .deleteNewsIcon {
-      font-size: 20px;
-      margin-top: 5px;
-      margin-left: 5px; }
+.delete-area {
+  margin-bottom: 5px; }
+  .delete-area .deleteNewsIcon {
+    font-size: 20px;
+    margin-top: 5px;
+    margin-left: 5px; }
 
 /*# sourceMappingURL=dashboard.css.map */

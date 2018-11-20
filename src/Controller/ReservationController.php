@@ -155,10 +155,6 @@ class ReservationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($reservation);
         $em->flush();
-//        $result = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->deleteReservation($id);
-//        if(!$result) {
-//            return new JsonResponse(['error in deleting reservation'], 500);
-//        }
         return new JsonResponse([], 200);
     }
 

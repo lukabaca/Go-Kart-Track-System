@@ -1,42 +1,74 @@
 $(document).ready(function () {
+    let newsId;
    $('.deleteNewsIcon').on('click', function (e) {
       e.preventDefault();
       console.log('usun');
-       reservation_id = $(this).closest('tr').attr('reservation-id');
-       $('#newsDeleteConfirmationModal').modal('show');
+      newsId = $(this).closest('.news').attr('news-id');
+      console.log(newsId);
+      $('#newsDeleteConfirmationModal').modal('show');
    });
     $('#confirmDeletetingNewsBtn').on('click', function (e) {
         e.preventDefault();
-        // if(reservation_id !== null && reservation_id !== undefined) {
-        //     $.ajax({
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         url: '/reservation/deleteReservation/' + reservation_id,
-        //         success: function (data) {
-        //             let reservationTable = $('.reservationTable');
-        //             deleteReservationFromTable(reservationTable, reservation_id);
-        //             successAlert('Poprawnie anulowano rezerwacje');
-        //         },
-        //         error: function (xhr, ajaxOptions, thrownError) {
-        //             let statusCode = xhr.status;
-        //             let errorMessage;
-        //             switch (statusCode) {
-        //                 case 403: {
-        //                     errorMessage = 'Nie można usuwać czyichś rezerwacji';
-        //                     errorAlert(errorMessage);
-        //                     break;
-        //                 }
-        //                 case 404: {
-        //                     window.location.href = '/status404';
-        //                     break;
-        //                 }
-        //                 default : {
-        //                     window.location.href = '/status500';
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //     });
-        // }
+        if(newsId !== null && newsId !== undefined) {
+            startLoadingProgress()
+            console.log(newsId);
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/dashboard/deleteNews/' + newsId,
+                success: function (data) {
+                    successAlert('Poprawnie usunięto aktualność');
+                    let newsArea = $('[news-id='+newsId+']');
+                    newsArea.remove();
+                    stopLoadingProgress();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    let statusCode = xhr.status;
+                    let errorMessage;
+                    switch (statusCode) {
+                        case 404: {
+                            window.location.href = '/status404';
+                            break;
+                        }
+                        default : {
+                            window.location.href = '/status500';
+                            break;
+                        }
+                    }
+                    stopLoadingProgress();
+                }
+            });
+        }
     });
 });
+function f() {
+
+}
+
+function successAlert(message) {
+    let alertSuccessContent =
+        '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">X</span>' +
+        '</button>' +
+        '<strong>'+message+'</strong>' +
+        '</div>';
+    $('.alertArea').append(alertSuccessContent);
+}
+function errorAlert(message) {
+    let alertErrorContent =
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">X</span>' +
+        '</button>' +
+        '<strong>'+message+'</strong>' +
+        '</div>';
+    $('.alertArea').append(alertErrorContent);
+}
+
+function startLoadingProgress() {
+    $('.loader').css('display', 'block');
+}
+function stopLoadingProgress() {
+    $('.loader').css('display', 'none');
+}
