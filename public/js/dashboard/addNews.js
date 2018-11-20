@@ -8,10 +8,8 @@ $(document).ready(function () {
             reader.readAsDataURL(input.files[0]);
         }
     }
-
     $("#news_file").on('change', function(e) {
         e.preventDefault();
-        console.log('weszlo');
         $('.card').remove();
         let content =
             '<div class="card">' +
@@ -26,8 +24,5 @@ $(document).ready(function () {
 
     $('body').on('click', '.deleteImageIcon', function (e) {
         e.stopPropagation();
-        console.log('usun zdjecie');
-        // let recordingId = $(this).closest('.col').attr('recording-id');
-        // deleteRecording(recordingId);
     });
 });
