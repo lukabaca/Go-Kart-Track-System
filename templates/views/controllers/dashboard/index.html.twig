@@ -4,18 +4,73 @@
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/dashboard.css') }}">
 {% endblock %}
-
 {% block body %}
     {{ parent() }}
-
+    <div class="loader"></div>
     <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
         <div class="row">
-            tutaj beda aktualnosci
+           {% if newsList %}
+               {% for news in newsList %}
+                   <div class="col-md-12 news" news-id="{{ news.id }}">
+                       <div class="card">
+                           <div class="card-body">
+                               <div class="row">
+                                   {% if news.file %}
+                                       <div class="col-md-6">
+                                           {% if is_granted('ROLE_ADMIN') %}
+                                               <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
+                                           {% endif %}
+                                           {{ news.description }}
+                                       </div>
+                                       <div class="col-md-6">
+                                           {% if news.file %}
+                                               <img class="card-img-top" src="{{ asset('images/news/'~news.file~'') }}" alt="Card image cap">
+                                           {% endif %}
+                                       </div>
+                                   {% else %}
+                                       <div class="col-md-12">
+                                           {% if is_granted('ROLE_ADMIN') %}
+                                               <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
+                                           {% endif %}
+                                           {{ news.description }}
+                                       </div>
+                                   {% endif %}
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               {% endfor %}
+           {% else %}
+               <p>Obecnie brak aktualności</p>
+           {% endif %}
+        </div>
+    </div>
+    <div class="modal fade" id="newsDeleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="getKartModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="deleteReservationHeader">Czy na pewno chcesz usunąć ten post?</p>
+                    <p>Po usunięciu użytkownicy <strong>nie będą mogli już go zobaczyć.</strong></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                    <button id="confirmDeletetingNewsBtn" type="button" class="btn btn-primary" data-dismiss="modal">Zatwierdź</button>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/dashboard/dashboard.js') }}"></script>
 {%  endblock %}

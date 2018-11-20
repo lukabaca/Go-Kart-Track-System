@@ -1,0 +1,51 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Dodaj aktualność
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashboard/addNews.css') }}">
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                    {{ form_start(newsForm) }}
+                    <div class="form-group">
+                        {{ form_label(newsForm.description) }}
+                        {{ form_widget(newsForm.description) }}
+                        <small class="formErrorMessage">{{ form_errors(newsForm.description) }}</small>
+                        {{ form_help(newsForm.description) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(newsForm.file) }}
+                        {{ form_widget(newsForm.file) }}
+                        <small class="formErrorMessage">{{ form_errors(newsForm.file) }}</small>
+                        {{ form_help(newsForm.file) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(newsForm.submit) }}
+                        {{ form_widget(newsForm.submit) }}
+                    </div>
+                {{ form_end(newsForm) }}
+            </div>
+            <div class="col-md-6 imageArea">
+                <div class="card">
+                    <div class="card-body">
+                        {% if filePath %}
+                            <img src="{{ asset('images/karts/'~filePath~'') }}" id="imageUploaded" class="img-fluid rounded mx-auto d-block">
+                        {% else %}
+                            <p class="noImageHeader">Brak zdjęcia</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/dashboard/addNews.js') }}"></script>
+{%  endblock %}
