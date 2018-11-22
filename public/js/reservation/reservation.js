@@ -103,11 +103,11 @@ $(document).ready(function () {
 
     $(dateInput).on('change', function (e) {
        e.preventDefault();
+       cantReserveInfoLabel.text('');
        let date = $(this).val();
        if(date !== '') {
            let dateObject = createDateObjectFromDateString(date);
            if(dateObject.getDate() !== today.getDate()) {
-               cantReserveInfoLabel.text('');
                hourStartInput.removeAttr("disabled");
                console.log('start czasu ', trackStartTime);
                console.log('koniec czasu', trackEndTime);
@@ -561,7 +561,7 @@ function makeReservation(startDate, endDate, cost, byTimeReservationType, descri
         },
         success: function (data) {
             console.log(data);
-            resetForm();
+            // resetForm();
             window.location.href = '/reservation/reservationDetails/' + data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
