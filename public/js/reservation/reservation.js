@@ -18,6 +18,7 @@ $(document).ready(function () {
     let numberOfRidesInput = $('#numberOfRidesInput');
     let hourStartInput = $('#hourStartInput');
     let hourEndInput = $('#hourEndInput');
+    let cantReserveInfoLabel = $('#cantReserveInfo');
 
     let maxNumberOfDays = 21;
     let minNumberOfRides = 1;
@@ -106,6 +107,8 @@ $(document).ready(function () {
        if(date !== '') {
            let dateObject = createDateObjectFromDateString(date);
            if(dateObject.getDate() !== today.getDate()) {
+               cantReserveInfoLabel.text('');
+               hourStartInput.removeAttr("disabled");
                console.log('start czasu ', trackStartTime);
                console.log('koniec czasu', trackEndTime);
                setMaxTime(hourStartInput, trackEndTime);
@@ -115,9 +118,17 @@ $(document).ready(function () {
                console.log('dzis ', today);
                console.log('koniec czasu', trackEndTime);
                let tmp = new Date(today.getFullYear(), today.getMonth(), today.getDate(), trackEndTime.getHours(), trackEndTime.getMinutes());
-               console.log('tmp ', tmp);
-               setMinTime(hourStartInput, tmp);
-               setMaxTime(hourStartInput, today);
+               if(today >= tmp) {
+                   hourStartInput.attr("disabled", "disabled");
+                   hourStartInput.val('');
+                   hourEndInput.val('');
+                   cantReserveInfoLabel.text('Tor jest już zamknięty');
+                   console.log('dzis nie mozna juz rezerwowac');
+               } else {
+                   console.log('tmp ', tmp);
+                   setMinTime(hourStartInput, tmp);
+                   setMaxTime(hourStartInput, today);
+               }
            }
            isValidDate = true;
        } else {
