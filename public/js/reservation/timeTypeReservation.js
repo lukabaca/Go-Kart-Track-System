@@ -105,6 +105,8 @@ $(document).ready(function () {
         language: 'pl',
         autoclose: true,
     });
+
+    //init options for pickers
     $('.datePicker').datepicker('setDate', today);
     setMinTime(hourStartInput, today);
     setMinTime(hourEndInput, today);
