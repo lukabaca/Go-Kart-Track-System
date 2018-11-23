@@ -68,7 +68,10 @@ html, body {
     margin-right: 10px;
   }
 }
-
+button:disabled {
+  background-color: $pageHeader !important;
+  border-color: $pageHeader !important;
+}
 //
 #logout {
   //font-size:30p

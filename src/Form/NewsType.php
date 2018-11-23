@@ -23,7 +23,7 @@ class NewsType extends AbstractType
     {
         $builder->add('description', TextareaType::class, array(
             'label' => FALSE,
-            'required' => FALSE,
+            'required' => TRUE,
             'attr' => [
                 'placeholder' => 'Opis',
                 'class' => 'form-control'

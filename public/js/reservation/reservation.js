@@ -12,7 +12,14 @@ let isPageReady = [
         'status': false
     },
 ];
+let flag = false;
 $(document).ready(function () {
+    let dateInput = $('#dateInput');
+    let numberOfRidesInput = $('#numberOfRidesInput');
+    let hourStartInput = $('#hourStartInput');
+    let hourEndInput = $('#hourEndInput');
+    let cantReserveInfoLabel = $('#cantReserveInfo');
+
     let maxNumberOfDays = 21;
     let minNumberOfRides = 1;
     let today = new Date();
@@ -39,7 +46,7 @@ $(document).ready(function () {
     let trackStartTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0);
     let trackEndTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 22, 0);
 
-    $('#numberOfRidesInput').val(minNumberOfRides);
+    $(numberOfRidesInput).val(minNumberOfRides);
     startLoadingProgress();
     loadTimePerOneRide();
     loadTrackWorkingHours();
@@ -63,13 +70,12 @@ $(document).ready(function () {
         language: 'pl',
         autoclose: true,
     });
-    $('.datePicker').datepicker('setDate', today);
-    $('#numberOfRidesInput').on('change', function (e) {
+
+    $(numberOfRidesInput).on('change', function (e) {
         e.preventDefault();
         numberOfRides = $(this).val();
-        console.log(numberOfRides);
-        if($('#hourStartInput').val() !== '' && numberOfRides !== '' && numberOfRides > 0) {
-            let startTime = $('#hourStartInput').val();
+        if($(hourStartInput).val() !== '' && numberOfRides !== '' && numberOfRides > 0) {
+            let startTime = $(hourStartInput).val();
             let hourAndMinuteStartTime = startTime.split(':');
             let hourAndMinuteEndTime = getEndTime(startTime, numberOfRides, timePerOneRide);
             let arrayEnd = hourAndMinuteEndTime.split(':');
@@ -78,13 +84,13 @@ $(document).ready(function () {
             /*popraw porownywanie samych godzin i minut a nie dat calych, bo mzoe przejsc z inputa na nastepny dzien i wtedy sie wywali */
             if(dateEnd <= trackEndTime) {
                 isValidNumberOfRides = true;
-                $('#hourEndInput').val(hourAndMinuteEndTime);
+                $(hourEndInput).val(hourAndMinuteEndTime);
             } else {
                 let minutesBetweenDates = getMinutesBetweenDates(dateStart, trackEndTime);
                 $(this).val(minutesBetweenDates / timePerOneRide);
             }
         } else {
-            $('#hourEndInput').val('');
+            $(hourEndInput).val('');
             isValidNumberOfRides = false;
         }
         if(numberOfRides !== '') {
@@ -95,10 +101,28 @@ $(document).ready(function () {
         checkButtonStatus();
     });
 
-    $('#dateInput').on('change', function (e) {
+    $(dateInput).on('change', function (e) {
        e.preventDefault();
+       cantReserveInfoLabel.text('');
        let date = $(this).val();
        if(date !== '') {
+           let dateObject = createDateObjectFromDateString(date);
+           if(dateObject.getDate() !== today.getDate()) {
+               hourStartInput.removeAttr("disabled");
+               setMaxTime(hourStartInput, trackEndTime);
+               setMinTime(hourStartInput, trackStartTime);
+           } else {
+               let tmp = new Date(today.getFullYear(), today.getMonth(), today.getDate(), trackEndTime.getHours(), trackEndTime.getMinutes());
+               if(today >= tmp) {
+                   hourStartInput.attr("disabled", "disabled");
+                   hourStartInput.val('');
+                   hourEndInput.val('');
+                   cantReserveInfoLabel.text('Tor jest już zamknięty');
+               } else {
+                   setMinTime(hourStartInput, tmp);
+                   setMaxTime(hourStartInput, today);
+               }
+           }
            isValidDate = true;
        } else {
            isValidDate = false;
@@ -176,7 +200,7 @@ $(document).ready(function () {
         let tr = $(this).closest('.record-row');
         let kartId = tr.attr('kart-id');
         let kart = getKartById(karts, kartId);
-        let numberOfRides = $('#numberOfRidesInput').val();
+        let numberOfRides = $(numberOfRidesInput).val();
         if(kart) {
             tr.remove();
             // totalPrize -= kart.prize;
@@ -245,7 +269,7 @@ $(document).ready(function () {
                 stopLoadingProgress();
             }
         }
-        let numberOfRides = $('#numberOfRidesInput').val();
+        let numberOfRides = $(numberOfRidesInput).val();
         let kartIds = getKartIdsFromTable(kartTable);
         getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
         stopLoadingProgress();
@@ -253,9 +277,9 @@ $(document).ready(function () {
 
     $('#reservationForm').submit(function (event) {
         event.preventDefault();
-        let date = $('#dateInput').val();
-        let hourStart = $('#hourStartInput').val();
-        let hourEnd = $('#hourEndInput').val();
+        let date = $(dateInput).val();
+        let hourStart = $(hourStartInput).val();
+        let hourEnd = $(hourEndInput).val();
         let kartTable = $('#kartTable');
         let kartIds = getKartIdsFromTable(kartTable);
         let prize = $('#reservationPrize').text();
@@ -339,19 +363,21 @@ $(document).ready(function () {
             timeFormat: 'HH:mm',
             interval: timePerOneRide,
             scrollbar: true,
-            minTime: trackStartTime,
-            maxTime: trackEndTime,
             dynamic: true,
             dropdown: true,
             change: function () {
                 let time = $(this).val();
-                if ($('#numberOfRidesInput').val() !== '' && time !== '') {
-                    numberOfRides = $('#numberOfRidesInput').val();
-                    isValidHourStart = true;
+                if ($(numberOfRidesInput).val() !== '' && time !== '') {
+                    numberOfRides = $(numberOfRidesInput).val();
                     let hourAndMinuteEndTime = getEndTime(time, numberOfRides, timePerOneRide);
-                    $('#hourEndInput').val(hourAndMinuteEndTime);
+                    $(hourEndInput).val(hourAndMinuteEndTime);
+                    array = getHourAndMinutesFromTimePicker(time);
+                    time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
+                    isValidHourStart = true;
                 } else {
-                    $('#hourEndInput').val('');
+                    $(hourEndInput).val('');
+                    setMaxTime(hourStartInput, trackEndTime);
+                    setMinTime(hourStartInput, trackStartTime);
                     isValidHourStart = false;
                 }
                 checkButtonStatus();
@@ -371,6 +397,8 @@ $(document).ready(function () {
         if(isPageReadyFinally) {
             stopLoadingProgress();
             initTimePickerOptions();
+            //init options for pickers
+            $(dateInput).datepicker('setDate', today);
             $('.reservation-area').css('display', 'flex');
         }
     }
@@ -507,8 +535,6 @@ function makeReservation(startDate, endDate, cost, byTimeReservationType, descri
             reservationData: reservationData
         },
         success: function (data) {
-            console.log(data);
-            resetForm();
             window.location.href = '/reservation/reservationDetails/' + data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -586,4 +612,41 @@ function getMinutesBetweenDates(date1, date2) {
     let milisecondsBetweenDates = Math.abs(date1.getTime() - date2.getTime());
     let minutesBetweenDates = milisecondsBetweenDates / (1000 * 60);
     return minutesBetweenDates;
+}
+function createDateObjectFromDateString(dateString) {
+    if(dateString !== '') {
+        let array = dateString.split('-');
+        let day = array[0];
+        let month = array[1] - 1;
+        let year = array[2];
+        let date = new Date(year, month, day);
+        return date;
+    } else {
+        return null;
+    }
+}
+
+function setMinTime(element, minTime) {
+    if (flag === true) {
+        return;
+    }
+    else {
+        flag = true;
+    }
+    $(element).timepicker('option', 'minTime', minTime);
+    flag = false;
+}
+function setMaxTime(element, maxTime) {
+    if (flag === true) {
+        return;
+    }
+    else {
+        flag = true;
+    }
+    $(element).timepicker('option', 'maxTime', maxTime);
+    flag = false;
+}
+function getHourAndMinutesFromTimePicker(time) {
+    $res = time.split(':');
+    return $res;
 }

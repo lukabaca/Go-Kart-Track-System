@@ -16,6 +16,7 @@ $(document).ready(function () {
     let isValidDate = true;
 
 
+
     $(hourStartInput).timepicker({
         timeFormat: 'HH:mm',
         interval: 10,
@@ -62,6 +63,14 @@ $(document).ready(function () {
         e.preventDefault();
         let date = $(this).val();
         if(date !== '') {
+            let dateObject = createDateObjectFromDateString(date);
+            if(dateObject.getDate() !== today.getDate()) {
+                setMaxTime(hourStartInput, defaultMaxTime);
+                setMinTime(hourStartInput, defaultMinTime);
+            } else {
+                setMinTime(hourStartInput, today);
+                setMinTime(hourEndInput, today);
+            }
             isValidDate = true;
         } else {
             isValidDate = false;
@@ -96,7 +105,11 @@ $(document).ready(function () {
         language: 'pl',
         autoclose: true,
     });
+
+    //init options for pickers
     $('.datePicker').datepicker('setDate', today);
+    setMinTime(hourStartInput, today);
+    setMinTime(hourEndInput, today);
 
     function checkButtonStatus() {
         if(isValidHourStart && isValidHourEnd && isValidPrice && isValidDate) {
@@ -127,7 +140,6 @@ $(document).ready(function () {
     }
     $('#reservationForm').submit(function (event) {
         event.preventDefault();
-        console.log('submit forma');
         let date = $('#dateInput').val();
         let hourStart = $('#startHourInput').val();
         let hourEnd = $('#endHourInput').val();
@@ -158,7 +170,6 @@ function makeReservation(startDate, endDate, cost, byTimeReservationType, descri
             reservationData: reservationData
         },
         success: function (data) {
-            console.log(data);
             resetForm();
             window.location.href = '/reservation/reservationDetails/' + data.id;
         },
@@ -194,4 +205,17 @@ function getHourAndMinutesFromTimePicker(time) {
 function resetForm() {
     let today = new Date();
     $('#reservationForm')[0].reset();
+}
+
+function createDateObjectFromDateString(dateString) {
+    if(dateString !== '') {
+        let array = dateString.split('-');
+        let day = array[0];
+        let month = array[1] - 1;
+        let year = array[2];
+        let date = new Date(year, month, day);
+        return date;
+    } else {
+        return null;
+    }
 }

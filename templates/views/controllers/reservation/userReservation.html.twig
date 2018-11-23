@@ -22,17 +22,19 @@
                 {% if reservations %}
                 <table class="table reservationTable">
                     <thead>
-                        <th>Data rozpoczęcia</th>
-                        <th>Data zakończenia</th>
-                        <th>Koszt</th>
+                        <th>Data</th>
+                        <th>Rozpoczęcie</th>
+                        <th>Zakończenie</th>
+                        <th>Koszt (zł)</th>
                         <th></th>
                     </thead>
                     <tbody>
                     {% for reservation in reservations %}
                         <tr class="reservation-row" reservation-id="{{ reservation.id }}">
                             <td>{{ reservation.startDate }}</td>
-                            <td>{{ reservation.endDate }}</td>
-                            <td>{{ reservation.cost }}zł</td>
+                            <td>{{ reservation.startDateHourAndMinutes }}</td>
+                            <td>{{ reservation.endDateHourAndMinutes }}</td>
+                            <td>{{ reservation.cost }}</td>
                             <td class="reservation-options">
                                 <button type="button" class="showDetailsReservationBtn btn btn-info">Szczegóły rezerwacji</button>
                                 <button type="button" class="deleteReservationBtn btn btn-danger">Anuluj rezerwacje</button>

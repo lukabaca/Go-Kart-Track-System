@@ -50,7 +50,25 @@ class ReservationController extends Controller
      */
     public function userReservationAction(Request $request)
     {
-        $reservations = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getUserReservations($this->getUser()->getId());
+        $reservationsTemp = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->getUserReservations($this->getUser()->getId());
+        $reservations = [];
+        foreach ($reservationsTemp as $reservationTemp) {
+            $startDateTemp = new DateTime($reservationTemp->getStartDate());
+            $startDate = $startDateTemp->format('Y-m-d');
+            $startDateHourAndMinutes = $startDateTemp->format('H:i:s');
+            $endDateTemp = new DateTime($reservationTemp->getEndDate());
+            $endDate = $endDateTemp->format('Y-m-d');
+            $endDateHourAndMinutes = $endDateTemp->format('H:i:s');
+            $reservation = [
+                'id' => $reservationTemp->getId(),
+                'startDate' => $startDate,
+                'startDateHourAndMinutes' => $startDateHourAndMinutes,
+                'endDate' => $endDate,
+                'endDateHourAndMinutes' => $endDateHourAndMinutes,
+                'cost' => $reservationTemp->getCost(),
+            ];
+            $reservations [] = $reservation;
+        }
         return $this->render('views/controllers/reservation/userReservation.html.twig', [
                 'reservations' => $reservations
             ]

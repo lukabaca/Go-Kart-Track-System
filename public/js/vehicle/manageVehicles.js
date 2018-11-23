@@ -5,7 +5,7 @@ $(document).ready(function () {
         "language": {
             "lengthMenu": "Wybierz _MENU_ rekordów na strone",
             "zeroRecords": "Brak danych",
-            "info": "Strona _PAGE_ z _PAGES_ z _MAX_ wszystkich rekordów",
+            "info": "_START_ do _END_ z _TOTAL_ wszystkich rekordów",
             "infoEmpty": "Brak danych",
             "infoFiltered": "(przefiltrowane z _MAX_ total records)",
             "search": "Szukaj",
@@ -57,7 +57,7 @@ $(document).ready(function () {
         "info" : true,
         "searching": true,
         "pageLength": 10,
-        "order": [[1, 'asc']],
+        "order": [[2, 'desc']],
     });
     $('.table tbody').on( 'click', '.editAvailabilityBtn', function (e) {
         e.preventDefault();
@@ -70,7 +70,10 @@ $(document).ready(function () {
             dataType: 'json',
             url: '/vehicle/editKartAvailability/' + kartId + '/' + availability,
             success: function (data) {
-                kartTable.ajax.reload();
+                let availability = (data.availability == 1) ? 'Dostępny' : 'Niedostępny';
+                let td = closestTr.find('td.kart-availability');
+                td.text(availability);
+                $(td).attr('kart-availability', data.availability);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;

@@ -5,7 +5,7 @@ $(document).ready(function () {
         "language": {
             "lengthMenu": "Wybierz _MENU_ rekordów na strone",
             "zeroRecords": "Brak danych",
-            "info": "Strona _PAGE_ z _PAGES_ z _MAX_ wszystkich rekordów",
+            "info": "_START_ do _END_ z _TOTAL_ wszystkich rekordów",
             "infoEmpty": "Brak danych",
             "infoFiltered": "(przefiltrowane z _MAX_ total records)",
             "search": "Szukaj",
@@ -55,7 +55,7 @@ $(document).ready(function () {
         "info" : true,
         "searching": true,
         "pageLength": 10,
-        "order": [[1, 'asc']],
+        "order": [[0, 'asc'], [1, 'asc']],
     });
     $('.table tbody').on('click', '.user-row', function (e) {
        e.preventDefault();
