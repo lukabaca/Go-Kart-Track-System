@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Kart;
 use App\Entity\Lap;
 use App\Entity\User;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,36 +88,50 @@ class LapsController extends Controller
      */
     public function test(Request $request)
     {
-        $recordsTemp = $this->getDoctrine()->getManager()->getRepository(Lap::class)->getRecords(5, 1);
-        if(!$recordsTemp) {
-            return new JsonResponse([], 404);
-        }
-        $records = [];
-        foreach ($recordsTemp as $recordTemp) {
-            $userId = $recordTemp->getUser()->getId();
-            $kartId = $recordTemp->getKart()->getId();
-            $user = $this->getDoctrine()->getManager()->getRepository(User::class)->find($userId);
-            $kart = $this->getDoctrine()->getManager()->getRepository(Kart::class)->find($kartId);
-            if(!$user || !$kart) {
-                return new JsonResponse([], 404);
+        try {
+            $file = fopen(__DIR__ . '/' . "test.csv", "r");
+            $laps = [];
+            while (($line = fgetcsv($file)) !== FALSE) {
+                $lap = new Lap();
+                $lap->setTime($line[0]);
+                $lap->setAverageSpeed($line[1]);
+                $lap->setDate($line[2]);
+                $kart = $this->getDoctrine()->getRepository(Kart::class)->find($line[3]);
+                if (!$kart) {
+                    $kartName = '';
+                } else {
+                    $lap->setKart($kart);
+                    $kartName = $lap->getKart()->getName();
+                }
+                $user = $this->getDoctrine()->getRepository(User::class)->find($line[4]);
+                if(!$user) {
+                    $userName = '';
+                    $userSurname = '';
+                } else {
+                    $lap->setUser($user);
+                    $userName = $lap->getUser()->getName();
+                    $userSurname = $lap->getUser()->getSurname();
+                }
+
+                $lap = [
+                    'time' => $lap->getTime(),
+                    'averageSpeed' => $lap->getAverageSpeed(),
+                    'date' => $lap->getDate(),
+                    'user' => [
+                        'name' => $userName,
+                        'surname' => $userSurname,
+                    ],
+                    'kart' => [
+                        'name' => $kartName,
+                    ]
+                ];
+                $laps [] = $lap;
             }
-            $recordTemp->setUser($user);
-            $recordTemp->setKart($kart);
-            $record = [
-                'id' => $recordTemp->getId(),
-                'time' => $recordTemp->getTime(),
-                'averageSpeed' => $recordTemp->getAverageSpeed(),
-                'date' => $recordTemp->getDate(),
-                'user' => [
-                    'name' => $recordTemp->getUser()->getName(),
-                ],
-                'kart' => [
-                    'name' => $recordTemp->getKart()->getName(),
-                ]
-            ];
-            $records [] = $record;
+            fclose($file);
+            return new JsonResponse($laps, 200);
+        } catch (Exception $e) {
+            return new JsonResponse('cant locate file', 404);
         }
-        return new JsonResponse($records, 200);
     }
 
 }
