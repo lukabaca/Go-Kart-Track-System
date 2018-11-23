@@ -109,23 +109,16 @@ $(document).ready(function () {
            let dateObject = createDateObjectFromDateString(date);
            if(dateObject.getDate() !== today.getDate()) {
                hourStartInput.removeAttr("disabled");
-               console.log('start czasu ', trackStartTime);
-               console.log('koniec czasu', trackEndTime);
                setMaxTime(hourStartInput, trackEndTime);
                setMinTime(hourStartInput, trackStartTime);
            } else {
-               console.log('weszlo w dzien ten sam');
-               console.log('dzis ', today);
-               console.log('koniec czasu', trackEndTime);
                let tmp = new Date(today.getFullYear(), today.getMonth(), today.getDate(), trackEndTime.getHours(), trackEndTime.getMinutes());
                if(today >= tmp) {
                    hourStartInput.attr("disabled", "disabled");
                    hourStartInput.val('');
                    hourEndInput.val('');
                    cantReserveInfoLabel.text('Tor jest już zamknięty');
-                   console.log('dzis nie mozna juz rezerwowac');
                } else {
-                   console.log('tmp ', tmp);
                    setMinTime(hourStartInput, tmp);
                    setMaxTime(hourStartInput, today);
                }
@@ -374,28 +367,15 @@ $(document).ready(function () {
             dropdown: true,
             change: function () {
                 let time = $(this).val();
-                console.log('czy to wbija');
-                // if(time !== '') {
-                //     array = getHourAndMinutesFromTimePicker(time);
-                //     time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
-                //     setMaxTime(hourStartInput, time);
-                // } else {
-                //     setMaxTime(hourStartInput, trackStartTime);
-                //     setMinTime(hourStartInput, trackEndTime);
-                // }
-
                 if ($(numberOfRidesInput).val() !== '' && time !== '') {
-                    // console.log('number of rides i czas rozne od pustego');
                     numberOfRides = $(numberOfRidesInput).val();
                     let hourAndMinuteEndTime = getEndTime(time, numberOfRides, timePerOneRide);
                     $(hourEndInput).val(hourAndMinuteEndTime);
                     array = getHourAndMinutesFromTimePicker(time);
                     time = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), array[0], array[1]);
-                    // setMinTime(hourEndInput, time);
                     isValidHourStart = true;
                 } else {
                     $(hourEndInput).val('');
-                    // console.log('zmieniam czasy');
                     setMaxTime(hourStartInput, trackEndTime);
                     setMinTime(hourStartInput, trackStartTime);
                     isValidHourStart = false;
@@ -419,11 +399,6 @@ $(document).ready(function () {
             initTimePickerOptions();
             //init options for pickers
             $(dateInput).datepicker('setDate', today);
-            // setMinTime(hourStartInput, today);
-            console.log('strona gotowa');
-            // console.log(trackEndTime);
-            // console.log(trackStartTime);
-            // setMaxTime(hourStartInput, trackEndTime);
             $('.reservation-area').css('display', 'flex');
         }
     }
@@ -560,8 +535,6 @@ function makeReservation(startDate, endDate, cost, byTimeReservationType, descri
             reservationData: reservationData
         },
         success: function (data) {
-            console.log(data);
-            // resetForm();
             window.location.href = '/reservation/reservationDetails/' + data.id;
         },
         error: function (xhr, ajaxOptions, thrownError) {

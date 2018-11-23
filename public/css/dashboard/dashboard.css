@@ -8,4 +8,7 @@
 .news {
   margin-bottom: 30px; }
 
+.deleteNewsIcon {
+  cursor: pointer; }
+
 /*# sourceMappingURL=dashboard.css.map */
