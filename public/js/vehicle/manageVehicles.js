@@ -70,7 +70,10 @@ $(document).ready(function () {
             dataType: 'json',
             url: '/vehicle/editKartAvailability/' + kartId + '/' + availability,
             success: function (data) {
-                kartTable.ajax.reload();
+                let availability = (data.availability == 1) ? 'Dostępny' : 'Niedostępny';
+                let td = closestTr.find('td.kart-availability');
+                td.text(availability);
+                $(td).attr('kart-availability', data.availability);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
