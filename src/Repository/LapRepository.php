@@ -29,8 +29,10 @@ class LapRepository extends EntityRepository
                 $lapsTemp = $stmt->fetchAll();
                 foreach ($lapsTemp as $lapTemp) {
                     $id = $lapTemp['id'];
-                    $time = $lapTemp['time'];
-                    $averageSpeed = $lapTemp['averageSpeed'];
+                    $minute = $lapTemp['minute'];
+                    $second = $lapTemp['second'];
+                    $milisecond = $lapTemp['milisecond'];
+                    $averageSpeed = $lapTemp['average_speed'];
                     $date = $lapTemp['date'];
                     $user_id = $lapTemp['user_id'];
                     $kart_id = $lapTemp['kart_id'];
@@ -40,7 +42,9 @@ class LapRepository extends EntityRepository
                     $user->setId($user_id);
                     $lap->setUser($user);
                     $lap->setKart(new Kart($kart_id));
-                    $lap->setTime($time);
+                    $lap->setMinute($minute);
+                    $lap->setSecond($second);
+                    $lap->setMilisecond($milisecond);
                     $lap->setAverageSpeed($averageSpeed);
                     $lap->setDate($date);
                     $laps [] = $lap;

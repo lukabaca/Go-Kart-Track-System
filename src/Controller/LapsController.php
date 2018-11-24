@@ -66,9 +66,13 @@ class LapsController extends Controller
             }
             $recordTemp->setUser($user);
             $recordTemp->setKart($kart);
+            $minute = $recordTemp->getMinute();
+            $second = $recordTemp->getSecond();
+            $milisecond = $recordTemp->getMilisecond();
+            $time = $this->createProperTimeFormat($minute, $second, $milisecond);
             $record = [
                 'id' => $recordTemp->getId(),
-                'time' => $recordTemp->getTime(),
+                'time' => $time,
                 'averageSpeed' => $recordTemp->getAverageSpeed(),
                 'date' => $recordTemp->getDate(),
                 'user' => [
@@ -82,6 +86,20 @@ class LapsController extends Controller
             $records [] = $record;
         }
         return new JsonResponse($records, 200);
+    }
+
+    private function createProperTimeFormat($minute, $second, $milisecond) {
+        if ($minute < 10) {
+            $minute = '0' . $minute;
+        }
+        if ($second < 10) {
+            $second = '0' . $second;
+        }
+        if ($milisecond < 10) {
+            $milisecond = '0' . $milisecond;
+        }
+        $time = $minute . ':' . $second . ':' . $milisecond;
+        return $time;
     }
 
     /**
