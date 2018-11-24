@@ -32,9 +32,14 @@ class LapSession
      */
     private $endDate;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Lap", mappedBy="lapSession", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Lap", mappedBy="lapSession")
      */
     private $lap;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="$lapSession")
+     */
+    private $user;
 
     /**
      * LapSession constructor.
@@ -113,5 +118,21 @@ class LapSession
     public function setLap($lap): void
     {
         $this->lap = $lap;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
     }
 }

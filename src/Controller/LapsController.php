@@ -83,7 +83,7 @@ class LapsController extends Controller
     }
 
     /**
-     * @Route("/laps/sessionLaps/datatable", name="laps/sessionLaps/datatable")
+     * @Route("/laps/userSessionLaps/datatable", name="laps/userSessionLaps/datatable")
      */
     public function datatableAction(Request $request)
     {
@@ -104,7 +104,7 @@ class LapsController extends Controller
                 }
             }
             $res = $this->getDoctrine()->getRepository(LapSession::class)->
-            getLapSessions($start, $length, $orderColumnName, $orderDir, $searchValue);
+            getLapSessions($start, $length, $orderColumnName, $orderDir, $searchValue, $this->getUser()->getId());
             $recordsTotalCount = count($this->getDoctrine()->getRepository(LapSession::class)->findAll());
             $response = [
                 "draw" => $draw,
@@ -183,7 +183,7 @@ class LapsController extends Controller
     public function readingCSVAction(Request $request)
     {
         try {
-            $file = fopen(__DIR__ . '/' . "test2.csv", "r");
+            $file = fopen(__DIR__ . '/' . "test.csv", "r");
             $laps = [];
             $i = 0;
             $insertedLapsId = [];
@@ -223,6 +223,7 @@ class LapsController extends Controller
             $lapSession = new LapSession();
             $lapSession->setStartDate($minDate);
             $lapSession->setEndDate($maxDate);
+            $lapSession->setUser($laps[0]->getUser());
             foreach ($laps as $lap) {
                 $lap->setLapSession($lapSession);
                 $em = $this->getDoctrine()->getManager();

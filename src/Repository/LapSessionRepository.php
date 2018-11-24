@@ -14,8 +14,8 @@ use Doctrine\ORM\EntityRepository;
 
 class LapSessionRepository extends EntityRepository
 {
-    public function getLapSessions($start, $length, $columnName, $orderDir, $searchValue) {
-        $sql = 'call getLapSessions(?, ?, ?, ?, ?)';
+    public function getLapSessions($start, $length, $columnName, $orderDir, $searchValue, $userId) {
+        $sql = 'call getLapSessions(?, ?, ?, ?, ?, ?)';
         $conn = $this->getEntityManager()->getConnection();
         try {
             $stmt = $conn->prepare($sql);
@@ -24,6 +24,7 @@ class LapSessionRepository extends EntityRepository
             $stmt->bindValue(3, $columnName);
             $stmt->bindValue(4, $orderDir);
             $stmt->bindValue(5, $searchValue);
+            $stmt->bindValue(6, $userId);
             $rowCount = $stmt->execute();
             if($rowCount > 0) {
                 $lapSessions = $stmt->fetchAll();

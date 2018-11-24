@@ -162,6 +162,11 @@ class User implements UserInterface
     private $reservation;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\LapSession", mappedBy="user")
+     */
+    private $lapSession;
+
+    /**
      * @return mixed
      */
     public function getLap()
@@ -364,6 +369,23 @@ class User implements UserInterface
     public function setReservation($reservation): void
     {
         $this->reservation = $reservation;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getLapSession()
+    {
+        return $this->lapSession;
+    }
+
+    /**
+     * @param mixed $lapSession
+     */
+    public function setLapSession($lapSession): void
+    {
+        $this->lapSession = $lapSession;
     }
     /**
      * @param mixed $roles

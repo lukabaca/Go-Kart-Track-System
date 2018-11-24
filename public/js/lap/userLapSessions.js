@@ -23,7 +23,7 @@ $(document).ready(function () {
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": '/laps/sessionLaps/datatable',
+            "url": '/laps/userSessionLaps/datatable',
             "type": "POST",
         },
         createdRow: function(row, data, dataIndex, cells) {
