@@ -1,5 +1,9 @@
 $(document).ready(function () {
     $('.table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf'
+        ],
         "columns": [
             { "width": "25%" },
             { "width": "25%" },

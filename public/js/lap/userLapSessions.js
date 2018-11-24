@@ -16,8 +16,8 @@ $(document).ready(function () {
             "processing": "Wczytywanie...",
         },
         "columnDefs": [
-            { "data": "start_date", "name": "start_date",   "targets": 0, "defaultContent": "-", },
-            { "data": "end_date", "name": "end_date",   "targets": 1, "defaultContent": "-", },
+            { "data": "start_date", "name": "start_date",   "targets": 0, "defaultContent": "-", "className":"start-date"},
+            { "data": "end_date", "name": "end_date",   "targets": 1, "defaultContent": "-", "className":"end-date"},
         ],
         // Server-side parameters
         "processing": true,

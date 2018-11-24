@@ -245,7 +245,7 @@ class LapsController extends Controller
     public function test(Request $request)
     {
         try {
-            $file = fopen(__DIR__ . '/' . "test.csv", "r");
+            $file = fopen(__DIR__ . '/' . "test2.csv", "r");
             $laps = [];
             while (($line = fgetcsv($file)) !== FALSE) {
                 $lap = new Lap();
