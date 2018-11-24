@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Kart;
 use App\Entity\Lap;
+use App\Entity\LapSession;
 use App\Entity\User;
 use DateTime;
 use Exception;
@@ -143,13 +144,32 @@ class LapsController extends Controller
                     $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
                     $lap->setKart($kart);
                     $lap->setUser($user);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($lap);
-                    $em->flush();
-                    $insertedLapId = $lap->getId();
-                    $insertedLapsId [] = $insertedLapId;
+                    $laps [] = $lap;
+//                    $em = $this->getDoctrine()->getManager();
+//                    $em->persist($lap);
+//                    $em->flush();
+//                    $insertedLapId = $lap->getId();
+//                    $insertedLapsId [] = $insertedLapId;
                 }
                 $i = $i + 1;
+            }
+            $dates = [];
+            foreach ($laps as $lap) {
+                $dates [] = $lap->getDate();
+            }
+            $minDate = min($dates);
+            $maxDate = max($dates);
+
+            $lapSession = new LapSession();
+            $lapSession->setStartDate($minDate);
+            $lapSession->setEndDate($maxDate);
+            foreach ($laps as $lap) {
+                $lap->setLapSession($lapSession);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($lap);
+                $em->flush();
+                $insertedLapId = $lap->getId();
+                $insertedLapsId [] = $insertedLapId;
             }
             fclose($file);
             return new JsonResponse($insertedLapsId, 200);

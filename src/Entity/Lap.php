@@ -49,9 +49,14 @@ class Lap
      */
     private $averageSpeed;
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\LapSession", inversedBy="lap", cascade={"persist"})
+     */
+    private $lapSession;
 
     /**
      * Lap constructor.
@@ -204,4 +209,19 @@ class Lap
         $this->date = $date;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getLapSession()
+    {
+        return $this->lapSession;
+    }
+
+    /**
+     * @param mixed $lapSession
+     */
+    public function setLapSession($lapSession): void
+    {
+        $this->lapSession = $lapSession;
+    }
 }
