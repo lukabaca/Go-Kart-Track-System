@@ -2,8 +2,11 @@ $(document).ready(function () {
     $('.table').DataTable({
         dom: 'Bfrtip',
         buttons: [
-            'csv', 'excel', 'pdf'
+            {extend: 'pdf', className: 'btn btn-primary tableButton'},
+            {extend: 'excel', className: 'btn btn-primary tableButton'},
+            {extend: 'csv', className: 'btn btn-primary tableButton'},
         ],
+        // 'csv', 'excel', 'pdf'
         "columns": [
             { "width": "25%" },
             { "width": "25%" },
