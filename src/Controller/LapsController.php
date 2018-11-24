@@ -93,6 +93,7 @@ class LapsController extends Controller
             $file = fopen(__DIR__ . '/' . "test.csv", "r");
             $laps = [];
             $i = 0;
+            $insertedLapsId = [];
             while (($line = fgetcsv($file)) !== FALSE) {
                 if($i > 0) {
                     $lap = new Lap();
@@ -101,28 +102,30 @@ class LapsController extends Controller
                     $minute = $timeSplit[0];
                     $second = $timeSplit[1];
                     $milisecond = $timeSplit[2];
-                    print_r($minute);
-                    print_r($second);
-                    print_r($milisecond);
-                    exit();
-                    $lap->setTime($timeDate);
-                    $lap->setAverageSpeed($line[1]);
-                    $lap->setDate($line[2]);
-                    $kart = $this->getDoctrine()->getRepository(Kart::class)->find($line[3]);
-                    $user = $this->getDoctrine()->getRepository(User::class)->find($line[4]);
+                    $averageSpeed = $line[1];
+                    $dateString = $line[2];
+                    $date = new DateTime($dateString);
+                    $kartId = $line[3];
+                    $userId = $line[4];
+                    $lap->setMinute($minute);
+                    $lap->setSecond($second);
+                    $lap->setMilisecond($milisecond);
+                    $lap->setAverageSpeed($averageSpeed);
+                    $lap->setDate($date);
+                    $kart = $this->getDoctrine()->getRepository(Kart::class)->find($kartId);
+                    $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
                     $lap->setKart($kart);
                     $lap->setUser($user);
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($lap);
                     $em->flush();
-                    print_r($lap->getId());
+                    $insertedLapId = $lap->getId();
+                    $insertedLapsId [] = $insertedLapId;
                 }
                 $i = $i + 1;
-//                $laps [] = $lap;
             }
             fclose($file);
-            exit();
-            return new JsonResponse($laps, 200);
+            return new JsonResponse($insertedLapsId, 200);
         } catch (Exception $e) {
             print_r($e->getMessage());
             exit();

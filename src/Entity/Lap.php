@@ -45,7 +45,7 @@ class Lap
      */
     private $milisecond;
     /**
-     * @ORM\Column(type="double")
+     * @ORM\Column(type="float")
      */
     private $averageSpeed;
     /**
