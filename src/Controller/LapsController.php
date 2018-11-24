@@ -31,6 +31,15 @@ class LapsController extends Controller
     }
 
     /**
+     * @Route("/laps/userLapSessions", name="laps/userLapSessions")
+     */
+    public function userLapSessionsAction(Request $request)
+    {
+        return $this->render('views/controllers/laps/userLapSessions.html.twig', []
+        );
+    }
+
+    /**
      * @Route("/laps/record/index", name="laps/record/index")
      */
     public function recordIndexAction(Request $request)

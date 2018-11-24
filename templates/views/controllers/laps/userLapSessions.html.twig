@@ -1,0 +1,21 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Twoje sesje przejazdowe
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/lap/userLapSessions.css') }}">
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="loader"></div>
+    <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Twoje przejazdy</h4>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/lap/userLapSessions.js') }}"></script>
+{%  endblock %}
