@@ -1,0 +1,47 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    Twoje okrążenia
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/lap/userLapsForLapSession.css') }}">
+{% endblock %}
+{% block body %}
+    {{ parent() }}
+    <div class="loader"></div>
+    <div class="container">
+        <div class="col-md-12 alertArea">
+        </div>
+        <h4 class="pageHeader">Twoje okrążenia dla sesji</h4>
+        <div class="row">
+            <div class="col-md-12 tableArea">
+                <table class="table userLapsTable">
+                    <thead>
+                        <th>Lp</th>
+                        <th>Czas okrążenia</th>
+                        <th>Średnia prędkość</th>
+                        <th>Gokart</th>
+                    </thead>
+                    <tbody>
+                    {% if laps %}
+                        {% for lap in laps %}
+                            <tr class="lap-row" lap-id="{{ lap.lap.id }}">
+                                <td>{{ lap.position }}</td>
+                                <td>{{ lap.lap.minute }}:{{ lap.lap.second }}:{{ lap.lap.milisecond }}</td>
+                                <td>{{ lap.lap.averageSpeed }}</td>
+                                <td>{{ lap.lap.kart.name }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <span>Brak okrążeń dla tej sesji</span>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/lap/userLapsForLapSession.js') }}"></script>
+{%  endblock %}

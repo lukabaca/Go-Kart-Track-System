@@ -32,6 +32,38 @@ class LapsController extends Controller
     }
 
     /**
+     * @Route("/laps/lapsForSession/{id}", name="laps/lapsForSession/{id}")
+     */
+    public function lapsForSessionAction(Request $request, $id)
+    {
+;
+        $lapsTemp = $this->getDoctrine()->getRepository(Lap::class)->getLapsForSession($id, $this->getUser()->getId());
+//        print_r($lapsTemp);
+//        exit();
+        $laps = [];
+        $position = 1;
+        foreach ($lapsTemp as $lapTemp) {
+            $lap = $lapTemp['lap'];
+            $kartId = $lapTemp['kartId'];
+            $lapSessionId = $lapTemp['lapSessionId'];
+            $kart = $this->getDoctrine()->getRepository(Kart::class)->find($kartId);
+            $lapSession = $this->getDoctrine()->getRepository(LapSession::class)->find($lapSessionId);
+            $lap->setKart($kart);
+            $lap->setLapSession($lapSession);
+            $array= [
+                'lap' => $lap,
+                'position' => $position,
+            ];
+            $laps [] = $array;
+            $position = $position + 1;
+        }
+        return $this->render('views/controllers/laps/userLapsForLapSession.html.twig', [
+                'laps' => $laps,
+            ]
+        );
+    }
+
+    /**
      * @Route("/laps/userLapSessions", name="laps/userLapSessions")
      */
     public function userLapSessionsAction(Request $request)
