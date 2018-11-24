@@ -75,6 +75,7 @@ class UserController extends Controller
         return $this->render('views/controllers/user/editUserRole.html.twig', [
             'user' => $user,
             'roles' => $roles,
+            'roles' => $roles,
         ]);
     }
     /**

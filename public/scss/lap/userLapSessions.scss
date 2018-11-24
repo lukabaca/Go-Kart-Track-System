@@ -1,1 +1,7 @@
 @import "../common/colors";
+.lapSessionTable {
+  .lapSession-row:hover {
+    cursor: pointer;
+    background-color: $mainAccentLight;
+  }
+}

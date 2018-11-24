@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAEE,sCAAsB;EACpB,MAAM,EAAE,OAAO;EACf,gBAAgB,ECCF,OAAO",
+"sources": ["../../scss/lap/userLapSessions.scss","../../scss/common/_colors.scss"],
 "names": [],
 "file": "userLapSessions.css"
 }

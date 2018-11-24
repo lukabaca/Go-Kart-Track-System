@@ -54,6 +54,42 @@ class LapsController extends Controller
     }
 
     /**
+     * @Route("/laps/sessionLaps/datatable", name="laps/sessionLaps/datatable")
+     */
+    public function datatableAction(Request $request)
+    {
+        if ($request->getMethod() == 'POST') {
+            $draw = intval($request->request->get('draw'));
+            $start = $request->request->get('start');
+            $length = $request->request->get('length');
+            $search = $request->request->get('search');
+            $orders = $request->request->get('order');
+            $columns = $request->request->get('columns');
+            $orderColumn = $orders[0]['column'];
+            $orderDir = $orders[0]['dir'];
+            $searchValue = $search['value'];
+            foreach ($columns as $key => $column)
+            {
+                if ($orderColumn == $key) {
+                    $orderColumnName = $column['name'];
+                }
+            }
+            $res = $this->getDoctrine()->getRepository(LapSession::class)->
+            getLapSessions($start, $length, $orderColumnName, $orderDir, $searchValue);
+            $recordsTotalCount = count($this->getDoctrine()->getRepository(LapSession::class)->findAll());
+            $response = [
+                "draw" => $draw,
+                "recordsTotal" => $recordsTotalCount,
+                "recordsFiltered" => $recordsTotalCount,
+                "data" => $res,
+            ];
+            return new JsonResponse($response, 200);
+        } else {
+            return new JsonResponse([], 400);
+        }
+    }
+
+    /**
      * @Route("/laps/loadRecords/{limit}/{timeMode}", name="laps/loadRecords/{limit}/{timeMode}")
      */
     public function loadRecordsAction(Request $request, $limit, $timeMode)
@@ -145,11 +181,6 @@ class LapsController extends Controller
                     $lap->setKart($kart);
                     $lap->setUser($user);
                     $laps [] = $lap;
-//                    $em = $this->getDoctrine()->getManager();
-//                    $em->persist($lap);
-//                    $em->flush();
-//                    $insertedLapId = $lap->getId();
-//                    $insertedLapsId [] = $insertedLapId;
                 }
                 $i = $i + 1;
             }
@@ -174,8 +205,6 @@ class LapsController extends Controller
             fclose($file);
             return new JsonResponse($insertedLapsId, 200);
         } catch (Exception $e) {
-            print_r($e->getMessage());
-            exit();
             return new JsonResponse('cant locate file', 404);
         }
     }
