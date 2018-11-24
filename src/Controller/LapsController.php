@@ -36,10 +36,7 @@ class LapsController extends Controller
      */
     public function lapsForSessionAction(Request $request, $id)
     {
-;
         $lapsTemp = $this->getDoctrine()->getRepository(Lap::class)->getLapsForSession($id, $this->getUser()->getId());
-//        print_r($lapsTemp);
-//        exit();
         $laps = [];
         $position = 1;
         foreach ($lapsTemp as $lapTemp) {
@@ -186,7 +183,7 @@ class LapsController extends Controller
     public function readingCSVAction(Request $request)
     {
         try {
-            $file = fopen(__DIR__ . '/' . "test.csv", "r");
+            $file = fopen(__DIR__ . '/' . "test2.csv", "r");
             $laps = [];
             $i = 0;
             $insertedLapsId = [];

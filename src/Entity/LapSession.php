@@ -32,7 +32,7 @@ class LapSession
      */
     private $endDate;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Lap", mappedBy="lapSession")
+     * @ORM\OneToMany(targetEntity="App\Entity\Lap", mappedBy="lapSession", cascade={"persist"})
      */
     private $lap;
 

@@ -12,7 +12,7 @@
     <div class="container">
         <div class="col-md-12 alertArea">
         </div>
-        <h4 class="pageHeader">Twoje okrążenia dla sesji</h4>
+        <h4 class="pageHeader"><i class="fas fa-angle-left goBack"></i>Twoje okrążenia dla sesji</h4>
         <div class="row">
             <div class="col-md-12 tableArea">
                 <table class="table userLapsTable">
@@ -23,7 +23,6 @@
                         <th>Gokart</th>
                     </thead>
                     <tbody>
-                    {% if laps %}
                         {% for lap in laps %}
                             <tr class="lap-row" lap-id="{{ lap.lap.id }}">
                                 <td>{{ lap.position }}</td>
@@ -32,9 +31,6 @@
                                 <td>{{ lap.lap.kart.name }}</td>
                             </tr>
                         {% endfor %}
-                    {% else %}
-                        <span>Brak okrążeń dla tej sesji</span>
-                    {% endif %}
                     </tbody>
                 </table>
             </div>

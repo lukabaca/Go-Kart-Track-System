@@ -48,7 +48,7 @@ class Lap
      * @ORM\Column(type="float")
      */
     private $averageSpeed;
-    /**ka
+    /**
      * @ORM\Column(type="datetime")
      */
     private $date;

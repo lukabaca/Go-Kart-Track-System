@@ -36,4 +36,9 @@ $(document).ready(function () {
         "pageLength": 10,
         "order": [[0, 'asc'], [1, 'asc']],
     });
+    $('.table tbody').on('click', '.lapSession-row', function (e) {
+        e.preventDefault();
+        let sessionId = $(this).closest('tr').attr('lapSession-id');
+        window.location.href = '/laps/lapsForSession/' + sessionId;
+    });
 });
