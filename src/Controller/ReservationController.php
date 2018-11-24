@@ -302,15 +302,13 @@ class ReservationController extends Controller
      */
     public function reservationDetailsAction(Request $request, $id)
     {
-        //sprawdz czy dla id tej rezerwacji nalezy do zalogowanego uzytkwonika, jesli tak to pokaz szczegoly rezerwacji
-        //jesli nie to przekieruj na nie masz dostepu do tej strony
         $reservation = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->find($id);
         if(!$reservation) {
             return $this->render('views/alerts/404.html.twig', []);
         }
         $userIdForReservation = $reservation->getUser()->getId();
         if($userIdForReservation != $this->getUser()->getId()) {
-            //nie mozesz przegladac czyich szczegolow rezerwacji
+            throw $this->createAccessDeniedException('You cannot access this page!');
         }
         $kartsInReservation = new ArrayCollection();
         $kartsInReservation = $reservation->getKarts();
