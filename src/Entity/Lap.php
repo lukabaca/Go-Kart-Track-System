@@ -24,7 +24,6 @@ class Lap
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="lap")
      */
@@ -34,9 +33,17 @@ class Lap
      */
     private $kart;
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="integer")
      */
-    private $time;
+    private $minute;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $second;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $milisecond;
     /**
      * @ORM\Column(type="double")
      */
@@ -45,6 +52,29 @@ class Lap
      * @ORM\Column(type="date")
      */
     private $date;
+
+    /**
+     * Lap constructor.
+     * @param $id
+     * @param $user
+     * @param $kart
+     * @param $minute
+     * @param $second
+     * @param $milisecond
+     * @param $averageSpeed
+     * @param $date
+     */
+    public function __construct($id = null, $user = null, $kart = null, $minute = null, $second = null, $milisecond = null, $averageSpeed = null, $date = null)
+    {
+        $this->id = $id;
+        $this->user = $user;
+        $this->kart = $kart;
+        $this->minute = $minute;
+        $this->second = $second;
+        $this->milisecond = $milisecond;
+        $this->averageSpeed = $averageSpeed;
+        $this->date = $date;
+    }
 
     /**
      * @return mixed
@@ -97,17 +127,49 @@ class Lap
     /**
      * @return mixed
      */
-    public function getTime()
+    public function getMinute()
     {
-        return $this->time;
+        return $this->minute;
     }
 
     /**
-     * @param mixed $time
+     * @param mixed $minute
      */
-    public function setTime($time): void
+    public function setMinute($minute): void
     {
-        $this->time = $time;
+        $this->minute = $minute;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSecond()
+    {
+        return $this->second;
+    }
+
+    /**
+     * @param mixed $second
+     */
+    public function setSecond($second): void
+    {
+        $this->second = $second;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMilisecond()
+    {
+        return $this->milisecond;
+    }
+
+    /**
+     * @param mixed $milisecond
+     */
+    public function setMilisecond($milisecond): void
+    {
+        $this->milisecond = $milisecond;
     }
 
     /**
@@ -141,4 +203,5 @@ class Lap
     {
         $this->date = $date;
     }
+
 }

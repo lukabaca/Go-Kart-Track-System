@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Kart;
 use App\Entity\Lap;
 use App\Entity\User;
+use DateTime;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -81,6 +82,52 @@ class LapsController extends Controller
             $records [] = $record;
         }
         return new JsonResponse($records, 200);
+    }
+
+    /**
+     * @Route("/laps/readingCSV", name="/laps/readingCSV")
+     */
+    public function readingCSVAction(Request $request)
+    {
+        try {
+            $file = fopen(__DIR__ . '/' . "test.csv", "r");
+            $laps = [];
+            $i = 0;
+            while (($line = fgetcsv($file)) !== FALSE) {
+                if($i > 0) {
+                    $lap = new Lap();
+                    $time = $line[0];
+                    $timeSplit = explode(':', $time);
+                    $minute = $timeSplit[0];
+                    $second = $timeSplit[1];
+                    $milisecond = $timeSplit[2];
+                    print_r($minute);
+                    print_r($second);
+                    print_r($milisecond);
+                    exit();
+                    $lap->setTime($timeDate);
+                    $lap->setAverageSpeed($line[1]);
+                    $lap->setDate($line[2]);
+                    $kart = $this->getDoctrine()->getRepository(Kart::class)->find($line[3]);
+                    $user = $this->getDoctrine()->getRepository(User::class)->find($line[4]);
+                    $lap->setKart($kart);
+                    $lap->setUser($user);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($lap);
+                    $em->flush();
+                    print_r($lap->getId());
+                }
+                $i = $i + 1;
+//                $laps [] = $lap;
+            }
+            fclose($file);
+            exit();
+            return new JsonResponse($laps, 200);
+        } catch (Exception $e) {
+            print_r($e->getMessage());
+            exit();
+            return new JsonResponse('cant locate file', 404);
+        }
     }
 
     /**
