@@ -134,7 +134,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/reservation/getKarts',
+            url: '/reservation/getAvailableKarts',
             success: function (data) {
                 if(data.length > 0) {
                     karts = data;
@@ -145,20 +145,27 @@ $(document).ready(function () {
                 showReservationForm();
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                stopLoadingProgress();
                 let statusCode = xhr.status;
+                let errorMessage = '';
                 switch (statusCode) {
+                    case 404: {
+                        errorMessage = 'Brak dostępnych gokartów w ofercie';
+                        break;
+                    }
                     default : {
-                        let alertErrorContent =
-                            '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                            '<span aria-hidden="true">X</span>' +
-                            '</button>' +
-                            '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
-                            '</div>';
-                        $('.alertArea').append(alertErrorContent);
+                        errorMessage = 'Wystąpił błąd podczas pobierania danych';
                         break;
                     }
                 }
+                let alertErrorContent =
+                    '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">X</span>' +
+                    '</button>' +
+                    '<strong>'+errorMessage+'</strong>' +
+                    '</div>';
+                $('.alertArea').append(alertErrorContent);
             }
         });
     }
@@ -313,20 +320,23 @@ $(document).ready(function () {
                 showReservationForm();
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                stopLoadingProgress();
                 let statusCode = xhr.status;
+                let errorMessage = '';
                 switch (statusCode) {
                     default : {
-                        let alertErrorContent =
-                            '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                            '<span aria-hidden="true">X</span>' +
-                            '</button>' +
-                            '<strong>Wystąpił błąd podczas pobierania danych</strong>' +
-                            '</div>';
-                        $('.alertArea').append(alertErrorContent);
+                        errorMessage = 'Wystąpił błąd podczas pobierania danych';
                         break;
                     }
                 }
+                let alertErrorContent =
+                    '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">X</span>' +
+                    '</button>' +
+                    '<strong>'+errorMessage+'</strong>' +
+                    '</div>';
+                $('.alertArea').append(alertErrorContent);
             }
         });
     }
@@ -356,6 +366,7 @@ $(document).ready(function () {
                showReservationForm();
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                stopLoadingProgress();
                 let statusCode = xhr.status;
                 switch (statusCode) {
                     default : {

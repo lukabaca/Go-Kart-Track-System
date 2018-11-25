@@ -126,9 +126,13 @@ footer {
   font-size: 25px;
   cursor: pointer;
 }
-.noData {
+.noData-area {
+  width: 100%;
   text-align: center;
-  font-size: 20px;
+  .noData {
+    text-align: center;
+    font-size: 20px;
+  }
 }
 
 /*data table styling */
@@ -136,4 +140,11 @@ footer {
   color: $pageHeader;
   font-size: 30px;
   text-align: center;
+}
+
+/*forms required fields *
+ */
+.form-group label.required:after {
+  content:"*" !important;
+  color:red !important;
 }
