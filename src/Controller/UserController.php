@@ -9,6 +9,7 @@
 namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\User;
+use App\Form\UserType;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 class UserController extends Controller
 {
     /**
@@ -134,5 +137,29 @@ class UserController extends Controller
         } else {
             return new JsonResponse([], 400);
         }
+    }
+
+    /**
+     * @Route("/user/editUserData", name="user/editUserData")
+     */
+    public function editUserDataAction(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $dataSuccessChange = false;
+        $user = $this->getUser();
+        $userForm = $this->createForm(UserType::class, $user);
+        $userForm->handleRequest($request);
+        if($userForm->isSubmitted() && $userForm->isValid())
+        {
+            $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($encodedPassword);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $dataSuccessChange = true;
+        }
+        return $this->render('views/controllers/user/editUser.html.twig', [
+            'dataSuccessChange' => $dataSuccessChange,
+            'userForm' => $userForm->createView(),
+        ]);
     }
 }

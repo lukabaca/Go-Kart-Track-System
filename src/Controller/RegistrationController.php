@@ -33,22 +33,22 @@ class RegistrationController extends Controller
           $user = new User();
           return $this->handleForm($request, $user, $passwordEncoder);
     }
-    /**
-     * @Route("/registration/editUserData", name="registration/editUserData")
-     */
-    public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
-    {
-        $user = $this->getUser();
-        $userID = $user->getId();
-        $repository = $this->getDoctrine()->getRepository(User::class);
-        $userToEdit = $repository->find($userID);
-        if(!$userToEdit) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$userID
-            );
-        }
-        return $this->handleForm($request, $userToEdit, $passwordEncoder, true);
-    }
+//    /**
+//     * @Route("/registration/editUserData", name="registration/editUserData")
+//     */
+//    public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
+//    {
+//        $user = $this->getUser();
+//        $userID = $user->getId();
+//        $repository = $this->getDoctrine()->getRepository(User::class);
+//        $userToEdit = $repository->find($userID);
+//        if(!$userToEdit) {
+//            throw $this->createNotFoundException(
+//                'No user found for id '.$userID
+//            );
+//        }
+//        return $this->handleForm($request, $userToEdit, $passwordEncoder, true);
+//    }
     private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder, $isEditingUser = false)
     {
         $userLoginForm = $this->createForm(UserType::class, $user);
@@ -73,7 +73,6 @@ class RegistrationController extends Controller
                     'sucessfulRegistration' => true
                 ]);
             }
-            //tutaj przekieruj na dashboard
             return $this->render('views/controllers/dashboard/index.html.twig', []);
         }
         if(!$isEditingUser) {
