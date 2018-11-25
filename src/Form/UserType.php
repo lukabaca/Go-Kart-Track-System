@@ -91,7 +91,8 @@ class UserType extends AbstractType
             'attr' => [
                 'placeholder' => 'Numer telefonu',
                 'class' => 'form-control'
-            ]
+            ],
+            'help' =>'Podaj numer komórkowy jako 9 cyfr bez spacji',
         ));
         $builder->add('submit', SubmitType::class, array(
             'label' => 'Zarejestruj się',
