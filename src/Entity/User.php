@@ -70,7 +70,6 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=30)
      *
-     *
      * @Assert\Regex(
      *     pattern = "/^[a-zA-ZęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+$/",
      *     message="Wartość {{ value }} nie jest w poprawnym formacie"

@@ -5,8 +5,6 @@ use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\UserRoles;
 use App\Form\UserType;
-use App\Repository\RoleRepository;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;

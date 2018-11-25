@@ -40,7 +40,6 @@ class UserType extends AbstractType
             'label' => 'Hasło',
             'required' => TRUE,
             'options' => array('attr' => array('class' => 'form-control')),
-
             'first_options'  => array('label' => 'Hasło'),
             'second_options' => array('label' => 'Powtórz hasło'),
         ));
