@@ -232,11 +232,12 @@ $(document).ready(function () {
             return;
         }
         let tdWithCheckBox = $(this).closest('tr').find('td.kartCheckBox');
-        let isRowChecked = tdWithCheckBox.find('input').prop('checked');
+        let checkBox = tdWithCheckBox.find('input');
+        let isRowChecked = checkBox.prop('checked');
         if(isRowChecked) {
-            test.find('input').prop('checked', false);
+            checkBox.prop('checked', false);
         } else {
-            test.find('input').prop('checked', true);
+            checkBox.prop('checked', true);
         }
     });
 
