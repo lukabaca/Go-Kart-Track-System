@@ -16,6 +16,10 @@
       position: static;
       overflow: auto;
     }
+    .record-row:hover {
+      cursor: pointer;
+      background-color: $mainAccentLight;
+    }
   }
 }
 #kartTable {

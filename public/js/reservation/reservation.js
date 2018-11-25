@@ -184,7 +184,7 @@ $(document).ready(function () {
             if(isValid && availability == 1) {
                 let recordContent =
                     '<tr class="record-row" kart-id=' + id + '>' +
-                    '<td class="record-info-td">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
+                    '<td class="record-info-td kartCheckBox">'+'<input type="checkbox" class="form-check-input" value="' + id + '">'+'</td>' +
                     '<td class="record-info-td">' + name + '</td>' +
                     '<td class="record-info-td">' + prize + 'zł</td>' +
                     '</tr>';
@@ -217,6 +217,21 @@ $(document).ready(function () {
             //error bo nie znalazlem katalogu, ups cos poszlo nie tak?
         }
         checkButtonStatus();
+    });
+
+    $('body').on('click', '.record-row', function (e) {
+        e.stopPropagation();
+        if(e.target.nodeName === "INPUT") {
+            return;
+        }
+        let kartId = $(this).closest('tr').attr('kart-id');
+        let test = $(this).closest('tr').find('td.kartCheckBox');
+        let isRowChecked = test.find('input').prop('checked');
+        if(isRowChecked) {
+            test.find('input').prop('checked', false);
+        } else {
+            test.find('input').prop('checked', true);
+        }
     });
 
     $('#confirmKartsModalBtn').on('click', function (e) {
