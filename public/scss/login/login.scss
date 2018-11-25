@@ -1,6 +1,11 @@
 @import "../common/colors";
 .loginArea {
+ padding-left: 15px;
+ padding-right: 15px;
  margin-top: 10%;
+ .loginCard {
+   width: 100%;
+ }
 }
 .headerLoginArea {
  text-align: center;
@@ -25,8 +30,8 @@
 }
 .formArea {
  background-color: white;
- padding-bottom: 0px;
- margin-bottom: 0px;
+ padding-bottom: 0;
+ margin-bottom: 0;
  padding-top: 20px;
 }
 .headerLogin {

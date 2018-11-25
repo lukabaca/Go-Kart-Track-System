@@ -127,7 +127,7 @@ class ReservationController extends Controller
     {
         $timePerOneRideTemp = $this->getDoctrine()->getManager()->getRepository(RideTimeDictionary::class)->getTimePerOneRide();
         if(!$timePerOneRideTemp) {
-            return new JsonResponse([], 404);
+            return new JsonResponse(['no time per one ride found'], 404);
         }
         $timePerOneRide = [
             'id' => $timePerOneRideTemp->getId(),
@@ -258,9 +258,9 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/reservation/getKarts", name="reservation/getKarts")
+     * @Route("/reservation/getAvailableKarts", name="reservation/getAvailableKarts")
      */
-    public function getKartsAction(Request $request)
+    public function getAvailableKartsAction(Request $request)
     {
        $karts = $this->getDoctrine()->getManager()->getRepository(Kart::class)->findAll();
        if(!$karts) {
@@ -268,15 +268,19 @@ class ReservationController extends Controller
        }
        $kartsRes = [];
        foreach ($karts as $kart) {
-            $kartTemp = [
-                'id' => $kart->getId(),
-                'name' => $kart->getName(),
-                'prize' => $kart->getPrize(),
-                'availability' => $kart->getAvailability(),
-            ];
-            $kartsRes [] = $kartTemp;
+           if($kart->getAvailability()) {
+               $kartTemp = [
+                   'id' => $kart->getId(),
+                   'name' => $kart->getName(),
+                   'prize' => $kart->getPrize(),
+                   'availability' => $kart->getAvailability(),
+               ];
+               $kartsRes [] = $kartTemp;
+           }
        }
-
+       if(!$kartsRes) {
+           return new JsonResponse('no available karts found', 404);
+       }
        return new JsonResponse($kartsRes, 200);
     }
 

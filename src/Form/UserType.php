@@ -40,7 +40,6 @@ class UserType extends AbstractType
             'label' => 'Hasło',
             'required' => TRUE,
             'options' => array('attr' => array('class' => 'form-control')),
-
             'first_options'  => array('label' => 'Hasło'),
             'second_options' => array('label' => 'Powtórz hasło'),
         ));
@@ -92,7 +91,8 @@ class UserType extends AbstractType
             'attr' => [
                 'placeholder' => 'Numer telefonu',
                 'class' => 'form-control'
-            ]
+            ],
+            'help' =>'Podaj numer komórkowy jako 9 cyfr bez spacji',
         ));
         $builder->add('submit', SubmitType::class, array(
             'label' => 'Zarejestruj się',

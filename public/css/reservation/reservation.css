@@ -13,6 +13,9 @@
       margin: 0;
       position: static;
       overflow: auto; }
+    .table-area #kartTableModal .record-row:hover {
+      cursor: pointer;
+      background-color: #e0e0e0; }
 
 #kartTable {
   margin-top: 25px; }

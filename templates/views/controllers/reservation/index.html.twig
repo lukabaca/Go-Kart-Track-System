@@ -23,23 +23,23 @@ Rezerwacja
                     <div class="row">
                         <form method="POST" action="#" id="reservationForm">
                             <div class="form-group">
-                                <label for="reservationStart">Dzień</label>
+                                <label class="required" for="reservationDate">Dzień</label>
                                 <input type="text" class="form-control datePicker" id="dateInput" required>
                             </div>
                             <div class="form-group form-row">
                                 <div class="col">
-                                    <label for="reservationStart">Godzina rozpoczęcia</label>
+                                    <label class="required" for="reservationStart">Godzina rozpoczęcia</label>
                                     <input type="text" class="form-control timePicker" id="hourStartInput" required>
                                     <small class="form-text text-muted" id="trackWorkingHoursInfo"></small>
                                     <small class="formErrorMessage" id="cantReserveInfo"></small>
                                 </div>
                                 <div class="col">
-                                    <label for="reservationStart">Godzina zakończenia</label>
+                                    <label for="reservationEnd">Godzina zakończenia</label>
                                     <input type="text" class="form-control" id="hourEndInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="reservationStart">Ilość przejazdów</label>
+                                <label class="required" for="reservationNumberOfRides">Ilość przejazdów</label>
                                 <input type="number" class="form-control" id="numberOfRidesInput" min="1" max="5" required>
                                 <small class="form-text text-muted" id="trackWorkingHoursInfo">Maksymalna liczba przejazdów na rezerwacje to 5</small>
                             </div>

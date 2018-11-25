@@ -67,7 +67,7 @@
                         {{ form_label(userLoginForm.telephoneNumber) }}
                         {{ form_widget(userLoginForm.telephoneNumber) }}
                         <small class="formErrorMessage">{{ form_errors(userLoginForm.telephoneNumber) }}</small>
-                        {{ form_help(userLoginForm.telephoneNumber) }}
+                        <small class="form-text text-muted">{{ form_help(userLoginForm.telephoneNumber) }}</small>
                     </div>
                     <div class="form-group">
                         {{ form_label(userLoginForm.submit) }}
@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="registrationResponseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,7 +102,7 @@
     <script src="{{ asset('js/registration/registration.js') }}"></script>
     {% if successfulRegistration %}
         <script>
-            $('#exampleModal').modal('show');
+            $('#registrationResponseModal').modal('show');
         </script>
     {% endif %}
 {%  endblock %}
