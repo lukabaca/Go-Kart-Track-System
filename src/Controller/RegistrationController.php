@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-03
- * Time: 17:50
- */
 
 namespace App\Controller;
-
-
 use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\UserRoles;

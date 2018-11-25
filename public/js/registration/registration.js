@@ -35,11 +35,9 @@ $( document ).ready(function() {
        e.preventDefault();
         let selectedMonth = $(this).find(":selected").val();
         let selectedYear = yearSelect.find(':selected').val();
-
         let dayCount = calculateDays(selectedMonth, selectedYear);
         daysSelect.empty();
         populateDays(dayCount, daysSelect);
-
     });
 });
 function initSelects(actualYear, yearSelect, monthSelect, daysSelect) {
@@ -50,7 +48,6 @@ function initSelects(actualYear, yearSelect, monthSelect, daysSelect) {
         } else {
             monthNumber = i;
         }
-
         let optionMonth = '<option value="'+i+'">'+monthNumber+'</option>';
         monthSelect.append(optionMonth);
     }
