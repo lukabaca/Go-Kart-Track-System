@@ -105,7 +105,7 @@ class LapsController extends Controller
             }
             $res = $this->getDoctrine()->getRepository(LapSession::class)->
             getLapSessions($start, $length, $orderColumnName, $orderDir, $searchValue, $this->getUser()->getId());
-            $recordsTotalCount = count($this->getDoctrine()->getRepository(LapSession::class)->findAll());
+            $recordsTotalCount = count($res);
             $response = [
                 "draw" => $draw,
                 "recordsTotal" => $recordsTotalCount,
