@@ -92,22 +92,28 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=11)
-     *
-     *
-     * * @Assert\Regex(
-     *     pattern = "/^[0-9]{11}/",
-     *     message="Numer pesel musi składać się z 11 cyfr"
+     * @Assert\Regex(
+     *     pattern = "/^[0-9]+/",
+     *     message="Pesel musi składać się wyłącznie z cyfr"
+     * )
+     * @Assert\Length(
+     *    max = 11,
+     *    min = 11,
+     *    exactMessage="Numer pesel musi składać się z 11 cyfr",
      * )
      */
     private $pesel;
 
     /**
      * @ORM\Column(type="string", length=9)
-     *
-     *
-     * * @Assert\Regex(
+     * @Assert\Regex(
      *     pattern = "/^[a-zA-Z]{3}[0-9]{6}/",
      *     message="Niepoprawny format serii i numeru dowodu osobistego (wymagane 3 litery oraz 6 cyfr)"
+     * )
+     * @Assert\Length(
+     *    max = 9,
+     *    min = 9,
+     *    exactMessage="Wymagane są 3 litery oraz 6 cyfr",
      * )
      */
     private $documentID;

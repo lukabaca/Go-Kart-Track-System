@@ -35,18 +35,12 @@ $( document ).ready(function() {
        e.preventDefault();
         let selectedMonth = $(this).find(":selected").val();
         let selectedYear = yearSelect.find(':selected').val();
-
         let dayCount = calculateDays(selectedMonth, selectedYear);
         daysSelect.empty();
         populateDays(dayCount, daysSelect);
-
     });
 });
 function initSelects(actualYear, yearSelect, monthSelect, daysSelect) {
-    // for(let i = 1898; i <= actualYear.getFullYear() - 1; i++) {
-    //     let optionYear = '<option value="'+i+'">'+i+'</option>';
-    //     yearSelect.append(optionYear);
-    // }
     for(i = 1; i <= 12; i++) {
         let monthNumber;
         if(i < 10) {
@@ -54,7 +48,6 @@ function initSelects(actualYear, yearSelect, monthSelect, daysSelect) {
         } else {
             monthNumber = i;
         }
-
         let optionMonth = '<option value="'+i+'">'+monthNumber+'</option>';
         monthSelect.append(optionMonth);
     }
