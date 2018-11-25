@@ -231,9 +231,8 @@ $(document).ready(function () {
         if(e.target.nodeName === "INPUT") {
             return;
         }
-        let kartId = $(this).closest('tr').attr('kart-id');
-        let test = $(this).closest('tr').find('td.kartCheckBox');
-        let isRowChecked = test.find('input').prop('checked');
+        let tdWithCheckBox = $(this).closest('tr').find('td.kartCheckBox');
+        let isRowChecked = tdWithCheckBox.find('input').prop('checked');
         if(isRowChecked) {
             test.find('input').prop('checked', false);
         } else {

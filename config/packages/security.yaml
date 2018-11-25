@@ -42,4 +42,5 @@ security:
          - { path: ^/recording/*, roles: ROLE_USER}
          - { path: ^/reservation/*, roles: [ROLE_USER, ROLE_ADMIN]}
          - { path: ^/vehicle/*, roles: [ROLE_USER, ROLE_ADMIN]}
+         - { path: ^/trackInfo/*, roles: [ROLE_USER, ROLE_ADMIN]}
 
