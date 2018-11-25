@@ -119,8 +119,8 @@ $(document).ready(function () {
                    hourEndInput.val('');
                    cantReserveInfoLabel.text('Tor jest już zamknięty');
                } else {
-                   setMinTime(hourStartInput, tmp);
-                   setMaxTime(hourStartInput, today);
+                   setMinTime(hourStartInput, today);
+                   setMaxTime(hourStartInput, tmp);
                }
            }
            isValidDate = true;
