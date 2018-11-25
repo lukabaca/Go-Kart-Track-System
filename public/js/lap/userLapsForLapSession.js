@@ -8,7 +8,6 @@ $(document).ready(function () {
             {extend: 'csv', className: 'btn btn-primary tableButton', charset: 'utf-8', fieldSeparator: ',',
                 fieldBoundary: '',},
         ],
-        // 'csv', 'excel', 'pdf'
         "columns": [
             { "width": "25%" },
             { "width": "25%" },
