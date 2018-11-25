@@ -43,10 +43,6 @@ $( document ).ready(function() {
     });
 });
 function initSelects(actualYear, yearSelect, monthSelect, daysSelect) {
-    // for(let i = 1898; i <= actualYear.getFullYear() - 1; i++) {
-    //     let optionYear = '<option value="'+i+'">'+i+'</option>';
-    //     yearSelect.append(optionYear);
-    // }
     for(i = 1; i <= 12; i++) {
         let monthNumber;
         if(i < 10) {

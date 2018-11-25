@@ -100,7 +100,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/registration/registration.js') }}"></script>
-    {% if sucessfulRegistration %}
+    {% if successfulRegistration %}
         <script>
             $('#exampleModal').modal('show');
         </script>

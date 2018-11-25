@@ -33,24 +33,10 @@ class RegistrationController extends Controller
           $user = new User();
           return $this->handleForm($request, $user, $passwordEncoder);
     }
-//    /**
-//     * @Route("/registration/editUserData", name="registration/editUserData")
-//     */
-//    public function editUserDataAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserInterface $user)
-//    {
-//        $user = $this->getUser();
-//        $userID = $user->getId();
-//        $repository = $this->getDoctrine()->getRepository(User::class);
-//        $userToEdit = $repository->find($userID);
-//        if(!$userToEdit) {
-//            throw $this->createNotFoundException(
-//                'No user found for id '.$userID
-//            );
-//        }
-//        return $this->handleForm($request, $userToEdit, $passwordEncoder, true);
-//    }
-    private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder, $isEditingUser = false)
+
+    private function handleForm(Request $request, User $user, UserPasswordEncoderInterface $encoder)
     {
+        $successfulRegistration = false;
         $userLoginForm = $this->createForm(UserType::class, $user);
         $userLoginForm->handleRequest($request);
         if($userLoginForm->isSubmitted() && $userLoginForm->isValid())
@@ -67,23 +53,11 @@ class RegistrationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            if(!$isEditingUser) {
-                return $this->render('views/controllers/registration/index.html.twig', [
-                    'userLoginForm' => $userLoginForm->createView(),
-                    'sucessfulRegistration' => true
-                ]);
-            }
-            return $this->render('views/controllers/dashboard/index.html.twig', []);
+            $successfulRegistration = true;
         }
-        if(!$isEditingUser) {
-            return $this->render('views/controllers/registration/index.html.twig', [
-                'userLoginForm' => $userLoginForm->createView(),
-                'sucessfulRegistration' => false
-            ]);
-        } else {
-            return $this->render('views/controllers/registration/editUser.html.twig', [
-                'userLoginForm' => $userLoginForm->createView(),
-            ]);
-        }
+        return $this->render('views/controllers/registration/index.html.twig', [
+            'userLoginForm' => $userLoginForm->createView(),
+            'successfulRegistration' => $successfulRegistration,
+        ]);
     }
 }
