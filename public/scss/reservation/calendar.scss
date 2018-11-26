@@ -12,3 +12,10 @@
 #emptyCalendarHeader {
   text-align: center;
 }
+.popover {
+  height: 150px !important;
+  z-index: 9999;
+}
+.fc-content {
+  //font-size: 10px !important;
+}
