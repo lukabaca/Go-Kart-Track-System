@@ -122,6 +122,30 @@ function initCalendar(eventArray, defaultView) {
         slotDuration: '00:10:00',
         //slotLabelInterval pomysl czy ma zostac czy nie
         // slotLabelInterval: 10,
+        // eventClick: function(calEvent, jsEvent, view) {
+        //     console.log('Event: ' + calEvent.id);
+        //     console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        //     console.log('View: ' + view.name);
+        // },
+        eventRender: function(eventObj, element) {
+            let startDate = eventObj.start.toDate();
+            let endDate = eventObj.end.toDate();
+            let day = startDate.getDate() + '-' + startDate.getMonth() + '-' +  startDate.getFullYear();
+            let hourAndMinuteStart = startDate.getHours() + ':' + startDate.getMinutes();
+            let hourAndMinuteEnd = endDate.getHours() + ':' + endDate.getMinutes();
+            let content =
+                '<p>'+day+'</p' +
+                '<span>'+hourAndMinuteStart + '-' + hourAndMinuteEnd+'</span>';
+            element.popover({
+                html: true,
+                trigger: 'hover',
+                content: '<p>'+day+'</p>' +
+                    '<span>'+'<strong>'+hourAndMinuteStart+'</strong>' + '-' + '<strong>'+hourAndMinuteEnd+'</strong>'+'</span>',
+                placement: 'top',
+                container: 'body',
+                animation: true,
+            });
+        },
     });
 }
     function destroyCalendar() {
