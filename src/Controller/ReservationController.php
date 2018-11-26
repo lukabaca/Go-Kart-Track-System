@@ -13,6 +13,7 @@ use App\Entity\Kart;
 use App\Entity\Reservation;
 use App\Entity\trackConfig\RideTimeDictionary;
 use App\Entity\trackConfig\TrackInfo;
+use App\Helper\RoleHelper;
 use App\Repository\trackConfig\RideTimeDictionaryRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -313,11 +314,16 @@ class ReservationController extends Controller
         if(!$reservation) {
             return $this->render('views/alerts/404.html.twig', []);
         }
+        $loggedUserRoles = new ArrayCollection();
+        $loggedUserRoles = $this->getUser()->getRoles();
+        $isAdmin = false;
+        $isAdmin = RoleHelper::getRoleByRoleName($loggedUserRoles, 'ROLE_ADMIN');
         $userIdForReservation = $reservation->getUser()->getId();
-        if($userIdForReservation != $this->getUser()->getId()) {
-            throw $this->createAccessDeniedException('You cannot access this page!');
+        if(!$isAdmin) {
+            if ($userIdForReservation != $this->getUser()->getId()) {
+                throw $this->createAccessDeniedException('You cannot access this page!');
+            }
         }
-        $kartsInReservation = new ArrayCollection();
         $kartsInReservation = $reservation->getKarts();
         $startDate = date_create($reservation->getStartDate());
         $startDateHour = date_format($startDate, 'H:i');
@@ -329,7 +335,7 @@ class ReservationController extends Controller
             'startDateHour' => $startDateHour,
             'endDateHour' => $endDateHour,
             'reservation' => $reservation,
-            'karts' => $kartsInReservation
+            'karts' => $kartsInReservation,
         ]
         );
     }

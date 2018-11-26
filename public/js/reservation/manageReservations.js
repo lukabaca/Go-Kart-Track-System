@@ -28,13 +28,6 @@ $(document).ready(function () {
             { "data": "name", "name": "name",   "targets": 4, "defaultContent": "-", },
             { "data": "surname", "name": "surname",   "targets": 5, "defaultContent": "-", },
         ],
-        // "columns": [
-        //     { "width": "25%" },
-        //     { "width": "25%" },
-        //     { "width": "10%" },
-        //     { "width": "10%" },
-        //     { "width": "10%"},
-        // ],
         // Server-side parameters
         "processing": true,
         "serverSide": true,
@@ -44,7 +37,6 @@ $(document).ready(function () {
         },
         "createdRow": function(row, data, dataIndex, cells) {
             if(data.by_time_reservation_type == 1) {
-                console.log(data);
                 $(row).addClass('timeTypeReservation');
             }
             $(row).addClass('reservation-row').attr('reservation-id', data.id);
@@ -55,5 +47,10 @@ $(document).ready(function () {
         "searching": true,
         "pageLength": 10,
         "order": [[0, 'desc']],
+    });
+    $('.table tbody').on('click', '.reservation-row', function (e) {
+        e.preventDefault();
+        let reservationId = $(this).closest('tr').attr('reservation-id');
+        window.location.href = '/reservation/reservationDetails/' + reservationId;
     });
 });

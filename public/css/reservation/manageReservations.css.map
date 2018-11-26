@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAEA,oBAAqB;EACnB,gBAAgB,EAAE,kBAAkB",
+"mappings": "AAEA,oBAAqB;EACnB,gBAAgB,EAAE,kBAAkB;;AAEtC,sBAAuB;EACrB,MAAM,EAAE,OAAO;EACf,gBAAgB,EAAE,kBAA2B",
 "sources": ["../../scss/reservation/manageReservations.scss"],
 "names": [],
 "file": "manageReservations.css"
