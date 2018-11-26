@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AACA,gBAAiB;EACf,KAAK,EAAE,IAAI;EACX,0BAAU;IACR,KAAK,EAAE,IAAI;EAEb,qBAAK;IACH,aAAa,EAAE,IAAI;EAErB,gCAAgB;IACd,aAAa,EAAE,CAAC",
-"sources": ["../../scss/reservation/timeTypeReservation.scss"],
+"mappings": "AACA,gBAAiB;EACf,KAAK,EAAE,IAAI;EACX,0BAAU;IACR,KAAK,EAAE,IAAI;EAEb,qBAAK;IACH,aAAa,EAAE,IAAI;EAErB,gCAAgB;IACd,aAAa,EAAE,CAAC;;AAGpB,aAAc;EACZ,UAAU,EAAE,MAAM;EAClB,8CAAiC;IAC/B,KAAK,ECfD,OAAO;IDgBX,SAAS,EAAE,IAAI",
+"sources": ["../../scss/reservation/timeTypeReservation.scss","../../scss/common/_colors.scss"],
 "names": [],
 "file": "timeTypeReservation.css"
 }

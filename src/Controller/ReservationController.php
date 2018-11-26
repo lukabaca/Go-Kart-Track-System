@@ -215,17 +215,19 @@ class ReservationController extends Controller
             $endDate = new DateTime($reservationData->{'endDate'});
             $endDate = $endDate->format('Y-m-d H:i:s');
             $cost = $reservationData->{'cost'};
-            $byTimeReservationType = $reservationData->{'byTimeReservationType'};
+            $byTimeReservationType = $reservationData->{'byTimeReservationType'} ? 1 : 0;
             $description = $reservationData->{'description'};
             $kartIds = $reservationData->{'karts'};
-
             $isReservationValid = $this->getDoctrine()->getManager()->getRepository(Reservation::class)->isReservationValid($this->getUser()->getId(),
-                $startDate, $endDate, $cost);
+                $startDate, $endDate, $byTimeReservationType);
             if($isReservationValid == 0) {
                 return new JsonResponse(['Other reservation in this hour exists'], 409);
             }
             if($isReservationValid == 2) {
                 return new JsonResponse(['Wrong dates (too early or too late)'], 400);
+            }
+            if($isReservationValid == 3) {
+                return new JsonResponse(['Cant make reservation not in track working hours'], 400);
             }
             $reservation = new Reservation($startDate, $endDate, $cost, $byTimeReservationType, $description, $this->getUser());
             if(!$byTimeReservationType) {
@@ -252,6 +254,7 @@ class ReservationController extends Controller
                 'description' => $reservation->getDescription(),
             ];
             return new JsonResponse($reservation, 201);
+
         } else {
             return new JsonResponse(['nie otrzymano danych'], 500);
         }

@@ -22,26 +22,26 @@
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="reservationStart">Dzień</label>
+                                            <label class="required" for="reservationStart">Dzień</label>
                                             <input type="text" class="form-control datePicker" id="dateInput" required>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="reservationStart">Godzina rozpoczęcia</label>
+                                            <label class="required" for="reservationStart">Godzina rozpoczęcia</label>
                                             <input type="text" class="form-control" id="startHourInput" required>
                                             <small class="form-text text-muted" id="trackWorkingHoursInfo"></small>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="reservationStart">Godzina zakończenia</label>
+                                            <label class="required" for="reservationStart">Godzina zakończenia</label>
                                             <input type="text" class="form-control" id="endHourInput" required>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="reservationPrize">Cena</label>
+                                            <label class="required" for="reservationPrize">Cena</label>
                                             <input type="number" min="1.00" max="10000.00" step="0.01"class="form-control" id="reservationPrize"
                                                    placeholder="Wprowadź cenę" required>
                                             <small class="form-text text-muted" id="trackWorkingHoursInfo">Cena wyrażona w zł, separatorem dziesiętnym jest przecinek</small>
@@ -75,7 +75,7 @@
                 <div class="modal-body">
                 </div>
                 <div class="col-md-12 responseArea">
-                    <p class="reservationResponseErrorMessage">sss</p>
+                    <p class="reservationResponseErrorMessage"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
