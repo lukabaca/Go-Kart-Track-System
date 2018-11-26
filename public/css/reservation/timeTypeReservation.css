@@ -7,4 +7,10 @@
   #reservationForm .col:last-child {
     padding-right: 0; }
 
+.responseArea {
+  text-align: center; }
+  .responseArea .reservationResponseErrorMessage {
+    color: #DC143C;
+    font-size: 18px; }
+
 /*# sourceMappingURL=timeTypeReservation.css.map */

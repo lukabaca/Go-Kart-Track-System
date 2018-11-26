@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityRepository;
 
 class ReservationRepository extends EntityRepository
 {
-    public function isReservationValid($user_id, $startDate, $endDate, $cost) {
+    public function isReservationValid($user_id, $startDate, $endDate, $byTimeReservationType) {
         $sql = 'call isReservationValid(?, ?, ?, ?)';
         $conn = $this->getEntityManager()->getConnection();
         try {
@@ -24,14 +24,14 @@ class ReservationRepository extends EntityRepository
             $stmt->bindValue(1, $user_id);
             $stmt->bindValue(2, $startDate);
             $stmt->bindValue(3, $endDate);
-            $stmt->bindValue(4, $cost);
+            $stmt->bindValue(4, $byTimeReservationType);
             $rowCount = $stmt->execute();
             if($rowCount == 1) {
                 $res = $stmt->fetch();
                 if(!$res) {
                     return null;
                 }
-                for($i = 0; $i < 3; $i++) {
+                for($i = 0; $i < 4; $i++) {
                    if(!empty($res[$i])) {
                        return $res[$i];
                    }
@@ -43,6 +43,7 @@ class ReservationRepository extends EntityRepository
             return null;
         }
     }
+
     public function makeReservation($user_id, $startDate, $endDate, $cost) {
         $sql = 'call makeReservation(?, ?, ?, ?)';
         $conn = $this->getEntityManager()->getConnection();

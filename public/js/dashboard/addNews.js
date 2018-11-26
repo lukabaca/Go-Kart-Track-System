@@ -24,5 +24,7 @@ $(document).ready(function () {
 
     $('body').on('click', '.deleteImageIcon', function (e) {
         e.stopPropagation();
+        $('#news_file').val("");
+        $('#imageUploaded').attr('src', '');
     });
 });

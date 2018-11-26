@@ -24,11 +24,11 @@ $(document).ready(function () {
                     let errorMessage;
                     switch (statusCode) {
                         case 404: {
-                            window.location.href = '/status404';
+                            // window.location.href = '/status404';
                             break;
                         }
                         default : {
-                            window.location.href = '/status500';
+                            // window.location.href = '/status500';
                             break;
                         }
                     }

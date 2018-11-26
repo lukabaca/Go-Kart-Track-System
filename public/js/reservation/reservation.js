@@ -553,6 +553,7 @@ function makeReservation(startDate, endDate, cost, byTimeReservationType, descri
         "karts": karts,
     };
     reservationData = JSON.stringify(reservationData);
+    console.log(reservationData);
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -568,7 +569,7 @@ function makeReservation(startDate, endDate, cost, byTimeReservationType, descri
             responseElement = $('.reservationResponseErrorMessage');
             switch (statusCode) {
                 case 400: {
-                    responseElement.text('Wprowadzona data jest niepoprawna');
+                    responseElement.text('Wprowadzona data jest niepoprawna (zwróć uwagę na godziny otwarcia toru)');
                     break;
                 }
                 case 404: {
