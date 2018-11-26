@@ -553,7 +553,6 @@ function makeReservation(startDate, endDate, cost, byTimeReservationType, descri
         "karts": karts,
     };
     reservationData = JSON.stringify(reservationData);
-    console.log(reservationData);
     $.ajax({
         type: 'POST',
         dataType: 'json',
