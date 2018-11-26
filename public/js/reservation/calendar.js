@@ -120,19 +120,12 @@ function initCalendar(eventArray, defaultView) {
         slotLabelFormat: 'H:mm',
         editable: false,
         slotDuration: '00:10:00',
-        //slotLabelInterval pomysl czy ma zostac czy nie
-        // slotLabelInterval: 10,
-        // eventClick: function(calEvent, jsEvent, view) {
-        //     console.log('Event: ' + calEvent.id);
-        //     console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-        //     console.log('View: ' + view.name);
-        // },
         eventRender: function(eventObj, element) {
             let startDate = eventObj.start.toDate();
             let endDate = eventObj.end.toDate();
             let day = startDate.getDate() + '-' + startDate.getMonth() + '-' +  startDate.getFullYear();
-            let hourAndMinuteStart = startDate.getHours() + ':' + startDate.getMinutes();
-            let hourAndMinuteEnd = endDate.getHours() + ':' + endDate.getMinutes();
+            let hourAndMinuteStart = createProperHourMinuteFormat(startDate.getHours()) + ':' + createProperHourMinuteFormat(startDate.getMinutes());
+            let hourAndMinuteEnd = createProperHourMinuteFormat(endDate.getHours()) + ':' + createProperHourMinuteFormat(endDate.getMinutes());
             let content =
                 '<p>'+day+'</p' +
                 '<span>'+hourAndMinuteStart + '-' + hourAndMinuteEnd+'</span>';
@@ -265,4 +258,11 @@ function getProperDateFormat(date) {
     }
     let dateFormatted = year + '-' + month + '-' + day;
     return dateFormatted;
+}
+
+function createProperHourMinuteFormat(element) {
+    if (element < 10) {
+        element = '0' + element;
+    }
+    return element;
 }
