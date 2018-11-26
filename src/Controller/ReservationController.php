@@ -330,12 +330,14 @@ class ReservationController extends Controller
         $endDate = date_create($reservation->getEndDate());
         $endDateHour = date_format($endDate, 'H:i');
         $date = date_format($startDate, 'd-m-Y');
+        $byTimeReservationType = $reservation->getByTimeReservationType();
         return $this->render('views/controllers/reservation/reservationDetails.html.twig', [
             'date' => $date,
             'startDateHour' => $startDateHour,
             'endDateHour' => $endDateHour,
             'reservation' => $reservation,
             'karts' => $kartsInReservation,
+            'byTimeReservationType' => $byTimeReservationType,
         ]
         );
     }
