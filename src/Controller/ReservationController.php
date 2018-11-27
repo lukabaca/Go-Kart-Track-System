@@ -38,6 +38,7 @@ class ReservationController extends Controller
     }
     /**
      * @Route("/reservation/timeTypeReservation", name="reservation/timeTypeReservation")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function timeTypeReservationAction(Request $request)
     {
@@ -114,6 +115,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/reservation/manageReservations", name="/reservation/manageReservations")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function manageVehiclesAction(Request $request) {
         return $this->render('views/controllers/reservation/manageReservations.html.twig' ,[

@@ -28,9 +28,7 @@ class RecordingController extends Controller
     {
         $recording = new Recording();
         $recordingLoginForm = $this->createForm(RecordingType::class, $recording);
-
         $recordingsTemp = $this->getDoctrine()->getRepository(Recording::class)->findUserRecordings($this->getUser()->getId());
-
         $recordings = [];
         foreach ($recordingsTemp as $recording) {
             $recordingTemp = $recording;
@@ -38,8 +36,6 @@ class RecordingController extends Controller
             $recordingTemp->setRecordingLink($ytLinkFormatted);
             $recordings [] = $recordingTemp;
         }
-
-
         return $this->render('views/controllers/recording/index.html.twig', [
                 'recordingLoginForm' => $recordingLoginForm->createView(),
                 'recordings' => $recordings
@@ -54,31 +50,24 @@ class RecordingController extends Controller
     {
         if ($request->request->get('recordingData')) {
             $recordingTemp = json_decode($request->request->get('recordingData'), true);
-
             $recording = new Recording();
             $recording->setTitle($recordingTemp['title']);
             $recording->setRecordingLink($recordingTemp['link']);
             $user = $this->getUser();
-
             $recording->setUser($user);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($recording);
             $em->flush();
-
-
+            
             $recording = $this->getDoctrine()->getRepository(Recording::class)->find($recording->getId());
-
             if(!$recording) {
                 return new JsonResponse([], 404);
             }
-
             $id = $recording->getId();
             $title = $recording->getTitle();
             $ytLink = $recording->getRecordingLink();
-
             $ytLinkFormatted = $this->getYoutubeEmbedUrl($ytLink);
-
             $response = [
                 'id' => $id,
                 'title' => $title,
@@ -97,52 +86,21 @@ class RecordingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $recording = $em->getRepository(Recording::class)->find($id);
-
         if(!$recording) {
             return new JsonResponse([], 404);
         }
-
         $recordingUserId = $recording->getUser()->getId();
         $loggedUserId = $this->getUser()->getId();
-
         if($recordingUserId != $loggedUserId) {
             return new JsonResponse([], 401);
         }
-
         $em->remove($recording);
         $em->flush();
-
         return new JsonResponse([], 200);
-
     }
     private function getYoutubeEmbedUrl($url){
-
         $urlParts   = explode('/', $url);
         $vidid      = explode( '&', str_replace('watch?v=', '', end($urlParts) ) );
-
         return 'https://www.youtube.com/embed/' . $vidid[0] ;
-    }
-    /**
-     * @Route("/test", name="test")
-     */
-    public function test(Request $request)
-    {
-
-
-//        $roles = $this->getDoctrine()
-//            ->getRepository(Recording::class)
-//            ->find(1);
-//
-//        if (!$roles)
-//        {
-//            echo 'GGG';
-//        }
-//        $test = $roles->getRecordingLink();
-//        $test2 = $roles->getUser()->getName();
-//        $testYT = $this->getYoutubeEmbedUrl('https://www.youtube.com/watch?v=kHbQr6Xsy8U');
-//        print_r($testYT);
-//        exit();
-
-        $this->getDoctrine()->getRepository(Recording::class)->findUserRecordings(1);
     }
 }
