@@ -14,6 +14,7 @@ $(document).ready(function () {
                 url: '/reservation/deleteReservation/' + reservation_id,
                 success: function (data) {
                     successAlert('Poprawnie anulowano rezerwacje');
+                    $('.deleteReservationBtn').prop('disabled', true);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     let statusCode = xhr.status;
