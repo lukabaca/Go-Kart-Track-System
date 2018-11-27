@@ -88,6 +88,9 @@ class UserController extends Controller
      */
     public function editUserRoleAction(Request $request, $userId, $roleId)
     {
+        if($userId == $this->getUser()->getId()) {
+            return new JsonResponse(['cant change role of yourself'], 403);
+        }
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
         if(!$user) {
             return new JsonResponse(['user not found'], 404);

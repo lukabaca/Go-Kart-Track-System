@@ -12,8 +12,10 @@ $(document).ready(function () {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
+                let messageResponse = '';
                 switch (statusCode) {
                     default : {
+                        window.location.href = '/status500';
                         break;
                     }
                 }
@@ -21,3 +23,23 @@ $(document).ready(function () {
         });
     });
 });
+function successAlert(message) {
+    let alertSuccessContent =
+        '<div class="alert alert-success alert-dismissible fade show" role="alert">' +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">X</span>' +
+        '</button>' +
+        '<strong>'+message+'</strong>' +
+        '</div>';
+    $('.alertArea').append(alertSuccessContent);
+}
+function errorAlert(message) {
+    let alertErrorContent =
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">X</span>' +
+        '</button>' +
+        '<strong>'+message+'</strong>' +
+        '</div>';
+    $('.alertArea').append(alertErrorContent);
+}
