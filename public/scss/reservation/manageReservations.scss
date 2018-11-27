@@ -3,3 +3,7 @@
 .timeTypeReservation {
   background-color: #ddffcc !important;
 }
+.reservation-row:hover {
+  cursor: pointer;
+  background-color: $mainAccentLight !important;
+}

@@ -13,6 +13,7 @@ use App\Entity\Kart;
 use App\Entity\Reservation;
 use App\Entity\trackConfig\RideTimeDictionary;
 use App\Entity\trackConfig\TrackInfo;
+use App\Helper\RoleHelper;
 use App\Repository\trackConfig\RideTimeDictionaryRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -166,9 +167,14 @@ class ReservationController extends Controller
         if(!$reservation) {
             return new JsonResponse([], 404);
         }
-        $user_id = $reservation->getUser()->getId();
-        if($user_id != $this->getUser()->getId()) {
-            return new JsonResponse(['cant delete someones reservation'], 403);
+        $isByTimeReservationType = $reservation->getByTimeReservationType();
+        $loggedUserRoles = $this->getUser()->getRoles();
+        $isAdmin = RoleHelper::getRoleByRoleName($loggedUserRoles, 'ROLE_ADMIN');
+        if(!$isByTimeReservationType || !$isAdmin) {
+            $user_id = $reservation->getUser()->getId();
+            if($user_id != $this->getUser()->getId()) {
+                return new JsonResponse(['cant delete someones reservation'], 403);
+            }
         }
         $em = $this->getDoctrine()->getManager();
         $em->remove($reservation);
@@ -313,23 +319,28 @@ class ReservationController extends Controller
         if(!$reservation) {
             return $this->render('views/alerts/404.html.twig', []);
         }
+        $loggedUserRoles = $this->getUser()->getRoles();
+        $isAdmin = RoleHelper::getRoleByRoleName($loggedUserRoles, 'ROLE_ADMIN');
         $userIdForReservation = $reservation->getUser()->getId();
-        if($userIdForReservation != $this->getUser()->getId()) {
-            throw $this->createAccessDeniedException('You cannot access this page!');
+        if(!$isAdmin) {
+            if ($userIdForReservation != $this->getUser()->getId()) {
+                throw $this->createAccessDeniedException('You cannot access this page!');
+            }
         }
-        $kartsInReservation = new ArrayCollection();
         $kartsInReservation = $reservation->getKarts();
         $startDate = date_create($reservation->getStartDate());
         $startDateHour = date_format($startDate, 'H:i');
         $endDate = date_create($reservation->getEndDate());
         $endDateHour = date_format($endDate, 'H:i');
         $date = date_format($startDate, 'd-m-Y');
+        $byTimeReservationType = $reservation->getByTimeReservationType();
         return $this->render('views/controllers/reservation/reservationDetails.html.twig', [
             'date' => $date,
             'startDateHour' => $startDateHour,
             'endDateHour' => $endDateHour,
             'reservation' => $reservation,
-            'karts' => $kartsInReservation
+            'karts' => $kartsInReservation,
+            'byTimeReservationType' => $byTimeReservationType,
         ]
         );
     }

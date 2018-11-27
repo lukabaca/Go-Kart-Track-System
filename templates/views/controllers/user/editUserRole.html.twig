@@ -26,18 +26,34 @@
                                 <li class="list-group-item"><strong>Numer telefonu:</strong>{{ user.telephoneNumber }}</li>
                                 <li class="list-group-item">
                                     <strong>Role: </strong>
-                                    <select id="roleSelect">
-                                        {% for role in roles %}
-                                            {% if user.roles[0].id == role.id %}
-                                                <option selected value="{{ role.id }}">{{ role.name }}</option>
-                                            {% else %}
-                                                <option value="{{ role.id }}">{{ role.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
+                                    {% if app.user.id == user.id %}
+                                        <select id="roleSelect" disabled>
+                                            {% for role in roles %}
+                                                {% if user.roles[0].id == role.id %}
+                                                    <option selected value="{{ role.id }}">{{ role.name }}</option>
+                                                {% else %}
+                                                    <option value="{{ role.id }}">{{ role.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <select id="roleSelect">
+                                            {% for role in roles %}
+                                                {% if user.roles[0].id == role.id %}
+                                                    <option selected value="{{ role.id }}">{{ role.name }}</option>
+                                                {% else %}
+                                                    <option value="{{ role.id }}">{{ role.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
                                 </li>
                                 <li class="list-group-item">
-                                    <button class="btn btn-primary" id="saveChangesBtn" data-toggle="modal" data-target="#confirmationModal">Zapisz</button>
+                                    {% if app.user.id == user.id %}
+                                        <button class="btn btn-primary" id="saveChangesBtn" data-toggle="modal" data-target="#confirmationModal" disabled>Zapisz</button>
+                                    {% else %}
+                                        <button class="btn btn-primary" id="saveChangesBtn" data-toggle="modal" data-target="#confirmationModal">Zapisz</button>
+                                    {% endif %}
                                 </li>
                             </ul>
                         </div>

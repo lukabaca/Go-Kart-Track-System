@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AACA,wBAAyB;EACvB,UAAU,EAAE,MAAM;;AAEpB,qBAAsB;EACpB,UAAU,EAAE,IAAI",
+"sources": ["../../scss/reservation/reservationDetails.scss"],
 "names": [],
 "file": "reservationDetails.css"
 }
