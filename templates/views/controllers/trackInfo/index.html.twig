@@ -15,69 +15,53 @@
         <h4 class="pageHeader">Kontakt</h4>
         <div class="row">
             <div class="col-md-6 contactArea">
-                {% if not trackInfo %}
-                    <p>Obecnie brak informacji kontaktowych</p>
-                {% else %}
-                    <div class="card">
-                        <div class="card-body">
-                            <ul>
-                                {% if trackInfo.street and trackInfo.city %}
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <span class="contact-data">{{ trackInfo.street }}, {{ trackInfo.city }}</span>
-                                    </li>
-                                {% endif %}
-                                {% if trackInfo.email %}
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <i class="far fa-envelope"></i>
-                                        <span class="contact-data">{{ trackInfo.email }}</span>
-                                    </li>
-                                {% endif %}
-                                {% if trackInfo.telephoneNumber %}
-                                    <li class="d-flex justify-content-between align-items-center"><i class="fas fa-phone-volume"></i>
-                                        <span class="contact-data">{{ trackInfo.telephoneNumber }}</span>
-                                    </li>
-                                {% endif %}
-                                {% if trackInfo.hourStart and trackInfo.hourEnd %}
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <i class="far fa-clock"></i>
-                                        <span class="contact-data">{{ trackInfo.hourStart|date("H:i") }} - {{ trackInfo.hourEnd|date("H:i") }}</span>
-                                    </li>
-                                {% endif %}
-                                {% if trackInfo.facebookLink %}
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <i class="fab fa-facebook-square"></i>
-                                        {#<a href="{{ path('trackInfo/redirectToUrl', {'url': trackInfo.facebookLink}) }}" class="contact-data">facebook</a>#}
-                                        <a href="{{ trackInfo.facebookLink }}" class="contact-data">Facebook</a>
-                                    </li>
-                                {% endif %}
-                                {% if trackInfo.instagramLink %}
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        <i class="fab fa-instagram"></i>
-                                        <a href="{{ trackInfo.instagramLink }}">Instagram</a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="map">
-                        </div>
-                    </div>
-                </div>
+            {% if not trackInfo %}
+                <p>Obecnie brak informacji kontaktowych</p>
+            {% else %}
+                <ul>
+                    {% if trackInfo.street and trackInfo.city %}
+                        <li class="d-flex justify-content-between align-items-center">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="contact-data">{{ trackInfo.street }}, {{ trackInfo.city }}</span>
+                        </li>
+                    {% endif %}
+                    {% if trackInfo.email %}
+                        <li class="d-flex justify-content-between align-items-center">
+                            <i class="far fa-envelope"></i>
+                            <span class="contact-data">{{ trackInfo.email }}</span>
+                        </li>
+                    {% endif %}
+                    {% if trackInfo.telephoneNumber %}
+                        <li class="d-flex justify-content-between align-items-center"><i class="fas fa-phone-volume"></i>
+                            <span class="contact-data">{{ trackInfo.telephoneNumber }}</span>
+                        </li>
+                    {% endif %}
+                    {% if trackInfo.hourStart and trackInfo.hourEnd %}
+                        <li class="d-flex justify-content-between align-items-center">
+                            <i class="far fa-clock"></i>
+                            <span class="contact-data">{{ trackInfo.hourStart|date("H:i") }} - {{ trackInfo.hourEnd|date("H:i") }}</span>
+                        </li>
+                    {% endif %}
+                    {% if trackInfo.facebookLink %}
+                        <li class="d-flex justify-content-between align-items-center">
+                            <i class="fab fa-facebook-square"></i>
+                            {#<a href="{{ path('trackInfo/redirectToUrl', {'url': trackInfo.facebookLink}) }}" class="contact-data">facebook</a>#}
+                            <a href="{{ trackInfo.facebookLink }}" class="contact-data">Facebook</a>
+                        </li>
+                    {% endif %}
+                    {% if trackInfo.instagramLink %}
+                        <li class="d-flex justify-content-between align-items-center">
+                            <i class="fab fa-instagram"></i>
+                            <a href="{{ trackInfo.instagramLink }}">Instagram</a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
-    </div>
+            {% endif %}
     </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/trackInfo/index.js') }}"></script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-    </script>
 {%  endblock %}
