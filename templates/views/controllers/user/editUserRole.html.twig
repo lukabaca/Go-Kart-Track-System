@@ -49,7 +49,11 @@
                                     {% endif %}
                                 </li>
                                 <li class="list-group-item">
-                                    <button class="btn btn-primary" id="saveChangesBtn" data-toggle="modal" data-target="#confirmationModal">Zapisz</button>
+                                    {% if app.user.id == user.id %}
+                                        <button class="btn btn-primary" id="saveChangesBtn" data-toggle="modal" data-target="#confirmationModal" disabled>Zapisz</button>
+                                    {% else %}
+                                        <button class="btn btn-primary" id="saveChangesBtn" data-toggle="modal" data-target="#confirmationModal">Zapisz</button>
+                                    {% endif %}
                                 </li>
                             </ul>
                         </div>
