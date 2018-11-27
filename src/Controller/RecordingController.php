@@ -59,11 +59,7 @@ class RecordingController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($recording);
             $em->flush();
-            
-            $recording = $this->getDoctrine()->getRepository(Recording::class)->find($recording->getId());
-            if(!$recording) {
-                return new JsonResponse([], 404);
-            }
+
             $id = $recording->getId();
             $title = $recording->getTitle();
             $ytLink = $recording->getRecordingLink();
@@ -71,7 +67,7 @@ class RecordingController extends Controller
             $response = [
                 'id' => $id,
                 'title' => $title,
-                'link' => $ytLinkFormatted
+                'link' => $ytLinkFormatted,
             ];
             return new JsonResponse($response, 201);
         } else {
