@@ -15,4 +15,20 @@
   height: 150px !important;
   z-index: 9999; }
 
+ul {
+  list-style: none; }
+  ul li .userBadge {
+    background-color: #b3c6ff; }
+  ul li .timeBadge {
+    background-color: #f56954; }
+  ul li .legend-info-header {
+    font-weight: 200;
+    font-size: 12px; }
+  ul .badge {
+    margin-bottom: 8px;
+    height: 30px;
+    width: 50px; }
+    ul .badge .infoIcon {
+      line-height: 23px; }
+
 /*# sourceMappingURL=calendar.css.map */

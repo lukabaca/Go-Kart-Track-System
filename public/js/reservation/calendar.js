@@ -183,8 +183,8 @@ function initCalendar(eventArray, defaultView) {
     }
     function getReservations(date, viewType, calendarActualDate) {
         startLoadingProgress();
-        let colorUserReservation = '##b3e5fc';
-        let colorTimeReservation = '#f56954 ';
+        let colorUserReservation = '#b3c6ff';
+        let colorTimeReservation = '#f56954';
         let borderColor = '#424242 ';
         let backgroundColor;
         let className = 'eventCalendar';
@@ -217,7 +217,7 @@ function initCalendar(eventArray, defaultView) {
                         //with month there is -1 because js calendar starts numbering months from 0
                         monthStart = monthStart - 1;
                         monthEnd = monthEnd - 1;
-                        (reservations[i].timeReservationType == 1) ? (backgroundColor = colorUserReservation) : (backgroundColor = colorTimeReservation);
+                        (reservations[i].timeReservationType == 1) ? (backgroundColor = colorTimeReservation) : (backgroundColor = colorUserReservation);
                         if(isValid) {
                             reservationsEvents.push({
                                 id: id,
