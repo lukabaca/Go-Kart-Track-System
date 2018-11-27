@@ -7,6 +7,7 @@
  */
 namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 class StatusCodeController extends Controller
@@ -27,4 +28,5 @@ class StatusCodeController extends Controller
         return $this->render('views/alerts/404.html.twig', []
         );
     }
+
 }
