@@ -1,0 +1,20 @@
+{%  extends 'base.html.twig'%}
+{% block title %}
+    403
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/alerts/statusCodes.css') }}" />
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row pageNotFoundArea">
+            <div class="col-md-12 area">
+                <p id="topHeader">403</p>
+            </div>
+            <div class="col-md-12 area">
+                <p id="botHeader">Nie masz uprawnień do tych zasobów</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

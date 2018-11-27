@@ -29,4 +29,13 @@ class StatusCodeController extends Controller
         );
     }
 
+    /**
+     * @Route("/status403", name="/status403")
+     */
+    public function status403Action(Request $request)
+    {
+        return $this->render('views/alerts/403.html.twig', []
+        );
+    }
+
 }
