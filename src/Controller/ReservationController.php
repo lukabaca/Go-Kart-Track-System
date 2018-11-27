@@ -167,9 +167,14 @@ class ReservationController extends Controller
         if(!$reservation) {
             return new JsonResponse([], 404);
         }
-        $user_id = $reservation->getUser()->getId();
-        if($user_id != $this->getUser()->getId()) {
-            return new JsonResponse(['cant delete someones reservation'], 403);
+        $isByTimeReservationType = $reservation->getByTimeReservationType();
+        $loggedUserRoles = $this->getUser()->getRoles();
+        $isAdmin = RoleHelper::getRoleByRoleName($loggedUserRoles, 'ROLE_ADMIN');
+        if(!$isByTimeReservationType || !$isAdmin) {
+            $user_id = $reservation->getUser()->getId();
+            if($user_id != $this->getUser()->getId()) {
+                return new JsonResponse(['cant delete someones reservation'], 403);
+            }
         }
         $em = $this->getDoctrine()->getManager();
         $em->remove($reservation);
@@ -314,9 +319,7 @@ class ReservationController extends Controller
         if(!$reservation) {
             return $this->render('views/alerts/404.html.twig', []);
         }
-        $loggedUserRoles = new ArrayCollection();
         $loggedUserRoles = $this->getUser()->getRoles();
-        $isAdmin = false;
         $isAdmin = RoleHelper::getRoleByRoleName($loggedUserRoles, 'ROLE_ADMIN');
         $userIdForReservation = $reservation->getUser()->getId();
         if(!$isAdmin) {
