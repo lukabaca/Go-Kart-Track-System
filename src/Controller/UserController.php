@@ -128,6 +128,7 @@ class UserController extends Controller
                     $orderColumnName = $column['name'];
                 }
             }
+            $exceptedUserId = $this->getUser()->getId();
             $res = $this->getDoctrine()->getRepository(User::class)->
             getUsers($start, $length, $orderColumnName, $orderDir, $searchValue);
             $recordsTotalCount = count($this->getDoctrine()->getRepository(User::class)->findAll());
