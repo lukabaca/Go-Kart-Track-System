@@ -22,12 +22,17 @@ html, body {
   .formErrorMessage ul {
     list-style-type: none; }
 
-#userName {
+.nav-item-userName #userName {
+  max-width: 200px;
   text-transform: capitalize;
-  font-size: 25px;
+  font-size: 18px;
   margin-right: 25px;
   padding-top: 0;
-  padding-bottom: 0; }
+  padding-bottom: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 40px; }
 
 .navbarArea {
   height: 50px; }
