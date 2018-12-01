@@ -123,9 +123,9 @@ function initCalendar(eventArray, defaultView) {
         eventRender: function(eventObj, element) {
             let startDate = eventObj.start.toDate();
             let endDate = eventObj.end.toDate();
-            let day = startDate.getDate() + '-' + startDate.getMonth() + '-' +  startDate.getFullYear();
-            let hourAndMinuteStart = createProperHourMinuteFormat(startDate.getHours()) + ':' + createProperHourMinuteFormat(startDate.getMinutes());
-            let hourAndMinuteEnd = createProperHourMinuteFormat(endDate.getHours()) + ':' + createProperHourMinuteFormat(endDate.getMinutes());
+            let day = createProperFormat(startDate.getDate()) + '-' + createProperFormat(startDate.getMonth()) + '-' +  createProperFormat(startDate.getFullYear());
+            let hourAndMinuteStart = createProperFormat(startDate.getHours()) + ':' + createProperFormat(startDate.getMinutes());
+            let hourAndMinuteEnd = createProperFormat(endDate.getHours()) + ':' + createProperFormat(endDate.getMinutes());
             let content =
                 '<p>'+day+'</p' +
                 '<span>'+hourAndMinuteStart + '-' + hourAndMinuteEnd+'</span>';
@@ -260,7 +260,7 @@ function getProperDateFormat(date) {
     return dateFormatted;
 }
 
-function createProperHourMinuteFormat(element) {
+function createProperFormat(element) {
     if (element < 10) {
         element = '0' + element;
     }
