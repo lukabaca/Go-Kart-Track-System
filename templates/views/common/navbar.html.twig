@@ -61,7 +61,7 @@
         </ul>
         <ul class="navbar-nav  ml-auto navbarRightArea">
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <li class="nav-item"><span class="nav-link" id="userName"> {{ app.user.name }}</span></li>
+            <li class="nav-item nav-item-userName"><span class="nav-link" id="userName"> {{ app.user.name }}</span></li>
             {% endif %}
             <li class="nav-item dropdown">
                 <i class="far fa-user userIcon dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>

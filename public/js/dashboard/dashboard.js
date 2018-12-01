@@ -1,10 +1,12 @@
 $(document).ready(function () {
     let newsId;
-   $('.deleteNewsIcon').on('click', function (e) {
-      e.preventDefault();
-      newsId = $(this).closest('.news').attr('news-id');
-      $('#newsDeleteConfirmationModal').modal('show');
+
+    $('.deleteNewsIcon').on('click', function (e) {
+        e.preventDefault();
+        newsId = $(this).closest('.news').attr('news-id');
+        $('#newsDeleteConfirmationModal').modal('show');
    });
+
     $('#confirmDeletetingNewsBtn').on('click', function (e) {
         e.preventDefault();
         if(newsId !== null && newsId !== undefined) {

@@ -97,7 +97,7 @@ class UserType extends AbstractType
         $builder->add('submit', SubmitType::class, array(
             'label' => 'Zarejestruj się',
             'attr' => ['id' => 'submitButton',
-                'class' => 'btn btn-info submitButton'
+                'class' => 'btn btn-primary submitButton'
             ]
         ));
     }

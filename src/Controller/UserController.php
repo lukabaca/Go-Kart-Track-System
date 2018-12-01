@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-09
- * Time: 16:41
- */
 
 namespace App\Controller;
 use App\Entity\Role;
@@ -18,12 +12,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends Controller
 {
     /**
      * @Route("/user/manageUsers", name="/user/manageUsers")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function manageUsersAction(Request $request)
     {
@@ -151,15 +147,22 @@ class UserController extends Controller
         try {
             $dataSuccessChange = false;
             $user = $this->getUser();
+            $userBeforeChanges = $this->getDoctrine()->getRepository(User::class)->find($user->getId());
+            if (!$userBeforeChanges) {
+                return $this->render('views/alerts/500.html.twig', [
+                ]);
+            }
             $userForm = $this->createForm(UserType::class, $user);
             $userForm->handleRequest($request);
+            $em = $this->getDoctrine()->getManager();
             if ($userForm->isSubmitted() && $userForm->isValid()) {
                 $encodedPassword = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($encodedPassword);
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
                 $dataSuccessChange = true;
+            } else {
+                $em->refresh($userBeforeChanges);
             }
             return $this->render('views/controllers/user/editUser.html.twig', [
                 'dataSuccessChange' => $dataSuccessChange,

@@ -16,6 +16,26 @@
   height: 150px !important;
   z-index: 9999;
 }
-.fc-content {
-  //font-size: 10px !important;
+ul {
+  li {
+    .userBadge {
+      background-color: $userTypeReservation;
+    }
+    .timeBadge {
+      background-color: $timeTypeReservation;
+    }
+    .legend-info-header {
+      font-weight: 200;
+      font-size: 12px;
+    }
+  }
+  list-style: none;
+  .badge {
+    margin-bottom: 8px;
+    height: 30px;
+    width: 50px;
+    .infoIcon {
+      line-height: 23px;
+    }
+  }
 }
