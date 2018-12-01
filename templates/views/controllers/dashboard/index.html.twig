@@ -36,7 +36,14 @@
                                            {% if is_granted('ROLE_ADMIN') %}
                                                <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
                                            {% endif %}
-                                           {{ news.description }}
+                                           <div class="content-area">
+                                               <div class="info-area justify-content-start">
+                                                   {{ news.description }}
+                                               </div>
+                                               <div class="info-area justify-content-end">
+                                                   <small class="form-text text-muted">{{ news.date|date('Y-m-d') }}</small>
+                                               </div>
+                                           </div>
                                        </div>
                                    {% endif %}
                                </div>

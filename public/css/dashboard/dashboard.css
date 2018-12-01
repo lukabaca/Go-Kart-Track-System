@@ -11,4 +11,10 @@
 .deleteNewsIcon {
   cursor: pointer; }
 
+.content-area {
+  display: flex; }
+  .content-area .info-area {
+    display: flex;
+    width: 100%; }
+
 /*# sourceMappingURL=dashboard.css.map */
