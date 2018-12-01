@@ -1,18 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-16
- * Time: 20:50
- */
 
 namespace App\Controller;
 use App\Entity\Kart;
-use App\Entity\KartTechnicalData;
 use App\Form\KartType;
-use Doctrine\Common\Collections\ArrayCollection;
-use Exception;
-use function MongoDB\BSON\toJSON;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
