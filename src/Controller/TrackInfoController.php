@@ -26,6 +26,7 @@ class TrackInfoController extends Controller
      */
     public function addTrackInfoAction(Request $request)
     {
+        $isSuccessful = false;
         $trackInfo = $this->getDoctrine()->getRepository(TrackInfo::class)->find(1);
         if(!$trackInfo) {
             $trackInfo = new TrackInfo();
@@ -36,9 +37,11 @@ class TrackInfoController extends Controller
            $em = $this->getDoctrine()->getManager();
            $em->persist($trackInfo);
            $em->flush();
+           $isSuccessful = true;
         }
         return $this->render('views/controllers/trackInfo/addTrackInfo.html.twig', [
                 'trackInfoForm' => $trackInfoForm->createView(),
+                'isSuccessful' => $isSuccessful,
             ]
         );
     }
