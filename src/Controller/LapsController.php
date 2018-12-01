@@ -183,7 +183,8 @@ class LapsController extends Controller
     public function readingCSVAction(Request $request)
     {
         try {
-            $file = fopen(__DIR__ . '/' . "test.csv", "r");
+            $path = $_SERVER['DOCUMENT_ROOT'] . '\csv';
+            $file = fopen($path . '\test.csv', "r");
             $laps = [];
             $i = 0;
             $insertedLapsId = [];

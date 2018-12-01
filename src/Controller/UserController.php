@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-09
- * Time: 16:41
- */
 
 namespace App\Controller;
 use App\Entity\Role;
@@ -24,6 +18,7 @@ class UserController extends Controller
 {
     /**
      * @Route("/user/manageUsers", name="/user/manageUsers")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function manageUsersAction(Request $request)
     {
