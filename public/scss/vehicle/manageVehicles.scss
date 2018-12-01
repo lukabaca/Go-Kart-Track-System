@@ -13,4 +13,14 @@
   .editAvailabilityBtn, .editKartBtn {
     width: 100%;
   }
+  .editKartBtn {
+    background-color: $detailsInfo;
+    border-color: $detailsInfo;
+    &:hover {
+      background-color: $detailsInfoHover;
+    }
+  }
+  .editAvailabilityBtn {
+
+  }
 }

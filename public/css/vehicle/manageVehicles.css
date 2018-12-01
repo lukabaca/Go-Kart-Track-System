@@ -10,5 +10,10 @@
     margin-left: 10px; }
   .optionsArea .editAvailabilityBtn, .optionsArea .editKartBtn {
     width: 100%; }
+  .optionsArea .editKartBtn {
+    background-color: #aa7da2;
+    border-color: #aa7da2; }
+    .optionsArea .editKartBtn:hover {
+      background-color: #997091; }
 
 /*# sourceMappingURL=manageVehicles.css.map */

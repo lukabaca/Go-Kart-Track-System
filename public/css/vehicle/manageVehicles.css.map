@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AACA,UAAW;EACT,UAAU,EAAE,IAAI;;AAElB,aAAc;EACZ,aAAa,EAAE,IAAI;;AAErB,YAAa;EACX,OAAO,EAAE,IAAI;EACb,iCAAqB;IACnB,WAAW,EAAE,IAAI;EAEnB,4DAAmC;IACjC,KAAK,EAAE,IAAI",
-"sources": ["../../scss/vehicle/manageVehicles.scss"],
+"mappings": "AACA,UAAW;EACT,UAAU,EAAE,IAAI;;AAElB,aAAc;EACZ,aAAa,EAAE,IAAI;;AAErB,YAAa;EACX,OAAO,EAAE,IAAI;EACb,iCAAqB;IACnB,WAAW,EAAE,IAAI;EAEnB,4DAAmC;IACjC,KAAK,EAAE,IAAI;EAEb,yBAAa;IACX,gBAAgB,ECLN,OAAO;IDMjB,YAAY,ECNF,OAAO;IDOjB,+BAAQ;MACN,gBAAgB,ECPH,OAAO",
+"sources": ["../../scss/vehicle/manageVehicles.scss","../../scss/common/_colors.scss"],
 "names": [],
 "file": "manageVehicles.css"
 }

@@ -30,7 +30,7 @@ $(document).ready(function () {
             { "data": "", "targets": 3, "orderable": false, "render":
                     function ( data, type, row ) {
                     return '<div class="optionsArea">' +
-                        '<button class="btn btn-secondary editKartBtn"><i class="far fa-edit"></i></button>' +
+                        '<button class="btn btn-data-info editKartBtn"><i class="far fa-edit"></i></button>' +
                         '<button class="btn btn-secondary editAvailabilityBtn"><i class="fa fa-exchange-alt"></i></button>' +
                         '</div>';
                     }

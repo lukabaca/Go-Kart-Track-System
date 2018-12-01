@@ -136,7 +136,9 @@ footer {
     font-size: 20px;
   }
 }
-
+.btn {
+  color: white !important;
+}
 /*data table styling */
 .dataTables_wrapper .dataTables_processing {
   color: $pageHeader;
@@ -149,4 +151,25 @@ footer {
 .form-group label.required:after {
   content:"*" !important;
   color:red !important;
+}
+.btn-confirm-modal {
+  color: white;
+  background-color: $confirmWarning;
+  border-color: $confirmWarning;
+  &:hover {
+    background-color: $confirmWarningHover;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem $confirmWarning !important;
+  }
+}
+.btn-data-info {
+  background-color: $detailsInfo;
+  border-color: $detailsInfo;
+  &:hover {
+    background-color: $detailsInfoHover;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem $detailsInfo !important;
+  }
 }

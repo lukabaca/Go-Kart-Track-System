@@ -36,7 +36,7 @@
                             <td>{{ reservation.endDateHourAndMinutes }}</td>
                             <td>{{ reservation.cost }}</td>
                             <td class="reservation-options">
-                                <button type="button" class="showDetailsReservationBtn btn btn-primary">Szczegóły rezerwacji</button>
+                                <button type="button" class="showDetailsReservationBtn btn btn-data-info">Szczegóły rezerwacji</button>
                                 <button type="button" class="deleteReservationBtn btn btn-danger">Anuluj rezerwacje</button>
                             </td>
                         </tr>
@@ -64,7 +64,7 @@
                 <p id="deleteReservationHeader">Czy na pewno chcesz anulować tą rezerwację?</p>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                    <button id="confirmDeletetingReservationBtn" type="button" class="btn btn-primary" data-dismiss="modal">Zatwierdź</button>
+                    <button id="confirmDeletetingReservationBtn" type="button" class="btn btn-confirm-modal" data-dismiss="modal">Zatwierdź</button>
                 </div>
             </div>
         </div>
