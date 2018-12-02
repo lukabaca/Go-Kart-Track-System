@@ -23,6 +23,7 @@ class NewsType extends AbstractType
             ],
             'constraints' => new Callback(array($this, 'validate')),
         ));
+
         $builder->add('file', FileType::class, array(
             'label' => 'Plik',
             'required' => FALSE,

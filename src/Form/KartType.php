@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-02
- * Time: 18:09
- */
 
 namespace App\Form;
-
-
 use App\Entity\KartTechnicalData;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
@@ -21,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -34,7 +25,6 @@ class KartType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array(
-
             'label' => 'Nazwa gokartu',
             'required' => TRUE,
             'attr' => [
@@ -42,6 +32,7 @@ class KartType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('prize', IntegerType::class, array(
             'label' => 'Cena za przejazd',
             'required' => TRUE,
@@ -53,10 +44,12 @@ class KartType extends AbstractType
                 'min' => 1,
             ],
         ));
+
         $builder->add('availability', CheckboxType::class, array(
             'label' => 'Dostępność',
             'required' => FALSE,
         ));
+
         $builder->add('description', TextareaType::class, array(
             'label' => 'Opis',
             'required' => FALSE,
@@ -65,11 +58,14 @@ class KartType extends AbstractType
                 'class' => 'form-control'
             ],
         ));
+
         $builder->add('kartTechnicalData', KartTechnicalDataType::class);
+
         $builder->add('file', FileType::class, array(
             'label' => 'Plik',
             'required' => FALSE,
         ));
+
         $builder->add('submit', SubmitType::class, array(
             'label' => 'Zapisz',
             'attr' => ['id' => 'addKartButton',

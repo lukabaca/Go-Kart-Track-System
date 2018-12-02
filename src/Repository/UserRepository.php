@@ -58,7 +58,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             return null;
         }
     }
-    
+
     public function getUsers($start, $length, $columnName, $orderDir, $searchValue) {
         $sql = 'call getUsers(?, ?, ?, ?, ?)';
         $conn = $this->getEntityManager()->getConnection();
