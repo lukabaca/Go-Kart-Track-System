@@ -13,17 +13,14 @@ $( document ).ready(function() {
     let daysSelect = $('#user_birthDate_day');
     let monthSelect = $('#user_birthDate_month');
     let yearSelect = $('#user_birthDate_year');
-
     daysSelect.empty();
     monthSelect.empty();
-
     initSelects(actualYear, yearSelect, monthSelect, daysSelect);
 
     yearSelect.on('change', function (e) {
         e.preventDefault();
         let selectedMonth = monthSelect.find(":selected").val();
         let selectedYear = $(this).find(':selected').val();
-
         if(selectedMonth == 2) {
             let dayCount = calculateDays(selectedMonth, selectedYear);
             daysSelect.empty();
