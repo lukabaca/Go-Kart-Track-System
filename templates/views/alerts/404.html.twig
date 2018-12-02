@@ -1,20 +1,20 @@
 {%  extends 'base.html.twig'%}
 {% block title %}
-Login
+    404
 {% endblock %}
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{ asset('css/alerts/statusCodes.css') }}" />
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/alerts/statusCodes.css') }}" />
 {% endblock %}
 {% block body %}
-<div class="container">
-    <div class="row pageNotFoundArea">
-        <div class="col-md-12 area">
-            <p id="topHeader">404</p>
-        </div>
-        <div class="col-md-12 area">
-            <p id="botHeader">strona nie została znaleziona</p>
+    <div class="container">
+        <div class="row pageNotFoundArea">
+            <div class="col-md-12 area">
+                <p id="topHeader">404</p>
+            </div>
+            <div class="col-md-12 area">
+                <p id="botHeader">strona nie została znaleziona</p>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
