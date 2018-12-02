@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 class LapsController extends Controller
 {
@@ -128,11 +129,13 @@ class LapsController extends Controller
             $second = $recordTemp->getSecond();
             $milisecond = $recordTemp->getMilisecond();
             $time = $this->createProperTimeFormat($minute, $second, $milisecond);
+            $date = new DateTime($recordTemp->getDate());
+            $date = $date->format('Y-m-d');
             $record = [
                 'id' => $recordTemp->getId(),
                 'time' => $time,
                 'averageSpeed' => $recordTemp->getAverageSpeed(),
-                'date' => $recordTemp->getDate(),
+                'date' => $date,
                 'user' => [
                     'name' => $recordTemp->getUser()->getName(),
                     'surname' => $recordTemp->getUser()->getSurname()
