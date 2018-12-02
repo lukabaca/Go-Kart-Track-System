@@ -4,7 +4,6 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -74,7 +73,6 @@ class UserController extends Controller
         }
         return $this->render('views/controllers/user/editUserRole.html.twig', [
             'user' => $user,
-            'roles' => $roles,
             'roles' => $roles,
         ]);
     }

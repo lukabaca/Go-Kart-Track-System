@@ -13,3 +13,14 @@
 .deleteNewsIcon {
   cursor: pointer;
 }
+.content-area {
+  .date-area {
+    display: block;
+    width: 100%;
+  }
+  .info-area {
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+  }
+}

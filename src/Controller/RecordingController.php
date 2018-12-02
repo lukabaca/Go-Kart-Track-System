@@ -1,24 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-09
- * Time: 19:25
- */
-
 namespace App\Controller;
 use App\Entity\Recording;
-use App\Entity\User;
 use App\Form\RecordingType;
-use phpDocumentor\Reflection\Types\Iterable_;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
 class RecordingController extends Controller
 {
     /**
@@ -55,7 +44,6 @@ class RecordingController extends Controller
             $recording->setRecordingLink($recordingTemp['link']);
             $user = $this->getUser();
             $recording->setUser($user);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($recording);
             $em->flush();
@@ -88,7 +76,7 @@ class RecordingController extends Controller
         $recordingUserId = $recording->getUser()->getId();
         $loggedUserId = $this->getUser()->getId();
         if($recordingUserId != $loggedUserId) {
-            return new JsonResponse([], 401);
+            return new JsonResponse(['cant delete someones recording'], 401);
         }
         $em->remove($recording);
         $em->flush();

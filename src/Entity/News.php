@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-19
- * Time: 13:23
- */
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -36,16 +29,22 @@ class News
     private $description;
 
     /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
+    /**
      * News constructor.
      * @param $id
      * @param $file
      * @param $description
      */
-    public function __construct($id = null, $file = null, $description = null)
+    public function __construct($id = null, $file = null, $description = null, $date = null)
     {
         $this->id = $id;
         $this->file = $file;
         $this->description = $description;
+        $this->date = $date;
     }
 
     /**
@@ -94,5 +93,21 @@ class News
     public function setDescription($description): void
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date): void
+    {
+        $this->date = $date;
     }
 }

@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAEA,eAAgB;EACd,MAAM,EAAE,OAAO;EACf,gBAAgB,ECCA,OAAO",
+"mappings": "AACA,eAAgB;EACd,MAAM,EAAE,OAAO;EACf,gBAAgB,ECEA,OAAO",
 "sources": ["../../scss/user/manageUsers.scss","../../scss/common/_colors.scss"],
 "names": [],
 "file": "manageUsers.css"

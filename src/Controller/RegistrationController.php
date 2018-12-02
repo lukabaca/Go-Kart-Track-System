@@ -3,7 +3,6 @@
 namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\User;
-use App\Entity\UserRoles;
 use App\Form\UserType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

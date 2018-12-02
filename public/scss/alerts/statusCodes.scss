@@ -1,3 +1,4 @@
+@import "../common/colors";
 .area {
   text-align: center;
 }
@@ -5,10 +6,10 @@
   margin-top: 10%;
 }
 #topHeader {
-  font-weight: 250;
+  font-weight: 200;
   font-size: 120px;
   margin-bottom: 10px;
-  color: #B22222;
+  color: $statusCodeError;
 }
 #botHeader {
   font-size: 20px;

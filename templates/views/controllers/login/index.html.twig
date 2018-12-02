@@ -7,42 +7,42 @@
     <link rel="stylesheet" href="{{ asset('css/login/login.css') }}">
 {% endblock %}
 {% block body %}
-        <div class="imageBackground">
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 offset-md-4 loginArea">
-                    <div class="shadow p-3 mb-5 bg-white rounded card loginCard">
-                        <div class="card-body">
-                            <div class="headerLoginArea">
-                                <h2 class="headerLogin">Gokart arena</h2>
-                            </div>
-                            <div class="jumbotron jumbotron-fluid formArea">
-                                <form action="{{ path('login') }}" method="POST">
-                                    <div class="form-group">
-                                        <label for="email" class="loginLabel">Login</label>
-                                        <input type="email" name="_username" class="form-control" required id="email" placeholder="Login" value="{{ lastUserEmail }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="loginLabel">Hasło</label>
-                                        <input type="password" name="_password" class="form-control" required id="password" placeholder="Hasło" >
-                                    </div>
-                                    {% if error %}
-                                        <p class="errorMessage">Wprowadzono błędny email lub hasło</p>
-                                    {% endif %}
-                                    <div class="form-group">
-                                        <button class="btn btn-primary" type="submit" id="singInButton">Zaloguj się</button>
-                                    </div>
-                                    <p id="noAccountLabel">Nie posiadasz jeszcze konta?</p>
-                                    <a href="{{ path('registration/index') }}" id="register">Zarejestruj się</a>
-                                    <input type="hidden" name="_target_path" value="{{ path('dashboard/index') }}" />
-                                </form>
-                            </div>
+    <div class="imageBackground">
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 offset-md-4 loginArea">
+                <div class="shadow p-3 mb-5 bg-white rounded card loginCard">
+                    <div class="card-body">
+                        <div class="headerLoginArea">
+                            <h2 class="headerLogin">Gokart arena</h2>
+                        </div>
+                        <div class="jumbotron jumbotron-fluid formArea">
+                            <form action="{{ path('login') }}" method="POST">
+                                <div class="form-group">
+                                    <label for="email" class="loginLabel">Login</label>
+                                    <input type="email" name="_username" class="form-control" required id="email" placeholder="Login" value="{{ lastUserEmail }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="loginLabel">Hasło</label>
+                                    <input type="password" name="_password" class="form-control" required id="password" placeholder="Hasło" >
+                                </div>
+                                {% if error %}
+                                    <p class="errorMessage">Wprowadzono błędny email lub hasło</p>
+                                {% endif %}
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit" id="singInButton">Zaloguj się</button>
+                                </div>
+                                <p id="noAccountLabel">Nie posiadasz jeszcze konta?</p>
+                                <a href="{{ path('registration/index') }}" id="register">Zarejestruj się</a>
+                                <input type="hidden" name="_target_path" value="{{ path('dashboard/index') }}" />
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

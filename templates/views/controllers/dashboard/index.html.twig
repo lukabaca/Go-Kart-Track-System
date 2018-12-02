@@ -20,23 +20,40 @@
                            <div class="card-body">
                                <div class="row">
                                    {% if news.file %}
-                                       <div class="col-md-6">
-                                           {% if is_granted('ROLE_ADMIN') %}
-                                               <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
-                                           {% endif %}
-                                           {{ news.description }}
-                                       </div>
-                                       <div class="col-md-6">
-                                           {% if news.file %}
+                                       {% if news.description %}
+                                           <div class="col-md-6">
+                                               {% if is_granted('ROLE_ADMIN') %}
+                                                   <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
+                                               {% endif %}
+                                               <div class="content-area">
+                                                   <div class="date-area"><small class="form-text text-muted">{{ news.date|date('Y-m-d') }}</small></div>
+                                                   <div class="info-area">
+                                                       {{ news.description }}
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="col-md-6">
                                                <img class="card-img-top" src="{{ asset('images/news/'~news.file~'') }}" alt="Card image cap">
-                                           {% endif %}
-                                       </div>
+                                           </div>
+                                       {% else %}
+                                           <div class="col-md-12">
+                                               {% if is_granted('ROLE_ADMIN') %}
+                                                   <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
+                                               {% endif %}
+                                               <img class="card-img-top" src="{{ asset('images/news/'~news.file~'') }}" alt="Card image cap">
+                                           </div>
+                                       {% endif %}
                                    {% else %}
                                        <div class="col-md-12">
                                            {% if is_granted('ROLE_ADMIN') %}
                                                <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
                                            {% endif %}
-                                           {{ news.description }}
+                                           <div class="content-area">
+                                               <div class="date-area"><small class="form-text text-muted">{{ news.date|date('Y-m-d') }}</small></div>
+                                               <div class="info-area">
+                                                   {{ news.description }}
+                                               </div>
+                                           </div>
                                        </div>
                                    {% endif %}
                                </div>
@@ -51,7 +68,7 @@
            {% endif %}
         </div>
     </div>
-    <div class="modal fade" id="newsDeleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="getKartModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newsDeleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="newsDeleteConfirmationModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -60,12 +77,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p id="deleteReservationHeader">Czy na pewno chcesz usunąć ten post?</p>
+                    <p>Czy na pewno chcesz usunąć ten post?</p>
                     <p>Po usunięciu użytkownicy <strong>nie będą mogli już go zobaczyć.</strong></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                    <button id="confirmDeletetingNewsBtn" type="button" class="btn btn-primary" data-dismiss="modal">Zatwierdź</button>
+                    <button id="confirmDeletetingNewsBtn" type="button" class="btn btn-confirm-modal" data-dismiss="modal">Zatwierdź</button>
                 </div>
             </div>
         </div>

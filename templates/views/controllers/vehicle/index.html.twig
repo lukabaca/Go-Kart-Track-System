@@ -43,6 +43,11 @@
                                                                 <span>{{ kart.kartTechnicalData.vmax }}km/h</span>
                                                             </li>
                                                         {% endif %}
+                                                        {% if kart.kartTechnicalData.engine %}
+                                                            <li class="list-group-item">Silnik:
+                                                                <span>{{ kart.kartTechnicalData.engine }}</span>
+                                                            </li>
+                                                        {% endif %}
                                                     {% endif %}
                                                 </ul>
                                             </div>
@@ -63,7 +68,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
 {% block javascripts %}

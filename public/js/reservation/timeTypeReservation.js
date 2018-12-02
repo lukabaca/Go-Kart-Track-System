@@ -8,14 +8,13 @@ $(document).ready(function () {
     let hourEndInput = $('#endHourInput');
     let prizeInput = $('#reservationPrize');
     let dateInput = $('#dateInput');
-    reserveButton.attr("disabled", "disabled");
 
     let isValidHourStart = false;
     let isValidHourEnd = true;
     let isValidPrice = false;
     let isValidDate = true;
 
-
+    let isPageReady = false;
 
     $(hourStartInput).timepicker({
         timeFormat: 'HH:mm',
@@ -105,12 +104,7 @@ $(document).ready(function () {
         language: 'pl',
         autoclose: true,
     });
-
-    //init options for pickers
-    $('.datePicker').datepicker('setDate', today);
-    setMinTime(hourStartInput, today);
-    setMinTime(hourEndInput, today);
-
+    $(dateInput).datepicker('setDate', today);
     function checkButtonStatus() {
         if(isValidHourStart && isValidHourEnd && isValidPrice && isValidDate) {
             reserveButton.removeAttr("disabled");

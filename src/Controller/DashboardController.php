@@ -3,6 +3,7 @@
 namespace App\Controller;
 use App\Entity\News;
 use App\Form\NewsType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -46,6 +47,8 @@ class DashboardController extends Controller
                     return $this->render('views/alerts/500.html.twig' , []);
                 }
             }
+            $today = new DateTime('now');
+            $news->setDate($today);
             $em = $this->getDoctrine()->getManager();
             $em->persist($news);
             $em->flush();

@@ -19,7 +19,6 @@ $(document).ready(function () {
             { "data": "start_date", "name": "start_date",   "targets": 0, "defaultContent": "-", "className":"start-date"},
             { "data": "end_date", "name": "end_date",   "targets": 1, "defaultContent": "-", "className":"end-date"},
         ],
-        // Server-side parameters
         "processing": true,
         "serverSide": true,
         "ajax": {
@@ -29,7 +28,6 @@ $(document).ready(function () {
         createdRow: function(row, data, dataIndex, cells) {
             $(row).addClass('lapSession-row').attr('lapSession-id', data.id);
         },
-        // Classic DataTables parameters
         "paging" : true,
         "info" : true,
         "searching": true,

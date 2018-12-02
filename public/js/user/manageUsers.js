@@ -40,7 +40,6 @@ $(document).ready(function () {
                     return roleName;
                 },},
         ],
-        // Server-side parameters
         "processing": true,
         "serverSide": true,
         "ajax": {
@@ -50,7 +49,6 @@ $(document).ready(function () {
         createdRow: function(row, data, dataIndex, cells) {
             $(row).addClass('user-row').attr('user-id', data.id);
         },
-        // Classic DataTables parameters
         "paging" : true,
         "info" : true,
         "searching": true,

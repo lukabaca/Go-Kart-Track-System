@@ -1,19 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-09
- * Time: 20:01
- */
-
 namespace App\Repository;
-
-
 use App\Entity\Recording;
 use App\Entity\User;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
-
 class RecordingRepository extends EntityRepository
 {
     public function findUserRecordings($userId) {
@@ -26,22 +16,18 @@ class RecordingRepository extends EntityRepository
             if($rowCount > 0) {
                 $recordings = [];
                 $recordingsTemp = $stmt->fetchAll();
-
                 foreach ($recordingsTemp as $recordingTemp) {
                     $id = $recordingTemp['id'];
                     $recordingLink = $recordingTemp['recording_link'];
                     $title = $recordingTemp['title'];
                     $userId = $recordingTemp['user_id'];
-
                     $recording = new Recording();
                     $recording->setId($id);
                     $recording->setRecordingLink($recordingLink);
                     $recording->setTitle($title);
                     $recording->setUser(new User($userId));
-
                     $recordings [] = $recording;
                 }
-
                 return $recordings;
             } else {
                 return [];

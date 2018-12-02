@@ -62,7 +62,7 @@
             {% endif %}
             {% if byTimeReservationType %}
                 <div class="col-md-12">
-                    <button class="btn btn-primary deleteReservationBtn">Anuluj rezerwacje</button>
+                    <button class="btn btn-danger deleteReservationBtn">Anuluj rezerwacje</button>
                 </div>
             {% endif %}
         </div>
@@ -80,7 +80,7 @@
                 <p id="deleteReservationHeader">Czy na pewno chcesz anulować tą rezerwację?</p>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                    <button id="confirmDeletetingReservationBtn" type="button" class="btn btn-primary" data-dismiss="modal">Zatwierdź</button>
+                    <button id="confirmDeletetingReservationBtn" type="button" class="btn btn-confirm-modal" data-dismiss="modal">Zatwierdź</button>
                 </div>
             </div>
         </div>
