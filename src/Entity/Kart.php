@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-15
- * Time: 13:41
- */
-
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,22 +12,24 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Kart
 {
-
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="boolean")
      */
     private $availability;
+
     /**
      * @ORM\Column(type="float")
     *
      */
     private $prize;
+
     /**
      * @ORM\Column(type="string", length=45)
      * @Assert\Regex(
@@ -49,6 +44,7 @@ class Kart
      * )
      */
     private $name;
+
     /**
      * @ORM\Column(type="text")
      */
@@ -78,6 +74,7 @@ class Kart
      * )
      */
     private $reservations;
+
     /**
      * Kart constructor.
      * @param $id

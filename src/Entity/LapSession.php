@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-24
- * Time: 13:07
- */
 
 namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,14 +17,17 @@ class LapSession
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="datetime")
      */
     private $startDate;
+
     /**
      * @ORM\Column(type="datetime")
      */
     private $endDate;
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Lap", mappedBy="lapSession")
      */

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-20
- * Time: 17:52
- */
 
 namespace App\Entity\trackConfig;
-
 use Doctrine\ORM\Mapping as ORM;
 /**
  *
@@ -23,10 +16,12 @@ class RideTimeDictionary
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="integer")
      */
     private $ride_count;
+
     /**
      * @ORM\Column(type="time")
      */

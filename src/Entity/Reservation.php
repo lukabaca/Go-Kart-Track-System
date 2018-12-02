@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-26
- * Time: 13:03
- */
-
 namespace App\Entity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 /**
@@ -24,27 +16,31 @@ class Reservation
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="string")
      */
     private $startDate;
+
     /**
      * @ORM\Column(type="string")
      */
     private $endDate;
+
     /**
      * @ORM\Column(type="decimal")
      */
     private $cost;
+
     /**
      * @ORM\Column(type="boolean")
      */
     private $byTimeReservationType;
+
     /**
      * @ORM\Column(type="text")
      */
     private $description;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservation")
