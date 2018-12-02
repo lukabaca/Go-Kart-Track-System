@@ -24,12 +24,15 @@
                                            {% if is_granted('ROLE_ADMIN') %}
                                                <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
                                            {% endif %}
-                                           {{ news.description }}
+                                           <div class="content-area">
+                                               <div class="date-area"><small class="form-text text-muted">{{ news.date|date('Y-m-d') }}</small></div>
+                                               <div class="info-area">
+                                                   {{ news.description }}
+                                               </div>
+                                           </div>
                                        </div>
                                        <div class="col-md-6">
-                                           {% if news.file %}
-                                               <img class="card-img-top" src="{{ asset('images/news/'~news.file~'') }}" alt="Card image cap">
-                                           {% endif %}
+                                           <img class="card-img-top" src="{{ asset('images/news/'~news.file~'') }}" alt="Card image cap">
                                        </div>
                                    {% else %}
                                        <div class="col-md-12">
@@ -37,11 +40,9 @@
                                                <p class="delete-area"><i class="fa fa-trash deleteNewsIcon"></i></p>
                                            {% endif %}
                                            <div class="content-area">
-                                               <div class="info-area justify-content-start">
+                                               <div class="date-area"><small class="form-text text-muted">{{ news.date|date('Y-m-d') }}</small></div>
+                                               <div class="info-area">
                                                    {{ news.description }}
-                                               </div>
-                                               <div class="info-area justify-content-end">
-                                                   <small class="form-text text-muted">{{ news.date|date('Y-m-d') }}</small>
                                                </div>
                                            </div>
                                        </div>
@@ -58,7 +59,7 @@
            {% endif %}
         </div>
     </div>
-    <div class="modal fade" id="newsDeleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="getKartModalLabel" aria-hidden="true">
+    <div class="modal fade" id="newsDeleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="newsDeleteConfirmationModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -67,7 +68,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p id="deleteReservationHeader">Czy na pewno chcesz usunąć ten post?</p>
+                    <p>Czy na pewno chcesz usunąć ten post?</p>
                     <p>Po usunięciu użytkownicy <strong>nie będą mogli już go zobaczyć.</strong></p>
                 </div>
                 <div class="modal-footer">

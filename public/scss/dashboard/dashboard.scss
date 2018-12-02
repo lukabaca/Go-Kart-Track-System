@@ -14,9 +14,13 @@
   cursor: pointer;
 }
 .content-area {
-  display: flex;
+  .date-area {
+    display: block;
+    width: 100%;
+  }
   .info-area {
-    display: flex;
+    margin-top: 10px;
+    display: block;
     width: 100%;
   }
 }
