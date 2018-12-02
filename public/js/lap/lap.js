@@ -17,7 +17,6 @@ $(document).ready(function (e) {
        loadRecords(recordTable, recordLimit, timeModeDictionary[actualTimeModeSelected]);
     });
 
-
     $('#allTimeRecord').on('click', function (e) {
        e.preventDefault();
        removeAlertLabel('.alert');
@@ -41,7 +40,6 @@ $(document).ready(function (e) {
         clearTable(recordTable);
         loadRecords(recordTable, recordLimit, timeModeDictionary['weekRecord']);
     });
-
 });
 
 function loadRecords(table, recordLimit, timeMode) {
@@ -53,16 +51,13 @@ function loadRecords(table, recordLimit, timeMode) {
         success: function (data) {
             let isValid = true;
             for(let i = 0; i < data.length; i++) {
-
                 let position = i + 1;
                 let id = (data[i].id === null || data[i].id === undefined) ? isValid = false : data[i].id;
                 let time = (data[i].time === null || data[i].time === undefined) ? isValid = false : data[i].time;
-                // let averageSpeed = (data[i].averageSpeed === null || data[i].averageSpeed === undefined) ? isValid = false : data[i].averageSpeed;
                 let date = (data[i].date === null || data[i].date === undefined) ? isValid = false : data[i].date;
 
                 let userName = (data[i].user.name === null || data[i].user.name === undefined) ? isValid = false : data[i].user.name;
                 let userSurname = (data[i].user.surname === null || data[i].user.surname === undefined) ? isValid = false : data[i].user.surname;
-
                 let kartName = (data[i].kart.name === null || data[i].kart.name === undefined) ? isValid = false : data[i].kart.name;
 
                 if(isValid) {
@@ -74,7 +69,6 @@ function loadRecords(table, recordLimit, timeMode) {
                         '<td class="record-info-td">' + kartName + '</td>' +
                         '<td class="record-info-td">' + date + '</td>' +
                         '</tr>';
-
                     table.find('tbody').append(recordContent);
                     isValid = true;
                 }

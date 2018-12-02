@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-06
- * Time: 14:54
- */
-
 namespace App\Controller;
-
 
 use App\Entity\Kart;
 use App\Entity\Lap;
@@ -22,15 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LapsController extends Controller
 {
-    /**
-     * @Route("/laps/index", name="laps/index")
-     */
-    public function indexAction(Request $request)
-    {
-        return $this->render('views/controllers/laps/index.html.twig', []
-        );
-    }
-
     /**
      * @Route("/laps/lapsForSession/{id}", name="laps/lapsForSession/{id}")
      */
@@ -239,56 +222,4 @@ class LapsController extends Controller
             return new JsonResponse('cant locate file', 404);
         }
     }
-
-    /**
-     * @Route("/lapTest", name="lapTest")
-     */
-    public function test(Request $request)
-    {
-        try {
-            $file = fopen(__DIR__ . '/' . "test2.csv", "r");
-            $laps = [];
-            while (($line = fgetcsv($file)) !== FALSE) {
-                $lap = new Lap();
-                $lap->setTime($line[0]);
-                $lap->setAverageSpeed($line[1]);
-                $lap->setDate($line[2]);
-                $kart = $this->getDoctrine()->getRepository(Kart::class)->find($line[3]);
-                if (!$kart) {
-                    $kartName = '';
-                } else {
-                    $lap->setKart($kart);
-                    $kartName = $lap->getKart()->getName();
-                }
-                $user = $this->getDoctrine()->getRepository(User::class)->find($line[4]);
-                if(!$user) {
-                    $userName = '';
-                    $userSurname = '';
-                } else {
-                    $lap->setUser($user);
-                    $userName = $lap->getUser()->getName();
-                    $userSurname = $lap->getUser()->getSurname();
-                }
-
-                $lap = [
-                    'time' => $lap->getTime(),
-                    'averageSpeed' => $lap->getAverageSpeed(),
-                    'date' => $lap->getDate(),
-                    'user' => [
-                        'name' => $userName,
-                        'surname' => $userSurname,
-                    ],
-                    'kart' => [
-                        'name' => $kartName,
-                    ]
-                ];
-                $laps [] = $lap;
-            }
-            fclose($file);
-            return new JsonResponse($laps, 200);
-        } catch (Exception $e) {
-            return new JsonResponse('cant locate file', 404);
-        }
-    }
-
 }
