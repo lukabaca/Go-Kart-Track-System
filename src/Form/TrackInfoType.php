@@ -1,6 +1,5 @@
 <?php
 namespace App\Form;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,6 +20,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('city', TextType::class, array(
             'label' => 'Miasto',
             'required' => FALSE,
@@ -29,6 +29,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('email', EmailType::class, array(
             'label' => 'Email',
             'required' => FALSE,
@@ -37,6 +38,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('telephone_number', TextType::class, array(
             'label' => 'Numer kontaktowy',
             'required' => FALSE,
@@ -46,6 +48,7 @@ class TrackInfoType extends AbstractType
             ],
             'help' => 'Proponowany format to xxx-yyy-zzz',
         ));
+
         $builder->add('hourStart', TimeType::class, array(
             'label' => 'Godzina otwarcia',
             'required' => FALSE,
@@ -54,6 +57,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('hourEnd', TimeType::class, array(
             'label' => 'Godzina zamknięcia',
             'required' => FALSE,
@@ -62,6 +66,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('facebookLink', TextType::class, array(
             'label' => 'Link do facebooka',
             'required' => FALSE,
@@ -70,6 +75,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('instagramLink', TextType::class, array(
             'label' => 'Link do instagrama',
             'required' => FALSE,
@@ -78,6 +84,7 @@ class TrackInfoType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('submit', SubmitType::class, array(
             'label' => 'Zapisz',
             'attr' => ['id' => 'addTrackInfoButton',

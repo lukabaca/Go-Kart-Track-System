@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-15
- * Time: 13:36
- */
 
 namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,30 +18,37 @@ class Lap
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="lap")
      */
     private $user;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Kart", inversedBy="lap")
      */
     private $kart;
+
     /**
      * @ORM\Column(type="integer")
      */
     private $minute;
+
     /**
      * @ORM\Column(type="integer")
      */
     private $second;
+
     /**
      * @ORM\Column(type="integer")
      */
     private $milisecond;
+
     /**
      * @ORM\Column(type="float")
      */
     private $averageSpeed;
+
     /**
      * @ORM\Column(type="datetime")
      */

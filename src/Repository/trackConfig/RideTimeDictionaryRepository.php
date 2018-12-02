@@ -1,14 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-20
- * Time: 17:53
- */
-
 namespace App\Repository\trackConfig;
-
-
 use App\Entity\trackConfig\RideTimeDictionary;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;

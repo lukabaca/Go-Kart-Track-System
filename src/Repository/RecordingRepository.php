@@ -36,5 +36,4 @@ class RecordingRepository extends EntityRepository
             return [];
         }
     }
-
 }

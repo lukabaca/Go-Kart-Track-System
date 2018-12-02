@@ -1,17 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-02
- * Time: 23:55
- */
-
 namespace App\Form;
-
-
-use App\Entity\KartTechnicalData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,6 +17,7 @@ class KartTechnicalDataType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('vmax', TextType::class, array(
 
             'label' => 'Prędkość maksymalna',
@@ -37,6 +27,7 @@ class KartTechnicalDataType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('engine', TextType::class, array(
 
             'label' => 'Silnik',

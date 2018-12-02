@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: user
- * Date: 22.08.18
- * Time: 09:53
- */
-
 namespace App\Form;
-
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -34,6 +26,7 @@ class UserType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('password', RepeatedType::class, array(
             'type' => PasswordType::class,
             'invalid_message' => 'Hasła muszą się zgadzać',
@@ -43,6 +36,7 @@ class UserType extends AbstractType
             'first_options'  => array('label' => 'Hasło'),
             'second_options' => array('label' => 'Powtórz hasło'),
         ));
+
         $builder->add('name', TextType::class, array(
             'label' => 'Imię',
             'required' => TRUE,
@@ -51,6 +45,7 @@ class UserType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('surname', TextType::class, array(
             'label' => 'Nazwisko',
             'required' => TRUE,
@@ -59,6 +54,7 @@ class UserType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('birthDate', BirthdayType::class, array(
             'label' => 'Data urodzenia',
             'required' => TRUE,
@@ -69,6 +65,7 @@ class UserType extends AbstractType
             'format' => 'yyyy-MM-dd',
             'widget' => 'choice',
         ));
+
         $builder->add('pesel', TextType::class, array(
             'label' => 'Pesel',
             'required' => TRUE,
@@ -77,6 +74,7 @@ class UserType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('documentID', TextType::class, array(
             'label' => 'Numer i seria dowodu osobistego',
             'required' => TRUE,
@@ -85,6 +83,7 @@ class UserType extends AbstractType
                 'class' => 'form-control'
             ]
         ));
+
         $builder->add('telephoneNumber', TextType::class, array(
             'label' => 'Numer telefonu',
             'required' => TRUE,
@@ -94,6 +93,7 @@ class UserType extends AbstractType
             ],
             'help' =>'Podaj numer komórkowy jako 9 cyfr bez spacji',
         ));
+
         $builder->add('submit', SubmitType::class, array(
             'label' => 'Zarejestruj się',
             'attr' => ['id' => 'submitButton',
@@ -101,6 +101,7 @@ class UserType extends AbstractType
             ]
         ));
     }
+
     public  function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

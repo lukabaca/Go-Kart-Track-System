@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-04
- * Time: 22:43
- */
-
 namespace App\Repository;
-
 use App\Entity\User;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityRepository;
@@ -16,7 +8,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserRepository extends EntityRepository implements UserLoaderInterface
 {
-
     /**
      * Loads the user for the given username.
      *
@@ -58,7 +49,6 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
                         $roles [] = $role['name'];
                     }
                     $user->setRoles($roles);
-
                     return $user;
                 } else {
                     return null;
@@ -68,6 +58,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             return null;
         }
     }
+
     public function getUsers($start, $length, $columnName, $orderDir, $searchValue) {
         $sql = 'call getUsers(?, ?, ?, ?, ?)';
         $conn = $this->getEntityManager()->getConnection();

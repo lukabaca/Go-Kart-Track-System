@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-01
- * Time: 20:56
- */
 
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +17,7 @@ class KartTechnicalData
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="integer")
      * @Assert\Regex(
@@ -31,10 +26,12 @@ class KartTechnicalData
      * )
      */
     private $power;
+
     /**
      * @ORM\Column(type="float")
      */
     private $vmax;
+
     /**
      * @ORM\Column(type="string", length=45)
      */
@@ -44,7 +41,6 @@ class KartTechnicalData
      * @ORM\OneToOne(targetEntity="App\Entity\Kart", inversedBy="kartTechnicalData")
      */
     private $kart;
-
 
     /**
      * KartTechnicalData constructor.

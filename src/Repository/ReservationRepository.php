@@ -1,14 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-26
- * Time: 13:05
- */
-
 namespace App\Repository;
-
-
 use App\Entity\Reservation;
 use App\Entity\ReservationKart;
 use Doctrine\DBAL\DBALException;
@@ -73,6 +64,7 @@ class ReservationRepository extends EntityRepository
             return null;
         }
     }
+
     public function insertReservationAndKartIds($reservation_id, $kart_id) {
         $sql = 'call insertReservationAndKartIds(?, ?)';
         $conn = $this->getEntityManager()->getConnection();
@@ -97,6 +89,7 @@ class ReservationRepository extends EntityRepository
             return null;
         }
     }
+
     public function getKartPrizeByNumberOfRides($kart_id, $numberOfRides) {
         $sql = 'call getKartPrizeByNumberOfRides(?, ?)';
         $conn = $this->getEntityManager()->getConnection();
@@ -119,6 +112,7 @@ class ReservationRepository extends EntityRepository
             return null;
         }
     }
+
     public function getReservationsForViewType($date, $viewType) {
         $sql = 'call getReservationsForViewType(?, ?)';
         $conn = $this->getEntityManager()->getConnection();
@@ -146,6 +140,7 @@ class ReservationRepository extends EntityRepository
             return [];
         }
     }
+
     public function deleteReservation($reservation_id) {
         $sql = 'call deleteReservation(?)';
         $conn = $this->getEntityManager()->getConnection();
@@ -164,6 +159,7 @@ class ReservationRepository extends EntityRepository
             return null;
         }
     }
+
     public function getUserReservations($user_id) {
         $sql = 'call getUserReservations(?)';
         $conn = $this->getEntityManager()->getConnection();
@@ -190,6 +186,7 @@ class ReservationRepository extends EntityRepository
             return [];
         }
     }
+
     public function getTimeTypeReservations() {
         $sql = 'call getTimeTypeReservations()';
         $conn = $this->getEntityManager()->getConnection();

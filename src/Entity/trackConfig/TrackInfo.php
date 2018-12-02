@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-11-10
- * Time: 21:40
- */
 
 namespace App\Entity\trackConfig;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
@@ -24,6 +17,7 @@ class TrackInfo
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="string", length=45)
      * @Assert\Length(
@@ -32,6 +26,7 @@ class TrackInfo
      * )
      */
     private $street;
+
     /**
      * @ORM\Column(type="string", length=30)
      *  @Assert\Regex(
@@ -46,6 +41,7 @@ class TrackInfo
      * )
      */
     private $city;
+
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\Regex(
@@ -58,6 +54,7 @@ class TrackInfo
      * )
      */
     private $telephone_number;
+
     /**
      * @ORM\Column(type="time")
      * @Assert\LessThan(
@@ -66,6 +63,7 @@ class TrackInfo
      * )
      */
     private $hourStart;
+
     /**
      * @ORM\Column(type="time")
      * @Assert\GreaterThan(
@@ -74,14 +72,17 @@ class TrackInfo
      * )
      */
     private $hourEnd;
+
     /**
      * @ORM\Column(type="string", length=60)
      */
     private $facebookLink;
+
     /**
      * @ORM\Column(type="string", length=60)
      */
     private $instagramLink;
+
     /**
      * @ORM\Column(type="string", length=45)
      * @Assert\Email(

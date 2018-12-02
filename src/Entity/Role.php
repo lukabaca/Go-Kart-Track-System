@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-06
- * Time: 15:12
- */
-
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
@@ -35,6 +28,7 @@ class Role
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @ORM\Column(type="string", length=20)
      */
@@ -49,6 +43,7 @@ class Role
      * )
      */
     private $user;
+
     /**
      * @return mixed
      */
@@ -85,6 +80,4 @@ class Role
     {
         $this->user = new ArrayCollection();
     }
-
-
 }
