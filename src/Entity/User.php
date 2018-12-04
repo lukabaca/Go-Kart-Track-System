@@ -84,7 +84,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=11)
      * @Assert\Regex(
-     *     pattern = "/^[0-9]+/",
+     *     pattern = "/^[0-9]+$/",
      *     message="Pesel musi składać się wyłącznie z cyfr"
      * )
      * @Assert\Length(
