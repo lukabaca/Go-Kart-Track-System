@@ -81,7 +81,6 @@ $(document).ready(function () {
             let arrayEnd = hourAndMinuteEndTime.split(':');
             let dateEnd = new Date(trackEndTime.getFullYear(), trackEndTime.getMonth(), trackEndTime.getDate(), arrayEnd[0], arrayEnd[1]);
             let dateStart = new Date(trackEndTime.getFullYear(), trackEndTime.getMonth(), trackEndTime.getDate(), hourAndMinuteStartTime[0], hourAndMinuteStartTime[1]);
-            /*popraw porownywanie samych godzin i minut a nie dat calych, bo mzoe przejsc z inputa na nastepny dzien i wtedy sie wywali */
             if(dateEnd <= trackEndTime) {
                 isValidNumberOfRides = true;
                 $(hourEndInput).val(hourAndMinuteEndTime);
@@ -136,11 +135,7 @@ $(document).ready(function () {
             dataType: 'json',
             url: '/reservation/getAvailableKarts',
             success: function (data) {
-                if(data.length > 0) {
-                    karts = data;
-                } else {
-
-                }
+                karts = data;
                 setIsPageReadyStatus('loadedKarts', true);
                 showReservationForm();
             },
@@ -210,7 +205,6 @@ $(document).ready(function () {
         let numberOfRides = $(numberOfRidesInput).val();
         if(kart) {
             tr.remove();
-            // totalPrize -= kart.prize;
             let kartTable = $('#kartTable');
             let kartIds = getKartIdsFromTable(kartTable);
             getTotalPrizeForKartsInReservation(kartIds, numberOfRides);
@@ -221,7 +215,6 @@ $(document).ready(function () {
             }
             setPrizeInfo($('#reservationPrize'), totalPrize);
         } else {
-            //error bo nie znalazlem katalogu, ups cos poszlo nie tak?
         }
         checkButtonStatus();
     });
@@ -284,7 +277,6 @@ $(document).ready(function () {
                         kartTable.find('tbody').append(recordContent);
                         isValid = true;
                         isValidChosenKarts = true;
-                        // totalPrize += prize;
                         checkButtonStatus();
                     }
                 }
@@ -354,8 +346,6 @@ $(document).ready(function () {
                } else {
                    trackStartTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0);
                    trackEndTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 22, 0)
-                   // trackHourStart = '12:00';
-                   // trackHourEnd = '22:00';
                }
                let startTrackHourAndMinutes = convertHourAndMinuteToProperFormat(trackStartTime);
                let endTrackHourAndMinutes = convertHourAndMinuteToProperFormat(trackEndTime);
@@ -521,19 +511,6 @@ function getTotalPrizeForKartsInReservation(kartIds, numberOfRides) {
             error: function (xhr, ajaxOptions, thrownError) {
                 let statusCode = xhr.status;
                 switch (statusCode) {
-                    // case 400: {
-
-                    //     responseElement.text('Nie można sparsować przesłanych dat');
-                    //     break;
-                    // }
-                    // case 404: {
-                    //     // responseElement.text('Podano złe parametry');
-                    //     break;
-                    // }
-                    // case 409: {
-                    //     responseElement.text('Ten termin jest już zajęty');
-                    //     break;
-                    // }
                     default : {
                         window.location.href = '/status500';
                         break;
@@ -572,7 +549,6 @@ function makeReservation(startDate, endDate, cost, byTimeReservationType, descri
                     break;
                 }
                 case 404: {
-                    // responseElement.text('Podano złe parametry');
                     break;
                 }
                 case 409: {
@@ -651,7 +627,6 @@ function createDateObjectFromDateString(dateString) {
         return null;
     }
 }
-
 function setMinTime(element, minTime) {
     if (flag === true) {
         return;

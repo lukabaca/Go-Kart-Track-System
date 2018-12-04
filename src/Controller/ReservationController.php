@@ -1,20 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luka
- * Date: 2018-10-20
- * Time: 12:59
- */
-
 namespace App\Controller;
-
-
 use App\Entity\Kart;
 use App\Entity\Reservation;
 use App\Entity\trackConfig\RideTimeDictionary;
 use App\Entity\trackConfig\TrackInfo;
 use App\Helper\RoleHelper;
-use App\Repository\trackConfig\RideTimeDictionaryRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
 
 class ReservationController extends Controller
 {
@@ -76,6 +65,7 @@ class ReservationController extends Controller
             ]
         );
     }
+
     /**
      * @Route("/reservation/datatable", name="reservation/datatable")
      * @IsGranted("ROLE_ADMIN")
@@ -122,7 +112,6 @@ class ReservationController extends Controller
         ]);
     }
 
-
     /**
      * @Route("/reservation/getTimePerOneRide", name="reservation/getTimePerOneRide")
      */
@@ -139,6 +128,7 @@ class ReservationController extends Controller
         ];
         return new JsonResponse($timePerOneRide, 200);
     }
+
     /**
      * @Route("/reservation/getTrackConfig", name="reservation/getTrackConfig")
      */
@@ -148,10 +138,6 @@ class ReservationController extends Controller
         if(!$trackInfo) {
             return new JsonResponse(['no track config data'], 404);
         }
-//        $hourStart = $trackInfo->getHourStart() ? $trackInfo->getHourStart() : null;
-//        $hourEnd = $trackInfo->getHourEnd() ? $trackInfo->getHourEnd() : null;
-//        $hourStart = $trackInfo->getHourStart()->format('H:i');
-//        $hourEnd = $trackInfo->getHourEnd()->format('H:i');
         $hourStart = $trackInfo->getHourStart();
         $hourEnd = $trackInfo->getHourEnd();
         $trackInfo = [
