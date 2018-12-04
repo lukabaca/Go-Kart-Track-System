@@ -41,7 +41,6 @@ $(document).ready(function () {
             }
             $(row).addClass('reservation-row').attr('reservation-id', data.id);
         },
-        // Classic DataTables parameters
         "paging" : true,
         "info" : true,
         "searching": true,

@@ -79,12 +79,8 @@ $(document).ready(function () {
     $(prizeInput).on('change', function (e) {
        e.preventDefault();
        let prize = $(this).val();
-       if(prize !== '') {
-           isValidPrice = true;
-       } else {
-           isValidPrice = false;
-       }
-        checkButtonStatus();
+       isValidPrice = prize ? true : false;
+       checkButtonStatus();
     });
     $.fn.datepicker.dates['pl'] = {
         days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
