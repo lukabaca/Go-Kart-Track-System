@@ -43,4 +43,5 @@ security:
          - { path: ^/reservation/*, roles: [ROLE_USER, ROLE_ADMIN]}
          - { path: ^/vehicle/*, roles: [ROLE_USER, ROLE_ADMIN]}
          - { path: ^/trackInfo/*, roles: [ROLE_USER, ROLE_ADMIN]}
+         - { path: ^/user/*, roles: [ROLE_USER, ROLE_ADMIN]}
 
