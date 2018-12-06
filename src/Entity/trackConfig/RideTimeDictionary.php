@@ -23,7 +23,7 @@ class RideTimeDictionary
     private $ride_count;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="integer")
      */
     private $time_per_ride;
 

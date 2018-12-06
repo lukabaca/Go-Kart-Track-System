@@ -18,3 +18,13 @@
     text-transform: capitalize;
   }
 }
+.prize-per-ride-area {
+  margin-bottom: 20px;
+  .race-icon {
+    color: #A8A8A8;
+    margin-right: 8px;
+  }
+  & > * {
+    font-size: 22px;
+  }
+}
