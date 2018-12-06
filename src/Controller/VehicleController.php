@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Kart;
+use App\Entity\trackConfig\RideTimeDictionary;
 use App\Form\KartType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
@@ -25,8 +26,13 @@ class VehicleController extends Controller
                 $karts [] = $kartTemp;
             }
         }
+        $rideTimeInfo = $this->getDoctrine()->getRepository(RideTimeDictionary::class)->find(1);
+        if (!$rideTimeInfo) {
+            return $this->render('views/alerts/500.html.twig' , []);
+        }
         return $this->render('views/controllers/vehicle/index.html.twig' ,[
-            'karts' => $karts
+            'karts' => $karts,
+            'rideTimeInfo' => $rideTimeInfo,
         ]);
     }
 

@@ -13,4 +13,12 @@
   .kartCol .kartName {
     text-transform: capitalize; }
 
+.prize-per-ride-area {
+  margin-bottom: 20px; }
+  .prize-per-ride-area .race-icon {
+    color: #A8A8A8;
+    margin-right: 8px; }
+  .prize-per-ride-area > * {
+    font-size: 22px; }
+
 /*# sourceMappingURL=vehicle.css.map */

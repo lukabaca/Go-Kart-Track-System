@@ -15,6 +15,11 @@
         <div class="col-md-12 alertArea">
         </div>
         <h4 class="pageHeader">Pojazdy</h4>
+        {% if rideTimeInfo.rideCount and rideTimeInfo.timePerRide %}
+            <div class="prize-per-ride-area">
+                <i class="fas fa-flag-checkered race-icon"></i><span>{{ rideTimeInfo.rideCount }} przejazd trwa <strong>{{ rideTimeInfo.timePerRide }} min</strong></span>
+            </div>
+        {% endif %}
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
@@ -32,6 +37,11 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <ul class="list-group">
+                                                    {% if kart.prize %}
+                                                        <li class="list-group-item">Cena za przejazd:
+                                                            <span>{{ kart.prize }} zł</span>
+                                                        </li>
+                                                    {% endif %}
                                                     {% if kart.kartTechnicalData %}
                                                         {% if kart.kartTechnicalData.power %}
                                                             <li class="list-group-item">Moc:
