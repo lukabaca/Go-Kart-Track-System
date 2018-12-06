@@ -1,2 +1,2 @@
 # Praca_inzynierska
-Praca inżynierska.
+Praca inżynierska - serwis do obsługi toru kartingowego
