@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
  *
- * @ORM\Table(name="trackInfo")
+ * @ORM\Table(name="trackinfo")
  * @ORM\Entity(repositoryClass="App\Repository\trackConfig\TrackInfoRepository")
  *
  */
