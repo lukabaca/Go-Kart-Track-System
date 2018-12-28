@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use Serializable;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email", message="Ten adres email jest już w użyciu")
  */
-class User implements UserInterface
+class User implements UserInterface, Serializable, EquatableInterface
 {
     /**
      * @ORM\Id()
@@ -445,5 +447,71 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * String representation of object
+     * @link https://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->name,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /**
+     * Constructs the object
+     * @link https://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->name,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * The equality comparison should neither be done by referential equality
+     * nor by comparing identities (i.e. getId() === getId()).
+     *
+     * However, you do not need to compare every attribute, but only those that
+     * are relevant for assessing whether re-authentication is required.
+     *
+     * @return bool
+     */
+    public function isEqualTo(UserInterface $user)
+    {
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->email !== $user->getUsername()) {
+            return false;
+        }
+
+        $isEqual = count($this->getRoles()) == count($user->getRoles());
+        if ($isEqual) {
+            foreach($this->getRoles() as $role) {
+                $isEqual = $isEqual && in_array($role, $user->getRoles());
+            }
+        }
+
+        return $isEqual;
     }
 }
