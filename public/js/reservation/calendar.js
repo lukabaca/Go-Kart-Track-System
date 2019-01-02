@@ -122,7 +122,7 @@ function initCalendar(eventArray, defaultView) {
         eventRender: function(eventObj, element) {
             let startDate = eventObj.start.toDate();
             let endDate = eventObj.end.toDate();
-            let day = createProperFormat(startDate.getDate()) + '-' + createProperFormat(startDate.getMonth()) + '-' +  createProperFormat(startDate.getFullYear());
+            let day = createProperFormat(startDate.getDate()) + '-' + createProperFormat(startDate.getMonth() + 1) + '-' +  createProperFormat(startDate.getFullYear());
             let hourAndMinuteStart = createProperFormat(startDate.getHours()) + ':' + createProperFormat(startDate.getMinutes());
             let hourAndMinuteEnd = createProperFormat(endDate.getHours()) + ':' + createProperFormat(endDate.getMinutes());
             let content =
