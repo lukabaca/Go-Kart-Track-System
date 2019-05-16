@@ -1,2 +1,2 @@
-# Praca_inzynierska
-Praca inżynierska - serwis do obsługi toru kartingowego
+# Go-Kart Track System
+Web application for managing go-kart track.
